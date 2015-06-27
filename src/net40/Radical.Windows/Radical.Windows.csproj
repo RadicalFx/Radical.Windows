@@ -41,6 +41,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="Radical, Version=1.5.2.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Radical.1.5.2.1\lib\net40\Radical.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -55,9 +59,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\lib\Radical.AssemblyInfo.cs">
-      <Link>Properties\Radical.AssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="..\..\net35\Radical.Windows\CommandEvent.cs">
       <Link>CommandEvent.cs</Link>
     </Compile>
@@ -336,12 +337,6 @@
     <Compile Include="..\..\net35\Radical.Windows\WeakEvent Managers\MonitorChangedWeakEventManager.cs">
       <Link>WeakEvent Managers\MonitorChangedWeakEventManager.cs</Link>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Radical\Radical.csproj">
-      <Project>{B48B5BEC-DE0F-4310-9A36-FF9C07D77ACF}</Project>
-      <Name>Radical</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\net35\Radical.Windows\Presentation\Behaviors\AutoComplete\AutoComplete.xaml">

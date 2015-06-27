@@ -77,6 +77,10 @@
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Radical, Version=1.5.2.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Radical.1.5.2.1\lib\net40\Radical.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
@@ -139,10 +143,6 @@
     <ProjectReference Include="..\Radical.Windows\Radical.Windows.csproj">
       <Project>{8ad2dc17-392c-4bbe-b34b-11a3acb9dc86}</Project>
       <Name>Radical.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Radical\Radical.csproj">
-      <Project>{b48b5bec-de0f-4310-9a36-ff9c07d77acf}</Project>
-      <Name>Radical</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

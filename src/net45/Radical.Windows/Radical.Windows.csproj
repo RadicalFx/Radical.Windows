@@ -44,6 +44,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="Radical, Version=1.5.2.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Radical.1.5.2.1\lib\net45\Radical.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity">
@@ -59,9 +63,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\lib\Radical.AssemblyInfo.cs">
-      <Link>Properties\Radical.AssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="..\..\net35\Radical.Windows\CommandEvent.cs">
       <Link>CommandEvent.cs</Link>
     </Compile>
@@ -357,12 +358,6 @@
     <None Include="packages.config" />
     <None Include="Presentation\Resources\Effects\GrayscaleEffect.fx" />
     <Resource Include="Presentation\Resources\Effects\GrayscaleEffect.ps" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Radical\Radical.csproj">
-      <Project>{db4e99f1-3cbe-4e76-9197-d6f884a0f618}</Project>
-      <Name>Radical</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
