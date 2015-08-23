@@ -138,7 +138,6 @@
     <Compile Include="Presentation\CommandBuilders\CommandData.cs" />
     <Compile Include="Presentation\CommandBuilders\DelegateCommandBuilder.cs" />
     <Compile Include="Presentation\Markup\EditorBinding %28MarkupExtension%29.cs" />
-    <Compile Include="Properties\NugetInfo.cs" />
     <Compile Include="Properties\XmlnsDefinitions.cs" />
     <Compile Include="WeakEvent Managers\LoadedWeakEventManager.cs" />
     <Compile Include="WeakEvent Managers\MonitorChangedWeakEventManager.cs" />
