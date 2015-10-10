@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+    <metadata>
+        <id>Radical.Windows</id>
+        <title>Radical Windows</title>
+        <version>$version$</version>
+        <authors>Mauro Servienti, Enos Recanati, Michael Denny</authors>
+        <owners>radical,mauroservienti</owners>
+        <licenseUrl>https://github.com/RadicalFx/Radical.Windows/blob/develop/license.md</licenseUrl>
+        <projectUrl>https://github.com/RadicalFx/Radical.Windows</projectUrl>
+        <iconUrl>http://www.radicalframework.com/img/radical-ico.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Radical Framework</description>
+        <summary />
+        <language>en-US</language>
+        <tags>Radical Radical.Windows</tags>
+        <dependencies>
+            <group>
+                <dependency id="Radical" version="1.5.2.0" />
+            </group>
+            <group targetFramework=".NETFramework4.0">
+                <dependency id="Expression.Blend.Sdk" version="1.0.2" />
+                <dependency id="Radical" version="1.5.2.0" />
+            </group>
+            <group targetFramework=".NETFramework3.5">
+                <dependency id="Expression.Blend.Sdk3" version="1.0.1340.1" />
+                <dependency id="Radical" version="1.5.2.0" />
+            </group>
+            <group targetFramework=".NETFramework4.5">
+                <dependency id="Expression.Blend.Sdk" version="1.0.2" />
+                <dependency id="Radical" version="1.5.2.0" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\build\$configuration$\radical.windows\lib\" target="lib\" />
+    </files>
+</package>
