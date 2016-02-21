@@ -131,6 +131,7 @@
     <Compile Include="Presentation\Controls\BackgroundVisualHost.cs" />
     <Compile Include="Presentation\Controls\VisualTargetPresentationSource.cs" />
     <Compile Include="Presentation\Converters\BooleanConverter.cs" />
+    <Compile Include="Presentation\Converters\EnumBooleanConverter.cs" />
     <Compile Include="Presentation\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Presentation\Converters\TimeSpanToKeyTimeConverter.cs" />
     <Compile Include="Presentation\Extensions\DelegateCommandExtensions.cs" />
