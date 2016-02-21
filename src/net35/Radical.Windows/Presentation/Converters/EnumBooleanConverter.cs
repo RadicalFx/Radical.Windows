@@ -13,7 +13,7 @@ namespace Topics.Radical.Windows.Presentation.Converters
     {
         #region IValueConverter Members
         /// <summary>
-        /// Modifies the source data before passing it to the target for display in the UI.
+        /// Modifies the source data before passing it to the target to display in the UI.
         /// </summary>
         /// <param name="value">The source data being passed to the target.</param>
         /// <param name="targetType">The <see cref="T:System.Type"/> of data expected by the target dependency property.</param>
