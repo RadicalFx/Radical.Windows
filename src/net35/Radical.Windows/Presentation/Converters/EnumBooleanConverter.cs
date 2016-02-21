@@ -6,9 +6,6 @@ using System.Windows.Markup;
 
 namespace Topics.Radical.Windows.Presentation.Converters
 {
-#if !SILVERLIGHT
-    [MarkupExtensionReturnType(typeof(EnumBooleanConverter))]
-#endif
     /// <summary>
     /// A value converter to convert from enum to bool and back.
     /// </summary>
