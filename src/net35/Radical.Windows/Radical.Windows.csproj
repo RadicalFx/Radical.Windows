@@ -127,6 +127,7 @@
     <Compile Include="Presentation\Behaviors\RoutedEventHandlerBehavior.cs" />
     <Compile Include="Presentation\Behaviors\WindowControlBoxBehavior.cs" />
     <Compile Include="Presentation\Behaviors\TextBox Behaviors\DisableUndoManagerBehavior.cs" />
+    <Compile Include="Presentation\Behaviors\WindowsManager.cs" />
     <Compile Include="Presentation\CommandBuilders\BehaviorDelegateCommandBuilder.cs" />
     <Compile Include="Presentation\Controls\BackgroundVisualHost.cs" />
     <Compile Include="Presentation\Controls\VisualTargetPresentationSource.cs" />
