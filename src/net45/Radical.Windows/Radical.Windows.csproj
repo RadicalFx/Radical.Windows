@@ -259,6 +259,9 @@
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Converters\BooleanToVisibilityConverter.cs">
       <Link>Presentation\Converters\BooleanToVisibilityConverter.cs</Link>
     </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Converters\EnumBooleanConverter.cs">
+      <Link>Presentation\Converters\EnumBooleanConverter.cs</Link>
+    </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Converters\EnumCaptionConverter.cs">
       <Link>Presentation\Converters\EnumCaptionConverter.cs</Link>
     </Compile>
