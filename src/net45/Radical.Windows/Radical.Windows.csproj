@@ -259,6 +259,9 @@
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Converters\BooleanToVisibilityConverter.cs">
       <Link>Presentation\Converters\BooleanToVisibilityConverter.cs</Link>
     </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Converters\EnumBooleanConverter.cs">
+      <Link>Presentation\Converters\EnumBooleanConverter.cs</Link>
+    </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Converters\EnumCaptionConverter.cs">
       <Link>Presentation\Converters\EnumCaptionConverter.cs</Link>
     </Compile>
@@ -338,6 +341,7 @@
     <Compile Include="..\..\net35\Radical.Windows\WeakEvent Managers\MonitorChangedWeakEventManager.cs">
       <Link>WeakEvent Managers\MonitorChangedWeakEventManager.cs</Link>
     </Compile>
+    <Compile Include="Presentation\Behaviors\WindowsManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\net35\Radical.Windows\Presentation\Behaviors\AutoComplete\AutoComplete.xaml">

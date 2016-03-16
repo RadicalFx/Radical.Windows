@@ -210,6 +210,9 @@
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\WindowControlBoxBehavior.cs">
       <Link>Presentation\Behaviors\WindowControlBoxBehavior.cs</Link>
     </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\WindowsManager.cs">
+      <Link>Presentation\Behaviors\WindowsManager.cs</Link>
+    </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\CommandBuilders\BehaviorDelegateCommandBuilder.cs">
       <Link>Presentation\CommandBuilders\BehaviorDelegateCommandBuilder.cs</Link>
     </Compile>
@@ -254,6 +257,9 @@
     </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Converters\BooleanToVisibilityConverter.cs">
       <Link>Presentation\Converters\BooleanToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Converters\EnumBooleanConverter.cs">
+      <Link>Presentation\Converters\EnumBooleanConverter.cs</Link>
     </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Converters\EnumCaptionConverter.cs">
       <Link>Presentation\Converters\EnumCaptionConverter.cs</Link>
