@@ -37,6 +37,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -256,4 +258,11 @@ copy "$(TargetDir)System.Windows.Interactivity.*" "$(SolutionDir)build\$(Configu
 del "$(SolutionDir)build\$(ConfigurationName)\$(ProjectName)\lib\net35\$(TargetFileName).config"</PostBuildEvent>
     <PreBuildEvent>if exist "$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe" "$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe" /T ps_2_0 /E main /Fo"$(ProjectDir)Presentation\Resources\Effects\GrayscaleEffect.ps" "$(ProjectDir)Presentation\Resources\Effects\GrayscaleEffect.fx"</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\..\packages\GitVersionTask.3.4.1\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets" Condition="Exists('..\..\packages\GitVersionTask.3.4.1\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\GitVersionTask.3.4.1\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GitVersionTask.3.4.1\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets'))" />
+  </Target>
 </Project>
