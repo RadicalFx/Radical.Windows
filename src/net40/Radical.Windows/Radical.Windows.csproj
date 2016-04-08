@@ -342,6 +342,7 @@
     <Compile Include="..\..\net35\Radical.Windows\WeakEvent Managers\MonitorChangedWeakEventManager.cs">
       <Link>WeakEvent Managers\MonitorChangedWeakEventManager.cs</Link>
     </Compile>
+    <Compile Include="Presentation\Behaviors\DataGridBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\net35\Radical.Windows\Presentation\Behaviors\AutoComplete\AutoComplete.xaml">

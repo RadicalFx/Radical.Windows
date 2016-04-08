@@ -343,6 +343,9 @@
     <Compile Include="..\..\net35\Radical.Windows\WeakEvent Managers\MonitorChangedWeakEventManager.cs">
       <Link>WeakEvent Managers\MonitorChangedWeakEventManager.cs</Link>
     </Compile>
+    <Compile Include="..\..\net40\Radical.Windows\Presentation\Behaviors\DataGridBehavior.cs">
+      <Link>Presentation\Behaviors\DataGridBehavior.cs</Link>
+    </Compile>
     <Compile Include="Presentation\Behaviors\WindowsManager.cs" />
   </ItemGroup>
   <ItemGroup>
