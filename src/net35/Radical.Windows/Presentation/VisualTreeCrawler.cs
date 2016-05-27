@@ -1,5 +1,7 @@
 ﻿using System;
 using Topics.Radical.Validation;
+using System.Collections.Generic;
+using System.Linq;
 
 #if !NETFX_CORE
 using System.Windows.Media;
@@ -129,5 +131,61 @@ namespace Topics.Radical.Windows
 
 			return child as T;
 		}
-	}
+
+        /// <summary>
+        /// Finds all the childs fo the givent type.
+        /// </summary>
+        /// <typeparam name="T">The typeof the childs to find.</typeparam>
+        /// <param name="source">The source to look on.</param>
+        /// <returns>
+        /// A list of childs if any; otherwise null.
+        /// </returns>
+        public static IEnumerable<T> FindChilds<T>(this DependencyObject source)
+            where T : DependencyObject
+        {
+            return FindChilds<T>(source, o => true);
+        }
+
+        /// <summary>
+		/// Finds all the childs fo the givent type.
+		/// </summary>
+		/// <typeparam name="T">The typeof the childs to find.</typeparam>
+		/// <param name="source">The source to look on.</param>
+		/// <param name="filter">The filter to apply to determine if the found child satisfy the requirments of the caller.</param>
+		/// <returns>A list of childs if any; otherwise null.</returns>
+		public static IEnumerable<T> FindChilds<T>(this DependencyObject source, Predicate<T> filter)
+            where T : DependencyObject
+        {
+            Ensure.That(source).Named("referenceVisual").IsNotNull();
+            Ensure.That(filter).Named("filter").IsNotNull();
+
+            DependencyObject child = null;
+
+            var childs = new List<T>();
+
+            var count = VisualTreeHelper.GetChildrenCount(source);
+            for (Int32 i = 0; i < count; i++)
+            {
+                child = VisualTreeHelper.GetChild(source, i);
+                if (child != null && (child.GetType() == typeof(T)) && filter((T)child))
+                {
+                    childs.Add(child as T);
+                }
+                else if (child != null)
+                {
+                    child = VisualTreeCrawler.FindChild(child, filter);
+                    if (child != null && (child.GetType() == typeof(T)) && filter((T)child))
+                    {
+                        childs.Add(child as T);
+                    }
+                }
+            }
+
+            if (childs.Any())
+                return childs;
+            else
+                return null;
+
+        }
+    }
 }
