@@ -18,6 +18,8 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,8 +46,8 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="Radical, Version=1.5.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Radical.1.5.2.1\lib\net45\Radical.dll</HintPath>
+    <Reference Include="Radical, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Radical.1.6.0\lib\net45\Radical.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -341,6 +343,9 @@
     <Compile Include="..\..\net35\Radical.Windows\WeakEvent Managers\MonitorChangedWeakEventManager.cs">
       <Link>WeakEvent Managers\MonitorChangedWeakEventManager.cs</Link>
     </Compile>
+    <Compile Include="..\..\net40\Radical.Windows\Presentation\Behaviors\DataGridBehavior.cs">
+      <Link>Presentation\Behaviors\DataGridBehavior.cs</Link>
+    </Compile>
     <Compile Include="Presentation\Behaviors\WindowsManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -382,6 +387,13 @@ del "$(SolutionDir)build\$(ConfigurationName)\$(ProjectName)\lib\net45\$(TargetF
   <PropertyGroup>
     <PreBuildEvent>if exist "$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe" "$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe" /T ps_2_0 /E main /Fo"$(ProjectDir)Presentation\Resources\Effects\GrayscaleEffect.ps" "$(ProjectDir)Presentation\Resources\Effects\GrayscaleEffect.fx"</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets" Condition="Exists('..\..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
