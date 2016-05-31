@@ -133,59 +133,59 @@ namespace Topics.Radical.Windows
 		}
 
         /// <summary>
-        /// Finds all the childs fo the givent type.
+        /// Finds all the children fo the givent type.
         /// </summary>
-        /// <typeparam name="T">The typeof the childs to find.</typeparam>
+        /// <typeparam name="T">The typeof the children to find.</typeparam>
         /// <param name="source">The source to look on.</param>
         /// <returns>
-        /// A list of childs if any; otherwise null.
+        /// A list of children if any; otherwise null.
         /// </returns>
-        public static IEnumerable<T> FindChilds<T>(this DependencyObject source)
-            where T : DependencyObject
-        {
-            return FindChilds<T>(source, o => true);
-        }
+        public static IEnumerable<T> FindChildren<T>(this DependencyObject source)
+			where T : DependencyObject
+		{
+			return FindChildren<T>(source, o => true);
+		}
 
         /// <summary>
-		/// Finds all the childs fo the givent type.
-		/// </summary>
-		/// <typeparam name="T">The typeof the childs to find.</typeparam>
-		/// <param name="source">The source to look on.</param>
-		/// <param name="filter">The filter to apply to determine if the found child satisfy the requirments of the caller.</param>
-		/// <returns>A list of childs if any; otherwise null.</returns>
-		public static IEnumerable<T> FindChilds<T>(this DependencyObject source, Predicate<T> filter)
-            where T : DependencyObject
-        {
-            Ensure.That(source).Named("referenceVisual").IsNotNull();
-            Ensure.That(filter).Named("filter").IsNotNull();
+        /// Finds all the children fo the givent type.
+        /// </summary>
+        /// <typeparam name="T">The typeof the children to find.</typeparam>
+        /// <param name="source">The source to look on.</param>
+        /// <param name="filter">The filter to apply to determine if the found children satisfy the requirments of the caller.</param>
+        /// <returns>A list of children if any; otherwise null.</returns>
+        public static IEnumerable<T> FindChildren<T>(this DependencyObject source, Predicate<T> filter)
+			where T : DependencyObject
+		{
+			Ensure.That(source).Named("referenceVisual").IsNotNull();
+			Ensure.That(filter).Named("filter").IsNotNull();
 
-            DependencyObject child = null;
+			DependencyObject child = null;
 
-            var childs = new List<T>();
+			var childs = new List<T>();
 
-            var count = VisualTreeHelper.GetChildrenCount(source);
-            for (Int32 i = 0; i < count; i++)
-            {
-                child = VisualTreeHelper.GetChild(source, i);
-                if (child != null && (child.GetType() == typeof(T)) && filter((T)child))
-                {
-                    childs.Add(child as T);
-                }
-                else if (child != null)
-                {
-                    child = VisualTreeCrawler.FindChild(child, filter);
-                    if (child != null && (child.GetType() == typeof(T)) && filter((T)child))
-                    {
-                        childs.Add(child as T);
-                    }
-                }
-            }
+			var count = VisualTreeHelper.GetChildrenCount(source);
+			for (Int32 i = 0; i < count; i++)
+			{
+				child = VisualTreeHelper.GetChild(source, i);
+				if (child != null && (child.GetType() == typeof(T)) && filter((T)child))
+				{
+					childs.Add(child as T);
+				}
+				else if (child != null)
+				{
+					child = VisualTreeCrawler.FindChild(child, filter);
+					if (child != null && (child.GetType() == typeof(T)) && filter((T)child))
+					{
+						childs.Add(child as T);
+					}
+				}
+			}
 
-            if (childs.Any())
-                return childs;
-            else
-                return null;
+			if (childs.Any())
+				return childs;
+			else
+				return null;
 
-        }
-    }
+		}
+	}
 }
