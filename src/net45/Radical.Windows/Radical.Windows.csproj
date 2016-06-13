@@ -201,6 +201,9 @@
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\RoutedEventHandlerBehavior.cs">
       <Link>Presentation\Behaviors\RoutedEventHandlerBehavior.cs</Link>
     </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ScrollViewerManager.cs">
+      <Link>Presentation\Behaviors\ScrollViewerManager.cs</Link>
+    </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\TextBox Behaviors\DisableUndoManagerBehavior.cs">
       <Link>Presentation\Behaviors\TextBox Behaviors\DisableUndoManagerBehavior.cs</Link>
     </Compile>
