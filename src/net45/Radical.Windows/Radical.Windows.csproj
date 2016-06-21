@@ -180,6 +180,9 @@
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ListView Behaviors\SelectionHandler.cs">
       <Link>Presentation\Behaviors\ListView Behaviors\SelectionHandler.cs</Link>
     </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\MouseManager.cs">
+      <Link>Presentation\Behaviors\MouseManager.cs</Link>
+    </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\OverlayAdorner\ContentOverlayAdorner.cs">
       <Link>Presentation\Behaviors\OverlayAdorner\ContentOverlayAdorner.cs</Link>
     </Compile>
