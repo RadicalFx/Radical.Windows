@@ -121,6 +121,7 @@
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DropArgs.cs" />
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DragOverArgs.cs" />
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DragDropOperationArgs.cs" />
+    <Compile Include="Presentation\Behaviors\MouseManager.cs" />
     <Compile Include="Presentation\Behaviors\OverlayAdorner\ContentOverlayAdorner.cs" />
     <Compile Include="Presentation\Behaviors\OverlayAdorner\Overlay.cs" />
     <Compile Include="Presentation\Behaviors\OverlayAdorner\OverlayBehavior.cs" />
