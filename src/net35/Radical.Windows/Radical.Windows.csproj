@@ -121,6 +121,7 @@
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DropArgs.cs" />
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DragOverArgs.cs" />
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DragDropOperationArgs.cs" />
+    <Compile Include="Presentation\Behaviors\MouseManager.cs" />
     <Compile Include="Presentation\Behaviors\ListBoxBehaviors\ScrollIntoViewForListBox.cs" />
     <Compile Include="Presentation\Behaviors\OverlayAdorner\ContentOverlayAdorner.cs" />
     <Compile Include="Presentation\Behaviors\OverlayAdorner\Overlay.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Presentation\Behaviors\Password.cs" />
     <Compile Include="Presentation\Behaviors\PasswordBoxBehavior.cs" />
     <Compile Include="Presentation\Behaviors\RoutedEventHandlerBehavior.cs" />
+    <Compile Include="Presentation\Behaviors\ScrollViewerManager.cs" />
     <Compile Include="Presentation\Behaviors\WindowControlBoxBehavior.cs" />
     <Compile Include="Presentation\Behaviors\TextBox Behaviors\DisableUndoManagerBehavior.cs" />
     <Compile Include="Presentation\Behaviors\WindowsManager.cs" />

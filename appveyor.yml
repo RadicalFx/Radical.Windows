@@ -19,6 +19,7 @@
     - src\packages -> src\**\packages.config
 
   before_build:
+    - appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/v3.2.0/nuget.exe
     - nuget restore "src\Radical.Windows.sln"
 
   build:
@@ -56,6 +57,7 @@
     - src\packages -> src\**\packages.config
 
   before_build:
+    - appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/v3.2.0/nuget.exe
     - nuget restore "src\Radical.Windows.sln"
 
   build:
