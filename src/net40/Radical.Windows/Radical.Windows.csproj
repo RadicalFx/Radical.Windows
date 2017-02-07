@@ -164,6 +164,9 @@
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\EmptyPlaceHolderService\EmptyPlaceHolderService.cs">
       <Link>Presentation\Behaviors\EmptyPlaceHolderService\EmptyPlaceHolderService.cs</Link>
     </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ListBoxBehaviors\ScrollIntoViewForListBox.cs">
+      <Link>Presentation\Behaviors\ListBoxBehaviors\ScrollIntoViewForListBox.cs</Link>
+    </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ListView Behaviors\GridViewColumnManager.cs">
       <Link>Presentation\Behaviors\ListView Behaviors\GridViewColumnManager.cs</Link>
     </Compile>
