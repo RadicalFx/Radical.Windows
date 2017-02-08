@@ -20,15 +20,15 @@
             </group>
             <group targetFramework=".NETFramework4.0">
                 <dependency id="Expression.Blend.Sdk" version="1.0.2" />
-                <dependency id="Radical" version="1.5.2.0" />
+                <dependency id="Radical" version="[1.6,2.0)" />
             </group>
             <group targetFramework=".NETFramework3.5">
                 <dependency id="Expression.Blend.Sdk3" version="1.0.1340.1" />
-                <dependency id="Radical" version="1.5.2.0" />
+                <dependency id="Radical" version="[1.6,2.0)" />
             </group>
             <group targetFramework=".NETFramework4.5">
                 <dependency id="Expression.Blend.Sdk" version="1.0.2" />
-                <dependency id="Radical" version="1.5.2.0" />
+                <dependency id="Radical" version="[1.6,2.0)" />
             </group>
         </dependencies>
     </metadata>
