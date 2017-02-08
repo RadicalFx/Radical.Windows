@@ -77,8 +77,8 @@
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="Radical, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Radical.1.6.0\lib\net35\Radical.dll</HintPath>
+    <Reference Include="Radical, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Radical.1.6.1\lib\net35\Radical.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -121,12 +121,15 @@
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DropArgs.cs" />
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DragOverArgs.cs" />
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DragDropOperationArgs.cs" />
+    <Compile Include="Presentation\Behaviors\MouseManager.cs" />
+    <Compile Include="Presentation\Behaviors\ListBoxBehaviors\ScrollIntoViewForListBox.cs" />
     <Compile Include="Presentation\Behaviors\OverlayAdorner\ContentOverlayAdorner.cs" />
     <Compile Include="Presentation\Behaviors\OverlayAdorner\Overlay.cs" />
     <Compile Include="Presentation\Behaviors\OverlayAdorner\OverlayBehavior.cs" />
     <Compile Include="Presentation\Behaviors\Password.cs" />
     <Compile Include="Presentation\Behaviors\PasswordBoxBehavior.cs" />
     <Compile Include="Presentation\Behaviors\RoutedEventHandlerBehavior.cs" />
+    <Compile Include="Presentation\Behaviors\ScrollViewerManager.cs" />
     <Compile Include="Presentation\Behaviors\WindowControlBoxBehavior.cs" />
     <Compile Include="Presentation\Behaviors\TextBox Behaviors\DisableUndoManagerBehavior.cs" />
     <Compile Include="Presentation\Behaviors\WindowsManager.cs" />
@@ -258,11 +261,11 @@ copy "$(TargetDir)System.Windows.Interactivity.*" "$(SolutionDir)build\$(Configu
 del "$(SolutionDir)build\$(ConfigurationName)\$(ProjectName)\lib\net35\$(TargetFileName).config"</PostBuildEvent>
     <PreBuildEvent>if exist "$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe" "$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe" /T ps_2_0 /E main /Fo"$(ProjectDir)Presentation\Resources\Effects\GrayscaleEffect.ps" "$(ProjectDir)Presentation\Resources\Effects\GrayscaleEffect.fx"</PreBuildEvent>
   </PropertyGroup>
-  <Import Project="..\..\packages\GitVersionTask.3.4.1\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets" Condition="Exists('..\..\packages\GitVersionTask.3.4.1\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" />
+  <Import Project="..\..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets" Condition="Exists('..\..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\GitVersionTask.3.4.1\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GitVersionTask.3.4.1\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GitVersionTask.3.6.5\build\portable-net+sl+win+wpa+wp\GitVersionTask.targets'))" />
   </Target>
 </Project>

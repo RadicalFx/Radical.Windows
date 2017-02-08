@@ -46,8 +46,8 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="Radical, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Radical.1.6.0\lib\net45\Radical.dll</HintPath>
+    <Reference Include="Radical, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Radical.1.6.1\lib\net45\Radical.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -168,6 +168,9 @@
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\EmptyPlaceHolderService\EmptyPlaceHolderService.cs">
       <Link>Presentation\Behaviors\EmptyPlaceHolderService\EmptyPlaceHolderService.cs</Link>
     </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ListBoxBehaviors\ScrollIntoViewForListBox.cs">
+      <Link>Presentation\Behaviors\ListBoxBehaviors\ScrollIntoViewForListBox.cs</Link>
+    </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ListView Behaviors\GridViewColumnManager.cs">
       <Link>Presentation\Behaviors\ListView Behaviors\GridViewColumnManager.cs</Link>
     </Compile>
@@ -179,6 +182,9 @@
     </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ListView Behaviors\SelectionHandler.cs">
       <Link>Presentation\Behaviors\ListView Behaviors\SelectionHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\MouseManager.cs">
+      <Link>Presentation\Behaviors\MouseManager.cs</Link>
     </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\OverlayAdorner\ContentOverlayAdorner.cs">
       <Link>Presentation\Behaviors\OverlayAdorner\ContentOverlayAdorner.cs</Link>
@@ -200,6 +206,9 @@
     </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\RoutedEventHandlerBehavior.cs">
       <Link>Presentation\Behaviors\RoutedEventHandlerBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ScrollViewerManager.cs">
+      <Link>Presentation\Behaviors\ScrollViewerManager.cs</Link>
     </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\TextBox Behaviors\DisableUndoManagerBehavior.cs">
       <Link>Presentation\Behaviors\TextBox Behaviors\DisableUndoManagerBehavior.cs</Link>
@@ -387,12 +396,12 @@ del "$(SolutionDir)build\$(ConfigurationName)\$(ProjectName)\lib\net45\$(TargetF
   <PropertyGroup>
     <PreBuildEvent>if exist "$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe" "$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe" /T ps_2_0 /E main /Fo"$(ProjectDir)Presentation\Resources\Effects\GrayscaleEffect.ps" "$(ProjectDir)Presentation\Resources\Effects\GrayscaleEffect.fx"</PreBuildEvent>
   </PropertyGroup>
-  <Import Project="..\..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets" Condition="Exists('..\..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets')" />
+  <Import Project="..\..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets" Condition="Exists('..\..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GitVersionTask.3.4.1\build\dotnet\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
