@@ -13,6 +13,7 @@ using Topics.Radical.ComponentModel;
 using Topics.Radical.Observers;
 using Topics.Radical.Linq;
 using Topics.Radical.Windows.Input;
+using System.Reflection;
 
 namespace Topics.Radical.Windows.CommandBuilders
 {
@@ -42,25 +43,6 @@ namespace Topics.Radical.Windows.CommandBuilders
 			}
 		}
 
-		static String GetExpectedMethodName( String path )
-		{
-			//WARN: questo è un bug: impedisce di chiamare effettivamente il metodo nel VM qualcosa del tipo FooCommand perchè noi cercheremmo solo Foo
-			var methodName = path.EndsWith( "Command" ) ? path.Remove( path.LastIndexOf( "Command" ) ) : path;
-
-			return methodName;
-		}
-
-		//static Object GetNestedContextIfAny( Object context, String path )
-		//{
-		//	var segements = path.Split( new[] { '.' }, StringSplitOptions.RemoveEmptyEntries );
-		//	if ( context != null && segements.Length > 1 )
-		//	{
-
-		//	}
-
-		//	return context;
-		//}
-
 		/// <summary>
 		/// Tries to generate command data.
 		/// </summary>
@@ -69,92 +51,110 @@ namespace Topics.Radical.Windows.CommandBuilders
 		/// <param name="data">The data.</param>
 		/// <returns></returns>
 		public virtual Boolean TryGenerateCommandData( PropertyPath path, Object dataContext, out CommandData data )
-		{
-			var propertyPath = path.Path;
-			var nestedProperties = propertyPath
-				.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
-			var propertyLevel = 0;
-			while (dataContext != null && propertyLevel < nestedProperties.Length-1)
-			{
-				var currentProperty = nestedProperties[propertyLevel];
-				var dataContextType = dataContext.GetType();
-				var pi = dataContextType.GetProperty(currentProperty);
-				if (pi == null)
-				{
-					logger.Error("Cannot find any property named: {0}.", currentProperty);
-					dataContext = null;
-					break;
-				}
-				dataContext = pi.GetValue(dataContext, null);
-				propertyLevel++;
-				propertyPath = nestedProperties[propertyLevel];
-			}
+        {
+            var propertyPath = path.Path;
+            var nestedProperties = propertyPath
+                .Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+            var propertyLevel = 0;
+            while (dataContext != null && propertyLevel < nestedProperties.Length - 1)
+            {
+                var currentProperty = nestedProperties[propertyLevel];
+                var dataContextType = dataContext.GetType();
+                var pi = dataContextType.GetProperty(currentProperty);
+                if (pi == null)
+                {
+                    logger.Error("Cannot find any property named: {0}.", currentProperty);
+                    dataContext = null;
+                    break;
+                }
+                dataContext = pi.GetValue(dataContext, null);
+                propertyLevel++;
+                propertyPath = nestedProperties[propertyLevel];
+            }
 
-			if ( dataContext == null )
-			{
-				data = null;
-				return false;
-			}
+            if (dataContext == null)
+            {
+                data = null;
+                return false;
+            }
 
-			var methodName = GetExpectedMethodName( propertyPath );
-			var factName = String.Concat( "Can", methodName );
-			var properties = dataContext.GetType().GetProperties();
+            var properties = dataContext.GetType().GetProperties();
+            var commandData = generateCommandData(dataContext, propertyPath, properties);
 
-			var commandData = dataContext.GetType()
-				.GetMethods()
-				.Where( mi => mi.Name.Equals( methodName ) )
-				.Select( mi =>
-				{
-					var prms = mi.GetParameters();
+            if (commandData == null)
+            {
+                logger.Warning("Cannot find any method named: {0}, with or without the Command suffix.", propertyPath);
+            }
 
-					return new CommandData()
-					{
-						DataContext = dataContext,
-						FastDelegate = mi.CreateVoidDelegate(),
+            data = commandData;
 
-						Fact = properties.Where( pi =>
-						{
-							return pi.PropertyType == typeof( Fact ) && pi.Name.Equals( factName );
-						} )
-						.Select( pi =>
-						{
-							var fact = ( Fact )pi.GetValue( dataContext, null );
-							return fact;
-						} )
-						.SingleOrDefault(),
+            return commandData != null;
+        }
 
-						BooleanFact = properties.Where( pi =>
-						{
-							return dataContext is INotifyPropertyChanged
-								&& pi.PropertyType == typeof( Boolean )
-								&& pi.Name.Equals( factName );
-						} )
-						.Select( pi => new BooleanFact
-						{
-							FastGetter = dataContext.CreateFastPropertyGetter<Boolean>( pi ),
-							Name = pi.Name
-						} )
-						.SingleOrDefault(),
+        static MethodInfo getMethodToBindTo(object dataContext, string methodName)
+        {
+            var method = dataContext.GetType()
+                .GetMethods()
+                .Where(mi => mi.Name.Equals(methodName))
+                .SingleOrDefault();
 
-						HasParameter = prms.Length == 1,
-						ParameterType = prms.Length != 1 ? null : prms[ 0 ].ParameterType,
-						KeyBindings = mi.GetAttributes<KeyBindingAttribute>(),
-						Description = mi.GetAttribute<CommandDescriptionAttribute>()
-					};
-				} )
-				.SingleOrDefault();
+            if (method == null && methodName.EndsWith("Command"))
+            {
+                method = getMethodToBindTo(dataContext, methodName.Remove(methodName.LastIndexOf("Command")));
+            }
 
-			if ( commandData == null )
-			{
-				logger.Warning( "Cannot find any method named: {0}.", methodName );
-			}
+            return method;
+        }
 
-			data = commandData;
+        static CommandData generateCommandData(object dataContext, string methodName, PropertyInfo[] properties)
+        {
+            var method = getMethodToBindTo(dataContext, methodName);
+            if (method == null)
+            {
+                return null;
+            }
 
-			return commandData != null;
-		}
+            var factName = string.Concat("Can", method.Name);
+            var prms = method.GetParameters();
 
-		public virtual IDelegateCommand CreateCommand( CommandData commandData )
+            return new CommandData()
+            {
+                MethodName = method.Name,
+                DataContext = dataContext,
+                FastDelegate = method.CreateVoidDelegate(),
+
+                Fact = properties.Where(pi =>
+                {
+                    return pi.PropertyType == typeof(Fact) && pi.Name.Equals(factName);
+                })
+                .Select(pi =>
+                {
+                    var fact = (Fact)pi.GetValue(dataContext, null);
+                    return fact;
+                })
+                .SingleOrDefault(),
+
+                BooleanFact = properties.Where(pi =>
+                {
+                    return dataContext is INotifyPropertyChanged
+                        && pi.PropertyType == typeof(Boolean)
+                        && pi.Name.Equals(factName);
+                })
+                .Select(pi => new BooleanFact
+                {
+                    FastGetter = dataContext.CreateFastPropertyGetter<Boolean>(pi),
+                    Name = pi.Name
+                })
+                .SingleOrDefault(),
+
+                HasParameter = prms.Length == 1,
+                ParameterType = prms.Length != 1 ? null : prms[0].ParameterType,
+                KeyBindings = method.GetAttributes<KeyBindingAttribute>(),
+                Description = method.GetAttribute<CommandDescriptionAttribute>()
+            };
+        }
+
+        public virtual IDelegateCommand CreateCommand( CommandData commandData )
 		{
 			var text = ( commandData.Description == null ) ?
 						String.Empty :

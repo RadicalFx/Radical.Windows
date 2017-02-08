@@ -10,6 +10,8 @@ namespace Topics.Radical.Windows.CommandBuilders
 {
     public class CommandData
     {
+        public string MethodName;
+
         public Object DataContext;
         public LateBoundVoidMethod FastDelegate;
 
