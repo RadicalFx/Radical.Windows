@@ -355,6 +355,7 @@
     <Compile Include="..\..\net40\Radical.Windows\Presentation\Behaviors\DataGridBehavior.cs">
       <Link>Presentation\Behaviors\DataGridBehavior.cs</Link>
     </Compile>
+    <Compile Include="Presentation\Behaviors\ListView Behaviors\ScrollIntoViewForListView.cs" />
     <Compile Include="Presentation\Behaviors\WindowsManager.cs" />
   </ItemGroup>
   <ItemGroup>
