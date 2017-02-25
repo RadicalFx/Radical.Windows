@@ -352,6 +352,7 @@
       <Link>WeakEvent Managers\MonitorChangedWeakEventManager.cs</Link>
     </Compile>
     <Compile Include="Presentation\Behaviors\DataGridBehavior.cs" />
+    <Compile Include="Presentation\Behaviors\ListBoxBehaviors\ManipulationBoundaryFeedback.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\net35\Radical.Windows\Presentation\Behaviors\AutoComplete\AutoComplete.xaml">
