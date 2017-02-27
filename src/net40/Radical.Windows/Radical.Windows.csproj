@@ -351,7 +351,8 @@
     <Compile Include="..\..\net35\Radical.Windows\WeakEvent Managers\MonitorChangedWeakEventManager.cs">
       <Link>WeakEvent Managers\MonitorChangedWeakEventManager.cs</Link>
     </Compile>
-    <Compile Include="Presentation\Behaviors\DataGridBehavior.cs" />
+    <Compile Include="Presentation\Behaviors\DataGridBehaviors\DataGridBehavior.cs" />
+    <Compile Include="Presentation\Behaviors\DataGridBehaviors\ScrollIntoViewForDataGrid.cs" />
     <Compile Include="Presentation\Behaviors\ListBoxBehaviors\ManipulationBoundaryFeedback.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -371,7 +372,9 @@
     <None Include="Presentation\Resources\Effects\GrayscaleEffect.fx" />
     <Resource Include="Presentation\Resources\Effects\GrayscaleEffect.ps" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Presentation\Behaviors\NewFolder1\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if exist "$(SolutionDir)build\$(ConfigurationName)\$(ProjectName)\lib\net40". (
