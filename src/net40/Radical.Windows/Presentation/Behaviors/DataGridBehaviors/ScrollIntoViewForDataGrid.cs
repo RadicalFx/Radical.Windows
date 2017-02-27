@@ -3,42 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
+using Topics.Radical.Conversions;
 using Topics.Radical.Windows.Behaviors;
 
 namespace Topics.Radical.Windows.Presentation.Behaviors
 {
-    class ScrollIntoViewForDataGrid : RadicalBehavior<DataGrid>
+    public class ScrollIntoViewForDataGrid : RadicalBehavior<DataGrid>
     {
         protected override void OnAttached()
         {
             base.OnAttached();
-            this.AssociatedObject.SelectionChanged += AssociatedObject_SelectionChanged;
+            this.AssociatedObject.SelectionChanged += OnAssociatedObjectSelectionChanged;
         }
 
-        void AssociatedObject_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void OnAssociatedObjectSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is DataGrid)
+            sender.As<DataGrid>(dataGrid =>
             {
-                DataGrid dataGrid = (sender as DataGrid);
                 if (dataGrid.SelectedItem != null)
                 {
                     dataGrid.Dispatcher.BeginInvoke(
                         (Action)(() =>
                         {
                             dataGrid.UpdateLayout();
-                            if (dataGrid.SelectedItem !=
-                                null)
-                                dataGrid.ScrollIntoView(
-                                    dataGrid.SelectedItem);
+                            if (dataGrid.SelectedItem != null)
+                                dataGrid.ScrollIntoView(dataGrid.SelectedItem);
                         }));
                 }
-            }
+            });
         }
+
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            this.AssociatedObject.SelectionChanged -=
-                AssociatedObject_SelectionChanged;
+            this.AssociatedObject.SelectionChanged -= OnAssociatedObjectSelectionChanged;
 
         }
     }
