@@ -121,6 +121,7 @@
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DropArgs.cs" />
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DragOverArgs.cs" />
     <Compile Include="Presentation\Behaviors\DragDropBehavior\DragDropOperationArgs.cs" />
+    <Compile Include="Presentation\Behaviors\ListView Behaviors\ScrollIntoViewForListView.cs" />
     <Compile Include="Presentation\Behaviors\MouseManager.cs" />
     <Compile Include="Presentation\Behaviors\ListBoxBehaviors\ScrollIntoViewForListBox.cs" />
     <Compile Include="Presentation\Behaviors\OverlayAdorner\ContentOverlayAdorner.cs" />

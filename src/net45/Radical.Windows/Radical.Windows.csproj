@@ -180,6 +180,9 @@
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ListView Behaviors\ListViewManager.cs">
       <Link>Presentation\Behaviors\ListView Behaviors\ListViewManager.cs</Link>
     </Compile>
+    <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ListView Behaviors\ScrollIntoViewForListView.cs">
+      <Link>Presentation\Behaviors\ListView Behaviors\ScrollIntoViewForListView.cs</Link>
+    </Compile>
     <Compile Include="..\..\net35\Radical.Windows\Presentation\Behaviors\ListView Behaviors\SelectionHandler.cs">
       <Link>Presentation\Behaviors\ListView Behaviors\SelectionHandler.cs</Link>
     </Compile>
