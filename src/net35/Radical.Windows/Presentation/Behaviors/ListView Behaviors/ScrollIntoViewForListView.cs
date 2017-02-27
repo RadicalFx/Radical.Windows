@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using Topics.Radical.Conversions;
 
 namespace Topics.Radical.Windows.Behaviors
 {
@@ -8,33 +9,30 @@ namespace Topics.Radical.Windows.Behaviors
         protected override void OnAttached()
         {
             base.OnAttached();
-            this.AssociatedObject.SelectionChanged += AssociatedObject_SelectionChanged;
+            this.AssociatedObject.SelectionChanged += OnAssociatedObjectSelectionChanged;
         }
 
-        void AssociatedObject_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void OnAssociatedObjectSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is ListView)
+            sender.As<ListView>(listView =>
             {
-                ListView listView = (sender as ListView);
                 if (listView.SelectedItem != null)
                 {
                     listView.Dispatcher.BeginInvoke(
                         (Action)(() =>
                         {
                             listView.UpdateLayout();
-                            if (listView.SelectedItem !=
-                                null)
-                                listView.ScrollIntoView(
-                                    listView.SelectedItem);
+                            if (listView.SelectedItem != null)
+                                listView.ScrollIntoView(listView.SelectedItem);
                         }));
                 }
-            }
+            });
+
         }
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            this.AssociatedObject.SelectionChanged -=
-                AssociatedObject_SelectionChanged;
+            this.AssociatedObject.SelectionChanged -= OnAssociatedObjectSelectionChanged;
 
         }
     }
