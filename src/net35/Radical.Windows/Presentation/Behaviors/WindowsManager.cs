@@ -15,6 +15,7 @@ namespace Topics.Radical.Windows.Presentation.Behaviors
         private const int SwpNozorder = 0x0004;
         private const int WsExDlgmodalframe = 0x0001;
 
+        [Obsolete("The feature will be removed in the next major version, please use the new ShowIcon in WindowControlBoxBehavior", false)]
         public static readonly DependencyProperty ShowIconProperty = DependencyProperty.RegisterAttached(
                                 "ShowIcon",
                                 typeof(bool),
@@ -27,6 +28,7 @@ namespace Topics.Radical.Windows.Presentation.Behaviors
                                     )));
 
 
+        [Obsolete("The feature will be removed in the next major version, please use the new ShowIcon in WindowControlBoxBehavior", false)]
         public static Boolean GetShowIcon(UIElement element)
         {
             return (Boolean)element.GetValue(ShowIconProperty);
@@ -50,6 +52,7 @@ namespace Topics.Radical.Windows.Presentation.Behaviors
             };
         }
 
+        [Obsolete("The feature will be removed in the next major version, please use the new ShowIcon in WindowControlBoxBehavior", false)]
         public static void SetShowIcon(UIElement element, Boolean value)
         {
             element.SetValue(ShowIconProperty, value);
