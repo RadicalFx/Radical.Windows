@@ -1,14 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CDD1DA5D-B3A3-4274-9F83-4ACDE54C34EF}"
-	ProjectSection(SolutionItems) = preProject
-		..\appveyor.yml = ..\appveyor.yml
-		WebEssentials-Settings.json = WebEssentials-Settings.json
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net40", "net40", "{D02EE7AB-5E92-4BF2-9ADC-1CFF12355895}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net35", "net35", "{63E573C9-D4C7-42E6-9055-DA74A2CB42CF}"
@@ -21,12 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radical.Windows", "net35\Ra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radical.Windows", "net40\Radical.Windows\Radical.Windows.csproj", "{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radical.Windows", "net45\Radical.Windows\Radical.Windows.csproj", "{135504B6-2A47-4E30-994E-60BC49477091}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{557CC2FF-843C-4096-B12B-6F9A8884FA3E}"
-	ProjectSection(SolutionItems) = preProject
-		nuget\Radical.Windows.nuspec = nuget\Radical.Windows.nuspec
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radical.Windows", "net45\Radical.Windows\Radical.Windows.csproj", "{135504B6-2A47-4E30-994E-60BC49477091}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net40", "net40", "{667F5571-5118-4BDB-A011-BFB5DEAE389C}"
 EndProject
@@ -97,5 +86,6 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
+		SolutionGuid = {169E928A-D6BD-4608-A068-3B8AAB88B19D}
 	EndGlobalSection
 EndGlobal
