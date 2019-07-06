@@ -3,86 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net40", "net40", "{D02EE7AB-5E92-4BF2-9ADC-1CFF12355895}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radical.Windows", "Radical.Windows\Radical.Windows.csproj", "{600DFD64-572A-44A2-BE7D-5CF9C2428DEC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net35", "net35", "{63E573C9-D4C7-42E6-9055-DA74A2CB42CF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4D938E88-567A-4F81-A0E4-A56650C81053}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net45", "net45", "{135601F4-F15B-4EB2-A3F9-1385E9C1AE93}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radical.Windows", "net35\Radical.Windows\Radical.Windows.csproj", "{FCD5EF38-2602-43CE-AB0E-B01068873084}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radical.Windows", "net40\Radical.Windows\Radical.Windows.csproj", "{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radical.Windows", "net45\Radical.Windows\Radical.Windows.csproj", "{135504B6-2A47-4E30-994E-60BC49477091}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net40", "net40", "{667F5571-5118-4BDB-A011-BFB5DEAE389C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Radical.Windows", "net40\Test.Radical.Windows\Test.Radical.Windows.csproj", "{20FC6C18-4C37-4BAE-9482-B77B4664D058}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radical.Windows.Tests", "Radical.Windows.Tests\Radical.Windows.Tests.csproj", "{20FC6C18-4C37-4BAE-9482-B77B4664D058}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|ARM = Debug|ARM
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|ARM = Release|ARM
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FCD5EF38-2602-43CE-AB0E-B01068873084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCD5EF38-2602-43CE-AB0E-B01068873084}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCD5EF38-2602-43CE-AB0E-B01068873084}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{FCD5EF38-2602-43CE-AB0E-B01068873084}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{FCD5EF38-2602-43CE-AB0E-B01068873084}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FCD5EF38-2602-43CE-AB0E-B01068873084}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCD5EF38-2602-43CE-AB0E-B01068873084}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCD5EF38-2602-43CE-AB0E-B01068873084}.Release|ARM.ActiveCfg = Release|Any CPU
-		{FCD5EF38-2602-43CE-AB0E-B01068873084}.Release|x64.ActiveCfg = Release|Any CPU
-		{FCD5EF38-2602-43CE-AB0E-B01068873084}.Release|x86.ActiveCfg = Release|Any CPU
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}.Release|ARM.ActiveCfg = Release|Any CPU
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}.Release|x64.ActiveCfg = Release|Any CPU
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86}.Release|x86.ActiveCfg = Release|Any CPU
-		{135504B6-2A47-4E30-994E-60BC49477091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{135504B6-2A47-4E30-994E-60BC49477091}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{135504B6-2A47-4E30-994E-60BC49477091}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{135504B6-2A47-4E30-994E-60BC49477091}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{135504B6-2A47-4E30-994E-60BC49477091}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{135504B6-2A47-4E30-994E-60BC49477091}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{135504B6-2A47-4E30-994E-60BC49477091}.Release|Any CPU.Build.0 = Release|Any CPU
-		{135504B6-2A47-4E30-994E-60BC49477091}.Release|ARM.ActiveCfg = Release|Any CPU
-		{135504B6-2A47-4E30-994E-60BC49477091}.Release|x64.ActiveCfg = Release|Any CPU
-		{135504B6-2A47-4E30-994E-60BC49477091}.Release|x86.ActiveCfg = Release|Any CPU
+		{600DFD64-572A-44A2-BE7D-5CF9C2428DEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{600DFD64-572A-44A2-BE7D-5CF9C2428DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{600DFD64-572A-44A2-BE7D-5CF9C2428DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{600DFD64-572A-44A2-BE7D-5CF9C2428DEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Release|ARM.ActiveCfg = Release|Any CPU
-		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Release|x64.ActiveCfg = Release|Any CPU
-		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{FCD5EF38-2602-43CE-AB0E-B01068873084} = {63E573C9-D4C7-42E6-9055-DA74A2CB42CF}
-		{8AD2DC17-392C-4BBE-B34B-11A3ACB9DC86} = {D02EE7AB-5E92-4BF2-9ADC-1CFF12355895}
-		{135504B6-2A47-4E30-994E-60BC49477091} = {135601F4-F15B-4EB2-A3F9-1385E9C1AE93}
-		{667F5571-5118-4BDB-A011-BFB5DEAE389C} = {4D938E88-567A-4F81-A0E4-A56650C81053}
-		{20FC6C18-4C37-4BAE-9482-B77B4664D058} = {667F5571-5118-4BDB-A011-BFB5DEAE389C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
