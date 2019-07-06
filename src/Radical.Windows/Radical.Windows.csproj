@@ -30,8 +30,8 @@
   </Target>
 
   <ItemGroup>
-    <None Remove="Presentation\Behaviors\AutoComplete\AutoComplete.xaml" />
-    <None Remove="Presentation\Resources\Effects\GrayscaleEffect.ps" />
+    <None Remove="Behaviors\AutoComplete\AutoComplete.xaml" />
+    <None Remove="Resources\Effects\GrayscaleEffect.ps" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Include="Presentation\Behaviors\AutoComplete\AutoComplete.xaml">
+    <Page Include="Behaviors\AutoComplete\AutoComplete.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -60,17 +60,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Presentation\Resources\Effects\GrayscaleEffect.ps" />
+    <Resource Include="Resources\Effects\GrayscaleEffect.ps" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Presentation\Behaviors\AutoComplete\AutoComplete.xaml.cs">
+    <Compile Update="Behaviors\AutoComplete\AutoComplete.xaml.cs">
       <DependentUpon>AutoComplete.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="if exist &quot;$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe&quot; &quot;$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe&quot; /T ps_2_0 /E main /Fo&quot;$(ProjectDir)Presentation\Resources\Effects\GrayscaleEffect.ps&quot; &quot;$(ProjectDir)Presentation\Resources\Effects\GrayscaleEffect.fx&quot;" />
+    <Exec Command="if exist &quot;$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe&quot; &quot;$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe&quot; /T ps_2_0 /E main /Fo&quot;$(ProjectDir)Resources\Effects\GrayscaleEffect.ps&quot; &quot;$(ProjectDir)Resources\Effects\GrayscaleEffect.fx&quot;" />
   </Target>
 
 </Project>

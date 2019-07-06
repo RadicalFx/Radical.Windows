@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Radical.Windows.Presentation.Converters;
+using Radical.Windows.Converters;
 using SharpTestsEx;
 using System;
 using System.Globalization;
 using System.Windows.Media.Animation;
 
-namespace Radical.Windows.Tests.Presentation.Converters
+namespace Radical.Windows.Tests.Converters
 {
     [TestClass]
     public class TimeSpanToKeyTimeConverterTests

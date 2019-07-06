@@ -3,7 +3,7 @@ using Radical.Windows.Behaviors;
 using System;
 using System.Windows.Controls;
 
-namespace Radical.Windows.Presentation.Behaviors
+namespace Radical.Windows.Behaviors
 {
     public class ScrollIntoViewForDataGrid : RadicalBehavior<DataGrid>
     {

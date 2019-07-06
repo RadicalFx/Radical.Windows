@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Interactivity;
 
-namespace Radical.Windows.Presentation.Behaviors
+namespace Radical.Windows.Behaviors
 {
     public class DisableManipulationBoundaryFeedback : Behavior<ListBox>
     {

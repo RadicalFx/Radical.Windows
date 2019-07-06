@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Radical.Windows.Presentation.Behaviors
+namespace Radical.Windows.Behaviors
 {
     public class ScrollViewerManager
     {

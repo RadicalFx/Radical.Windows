@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace Radical.Windows.Presentation.Converters
+namespace Radical.Windows.Converters
 {
     /// <summary>
     /// A value converter to convert from enum to bool and back.

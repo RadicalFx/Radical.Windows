@@ -9,7 +9,7 @@ namespace Radical.Windows.Effects
     {
         private static PixelShader _pixelShader = new PixelShader()
         {
-            UriSource = new Uri(@"pack://application:,,,/Radical.Windows;component/Presentation/Resources/Effects/GrayscaleEffect.ps")
+            UriSource = new Uri(@"pack://application:,,,/Radical.Windows;component/Resources/Effects/GrayscaleEffect.ps")
         };
 
         public GrayscaleEffect()

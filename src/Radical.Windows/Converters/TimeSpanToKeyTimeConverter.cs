@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Windows.Markup;
 using System.Windows.Media.Animation;
 
-namespace Radical.Windows.Presentation.Converters
+namespace Radical.Windows.Converters
 {
     [MarkupExtensionReturnType(typeof(TimeSpanToKeyTimeConverter))]
     public class TimeSpanToKeyTimeConverter : AbstractSingletonConverter

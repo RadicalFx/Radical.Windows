@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Radical.Windows.Presentation.Behaviors
+namespace Radical.Windows.Behaviors
 {
     public class WindowsManager
     {
