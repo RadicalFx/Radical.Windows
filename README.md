@@ -1,7 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/Radicalfx/Radical.Windows.png?label=ready&title=Ready)](http://waffle.io/Radicalfx/Radical.Windows)
-[![Stories in Progress](https://badge.waffle.io/Radicalfx/Radical.Windows.png?label=in progress&title=In Progress)](http://waffle.io/Radicalfx/Radical.Windows)
-
-[![Build status](https://ci.appveyor.com/api/projects/status/gq3sdtsc60vhiqtf?svg=true)](https://ci.appveyor.com/project/radical-bot/radical-windows)
+# Radical.Windows
 
 --
 
