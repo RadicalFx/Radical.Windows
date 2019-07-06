@@ -12,7 +12,7 @@ internal class Program
 
         Target("restore",
             Directory.EnumerateFiles("src", "*.csproj", SearchOption.AllDirectories),
-            proj => Run(sdk.GetDotnetCliPath(), $"restore \"{proj}\""););
+            proj => Run(sdk.GetDotnetCliPath(), $"restore \"{proj}\""));
         
         Target("build", DependsOn("restore"),
             Directory.EnumerateFiles("src", "*.sln", SearchOption.AllDirectories),
