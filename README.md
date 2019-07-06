@@ -2,7 +2,7 @@
 
 --
 
-![Radical logo](Radical.png)
+![Radical logo](assets/icon.png)
 
 *Radical* is an infrastructure framework whose primary role is to help in the development of composite WPF applications based on the Model View ViewModel pattern.
 
