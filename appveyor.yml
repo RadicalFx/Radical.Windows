@@ -12,16 +12,18 @@ environment:
 branches:
   only:
   - master
-  - develop
   - /release-.*/
   - /^\d+\.\d+\.\d+(-\S*)?$/
 
-build_script:
-- cmd: ./build.cmd
-
-test: off
+skip_tags: false
+configuration: Release
+platform: Any CPU
 
 artifacts:
 - path: ./**/*.nupkg
+
+build:
+  project: src\Radical.Windows.sln
+  verbosity: minimal
 
 deploy: off
