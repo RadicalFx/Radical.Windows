@@ -22,6 +22,9 @@ platform: Any CPU
 artifacts:
 - path: ./**/*.nupkg
 
+before_build:
+  - nuget restore .\src\Radical.Windows.sln
+
 build:
   project: src\Radical.Windows.sln
   verbosity: minimal
