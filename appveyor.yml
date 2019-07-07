@@ -1,89 +1,32 @@
-#
-#     DEVELOPMENT BRANCH
-#
-# build in Debug mode and deploy to MyGet.org as pre-release
+version: '{build}'
+image: Visual Studio 2019
 
-- branches:
-    only:
-    - develop
+skip_branch_with_pr: true
+pull_requests:
+  do_not_increment_build_number: true
 
-  skip_tags: true
-  configuration: Debug
-  platform: Any CPU
+environment:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  NUGET_XMLDOC_MODE: skip
 
-  artifacts:
-    - path: src\build\Debug
-    - path: src\build\nuget\*.nupkg
+branches:
+  only:
+  - master
+  - /release-.*/
+  - /^\d+\.\d+\.\d+(-\S*)?$/
 
-  cache:
-    - src\packages -> src\**\packages.config
+skip_tags: false
+configuration: Release
+platform: Any CPU
 
-  before_build:
-    - appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/v3.2.0/nuget.exe
-    - nuget restore "src\Radical.Windows.sln"
+artifacts:
+- path: ./**/*.nupkg
 
-  build:
-    project: src\Radical.Windows.sln
-    verbosity: minimal
+before_build:
+  - nuget restore .\src\Radical.Windows.sln
 
-  after_build:
-    - md "src\build\nuget"
-    - nuget pack "src\nuget\Radical.Windows.nuspec" -Version "%GitVersion_NuGetVersion%" -Properties "configuration=%CONFIGURATION%" -OutputDirectory "src\build\nuget"
+build:
+  project: src\Radical.Windows.sln
+  verbosity: minimal
 
-  deploy:
-  - provider: Environment
-    name: MyGet feed
-    on:
-      branch: develop
-
-#
-#     MASTER BRANCH
-#
-# build in Release mode and deploy to NuGet.org
-
-- branches:
-    only:
-    - master
-
-  skip_tags: true
-  configuration: Release
-  platform: Any CPU
-
-  artifacts:
-    - path: src\build\Release
-    - path: src\build\nuget\*.nupkg
-
-  cache:
-    - src\packages -> src\**\packages.config
-
-  before_build:
-    - appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/v3.2.0/nuget.exe
-    - nuget restore "src\Radical.Windows.sln"
-
-  build:
-    project: src\Radical.Windows.sln
-    verbosity: minimal
-
-  after_build:
-    - md "src\build\nuget"
-    - nuget pack "src\nuget\Radical.Windows.nuspec" -Version "%GitVersion_NuGetVersion%" -Properties "configuration=%CONFIGURATION%" -OutputDirectory "src\build\nuget"
-
-  test:
-    categories:
-      except:
-      - ObjectDumper
-      - AsyncWorker
-
-  deploy:
-  - provider: Environment
-    name: NuGet public feed
-    on:
-      branch: master
-  - provider: GitHub    
-    release: $(GitVersion_NuGetVersion)
-    description: 'Release v$(GitVersion_NuGetVersion)'
-    auth_token:
-      secure: 2ijF4OfPYfIUTunubL/Z04ogADL9sx/gKW1jMRNJnAa1OpHZpSvCKmP0gvNs8C7h
-    artifact: /.*\.nupkg/, src\build\Release.zip
-    on:
-      branch: master
+deploy: off
