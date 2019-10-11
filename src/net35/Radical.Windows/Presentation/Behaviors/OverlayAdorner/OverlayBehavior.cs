@@ -146,6 +146,7 @@ namespace Topics.Radical.Windows.Behaviors
 
         private void IsHitTestVisibleChanged(DependencyPropertyChangedEventArgs e)
         {
+            this.adorner.IsHitTestVisible = this.IsHitTestVisible;
             if (this.isAdornerVisible)
             {
                 this.adorner.InvalidateVisual();
