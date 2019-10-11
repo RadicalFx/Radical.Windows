@@ -1,6 +1,6 @@
 - branches:
     only:
-    - release-1.6
+    - /release-.*/
 
   skip_tags: false
   configuration: release
@@ -8,7 +8,7 @@
 
   artifacts:
     - path: src\build\Release
-    - path: src\build\Release\*.nupkg
+    - path: src\build\nuget\*.nupkg
 
   cache:
     - src\packages -> src\**\packages.config
