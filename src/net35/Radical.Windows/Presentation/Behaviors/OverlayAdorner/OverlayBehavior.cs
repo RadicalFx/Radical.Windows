@@ -72,7 +72,10 @@ namespace Topics.Radical.Windows.Behaviors
             "IsHitTestVisible",
             typeof( Boolean ),
             typeof( OverlayBehavior ),
-            new PropertyMetadata( true ) );
+            new PropertyMetadata(true,(s, e) =>
+            {
+                ((OverlayBehavior)s).IsHitTestVisibleChanged(e);
+            }));
 
         public Boolean IsHitTestVisible
         {
@@ -140,6 +143,14 @@ namespace Topics.Radical.Windows.Behaviors
         //        this.adorner.InvalidateVisual();
         //    }
         //}
+
+        private void IsHitTestVisibleChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (this.isAdornerVisible)
+            {
+                this.adorner.InvalidateVisual();
+            }
+        }
 
         ContentOverlayAdorner adorner;
         Boolean isAdornerVisible;
