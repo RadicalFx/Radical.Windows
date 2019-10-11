@@ -39,7 +39,7 @@ namespace Topics.Radical.Windows.Behaviors
             typeof( OverlayBehavior ),
             new PropertyMetadata( true, ( s, e ) =>
             {
-                ( ( OverlayBehavior )s ).OnIsVisibleChanged( e );
+                ((OverlayBehavior)s).OnIsVisibleChanged(e);
             } ) );
 
         public Boolean IsVisible
