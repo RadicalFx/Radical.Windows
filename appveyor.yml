@@ -1,6 +1,6 @@
 - branches:
     only:
-    - release-*
+    - release-1.6
 
   skip_tags: false
   configuration: release
