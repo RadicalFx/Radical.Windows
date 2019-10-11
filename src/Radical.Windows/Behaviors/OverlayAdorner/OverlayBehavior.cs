@@ -133,6 +133,10 @@ namespace Radical.Windows.Behaviors
 
         private void IsHitTestVisibleChanged(DependencyPropertyChangedEventArgs e)
         {
+            if (this.adorner != null)
+            {
+               this.adorner.IsHitTestVisible = this.IsHitTestVisible;
+            }
             if (this.isAdornerVisible)
             {
                 this.adorner.InvalidateVisual();
