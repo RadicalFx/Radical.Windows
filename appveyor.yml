@@ -26,6 +26,6 @@ before_build:
   - nuget restore .\src\Radical.Windows.sln
 
 build_script:
-  - devenv .\src\Radical.Windows.sln /Build Release
+  - "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.exe .\src\Radical.Windows.sln /Build Release"
 
 deploy: off
