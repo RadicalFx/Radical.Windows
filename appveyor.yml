@@ -25,8 +25,7 @@ artifacts:
 before_build:
   - nuget restore .\src\Radical.Windows.sln
 
-build:
-  project: src\Radical.Windows.sln
-  verbosity: minimal
+build_script:
+  - '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.exe" .\src\Radical.Windows.sln /Build Release'
 
 deploy: off

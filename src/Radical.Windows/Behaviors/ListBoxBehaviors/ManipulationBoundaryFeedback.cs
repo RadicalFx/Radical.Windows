@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using System.Windows.Interactivity;
+﻿using Microsoft.Xaml.Behaviors;
+using System.Windows.Controls;
 
 namespace Radical.Windows.Behaviors
 {

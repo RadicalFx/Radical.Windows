@@ -1,7 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -21,7 +22,7 @@
     <MinVerMinimumMajorMinor>2</MinVerMinimumMajorMinor>
   </PropertyGroup>
 
-  <Target Name="ApVeyorPullRequestsTarget" AfterTargets="MinVer" Condition="'$(APPVEYOR_PULL_REQUEST_NUMBER)' != ''">
+  <Target Name="AppVeyorPullRequestsTarget" AfterTargets="MinVer" Condition="'$(APPVEYOR_PULL_REQUEST_NUMBER)' != ''">
     <PropertyGroup>
       <PackageVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)-PR.$(APPVEYOR_PULL_REQUEST_NUMBER).$(MinVerPreRelease)</PackageVersion>
       <PackageVersion Condition="'$(MinVerBuildMetadata)' != ''">$(PackageVersion)+$(MinVerBuildMetadata)</PackageVersion>
@@ -30,43 +31,12 @@
   </Target>
 
   <ItemGroup>
-    <None Remove="Behaviors\AutoComplete\AutoComplete.xaml" />
-    <None Remove="Resources\Effects\GrayscaleEffect.ps" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Expression.Blend.Sdk" Version="[1.0.2]" />
     <PackageReference Include="MinVer" Version="2.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Radical" Version="[2.0.0-Alpha.1,3.0.0)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="Behaviors\AutoComplete\AutoComplete.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\Effects\GrayscaleEffect.ps" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Behaviors\AutoComplete\AutoComplete.xaml.cs">
-      <DependentUpon>AutoComplete.xaml</DependentUpon>
-    </Compile>
+    <PackageReference Include="Radical" Version="2.0.0-Beta.1" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.3" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
