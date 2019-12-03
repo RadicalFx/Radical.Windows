@@ -1,5 +1,6 @@
 ﻿namespace Radical.Windows.Tests
 {
+    using FakeItEasy;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Radical;
     using Radical.ComponentModel.ChangeTracking;
@@ -65,7 +66,7 @@
             var expected = 1;
             var actual = 0;
 
-            var svc = MockRepository.GenerateStub<IChangeTrackingService>();
+            var svc = A.Fake<IChangeTrackingService>();
             var monitor = new MementoMonitor(svc);
 
             var target = DelegateCommand.Create().AddMonitor(monitor);
@@ -81,14 +82,13 @@
             var expected = 1;
             var actual = 0;
 
-            var svc = MockRepository.GenerateStub<IChangeTrackingService>();
-            var raiser = svc.GetEventRaiser(obj => obj.TrackingServiceStateChanged += null);
+            var svc = A.Fake<IChangeTrackingService>();
             var monitor = new MementoMonitor(svc);
 
             var target = DelegateCommand.Create().AddMonitor(monitor);
             target.CanExecuteChanged += (s, e) => actual++;
 
-            raiser.Raise(svc, EventArgs.Empty);
+            svc.TrackingServiceStateChanged += Raise.WithEmpty();
 
             actual.Should().Be.EqualTo(expected);
         }
