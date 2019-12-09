@@ -5,7 +5,6 @@ using Radical.ComponentModel.Messaging;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
 using Radical.Windows.Presentation.Regions;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Threading;
 using System.Security.Principal;
@@ -238,10 +237,7 @@ namespace Radical.Windows.Presentation.Boot
         void OnBoot()
         {
             this.serviceProvider = this.CreateServiceProvider();
-            if (this.onServiceProviderCreated != null)
-            {
-                this.onServiceProviderCreated(this.serviceProvider);
-            }
+            this.onServiceProviderCreated?.Invoke(this.serviceProvider);
 
             if (this.onBeforeInstall != null)
             {
@@ -269,15 +265,9 @@ namespace Radical.Windows.Presentation.Boot
                 this.OnBootCompleted(this.serviceProvider);
 
                 var broker = serviceProvider.TryGetService<IMessageBroker>();
-                if (broker != null)
-                {
-                    broker.Broadcast(this, new ApplicationBootCompleted());
-                }
+                broker?.Broadcast(this, new ApplicationBootCompleted());
 
-                if (this.bootCompletedHandler != null)
-                {
-                    this.bootCompletedHandler(serviceProvider);
-                }
+                this.bootCompletedHandler?.Invoke(serviceProvider);
 
                 var callbacks = this.ResolveAll<IExpectBootCallback>();
                 if (callbacks != null && callbacks.Any())
@@ -380,10 +370,7 @@ namespace Radical.Windows.Presentation.Boot
                 this.mutex = new Mutex(false, mutexName);
                 args.AllowStartup = this.mutex.WaitOne(TimeSpan.Zero, false);
 
-                if (this.onSingletonApplicationStartup != null)
-                {
-                    this.onSingletonApplicationStartup(args);
-                }
+                this.onSingletonApplicationStartup?.Invoke(args);
             }
         }
 
@@ -409,19 +396,16 @@ namespace Radical.Windows.Presentation.Boot
         {
             var broker = serviceProvider.GetService<IMessageBroker>();
             broker.Subscribe<ApplicationShutdownRequest>(this, InvocationModel.Safe, (s, m) =>
-           {
-               this.OnShutdownCore(ApplicationShutdownReason.UserRequest);
-           });
+            {
+                this.OnShutdownCore(ApplicationShutdownReason.UserRequest);
+            });
 
             var args = new SingletonApplicationStartupArgs(this.singleton);
             this.HandleSingletonApplicationStartup(args);
 
             if (args.AllowStartup)
             {
-                if (this.bootHandler != null)
-                {
-                    this.bootHandler(serviceProvider);
-                }
+                this.bootHandler?.Invoke(serviceProvider);
             }
             else
             {
