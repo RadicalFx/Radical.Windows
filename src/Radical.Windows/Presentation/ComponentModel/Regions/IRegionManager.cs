@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// A region manager is responsible for managing region lifetime and arrangement.
-	/// </summary>
-	public interface IRegionManager
+    /// <summary>
+    /// A region manager is responsible for managing region lifetime and arrangement.
+    /// </summary>
+    public interface IRegionManager
 	{
 		/// <summary>
 		/// Registers the supplied region in this region manager.

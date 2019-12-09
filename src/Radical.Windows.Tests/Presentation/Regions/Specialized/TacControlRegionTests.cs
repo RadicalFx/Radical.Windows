@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Radical.Windows.Presentation.Regions;
-using System.Windows.Controls;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Radical.Windows.Presentation;
 using Radical.Windows.Presentation.ComponentModel;
-using System.Windows.Markup;
-using System.Windows;
+using Radical.Windows.Presentation.Regions;
+using System;
 using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Markup;
 
 namespace Test.Radical.Windows.Presentation.Regions.Specialized
 {

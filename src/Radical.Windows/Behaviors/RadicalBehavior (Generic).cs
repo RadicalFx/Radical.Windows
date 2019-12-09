@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xaml.Behaviors;
+using System;
 using System.Windows;
-using Microsoft.Xaml.Behaviors;
 
 namespace Radical.Windows.Behaviors
 {

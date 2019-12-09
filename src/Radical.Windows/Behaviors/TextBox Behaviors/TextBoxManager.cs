@@ -1,6 +1,5 @@
 ﻿using Radical.Linq;
 using Radical.Windows.Input;
-using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;

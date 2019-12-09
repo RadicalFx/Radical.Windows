@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Radical.Validation;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Radical.Validation;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {

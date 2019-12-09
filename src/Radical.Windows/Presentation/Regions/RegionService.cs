@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Radical.Validation;
+using Radical.Windows.Presentation.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using Radical.Validation;
-using Radical.Windows.Presentation.ComponentModel;
 
 namespace Radical.Windows.Presentation.Regions
 {

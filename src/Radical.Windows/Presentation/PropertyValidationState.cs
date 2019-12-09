@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Radical.Validation;
+﻿using Radical.Validation;
+using System;
 
 namespace Radical.Windows.Presentation
 {

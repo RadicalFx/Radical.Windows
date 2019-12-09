@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Radical.Windows.Markup
+﻿namespace Radical.Windows.Markup
 {
     public class ChoosenItemBinding : BindingDecoratorBase
     {

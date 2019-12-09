@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows;
-using Radical.Validation;
+﻿using Radical.Validation;
 using Radical.Windows.Presentation.ComponentModel;
+using System;
+using System.Windows;
 
 namespace Radical.Windows.Presentation.Services
 {

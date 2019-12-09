@@ -1,7 +1,4 @@
-﻿using System;
-using Radical.Messaging;
-
-namespace Radical.Windows.Presentation.Messaging
+﻿namespace Radical.Windows.Presentation.Messaging
 {
     /// <summary>
 	/// Domain event that identifies that a view model has been activated.

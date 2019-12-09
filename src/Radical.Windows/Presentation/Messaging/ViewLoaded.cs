@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using Radical.Messaging;
+﻿using System.Windows;
 
 namespace Radical.Windows.Presentation.Messaging
 {

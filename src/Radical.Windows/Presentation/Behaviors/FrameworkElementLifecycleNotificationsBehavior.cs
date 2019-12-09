@@ -1,9 +1,8 @@
-﻿using System.Windows;
-using Radical.ComponentModel.Messaging;
-using Radical.Reflection;
+﻿using Radical.ComponentModel.Messaging;
 using Radical.Windows.Behaviors;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
+using System.Windows;
 
 namespace Radical.Windows.Presentation.Behaviors
 {

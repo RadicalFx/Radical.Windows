@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Radical.Windows.Presentation.ComponentModel;
+using System;
 using System.Windows;
-using Radical.Windows.Presentation.ComponentModel;
 
 namespace Radical.Windows.Presentation.Regions
 {

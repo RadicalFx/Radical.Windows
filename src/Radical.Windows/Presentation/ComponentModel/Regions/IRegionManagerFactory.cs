@@ -1,10 +1,10 @@
 ﻿namespace Radical.Windows.Presentation.ComponentModel
 {
 
-	/// <summary>
-	/// A region manager factory.
-	/// </summary>
-	public interface IRegionManagerFactory
+    /// <summary>
+    /// A region manager factory.
+    /// </summary>
+    public interface IRegionManagerFactory
 	{
 		/// <summary>
 		/// Creates a new region manager.

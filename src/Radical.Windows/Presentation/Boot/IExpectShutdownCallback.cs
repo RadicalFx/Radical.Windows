@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Radical.ComponentModel;
-using Radical.Windows.Presentation.ComponentModel;
+﻿using Radical.Windows.Presentation.ComponentModel;
 
 namespace Radical.Windows.Presentation.Boot
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Radical.Windows.Presentation.Boot
+﻿namespace Radical.Windows.Presentation.Boot
 {
     /// <summary>
     /// Arguments to handle the application startup when singleton mode is set up.

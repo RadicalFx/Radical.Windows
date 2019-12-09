@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Radical.ComponentModel;
+﻿using Radical.ComponentModel;
 using Radical.ComponentModel.Messaging;
 using Radical.Linq;
 using Radical.Reflection;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.ComponentModel.Regions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace Radical.Windows.Presentation.Boot
 {

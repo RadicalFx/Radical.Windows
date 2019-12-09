@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Radical.Windows.Presentation.ComponentModel;
+using System;
 using System.Windows;
-using Radical.Windows.Presentation.ComponentModel;
 
 namespace Radical.Windows.Presentation.Regions
 {
-	/// <summary>
-	/// Region extensions.
-	/// </summary>
-	public static class RegionExtensions
+    /// <summary>
+    /// Region extensions.
+    /// </summary>
+    public static class RegionExtensions
 	{
 		/// <summary>
 		/// Loads the given content async in the supplied region.

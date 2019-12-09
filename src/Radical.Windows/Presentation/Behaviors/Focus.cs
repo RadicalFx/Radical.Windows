@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Radical.Windows.Behaviors;
 using System.Windows;
 using System.Windows.Input;
-using Radical.Windows.Behaviors;
 
 namespace Radical.Windows.Presentation.Behaviors
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class Focus : RadicalBehavior<FrameworkElement>
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Focus : RadicalBehavior<FrameworkElement>
 	{
 		#region Dependency Property: ControlledBy
 

@@ -1,7 +1,4 @@
-﻿using System;
-using Radical.Messaging;
-
-namespace Radical.Windows.Presentation.Messaging
+﻿namespace Radical.Windows.Presentation.Messaging
 {
 #pragma warning disable 0618
     /// <summary>

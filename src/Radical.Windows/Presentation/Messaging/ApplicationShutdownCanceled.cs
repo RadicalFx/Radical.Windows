@@ -1,7 +1,4 @@
-﻿using System;
-using Radical.Messaging;
-
-namespace Radical.Windows.Presentation.Messaging
+﻿namespace Radical.Windows.Presentation.Messaging
 {
     /// <summary>
     /// Notifies that the application shutdown has been canceled.

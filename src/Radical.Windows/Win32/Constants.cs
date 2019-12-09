@@ -1,5 +1,3 @@
-using System;
-
 namespace Radical.Win32
 {
 #pragma warning disable 1591

@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Radical.Linq;
+﻿using Radical.Linq;
 using Radical.Validation;
 using Radical.Windows.Presentation.ComponentModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Radical.Windows.Presentation.Services.Validation
 {
-	/// <summary>
-	/// Provides a base implementation of the <see cref="IValidationService"/> interface.
-	/// </summary>
-	public abstract class AbstractValidationService : IValidationService
+    /// <summary>
+    /// Provides a base implementation of the <see cref="IValidationService"/> interface.
+    /// </summary>
+    public abstract class AbstractValidationService : IValidationService
 	{
 		readonly List<ValidationError> _validationErrors = new List<ValidationError>();
 		ValidationTools tools = new ValidationTools();

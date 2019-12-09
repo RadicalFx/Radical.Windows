@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Radical.Validation;
+using System;
 using System.Collections.Generic;
-using Radical.Validation;
 
 namespace Radical.Windows.Presentation.Services.Validation
 {
-	/// <summary>
-	/// A validation service that delegates the validation process to a user defined handler.
-	/// </summary>
-	/// <remarks>
-	/// This validation service implementation is the ideal bridge to link the Radical.Presentation
-	/// validation process with an external validation system, e.g. the one supplied by the Validation 
-	/// Application Block of the Enterprise Library.
-	/// </remarks>
-	public sealed class DelegateValidationService : AbstractValidationService
+    /// <summary>
+    /// A validation service that delegates the validation process to a user defined handler.
+    /// </summary>
+    /// <remarks>
+    /// This validation service implementation is the ideal bridge to link the Radical.Presentation
+    /// validation process with an external validation system, e.g. the one supplied by the Validation 
+    /// Application Block of the Enterprise Library.
+    /// </remarks>
+    public sealed class DelegateValidationService : AbstractValidationService
 	{
 		readonly Func<string, IEnumerable<ValidationError>> validationCallback;
 

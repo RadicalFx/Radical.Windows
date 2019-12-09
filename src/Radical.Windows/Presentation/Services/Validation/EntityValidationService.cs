@@ -1,16 +1,15 @@
-﻿using System;
+﻿using Radical.ComponentModel.Validation;
+using Radical.Validation;
 using System.Collections.Generic;
 using System.Linq;
-using Radical.ComponentModel.Validation;
-using Radical.Validation;
 
 namespace Radical.Windows.Presentation.Services.Validation
 {
-	/// <summary>
-	/// Defines a validation service specialized in entity validation.
-	/// </summary>
-	/// <typeparam name="T">The type of the entity to validate.</typeparam>
-	public class EntityValidationService<T> : AbstractValidationService
+    /// <summary>
+    /// Defines a validation service specialized in entity validation.
+    /// </summary>
+    /// <typeparam name="T">The type of the entity to validate.</typeparam>
+    public class EntityValidationService<T> : AbstractValidationService
 	{
 		readonly T entity;
 		readonly IEnumerable<IValidator<T>> validators;

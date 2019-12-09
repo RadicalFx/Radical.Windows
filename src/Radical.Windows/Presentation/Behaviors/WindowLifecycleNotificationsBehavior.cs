@@ -1,21 +1,21 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
-using Radical.ComponentModel.Messaging;
+﻿using Radical.ComponentModel.Messaging;
+using Radical.Diagnostics;
 using Radical.Reflection;
+using Radical.Validation;
 using Radical.Windows.Behaviors;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
-using Radical.Diagnostics;
-using Radical.Validation;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows;
 
 namespace Radical.Windows.Presentation.Behaviors
 {
-	/// <summary>
-	/// Wires the window lifecycle to a view model that requires lifecycle notifications.
-	/// </summary>
-	public class WindowLifecycleNotificationsBehavior : RadicalBehavior<Window>
+    /// <summary>
+    /// Wires the window lifecycle to a view model that requires lifecycle notifications.
+    /// </summary>
+    public class WindowLifecycleNotificationsBehavior : RadicalBehavior<Window>
 	{
         static readonly TraceSource logger = new TraceSource( typeof( WindowLifecycleNotificationsBehavior ).FullName );
 

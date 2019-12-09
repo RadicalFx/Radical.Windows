@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Radical.Windows.Presentation.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Radical.Windows.Presentation.ComponentModel;
 
 namespace Radical.Windows.Presentation.Regions
 {
-	sealed class RegionHilightAdorner : Radical.Windows.Controls.OverlayAdorner
+    sealed class RegionHilightAdorner : Radical.Windows.Controls.OverlayAdorner
 	{
 		private readonly ContentPresenter userContent;
 

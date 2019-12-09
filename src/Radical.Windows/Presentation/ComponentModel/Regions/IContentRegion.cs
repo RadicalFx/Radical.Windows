@@ -2,10 +2,10 @@
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// A region that holds a single, replaceble, content.
-	/// </summary>
-	public interface IContentRegion : IRegion
+    /// <summary>
+    /// A region that holds a single, replaceble, content.
+    /// </summary>
+    public interface IContentRegion : IRegion
 	{
 		/// <summary>
 		/// Gets or sets the content.

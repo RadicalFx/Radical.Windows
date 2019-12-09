@@ -2,11 +2,11 @@
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// Defines the base contract that a Topics.Presentation
-	/// ViewModel must respect.
-	/// </summary>
-	public interface IViewModel : INotifyPropertyChanged
+    /// <summary>
+    /// Defines the base contract that a Topics.Presentation
+    /// ViewModel must respect.
+    /// </summary>
+    public interface IViewModel : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// Gets or sets the view. The view property is intended only for

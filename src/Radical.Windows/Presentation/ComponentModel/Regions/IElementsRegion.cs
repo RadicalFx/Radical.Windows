@@ -3,10 +3,10 @@ using System.Windows;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// A regione that holds a list of elements.
-	/// </summary>
-	public interface IElementsRegion : IRegion
+    /// <summary>
+    /// A regione that holds a list of elements.
+    /// </summary>
+    public interface IElementsRegion : IRegion
 	{
 		/// <summary>
 		/// Adds the specified view.

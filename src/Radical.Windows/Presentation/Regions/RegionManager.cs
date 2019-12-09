@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Radical.Linq;
+﻿using Radical.Linq;
 using Radical.Windows.Presentation.ComponentModel;
+using System;
+using System.Collections.Generic;
 
 namespace Radical.Windows.Presentation.Regions
 {
-	/// <summary>
-	/// Default region manager.
-	/// </summary>
-	public class RegionManager : IRegionManager
+    /// <summary>
+    /// Default region manager.
+    /// </summary>
+    public class RegionManager : IRegionManager
 	{
 		readonly IDictionary<string, IRegion> regions = new Dictionary<string, IRegion>();
 

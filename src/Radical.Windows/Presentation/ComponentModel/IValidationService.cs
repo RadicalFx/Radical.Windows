@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Radical.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Radical.Validation;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// Determines the reset behavior.
-	/// </summary>
-	[Flags]
+    /// <summary>
+    /// Determines the reset behavior.
+    /// </summary>
+    [Flags]
 	public enum ValidationResetBehavior
 	{
 		/// <summary>

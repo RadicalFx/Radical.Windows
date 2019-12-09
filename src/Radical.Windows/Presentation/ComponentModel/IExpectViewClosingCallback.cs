@@ -3,10 +3,10 @@ using System.ComponentModel;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// Defines that a ViewModel expects lifecycle notifications from the view.
-	/// </summary>
-	public interface IExpectViewClosingCallback
+    /// <summary>
+    /// Defines that a ViewModel expects lifecycle notifications from the view.
+    /// </summary>
+    public interface IExpectViewClosingCallback
 	{
 		/// <summary>
 		/// Called when the view is closing.

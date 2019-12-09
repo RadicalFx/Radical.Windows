@@ -1,7 +1,4 @@
-﻿using System;
-using Radical.Messaging;
-
-namespace Radical.Windows.Presentation.Messaging
+﻿namespace Radical.Windows.Presentation.Messaging
 {
     /// <summary>
     /// Notifies that a request to shutdown request has been issued.

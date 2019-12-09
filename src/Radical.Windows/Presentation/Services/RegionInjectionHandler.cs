@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Radical.Windows.Presentation.ComponentModel;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using Radical.Windows.Presentation.ComponentModel;
 
 namespace Radical.Windows.Presentation.Services
 {
-	class RegionInjectionHandler : Radical.Windows.Presentation.ComponentModel.IRegionInjectionHandler
+    class RegionInjectionHandler : Radical.Windows.Presentation.ComponentModel.IRegionInjectionHandler
 	{
 		Dictionary<string, List<Type>> viewsInterestedInRegions = new Dictionary<string, List<Type>>();
 

@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Radical.ComponentModel.ChangeTracking;
+using Radical.Linq;
+using Radical.Model;
+using Radical.Reflection;
+using Radical.Validation;
+using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.Presentation.Services.Validation;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using Radical.Linq;
-using Radical.Model;
-using Radical.Validation;
-using Radical.Reflection;
-using Radical.Windows.Presentation.ComponentModel;
-using Radical.Windows.Presentation.Services.Validation;
-using Radical.ComponentModel.ChangeTracking;
 using System.Linq.Expressions;
 
 namespace Radical.Windows.Presentation

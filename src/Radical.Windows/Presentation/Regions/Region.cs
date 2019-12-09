@@ -17,12 +17,12 @@ using Radical.Diagnostics;
 
 namespace Radical.Windows.Presentation.Regions
 {
-	/// <summary>
-	/// A base abstract implementation of a region and it's relative markup extension.
-	/// </summary>
-	/// <typeparam name="T">The type of the element that hosts this region.</typeparam>
+    /// <summary>
+    /// A base abstract implementation of a region and it's relative markup extension.
+    /// </summary>
+    /// <typeparam name="T">The type of the element that hosts this region.</typeparam>
 #if !SILVERLIGHT
-	[MarkupExtensionReturnType( typeof( IRegion ) )]
+    [MarkupExtensionReturnType( typeof( IRegion ) )]
 #endif
 	public abstract class Region<T> :
 		MarkupExtension,

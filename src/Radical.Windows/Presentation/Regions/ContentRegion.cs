@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Radical.Windows.Presentation.ComponentModel;
 using System.ComponentModel;
 using System.Windows;
-using Radical.Conversions;
-using Radical.Windows.Presentation.ComponentModel;
 
 namespace Radical.Windows.Presentation.Regions
 {
-	/// <summary>
-	/// A base abstract implementation of the <see cref="IContentRegion"/>.
-	/// </summary>
-	/// <typeparam name="T">The type of the element that hosts this region.</typeparam>
-	public abstract class ContentRegion<T> :
+    /// <summary>
+    /// A base abstract implementation of the <see cref="IContentRegion"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the element that hosts this region.</typeparam>
+    public abstract class ContentRegion<T> :
 		Region<T>,
 		IContentRegion
 		where T : FrameworkElement

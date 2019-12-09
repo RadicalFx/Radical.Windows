@@ -3,11 +3,11 @@ using System.Windows;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// The region service is responsible for managing regions, shell regions and
-	/// modules specific regions.
-	/// </summary>
-	public interface IRegionService
+    /// <summary>
+    /// The region service is responsible for managing regions, shell regions and
+    /// modules specific regions.
+    /// </summary>
+    public interface IRegionService
 	{
         /// <summary>
         /// Determines if this region service has knowledge of a region manager owned

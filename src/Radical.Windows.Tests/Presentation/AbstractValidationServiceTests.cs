@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Radical.Validation;
 using Radical.Windows.Presentation.Services.Validation;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Test.Radical.Windows.Presentation
 {

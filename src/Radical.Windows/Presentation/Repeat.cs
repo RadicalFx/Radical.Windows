@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Radical.Validation;
+using System;
 using System.Windows.Threading;
-using Radical.Validation;
 
 namespace Radical.Windows.Presentation
 {
-	/// <summary>
-	/// Allows to execute and action every time the given amount of time elapses.
-	/// </summary>
-	public class Repeat
+    /// <summary>
+    /// Allows to execute and action every time the given amount of time elapses.
+    /// </summary>
+    public class Repeat
 	{
 		/// <summary>
 		/// A repeater for the repeat infrastucture.

@@ -1,7 +1,4 @@
-﻿using System;
-using Radical.Messaging;
-
-namespace Radical.Windows.Presentation.Messaging
+﻿namespace Radical.Windows.Presentation.Messaging
 {
     /// <summary>
     /// Issues a request to close the view currently associated with the view model that sends the message.

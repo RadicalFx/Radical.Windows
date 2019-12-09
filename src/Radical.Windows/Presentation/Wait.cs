@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Radical.Validation;
+using System;
 using System.Windows.Threading;
-using Radical.Validation;
 
 namespace Radical.Windows.Presentation
 {
-	/// <summary>
-	/// Allows to execute and action after a user defined amount of time.
-	/// </summary>
-	public class Wait
+    /// <summary>
+    /// Allows to execute and action after a user defined amount of time.
+    /// </summary>
+    public class Wait
 	{
 		/// <summary>
 		/// A waiter for the Wait infrastucture.

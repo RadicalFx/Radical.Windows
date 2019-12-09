@@ -3,10 +3,10 @@ using System.Windows;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// The ActiveContentChanged events arguments.
-	/// </summary>
-	public class ActiveContentChangedEventArgs : EventArgs
+    /// <summary>
+    /// The ActiveContentChanged events arguments.
+    /// </summary>
+    public class ActiveContentChangedEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ActiveContentChangedEventArgs"/> class.

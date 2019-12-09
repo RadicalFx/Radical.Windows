@@ -1,18 +1,17 @@
-﻿using System;
+﻿using Radical.Conversions;
+using Radical.Windows.Presentation.ComponentModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using Radical.Conversions;
-using Radical.Windows.Presentation.ComponentModel;
 
 namespace Radical.Windows.Presentation.Regions
 {
-	/// <summary>
-	/// A base abstract implementation of the <see cref="IElementsRegion"/>.
-	/// </summary>
-	/// <typeparam name="T">The type of the element that hosts this region.</typeparam>
-	public abstract class ElementsRegion<T> :
+    /// <summary>
+    /// A base abstract implementation of the <see cref="IElementsRegion"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the element that hosts this region.</typeparam>
+    public abstract class ElementsRegion<T> :
 		Region<T>,
 		IElementsRegion
 		where T : FrameworkElement

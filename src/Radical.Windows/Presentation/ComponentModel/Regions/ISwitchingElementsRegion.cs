@@ -3,10 +3,10 @@ using System.Windows;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// A region that holds elements that can be switched, e.g. a Tab Control.
-	/// </summary>
-	public interface ISwitchingElementsRegion : IElementsRegion
+    /// <summary>
+    /// A region that holds elements that can be switched, e.g. a Tab Control.
+    /// </summary>
+    public interface ISwitchingElementsRegion : IElementsRegion
 	{
 		/// <summary>
 		/// Gets the content of the active.

@@ -1,7 +1,6 @@
 ﻿namespace Radical.Windows.Behaviors
 {
     using Radical.Windows.Controls;
-    using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;

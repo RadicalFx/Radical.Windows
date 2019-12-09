@@ -1,5 +1,4 @@
-﻿using System;
-using Radical.ComponentModel.Messaging;
+﻿using Radical.ComponentModel.Messaging;
 using Radical.Messaging;
 using Radical.Windows.Presentation.ComponentModel;
 

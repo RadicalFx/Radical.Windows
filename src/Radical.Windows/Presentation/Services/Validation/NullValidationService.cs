@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Radical.Validation;
+﻿using Radical.Validation;
 using Radical.Windows.Presentation.ComponentModel;
+using System.Collections.Generic;
 
 namespace Radical.Windows.Presentation.Services.Validation
 {
-	/// <summary>
-	/// A default fake implementation of the <see cref="IValidationService"/> interface.
-	/// </summary>
-	public sealed class NullValidationService : AbstractValidationService
+    /// <summary>
+    /// A default fake implementation of the <see cref="IValidationService"/> interface.
+    /// </summary>
+    public sealed class NullValidationService : AbstractValidationService
 	{
 		/// <summary>
 		/// A default empty instance of a validation service.

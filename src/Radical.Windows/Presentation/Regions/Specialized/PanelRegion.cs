@@ -1,15 +1,13 @@
-﻿using System;
+﻿using Radical.Conversions;
 using System.Windows;
 using System.Windows.Controls;
-using Radical.Conversions;
-using Radical.Windows.Presentation.ComponentModel;
 
 namespace Radical.Windows.Presentation.Regions
 {
-	/// <summary>
-	/// An elements region hosted by a Panel.
-	/// </summary>
-	public sealed class PanelRegion : ElementsRegion<Panel>
+    /// <summary>
+    /// An elements region hosted by a Panel.
+    /// </summary>
+    public sealed class PanelRegion : ElementsRegion<Panel>
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PanelRegion"/> class.

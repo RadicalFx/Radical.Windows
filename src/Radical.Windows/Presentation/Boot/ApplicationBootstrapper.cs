@@ -1,20 +1,20 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Radical.ComponentModel.Messaging;
+using Radical.Diagnostics;
+using Radical.Helpers;
+using Radical.Validation;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
 using Radical.Windows.Presentation.Regions;
-using System.Threading;
-using System.Security.Principal;
-using System.Globalization;
-using System.Windows.Markup;
-using Radical.Helpers;
+using System;
 using System.Diagnostics;
-using Radical.Diagnostics;
-using Radical.Validation;
+using System.Globalization;
+using System.Linq;
+using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
+using System.Windows.Markup;
 
 namespace Radical.Windows.Presentation.Boot
 {

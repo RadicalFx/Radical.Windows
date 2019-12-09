@@ -1,16 +1,15 @@
-﻿using System;
+﻿using Radical.Conversions;
+using Radical.Windows.Presentation.ComponentModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using Radical.Windows.Presentation.ComponentModel;
-using Radical.Conversions;
-using System.ComponentModel;
 
 namespace Radical.Windows.Presentation.Regions
 {
-	/// <summary>
-	/// An content region hosted by a ContentPresenter.
-	/// </summary>
-	public sealed class ContentPresenterRegion : ContentRegion<ContentPresenter>
+    /// <summary>
+    /// An content region hosted by a ContentPresenter.
+    /// </summary>
+    public sealed class ContentPresenterRegion : ContentRegion<ContentPresenter>
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ContentPresenterRegion"/> class.

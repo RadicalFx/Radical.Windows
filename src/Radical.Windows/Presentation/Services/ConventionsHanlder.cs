@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using Microsoft.Xaml.Behaviors;
+﻿using Microsoft.Xaml.Behaviors;
 using Radical.ComponentModel.Messaging;
 using Radical.Conversions;
 using Radical.Linq;
@@ -11,6 +7,10 @@ using Radical.Windows.Presentation.Behaviors;
 using Radical.Windows.Presentation.Boot;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Regions;
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Windows;
 
 namespace Radical.Windows.Presentation.Services
 {

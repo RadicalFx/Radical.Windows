@@ -1,5 +1,4 @@
 ﻿using Radical.Conversions;
-using Radical.Windows.Behaviors;
 using System;
 using System.Windows.Controls;
 

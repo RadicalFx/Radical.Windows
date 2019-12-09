@@ -4,10 +4,10 @@ using System.Windows;
 
 namespace Radical.Windows.Presentation.Boot
 {
-	/// <summary>
-	/// The configuration of the SplashScreen.
-	/// </summary>
-	public class SplashScreenConfiguration
+    /// <summary>
+    /// The configuration of the SplashScreen.
+    /// </summary>
+    public class SplashScreenConfiguration
 	{
 		/// <summary>
 		/// SplashScreenConfiguration default constructor.

@@ -1,5 +1,4 @@
 ﻿using Radical.Validation;
-using System;
 using System.Windows;
 
 namespace Radical.Windows.Behaviors

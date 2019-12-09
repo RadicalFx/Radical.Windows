@@ -1,15 +1,12 @@
-﻿using System;
+﻿using Radical.ComponentModel.Validation;
+using Radical.Linq;
+using Radical.Reflection;
+using Radical.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using Radical.Linq;
-using Radical.ComponentModel.Validation;
-using Radical.Validation;
-using Radical.Reflection;
-using Radical.Windows.Presentation.Services.Validation;
-using System.ComponentModel;
 
 namespace Radical.Windows.Presentation.Services.Validation
 {

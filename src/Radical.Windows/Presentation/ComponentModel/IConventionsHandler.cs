@@ -3,10 +3,10 @@ using System.Windows;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// Handles Presentation conventions.
-	/// </summary>
-	public interface IConventionsHandler
+    /// <summary>
+    /// Handles Presentation conventions.
+    /// </summary>
+    public interface IConventionsHandler
 	{
 		/// <summary>
 		/// Gets or sets the view model type resolver that can resolve the view model type given the view type.

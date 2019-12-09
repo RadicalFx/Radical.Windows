@@ -1,5 +1,4 @@
 ﻿using Radical.Validation;
-using Radical.Windows.Converters;
 using System;
 using System.Globalization;
 using System.Windows.Markup;

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// A region identifies a pluggable area in the user interface, 
-	/// where shell and modules can plug their own UI.
-	/// </summary>
-	public interface IRegion
+    /// <summary>
+    /// A region identifies a pluggable area in the user interface, 
+    /// where shell and modules can plug their own UI.
+    /// </summary>
+    public interface IRegion
 	{
         /// <summary>
         /// Gets the name of the region.

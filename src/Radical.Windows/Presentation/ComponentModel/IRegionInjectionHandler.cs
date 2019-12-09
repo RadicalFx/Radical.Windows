@@ -2,10 +2,10 @@
 using System.Windows;
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// Handles the process to inject views into regions.
-	/// </summary>
-	public interface IRegionInjectionHandler
+    /// <summary>
+    /// Handles the process to inject views into regions.
+    /// </summary>
+    public interface IRegionInjectionHandler
 	{
 		/// <summary>
 		/// Gets or sets the inject handler used to inject the given view into the given region.

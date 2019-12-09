@@ -1,5 +1,4 @@
 ﻿using Radical.ComponentModel;
-using System;
 using System.Collections.Specialized;
 
 namespace Radical.Observers

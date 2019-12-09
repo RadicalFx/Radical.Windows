@@ -109,7 +109,7 @@
 //        /// Occurs when the source monitored by this monitor changes.
 //        /// </summary>
 //        public event EventHandler Changed;
-		
+
 //        private void OnChanged()
 //        {
 //            if( this.Changed != null )

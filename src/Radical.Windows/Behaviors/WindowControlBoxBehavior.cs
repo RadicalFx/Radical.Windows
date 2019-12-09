@@ -1,8 +1,8 @@
-﻿using Radical.Win32;
+﻿using Microsoft.Xaml.Behaviors;
+using Radical.Win32;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
-using Microsoft.Xaml.Behaviors;
 using System.Windows.Interop;
 
 namespace Radical.Windows.Behaviors

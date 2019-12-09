@@ -1,5 +1,4 @@
 ﻿using Radical.Windows.Controls;
-using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;

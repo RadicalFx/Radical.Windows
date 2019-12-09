@@ -1,10 +1,10 @@
 ﻿
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// Determines the behavior of the validation process.
-	/// </summary>
-	public enum ValidationBehavior
+    /// <summary>
+    /// Determines the behavior of the validation process.
+    /// </summary>
+    public enum ValidationBehavior
 	{
 		/// <summary>
 		/// The default behavior.

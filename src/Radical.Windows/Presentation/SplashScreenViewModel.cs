@@ -1,9 +1,8 @@
-﻿using System;
-using Radical.Windows.Presentation;
+﻿using Radical.Windows.Presentation;
 
 namespace RadicalSplashScreen.Presentation
 {
-	class SplashScreenViewModel : AbstractViewModel
+    class SplashScreenViewModel : AbstractViewModel
 	{
 		public SplashScreenViewModel()
 		{

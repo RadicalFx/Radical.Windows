@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Linq.Expressions;
-using Radical.Linq;
+﻿using Radical.Linq;
 using Radical.Model;
 using Radical.Reflection;
 using Radical.Validation;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Services.Validation;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Radical.Windows.Presentation
 {

@@ -1,13 +1,13 @@
-﻿using System;
-using Radical.Validation;
+﻿using Radical.Validation;
 using Radical.Windows.Presentation.ComponentModel;
+using System;
 
 namespace Radical.Windows.Presentation.Regions
 {
-	/// <summary>
-	/// Default region manager factory.
-	/// </summary>
-	public class RegionManagerFactory : IRegionManagerFactory
+    /// <summary>
+    /// Default region manager factory.
+    /// </summary>
+    public class RegionManagerFactory : IRegionManagerFactory
 	{
 		readonly IServiceProvider container;
 

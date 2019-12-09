@@ -1,17 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Radical.ComponentModel.Validation;
+using Radical.Validation;
+using Radical.Windows.Presentation;
+using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.Presentation.Services.Validation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Radical.ComponentModel.Validation;
-using Radical.Validation;
-using Radical.Windows.Presentation;
-using Radical.Windows.Presentation.ComponentModel;
-using Radical.Windows.Presentation.Services.Validation;
 
 namespace Test.Radical.Windows.Presentation
 {

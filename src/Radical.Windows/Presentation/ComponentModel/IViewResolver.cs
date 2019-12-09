@@ -3,10 +3,10 @@ using System.Windows;
 
 namespace Radical.Windows.Presentation.ComponentModel
 {
-	/// <summary>
-	/// Resolves views providing support for a View first approach.
-	/// </summary>
-	public interface IViewResolver
+    /// <summary>
+    /// Resolves views providing support for a View first approach.
+    /// </summary>
+    public interface IViewResolver
 	{
 		/// <summary>
 		/// Gets the view.
