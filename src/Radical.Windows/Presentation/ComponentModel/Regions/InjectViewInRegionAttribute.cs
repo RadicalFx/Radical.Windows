@@ -17,6 +17,6 @@ namespace Radical.Windows.Presentation.ComponentModel.Regions
 		/// <value>
 		/// The name of the region.
 		/// </value>
-		public String Named { get; set; }
+		public string Named { get; set; }
 	}
 }

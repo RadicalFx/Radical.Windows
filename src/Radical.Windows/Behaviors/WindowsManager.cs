@@ -29,9 +29,9 @@ namespace Radical.Windows.Behaviors
 
 
         [Obsolete("The feature will be removed in the next major version, please use the new ShowIcon in WindowControlBoxBehavior", false)]
-        public static Boolean GetShowIcon(UIElement element)
+        public static bool GetShowIcon(UIElement element)
         {
-            return (Boolean)element.GetValue(ShowIconProperty);
+            return (bool)element.GetValue(ShowIconProperty);
         }
 
         [Obsolete("The feature will be removed in the next major version, please use the new ShowIcon in WindowControlBoxBehavior", false)]
@@ -53,7 +53,7 @@ namespace Radical.Windows.Behaviors
         }
 
         [Obsolete("The feature will be removed in the next major version, please use the new ShowIcon in WindowControlBoxBehavior", false)]
-        public static void SetShowIcon(UIElement element, Boolean value)
+        public static void SetShowIcon(UIElement element, bool value)
         {
             element.SetValue(ShowIconProperty, value);
         }

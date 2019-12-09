@@ -34,75 +34,75 @@ namespace Radical.Windows.Presentation.Services
         {
             this.broker = broker;
             this.releaser = releaser;
-            this.releaserSupportsDispose = releaser.GetType().IsAttributeDefined<SupportComponentDisposeAttribute>();
+            releaserSupportsDispose = releaser.GetType().IsAttributeDefined<SupportComponentDisposeAttribute>();
 
             this.bootstrapConventions = bootstrapConventions;
 
-            this.DefaultResolveViewModelType = viewType =>
+            DefaultResolveViewModelType = viewType =>
             {
                 var aName = new AssemblyName(viewType.Assembly.FullName);
-                var vmTypeName = String.Format("{0}.{1}Model, {2}", viewType.Namespace, viewType.Name, aName.FullName);
+                var vmTypeName = string.Format("{0}.{1}Model, {2}", viewType.Namespace, viewType.Name, aName.FullName);
                 var vmType = Type.GetType(vmTypeName, false);
 
                 return vmType;
             };
 
-            this.ResolveViewModelType = viewType =>
+            ResolveViewModelType = viewType =>
             {
-                return this.DefaultResolveViewModelType(viewType);
+                return DefaultResolveViewModelType(viewType);
             };
 
-            this.DefaultResolveViewType = viewModelType =>
+            DefaultResolveViewType = viewModelType =>
             {
                 var aName = new AssemblyName(viewModelType.Assembly.FullName);
-                var vTypeName = String.Format("{0}.{1}, {2}", viewModelType.Namespace, viewModelType.Name.Remove(viewModelType.Name.LastIndexOf('M')), aName.FullName);
+                var vTypeName = string.Format("{0}.{1}, {2}", viewModelType.Namespace, viewModelType.Name.Remove(viewModelType.Name.LastIndexOf('M')), aName.FullName);
                 var vType = Type.GetType(vTypeName, true);
 
                 return vType;
             };
 
-            this.ResolveViewType = viewModelType =>
+            ResolveViewType = viewModelType =>
             {
-                return this.DefaultResolveViewType(viewModelType);
+                return DefaultResolveViewType(viewModelType);
             };
 
-            this.DefaultViewReleaseHandler = (view, behavior) =>
+            DefaultViewReleaseHandler = (view, behavior) =>
             {
                 var autoDispose = view.GetType().IsAttributeDefined<ViewManualReleaseAttribute>() == false;
                 if(autoDispose || behavior == ViewReleaseBehavior.Force)
                 {
-                    var vm = this.GetViewDataContext(view, ViewDataContextSearchBehavior.LocalOnly);
+                    var vm = GetViewDataContext(view, ViewDataContextSearchBehavior.LocalOnly);
                     if(vm != null)
                     {
-                        this.SetViewDataContext(view, null);
-                        if(this.ShouldUnsubscribeViewModelOnRelease(view))
+                        SetViewDataContext(view, null);
+                        if(ShouldUnsubscribeViewModelOnRelease(view))
                         {
                             this.broker.Unsubscribe(vm);
                         }
 
                         this.releaser.Release(vm);
-                        if( !this.releaserSupportsDispose && vm is IDisposable)
+                        if( !releaserSupportsDispose && vm is IDisposable)
                         {
                             ((IDisposable)vm).Dispose();
                         }
                     }
 
-                    this.DetachViewBehaviors(view);
+                    DetachViewBehaviors(view);
 
                     this.releaser.Release(view);
-                    if(!this.releaserSupportsDispose && view is IDisposable)
+                    if(!releaserSupportsDispose && view is IDisposable)
                     {
                         ((IDisposable)view).Dispose();
                     }
                 }
             };
 
-            this.ViewReleaseHandler = (view, behavior) =>
+            ViewReleaseHandler = (view, behavior) =>
             {
-                this.DefaultViewReleaseHandler(view, behavior);
+                DefaultViewReleaseHandler(view, behavior);
             };
 
-            Func<DependencyObject, Boolean> isSingletonView = view =>
+            Func<DependencyObject, bool> isSingletonView = view =>
             {
                 var implementation = view.GetType();
                 var contracts = this.bootstrapConventions.SelectViewContracts(implementation);
@@ -111,52 +111,52 @@ namespace Radical.Windows.Presentation.Services
                 return isShell;
             };
 
-            this.DefaultShouldUnsubscribeViewModelOnRelease = view => !isSingletonView(view);
+            DefaultShouldUnsubscribeViewModelOnRelease = view => !isSingletonView(view);
 
-            this.ShouldUnsubscribeViewModelOnRelease = view => this.DefaultShouldUnsubscribeViewModelOnRelease(view);
+            ShouldUnsubscribeViewModelOnRelease = view => DefaultShouldUnsubscribeViewModelOnRelease(view);
 
-            this.DefaultShouldReleaseView = view => !isSingletonView(view);
+            DefaultShouldReleaseView = view => !isSingletonView(view);
 
-            this.ShouldReleaseView = view => this.DefaultShouldReleaseView(view);
+            ShouldReleaseView = view => DefaultShouldReleaseView(view);
 
-            this.DefaultShouldUnregisterRegionManagerOfView = view => !isSingletonView(view);
+            DefaultShouldUnregisterRegionManagerOfView = view => !isSingletonView(view);
 
-            this.ShouldUnregisterRegionManagerOfView = view => this.DefaultShouldUnregisterRegionManagerOfView(view);
+            ShouldUnregisterRegionManagerOfView = view => DefaultShouldUnregisterRegionManagerOfView(view);
 
-            this.DefaultFindHostingWindowOf = vm =>
+            DefaultFindHostingWindowOf = vm =>
             {
-                var view = this.GetViewOfViewModel(vm);
-                var window = this.FindWindowOf(view);//.FindWindow();
+                var view = GetViewOfViewModel(vm);
+                var window = FindWindowOf(view);//.FindWindow();
                 return window;
             };
 
-            this.FindHostingWindowOf = vm =>
+            FindHostingWindowOf = vm =>
             {
-                return this.DefaultFindHostingWindowOf(vm);
+                return DefaultFindHostingWindowOf(vm);
             };
 
-            this.DefaultFindWindowOf = dependencyObject =>
+            DefaultFindWindowOf = dependencyObject =>
             {
                 var window = Window.GetWindow(dependencyObject);//.FindWindow();
                 return window;
             };
 
-            this.FindWindowOf = dependencyObject =>
+            FindWindowOf = dependencyObject =>
             {
-                return this.DefaultFindWindowOf(dependencyObject);
+                return DefaultFindWindowOf(dependencyObject);
             };
 
-            this.DefaultViewHasDataContext = (view, behavior) =>
+            DefaultViewHasDataContext = (view, behavior) =>
             {
-                return this.GetViewDataContext(view, behavior) != null;
+                return GetViewDataContext(view, behavior) != null;
             };
 
-            this.ViewHasDataContext = (view, behavior) =>
+            ViewHasDataContext = (view, behavior) =>
             {
-                return this.DefaultViewHasDataContext(view, behavior);
+                return DefaultViewHasDataContext(view, behavior);
             };
 
-            this.DefaultGetViewDataContext = (view, behavior) =>
+            DefaultGetViewDataContext = (view, behavior) =>
             {
                 if(behavior == ViewDataContextSearchBehavior.Legacy)
                 {
@@ -196,12 +196,12 @@ namespace Radical.Windows.Presentation.Services
                 return null;
             };
 
-            this.GetViewDataContext = (view, behavior) =>
+            GetViewDataContext = (view, behavior) =>
             {
-                return this.DefaultGetViewDataContext(view, behavior);
+                return DefaultGetViewDataContext(view, behavior);
             };
 
-            this.DefaultSetViewDataContext = (view, dc) =>
+            DefaultSetViewDataContext = (view, dc) =>
             {
                 if(view is FrameworkElement)
                 {
@@ -215,22 +215,22 @@ namespace Radical.Windows.Presentation.Services
 #endif
             };
 
-            this.SetViewDataContext = (view, dc) =>
+            SetViewDataContext = (view, dc) =>
             {
-                this.DefaultSetViewDataContext(view, dc);
+                DefaultSetViewDataContext(view, dc);
             };
 
-            this.DefaultShouldExposeViewModelAsStaticResource = (view, dc) =>
+            DefaultShouldExposeViewModelAsStaticResource = (view, dc) =>
             {
                 return false;
             };
 
-            this.ShouldExposeViewModelAsStaticResource = (view, dc) =>
+            ShouldExposeViewModelAsStaticResource = (view, dc) =>
             {
-                return this.DefaultShouldExposeViewModelAsStaticResource(view, dc);
+                return DefaultShouldExposeViewModelAsStaticResource(view, dc);
             };
 
-            this.DefaultExposeViewModelAsStaticResource = (view, dc) =>
+            DefaultExposeViewModelAsStaticResource = (view, dc) =>
             {
                 var key = dc.GetType().Name;
                 if(view is FrameworkElement)
@@ -244,16 +244,16 @@ namespace Radical.Windows.Presentation.Services
                 }
             };
 
-            this.ExposeViewModelAsStaticResource = (view, dc) =>
+            ExposeViewModelAsStaticResource = (view, dc) =>
             {
-                this.DefaultExposeViewModelAsStaticResource(view, dc);
+                DefaultExposeViewModelAsStaticResource(view, dc);
             };
 
 
-            this.DefaultTryHookClosedEventOfHostOf = (view, closedCallback) =>
+            DefaultTryHookClosedEventOfHostOf = (view, closedCallback) =>
             {
                 //dobbiamo anche cercare una IClosableView oltre che una Window
-                var window = this.FindWindowOf(view);
+                var window = FindWindowOf(view);
                 if(window != null)
                 {
 #if SILVERLIGHT
@@ -292,16 +292,16 @@ namespace Radical.Windows.Presentation.Services
                 return window;
             };
 
-            this.TryHookClosedEventOfHostOf = (view, closedCallback) =>
+            TryHookClosedEventOfHostOf = (view, closedCallback) =>
             {
-                return this.DefaultTryHookClosedEventOfHostOf(view, closedCallback);
+                return DefaultTryHookClosedEventOfHostOf(view, closedCallback);
             };
 
-            this.DefaultIsHostingView = fe => fe.GetType().Name.EndsWith("View");
+            DefaultIsHostingView = fe => fe.GetType().Name.EndsWith("View");
 
-            this.IsHostingView = fe => this.DefaultIsHostingView(fe);
+            IsHostingView = fe => DefaultIsHostingView(fe);
 
-            this.DefaultAttachViewToViewModel = (view, viewModel) =>
+            DefaultAttachViewToViewModel = (view, viewModel) =>
             {
                 viewModel.As<IViewModel>(i =>
                {
@@ -309,12 +309,12 @@ namespace Radical.Windows.Presentation.Services
                });
             };
 
-            this.AttachViewToViewModel = (view, viewModel) =>
+            AttachViewToViewModel = (view, viewModel) =>
             {
-                this.DefaultAttachViewToViewModel(view, viewModel);
+                DefaultAttachViewToViewModel(view, viewModel);
             };
 
-            this.DefaultGetViewOfViewModel = viewModel =>
+            DefaultGetViewOfViewModel = viewModel =>
             {
                 if(viewModel is IViewModel)
                 {
@@ -324,13 +324,13 @@ namespace Radical.Windows.Presentation.Services
                 return null;
             };
 
-            this.GetViewOfViewModel = viewModel =>
+            GetViewOfViewModel = viewModel =>
             {
-                return this.DefaultGetViewOfViewModel(viewModel);
+                return DefaultGetViewOfViewModel(viewModel);
             };
 
 #if !SILVERLIGHT
-            this.DefaultAttachViewBehaviors = view =>
+            DefaultAttachViewBehaviors = view =>
             {
                 var bhv = Interaction.GetBehaviors(view);
                 if(view is Window && bhv.OfType<WindowLifecycleNotificationsBehavior>().None())
@@ -348,9 +348,9 @@ namespace Radical.Windows.Presentation.Services
                 }
             };
 
-            this.AttachViewBehaviors = view =>
+            AttachViewBehaviors = view =>
             {
-                this.DefaultAttachViewBehaviors(view);
+                DefaultAttachViewBehaviors(view);
             };
 #else
             this.AttachViewBehaviors = view =>
@@ -367,7 +367,7 @@ namespace Radical.Windows.Presentation.Services
 #endif
 
 #if !SILVERLIGHT
-            this.DefaultDetachViewBehaviors = view =>
+            DefaultDetachViewBehaviors = view =>
             {
                 var bhv = Interaction.GetBehaviors(view);
                 if(view is Window)
@@ -381,9 +381,9 @@ namespace Radical.Windows.Presentation.Services
                 bhv.OfType<DependencyObjectCloseHandlerBehavior>().ToList().ForEach(x => bhv.Remove(x));
             };
 
-            this.DetachViewBehaviors = view =>
+            DetachViewBehaviors = view =>
             {
-                this.DefaultDetachViewBehaviors(view);
+                DefaultDetachViewBehaviors(view);
             };
 #else
             this.DetachViewBehaviors = view =>
@@ -394,7 +394,7 @@ namespace Radical.Windows.Presentation.Services
             };
 #endif
 
-            this.DefaultShouldNotifyViewModelLoaded = (view, dataContext) =>
+            DefaultShouldNotifyViewModelLoaded = (view, dataContext) =>
             {
                 if(dataContext == null)
                 {
@@ -407,12 +407,12 @@ namespace Radical.Windows.Presentation.Services
                 return hasAttribute || hasRegions;
             };
 
-            this.ShouldNotifyViewModelLoaded = (view, dataContext) =>
+            ShouldNotifyViewModelLoaded = (view, dataContext) =>
             {
-                return this.DefaultShouldNotifyViewModelLoaded(view, dataContext);
+                return DefaultShouldNotifyViewModelLoaded(view, dataContext);
             };
 
-            this.DefaultShouldNotifyViewLoaded = view =>
+            DefaultShouldNotifyViewLoaded = view =>
             {
                 /*
                  * we should decide if the attribute must be applied on the view or, as in this fix,
@@ -427,9 +427,9 @@ namespace Radical.Windows.Presentation.Services
                 return /* hasAttributeOnViewModel || */ hasAttributeOnView || hasRegions;
             };
 
-            this.ShouldNotifyViewLoaded = view =>
+            ShouldNotifyViewLoaded = view =>
             {
-                return this.DefaultShouldNotifyViewLoaded(view);
+                return DefaultShouldNotifyViewLoaded(view);
             };
         }
 
@@ -495,7 +495,7 @@ namespace Radical.Windows.Presentation.Services
         /// The window finder.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<Object, Window> FindHostingWindowOf { get; set; }
+        public Func<object, Window> FindHostingWindowOf { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the window finder.
@@ -504,7 +504,7 @@ namespace Radical.Windows.Presentation.Services
         /// The window finder.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<Object, Window> DefaultFindHostingWindowOf { get; set; }
+        public Func<object, Window> DefaultFindHostingWindowOf { get; set; }
 
         /// <summary>
         /// Gets or sets the View -&gt; window finder, that given a View finds the root hosting Window for the given View.
@@ -531,7 +531,7 @@ namespace Radical.Windows.Presentation.Services
         /// The logic that determines if view has data context.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<DependencyObject, ViewDataContextSearchBehavior, Boolean> ViewHasDataContext { get; set; }
+        public Func<DependencyObject, ViewDataContextSearchBehavior, bool> ViewHasDataContext { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the logic that determines if view has data context.
@@ -540,7 +540,7 @@ namespace Radical.Windows.Presentation.Services
         /// The logic that determines if view has data context.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<DependencyObject, ViewDataContextSearchBehavior, Boolean> DefaultViewHasDataContext { get; private set; }
+        public Func<DependencyObject, ViewDataContextSearchBehavior, bool> DefaultViewHasDataContext { get; private set; }
 
         /// <summary>
         /// Gets or sets the logic that sets the view data context.
@@ -549,19 +549,19 @@ namespace Radical.Windows.Presentation.Services
         /// The logic that sets the view data context.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Action<DependencyObject, Object> SetViewDataContext { get; set; }
+        public Action<DependencyObject, object> SetViewDataContext { get; set; }
 
         [IgnorePropertyInjectionAttribue]
-        public Func<DependencyObject, Object, bool> DefaultShouldExposeViewModelAsStaticResource { get; private set; }
+        public Func<DependencyObject, object, bool> DefaultShouldExposeViewModelAsStaticResource { get; private set; }
 
         [IgnorePropertyInjectionAttribue]
-        public Func<DependencyObject, Object, bool> ShouldExposeViewModelAsStaticResource { get; set; }
+        public Func<DependencyObject, object, bool> ShouldExposeViewModelAsStaticResource { get; set; }
 
         [IgnorePropertyInjectionAttribue]
-        public Action<DependencyObject, Object> DefaultExposeViewModelAsStaticResource { get; private set; }
+        public Action<DependencyObject, object> DefaultExposeViewModelAsStaticResource { get; private set; }
 
         [IgnorePropertyInjectionAttribue]
-        public Action<DependencyObject, Object> ExposeViewModelAsStaticResource { get; set; }
+        public Action<DependencyObject, object> ExposeViewModelAsStaticResource { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the logic that sets the view data context.
@@ -570,7 +570,7 @@ namespace Radical.Windows.Presentation.Services
         /// The logic that sets the view data context.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Action<DependencyObject, Object> DefaultSetViewDataContext { get; private set; }
+        public Action<DependencyObject, object> DefaultSetViewDataContext { get; private set; }
 
         /// <summary>
         /// Gets or sets the logic that gets view data context.
@@ -579,7 +579,7 @@ namespace Radical.Windows.Presentation.Services
         /// The logic that gets view data context.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<DependencyObject, ViewDataContextSearchBehavior, Object> GetViewDataContext { get; set; }
+        public Func<DependencyObject, ViewDataContextSearchBehavior, object> GetViewDataContext { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the logic that gets view data context.
@@ -588,7 +588,7 @@ namespace Radical.Windows.Presentation.Services
         /// The logic that gets view data context.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<DependencyObject, ViewDataContextSearchBehavior, Object> DefaultGetViewDataContext { get; private set; }
+        public Func<DependencyObject, ViewDataContextSearchBehavior, object> DefaultGetViewDataContext { get; private set; }
 
         /// <summary>
         /// Tries to hook closed event of an the element in the visual tree that hosts this given view.
@@ -705,7 +705,7 @@ namespace Radical.Windows.Presentation.Services
         /// The logic that determines if ViewModel should notify the loaded message.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<DependencyObject, Object, Boolean> ShouldNotifyViewModelLoaded { get; set; }
+        public Func<DependencyObject, object, bool> ShouldNotifyViewModelLoaded { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the logic that determines if ViewModel should notify the loaded message.
@@ -714,7 +714,7 @@ namespace Radical.Windows.Presentation.Services
         /// The logic that determines if ViewModel should notify the loaded message.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<DependencyObject, Object, Boolean> DefaultShouldNotifyViewModelLoaded { get; private set; }
+        public Func<DependencyObject, object, bool> DefaultShouldNotifyViewModelLoaded { get; private set; }
 
         /// <summary>
         /// Gets or sets the logic that determines if View should notify the loaded message.
@@ -723,7 +723,7 @@ namespace Radical.Windows.Presentation.Services
         /// The logic that determines if View should notify the loaded message.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<DependencyObject, Boolean> ShouldNotifyViewLoaded { get; set; }
+        public Func<DependencyObject, bool> ShouldNotifyViewLoaded { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the logic that determines if View should notify the loaded message.
@@ -732,7 +732,7 @@ namespace Radical.Windows.Presentation.Services
         /// The logic that determines if View should notify the loaded message.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<DependencyObject, Boolean> DefaultShouldNotifyViewLoaded { get; private set; }
+        public Func<DependencyObject, bool> DefaultShouldNotifyViewLoaded { get; private set; }
 
         /// <summary>
         /// Gets or sets the view relase handler that is responsible to release views and view models.

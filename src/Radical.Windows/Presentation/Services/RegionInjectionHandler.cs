@@ -9,14 +9,14 @@ namespace Radical.Windows.Presentation.Services
 {
 	class RegionInjectionHandler : Radical.Windows.Presentation.ComponentModel.IRegionInjectionHandler
 	{
-		Dictionary<String, List<Type>> viewsInterestedInRegions = new Dictionary<string, List<Type>>();
+		Dictionary<string, List<Type>> viewsInterestedInRegions = new Dictionary<string, List<Type>>();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RegionInjectionHandler"/> class.
 		/// </summary>
 		public RegionInjectionHandler()
 		{
-			this.Inject = ( viewFactory, region ) =>
+			Inject = ( viewFactory, region ) =>
 			{
 				if ( region.AsyncLoadDelay > 0 )
 				{
@@ -24,13 +24,13 @@ namespace Radical.Windows.Presentation.Services
 						.AndThen( () => 
 						{
 							var view = viewFactory();
-							this.InjectViewIntoRegion( view, region );
+							InjectViewIntoRegion( view, region );
 						} );
 				}
 				else
 				{
 					var view = viewFactory();
-					this.InjectViewIntoRegion( view, region );
+					InjectViewIntoRegion( view, region );
 				}
 			};
 		}
@@ -56,9 +56,9 @@ namespace Radical.Windows.Presentation.Services
 		/// </returns>
 		public IEnumerable<Type> GetViewsInterestedIn( string regionName )
 		{
-			if( this.viewsInterestedInRegions.ContainsKey( regionName ) )
+			if( viewsInterestedInRegions.ContainsKey( regionName ) )
 			{
-				var views = this.viewsInterestedInRegions[ regionName ];
+				var views = viewsInterestedInRegions[ regionName ];
 				return views.AsReadOnly();
 			}
 
@@ -72,7 +72,7 @@ namespace Radical.Windows.Presentation.Services
 		/// <param name="viewType">Type of the view.</param>
 		public void RegisterViewAsInterestedIn( string regionName, Type viewType )
 		{
-			this.RegisterViewsAsInterestedIn( regionName, new[] { viewType } );
+			RegisterViewsAsInterestedIn( regionName, new[] { viewType } );
 		}
 
 		/// <summary>
@@ -82,13 +82,13 @@ namespace Radical.Windows.Presentation.Services
 		/// <param name="views">The views.</param>
 		public void RegisterViewsAsInterestedIn( string regionName, IEnumerable<Type> views )
 		{
-			if( this.viewsInterestedInRegions.ContainsKey( regionName ) )
+			if( viewsInterestedInRegions.ContainsKey( regionName ) )
 			{
-				this.viewsInterestedInRegions[ regionName ].AddRange( views );
+				viewsInterestedInRegions[ regionName ].AddRange( views );
 			}
 			else
 			{
-				this.viewsInterestedInRegions.Add( regionName, new List<Type>( views ) );
+				viewsInterestedInRegions.Add( regionName, new List<Type>( views ) );
 			}
 		}
 

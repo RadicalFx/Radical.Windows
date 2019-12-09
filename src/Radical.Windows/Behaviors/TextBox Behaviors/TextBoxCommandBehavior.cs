@@ -19,8 +19,8 @@ namespace Radical.Windows.Behaviors
 
         public ICommand Command
         {
-            get { return (ICommand)this.GetValue(CommandProperty); }
-            set { this.SetValue(CommandProperty, value); }
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
         }
 
         #endregion
@@ -33,7 +33,7 @@ namespace Radical.Windows.Behaviors
 
         public IInputElement CommandTarget
         {
-            get { return this.AssociatedObject; }
+            get { return AssociatedObject; }
         }
 
         KeyEventHandler onPreviewKeyDown;
@@ -44,8 +44,8 @@ namespace Radical.Windows.Behaviors
             {
                 var d = (DependencyObject)s;
 
-                var cmd = this.Command;
-                var prm = this.CommandParameter;
+                var cmd = Command;
+                var prm = CommandParameter;
 
                 if (cmd.CanExecute(prm))
                 {
@@ -79,13 +79,13 @@ namespace Radical.Windows.Behaviors
         protected override void OnAttached()
         {
             base.OnAttached();
-            this.AssociatedObject.PreviewKeyDown += onPreviewKeyDown;
+            AssociatedObject.PreviewKeyDown += onPreviewKeyDown;
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            this.AssociatedObject.PreviewKeyDown -= onPreviewKeyDown;
+            AssociatedObject.PreviewKeyDown -= onPreviewKeyDown;
         }
     }
 }

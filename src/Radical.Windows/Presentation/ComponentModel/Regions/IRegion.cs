@@ -9,21 +9,21 @@ namespace Radical.Windows.Presentation.ComponentModel
 	/// </summary>
 	public interface IRegion
 	{
-		/// <summary>
-		/// Gets the name of the region.
-		/// </summary>
-		/// <value>The name.</value>
-		String Name { get; }
+        /// <summary>
+        /// Gets the name of the region.
+        /// </summary>
+        /// <value>The name.</value>
+        string Name { get; }
 
 		/// <summary>
 		/// Gets the view that hosts this region.
 		/// </summary>
 		DependencyObject HostingView { get; }
 
-		/// <summary>
-		/// The number of milliseconds to wait before loading the region content.
-		/// </summary>
-		Int32 AsyncLoadDelay { get; set; }
+        /// <summary>
+        /// The number of milliseconds to wait before loading the region content.
+        /// </summary>
+        int AsyncLoadDelay { get; set; }
 
 #if SILVERLIGHT
 

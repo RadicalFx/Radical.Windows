@@ -16,8 +16,8 @@ namespace Radical.Windows.Presentation.Boot
         /// <param name="scope">The scope.</param>
         public SingletonApplicationStartupArgs( SingletonApplicationScope scope )
         {
-            this.Scope = scope;
-            this.AllowStartup = true;
+            Scope = scope;
+            AllowStartup = true;
         }
 
         /// <summary>
@@ -31,6 +31,6 @@ namespace Radical.Windows.Presentation.Boot
         /// <value>
         ///   <c>true</c> if the startup is allowed; otherwise, <c>false</c>.
         /// </value>
-        public Boolean AllowStartup { get; set; }
+        public bool AllowStartup { get; set; }
     }
 }

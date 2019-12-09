@@ -12,7 +12,7 @@ namespace Radical.Windows.Presentation.Services
     {
         readonly IServiceProvider container;
         readonly IConventionsHandler conventions;
-        readonly Action<Object> emptyInterceptor = o => { };
+        readonly Action<object> emptyInterceptor = o => { };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewResolver"/> class.
@@ -37,7 +37,7 @@ namespace Radical.Windows.Presentation.Services
         /// </returns>
         public DependencyObject GetView( Type viewType )
         {
-            return this.GetView( viewType, this.emptyInterceptor );
+            return GetView( viewType, emptyInterceptor );
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Radical.Windows.Presentation.Services
         /// </returns>
         public T GetView<T>() where T : DependencyObject
         {
-            return ( T )this.GetView( typeof( T ), this.emptyInterceptor );
+            return ( T )GetView( typeof( T ), emptyInterceptor );
         }
 
 
@@ -61,7 +61,7 @@ namespace Radical.Windows.Presentation.Services
         /// <returns></returns>
         public T GetView<T>( Action<object> viewModelInterceptor ) where T : DependencyObject
         {
-            return ( T )this.GetView( typeof( T ), viewModelInterceptor );
+            return ( T )GetView( typeof( T ), viewModelInterceptor );
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Radical.Windows.Presentation.Services
         /// <returns></returns>
         public TView GetView<TView, TViewModel>( Action<TViewModel> viewModelInterceptor ) where TView : DependencyObject
         {
-            return ( TView )this.GetView( typeof( TView ), o =>
+            return ( TView )GetView( typeof( TView ), o =>
             {
                 viewModelInterceptor( ( TViewModel )o );
             } );
@@ -87,30 +87,30 @@ namespace Radical.Windows.Presentation.Services
         /// <returns></returns>
         public DependencyObject GetView( Type viewType, Action<object> viewModelInterceptor )
         {
-            var view = ( DependencyObject )this.container.GetService( viewType );
+            var view = ( DependencyObject )container.GetService( viewType );
 
-            if ( !this.conventions.ViewHasDataContext( view, ViewDataContextSearchBehavior.LocalOnly ) )
+            if ( !conventions.ViewHasDataContext( view, ViewDataContextSearchBehavior.LocalOnly ) )
             {
-                var viewModelType = this.conventions.ResolveViewModelType( viewType );
+                var viewModelType = conventions.ResolveViewModelType( viewType );
                 if ( viewModelType != null )
                 {
                     //we support view(s) without ViewModel
 
-                    var viewModel = this.container.GetService( viewModelType );
+                    var viewModel = container.GetService( viewModelType );
 
                     viewModelInterceptor( viewModel );
 
-                    this.conventions.AttachViewToViewModel( view, viewModel );
-                    this.conventions.SetViewDataContext( view, viewModel );
-                    if(this.conventions.ShouldExposeViewModelAsStaticResource(view, viewModel))
+                    conventions.AttachViewToViewModel( view, viewModel );
+                    conventions.SetViewDataContext( view, viewModel );
+                    if(conventions.ShouldExposeViewModelAsStaticResource(view, viewModel))
                     {
-                        this.conventions.ExposeViewModelAsStaticResource(view, viewModel);
+                        conventions.ExposeViewModelAsStaticResource(view, viewModel);
                     }
                 }
 
 				//behaviors must be attached regardless of the presence of the view model
 				//the AttachViewBehaviors is considered to be idempotent.
-				this.conventions.AttachViewBehaviors( view );
+				conventions.AttachViewBehaviors( view );
             }
 
             return view;

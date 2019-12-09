@@ -14,13 +14,13 @@ namespace Radical.Windows.Presentation.Services.Validation
 	/// </remarks>
 	public sealed class DelegateValidationService : AbstractValidationService
 	{
-		readonly Func<String, IEnumerable<ValidationError>> validationCallback;
+		readonly Func<string, IEnumerable<ValidationError>> validationCallback;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DelegateValidationService"/> class.
 		/// </summary>
 		/// <param name="validationCallback">The validation callback.</param>
-		public DelegateValidationService( Func<String, IEnumerable<ValidationError>> validationCallback )
+		public DelegateValidationService( Func<string, IEnumerable<ValidationError>> validationCallback )
 		{
 			Ensure.That( validationCallback ).Named( () => validationCallback ).IsNotNull();
 
@@ -36,7 +36,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// </returns>
 		protected override IEnumerable<ValidationError> OnValidate( string ruleSet )
 		{
-			return this.validationCallback( ruleSet );
+			return validationCallback( ruleSet );
 		}
 	}
 }

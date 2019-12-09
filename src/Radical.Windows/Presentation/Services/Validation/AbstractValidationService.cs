@@ -20,8 +20,8 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// </summary>
 		protected AbstractValidationService()
 		{
-			this.IsValid = true;
-			this.MergeValidationErrors = false;
+			IsValid = true;
+			MergeValidationErrors = false;
 		}
 
         //readonly HashSet<String> validationCalledOnce = new HashSet<String>();
@@ -54,9 +54,9 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		/// The validation error message if any; otherwise a null or empty string.
 		/// </returns>
-		public String Validate( String propertyName )
+		public string Validate(string propertyName )
 		{
-			return this.ValidateRuleSet( null, propertyName );
+			return ValidateRuleSet( null, propertyName );
 		}
 
 		/// <summary>
@@ -67,7 +67,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		/// The validation error message if any; otherwise a null or empty string.
 		/// </returns>
-		public String ValidateRuleSet( String ruleSet, String propertyName )
+		public string ValidateRuleSet(string ruleSet, string propertyName )
 		{
             //if( !this.ValidationCalledOnceFor( propertyName ) )
             //{
@@ -82,28 +82,28 @@ namespace Radical.Windows.Presentation.Services.Validation
             //    return null;
             //}
 
-			if( this.IsValidationSuspended )
+			if( IsValidationSuspended )
 			{
 				return null;
 			}
 
-			var isValidBeforeValidation = this.IsValid;
+			var isValidBeforeValidation = IsValid;
 
-			var results = this.OnValidateProperty( ruleSet, propertyName );
+			var results = OnValidateProperty( ruleSet, propertyName );
 
-			var toBeRemoved = this._validationErrors
+			var toBeRemoved = _validationErrors
 				.Where( e => e.Key == propertyName )
 				.ToArray()
-				.ForEach( e => this._validationErrors.Remove( e ) );
+				.ForEach( e => _validationErrors.Remove( e ) );
 
-			this.AddValidationErrors( results.ToArray() );
+			AddValidationErrors( results.ToArray() );
 
 			var shouldTriggerStatusChanged = toBeRemoved.Any() || results.Any();
-			this.IsValid = this.ValidationErrors.None();
+			IsValid = ValidationErrors.None();
 
-			if( this.IsValid != isValidBeforeValidation || shouldTriggerStatusChanged )
+			if( IsValid != isValidBeforeValidation || shouldTriggerStatusChanged )
 			{
-				this.OnStatusChanged( EventArgs.Empty );
+				OnStatusChanged( EventArgs.Empty );
 			}
 
 			if( results.Any() )
@@ -126,7 +126,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <value>
 		/// 	<c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.
 		/// </value>
-		public Boolean IsValid
+		public bool IsValid
 		{
 			get;
 			private set;
@@ -148,7 +148,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnStatusChanged( EventArgs e )
 		{
-			var h = this.StatusChanged;
+			var h = StatusChanged;
 			if( h != null )
 			{
 				h( this, e );
@@ -161,7 +161,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected virtual void OnValidationReset( EventArgs e )
 		{
-			var h = this.ValidationReset;
+			var h = ValidationReset;
 			if( h != null )
 			{
 				h( this, e );
@@ -176,7 +176,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// </value>
 		public IEnumerable<ValidationError> ValidationErrors
 		{
-			get { return this._validationErrors; }
+			get { return _validationErrors; }
 		}
 
 		/// <summary>
@@ -187,24 +187,24 @@ namespace Radical.Windows.Presentation.Services.Validation
 		{
 			Ensure.That( errors ).Named( () => errors ).IsNotNull();
 
-			if( this.MergeValidationErrors )
+			if( MergeValidationErrors )
 			{
 				foreach( var error in errors )
 				{
-					var actual = this._validationErrors.SingleOrDefault( ve => ve.Key == error.Key );
+					var actual = _validationErrors.SingleOrDefault( ve => ve.Key == error.Key );
 					if( actual != null )
 					{
 						actual.AddProblems( error.DetectedProblems.ToArray() );
 					}
 					else
 					{
-						this._validationErrors.Add( error );
+						_validationErrors.Add( error );
 					}
 				}
 			}
 			else
 			{
-				this._validationErrors.AddRange( errors );
+				_validationErrors.AddRange( errors );
 			}
 		}
 
@@ -213,7 +213,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// </summary>
 		protected void ClearErrors()
 		{
-			this._validationErrors.Clear();
+			_validationErrors.Clear();
 		}
 
 		/// <summary>
@@ -222,9 +222,9 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		///   <c>True</c> if the validation process succedeed; otherwise <c>false</c>.
 		/// </returns>
-		public Boolean Validate()
+		public bool Validate()
 		{
-			return this.ValidateRuleSet( null );
+			return ValidateRuleSet( null );
 		}
 
 		/// <summary>
@@ -234,27 +234,27 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		///   <c>True</c> if the validation process succedeed; otherwise <c>false</c>.
 		/// </returns>
-		public virtual Boolean ValidateRuleSet( String ruleSet )
+		public virtual bool ValidateRuleSet(string ruleSet )
 		{
-			if( this.IsValidationSuspended )
+			if( IsValidationSuspended )
 			{
-				return this.IsValid;
+				return IsValid;
 			}
 
-			var isValidBeforeValidation = this.IsValid;
-			var result = this.OnValidate( ruleSet );
+			var isValidBeforeValidation = IsValid;
+			var result = OnValidate( ruleSet );
 
-			this.ClearErrors();
-			this.AddValidationErrors( result.ToArray() );
+			ClearErrors();
+			AddValidationErrors( result.ToArray() );
 
-			this.IsValid = result.None();
+			IsValid = result.None();
 
-			if( this.IsValid != isValidBeforeValidation || !this.IsValid )
+			if( IsValid != isValidBeforeValidation || !IsValid )
 			{
-				this.OnStatusChanged( EventArgs.Empty );
+				OnStatusChanged( EventArgs.Empty );
 			}
 
-			return this.IsValid;
+			return IsValid;
 		}
 
 		/// <summary>
@@ -264,7 +264,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		/// A list of <seealso cref="ValidationError"/>.
 		/// </returns>
-		protected abstract IEnumerable<ValidationError> OnValidate( String ruleSet );
+		protected abstract IEnumerable<ValidationError> OnValidate(string ruleSet );
 
 		/// <summary>
 		/// Called in order to execute the concrete validation process on the given property.
@@ -274,9 +274,9 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		/// A list of <seealso cref="ValidationError" />.
 		/// </returns>
-		protected virtual IEnumerable<ValidationError> OnValidateProperty( String ruleSet, String propertyName )
+		protected virtual IEnumerable<ValidationError> OnValidateProperty(string ruleSet, string propertyName )
 		{
-			if( !this.IsValidationSuspended && !this.ValidateRuleSet( ruleSet ) )
+			if( !IsValidationSuspended && !ValidateRuleSet( ruleSet ) )
 			{
 				/*
 				 * Se la validazione fallisce dobbiamo capire se è fallita
@@ -284,7 +284,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 				 * Cerchiamo quindi nella lista degli errori uno che abbia come Key
 				 * il nome della proprietà
 				 */
-				return this.ValidationErrors
+				return ValidationErrors
 					.Where( err => err.Key == propertyName )
 					.ToArray();
 			}
@@ -298,9 +298,9 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		/// A list of property names that identifies the invalid properties.
 		/// </returns>
-		public virtual IEnumerable<String> GetInvalidProperties()
+		public virtual IEnumerable<string> GetInvalidProperties()
 		{
-			return this.ValidationErrors.Select( ve => ve.Key )
+			return ValidationErrors.Select( ve => ve.Key )
                 .Distinct()
                 .AsReadOnly();
 		}
@@ -310,7 +310,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// </summary>
 		public void Reset() 
 		{
-			this.Reset( ValidationResetBehavior.All );
+			Reset( ValidationResetBehavior.All );
 		}
 
 		/// <summary>
@@ -321,24 +321,24 @@ namespace Radical.Windows.Presentation.Services.Validation
 		{
 			if( ( resetBehavior & ValidationResetBehavior.ErrorsOnly ) == ValidationResetBehavior.ErrorsOnly )
 			{
-				this._validationErrors.Clear();
+				_validationErrors.Clear();
 			}
 
-			this.IsValid = true;
+			IsValid = true;
 
             //if( ( resetBehavior & ValidationResetBehavior.ValidationTracker ) == ValidationResetBehavior.ValidationTracker )
             //{
             //    this.validationCalledOnce.Clear();
             //}
 
-			this.OnValidationReset( EventArgs.Empty );
+			OnValidationReset( EventArgs.Empty );
 		}
 
 		class ValidationSuspender : IDisposable
 		{
 			public void Dispose()
 			{
-				this.onDisposed();
+				onDisposed();
 			}
 
 			readonly Action onDisposed;
@@ -355,7 +355,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <value>
 		/// 	<c>true</c> if the validation process is suspended; otherwise, <c>false</c>.
 		/// </value>
-		public Boolean IsValidationSuspended { get; private set; }
+		public bool IsValidationSuspended { get; private set; }
 
 		ValidationSuspender suspender = null;
 
@@ -365,13 +365,13 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>A disposable instance to automatically resume validation on dispose.</returns>
 		public IDisposable SuspendValidation()
 		{
-			if( !this.IsValidationSuspended )
+			if( !IsValidationSuspended )
 			{
-				this.IsValidationSuspended = true;
-				this.suspender = new ValidationSuspender( () => this.ResumeValidation() );
+				IsValidationSuspended = true;
+				suspender = new ValidationSuspender( () => ResumeValidation() );
 			}
 
-			return this.suspender;
+			return suspender;
 		}
 
 		/// <summary>
@@ -379,10 +379,10 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// </summary>
 		public void ResumeValidation()
 		{
-			if( this.IsValidationSuspended )
+			if( IsValidationSuspended )
 			{
-				this.IsValidationSuspended = false;
-				this.suspender = null;
+				IsValidationSuspended = false;
+				suspender = null;
 			}
 		}
 
@@ -397,7 +397,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		public string GetPropertyDisplayName<T>( T entity, System.Linq.Expressions.Expression<Func<T, object>> property )
 		{
 			var propertyname = property.GetMemberName();
-			return this.GetPropertyDisplayName( entity, propertyname );
+			return GetPropertyDisplayName( entity, propertyname );
 		}
 
 		/// <summary>
@@ -408,10 +408,10 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns></returns>
 		public virtual string GetPropertyDisplayName( object entity, string propertyName )
 		{
-			return this.tools.GetPropertyDisplayName( propertyName, entity );
+			return tools.GetPropertyDisplayName( propertyName, entity );
 		}
 
-		Boolean _mergeValidationErrors;
+        bool _mergeValidationErrors;
 
 		/// <summary>
 		/// Gets or sets if the service should merge validation errors related to the same property.
@@ -423,21 +423,21 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// </exception>
 		public bool MergeValidationErrors
 		{
-			get { return this._mergeValidationErrors; }
+			get { return _mergeValidationErrors; }
 			set
 			{
-				if( value != this.MergeValidationErrors )
+				if( value != MergeValidationErrors )
 				{
-					this._mergeValidationErrors = value;
+					_mergeValidationErrors = value;
 
-					if( this.ValidationErrors.Any() )
+					if( ValidationErrors.Any() )
 					{
 						//reset the errors if any so the have them gruoped
-						var actual = this.ValidationErrors.ToArray();
-						this._validationErrors.Clear();
-						this.AddValidationErrors( actual );
+						var actual = ValidationErrors.ToArray();
+						_validationErrors.Clear();
+						AddValidationErrors( actual );
 
-						this.OnValidationReset( EventArgs.Empty );
+						OnValidationReset( EventArgs.Empty );
 					}
 				}
 			}

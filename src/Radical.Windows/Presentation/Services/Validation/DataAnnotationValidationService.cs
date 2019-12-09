@@ -47,7 +47,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		public DataAnnotationValidationService( TEntity entity )
 		{
 			this.entity = entity;
-			this.PropertyValueGetter = ( property, obj ) =>
+			PropertyValueGetter = ( property, obj ) =>
 			{
 				var val = obj.GetType()
 					.GetProperty( property )
@@ -57,7 +57,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 			};
 
 			var factory = new ValidatorBaseFactory();
-			this.customValidator = factory.CreateValidator<TEntity>();
+			customValidator = factory.CreateValidator<TEntity>();
 		}
 
 		/// <summary>
@@ -67,7 +67,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <value>
 		/// The property value getter.
 		/// </value>
-		public Func<String, Object, Object> PropertyValueGetter { get; set; }
+		public Func<string, object, object> PropertyValueGetter { get; set; }
 
 		/// <summary>
 		/// Called in order to execute the concrete validation process.
@@ -81,10 +81,10 @@ namespace Radical.Windows.Presentation.Services.Validation
 			var errors = new List<ValidationError>();
 
 			var results = new List<ValidationResult>();
-			var ctx = new ValidationContext( this.entity, null, null );
-			Validator.TryValidateObject( this.entity, ctx, results, true );
+			var ctx = new ValidationContext( entity, null, null );
+			Validator.TryValidateObject( entity, ctx, results, true );
 
-			var customRulesResults = this.customValidator.Validate( this.entity );
+			var customRulesResults = customValidator.Validate( entity );
 			if ( !customRulesResults.IsValid )
 			{
 				errors.AddRange( customRulesResults.Errors );
@@ -97,7 +97,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 					var memberName = r.MemberNames.Single();
 					return new ValidationError( 
 						memberName, 
-						this.GetPropertyDisplayName( this.entity, memberName ), 
+						GetPropertyDisplayName( entity, memberName ), 
 						new[] { r.ErrorMessage } );
 				} ) );
 			}
@@ -113,21 +113,21 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		/// A list of <seealso cref="ValidationError" />.
 		/// </returns>
-		protected override IEnumerable<ValidationError> OnValidateProperty(String ruleSet, string propertyName )
+		protected override IEnumerable<ValidationError> OnValidateProperty(string ruleSet, string propertyName )
 		{
 			var errors = new List<ValidationError>();
 
 			var results = new List<ValidationResult>();
-			var ctx = new ValidationContext( this.entity, null, null )
+			var ctx = new ValidationContext( entity, null, null )
 			{
 				MemberName = propertyName,
 			};
 
-			var val = this.PropertyValueGetter( propertyName, this.entity );
+			var val = PropertyValueGetter( propertyName, entity );
 
 			Validator.TryValidateProperty( val, ctx, results );
 
-			var customRulesResults = this.customValidator.Validate( this.entity, propertyName );
+			var customRulesResults = customValidator.Validate( entity, propertyName );
 			if ( !customRulesResults.IsValid )
 			{
 				errors.AddRange( customRulesResults.Errors.Where( e => e.Key == propertyName ) );
@@ -140,7 +140,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 					var memberName = r.MemberNames.Single();
 					return new ValidationError( 
 						memberName, 
-						this.GetPropertyDisplayName( this.entity, memberName ), 
+						GetPropertyDisplayName( entity, memberName ), 
 						new[] { r.ErrorMessage } );
 				} ) );
 			}
@@ -173,15 +173,15 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <param name="error">The error.</param>
 		/// <param name="rule">The rule.</param>
 		/// <returns></returns>
-		public DataAnnotationValidationService<TEntity> AddRule( Expression<Func<Object>> property, Func<ValidationContext<TEntity>, String> error, Func<ValidationContext<TEntity>, Boolean> rule )
+		public DataAnnotationValidationService<TEntity> AddRule( Expression<Func<object>> property, Func<ValidationContext<TEntity>, string> error, Func<ValidationContext<TEntity>, bool> rule )
 		{
-			this.customValidator.AddRule( ctx =>
+			customValidator.AddRule( ctx =>
 			{
 				var result = rule( ctx );
 				if ( !result )
 				{
 					var propertyName = property.GetMemberName();
-					var displayname = this.GetPropertyDisplayName( this.entity, propertyName );
+					var displayname = GetPropertyDisplayName( entity, propertyName );
 					ctx.Results.AddError( new ValidationError( propertyName, displayname, new[] { error( ctx ) } ) );
 				}
 			} );

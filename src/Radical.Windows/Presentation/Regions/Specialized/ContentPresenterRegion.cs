@@ -24,7 +24,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// Initializes a new instance of the <see cref="ContentPresenterRegion"/> class.
 		/// </summary>
 		/// <param name="name">The name.</param>
-		public ContentPresenterRegion( String name )
+		public ContentPresenterRegion(string name )
 			: base( name )
 		{
 
@@ -36,7 +36,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// <returns></returns>
 		protected override DependencyObject OnGetContent()
 		{
-			return this.Element.Content as DependencyObject;
+			return Element.Content as DependencyObject;
 		}
 
 		/// <summary>
@@ -46,7 +46,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="args">The cancel even arguments.</param>
 		protected override void OnSetContent( DependencyObject view, CancelEventArgs args )
 		{
-			var previous = this.Element.Content as DependencyObject;
+			var previous = Element.Content as DependencyObject;
 
 
 #if !SILVERLIGHT
@@ -62,7 +62,7 @@ namespace Radical.Windows.Presentation.Regions
 
 			if ( !args.Cancel )
 			{
-				this.Element.Content = view;
+				Element.Content = view;
 			}
 		}
 	}

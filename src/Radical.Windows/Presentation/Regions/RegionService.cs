@@ -143,7 +143,7 @@ namespace Radical.Windows.Presentation.Regions
         /// </returns>
         public bool HoldsRegionManager( DependencyObject owner )
         {
-            return this.regionManagers.ContainsKey( owner );
+            return regionManagers.ContainsKey( owner );
         }
 
         /// <summary>
@@ -156,12 +156,12 @@ namespace Radical.Windows.Presentation.Regions
         /// <exception cref="ArgumentOutOfRangeException">An ArgumentOutOfRangeException is raised if this service has no knowledge of a region manager owned by the supplied owner. Use HoldsRegionManager() to test.</exception>
         public IRegionManager GetRegionManager( DependencyObject owner )
         {
-            if ( !this.regionManagers.ContainsKey( owner ) )
+            if ( !regionManagers.ContainsKey( owner ) )
             {
                 throw new ArgumentOutOfRangeException( "owner", "Cannot find any region manager owned by the supplied view." );
             }
 
-            return this.regionManagers[ owner ];
+            return regionManagers[ owner ];
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Radical.Windows.Presentation.Regions
         /// <returns>The requested region manager</returns>
         public IRegionManager GetKnownRegionManager<TView>() where TView : DependencyObject
         {
-            return this.regionManagers.Where( kvp => typeof( TView ).IsAssignableFrom( kvp.Key.GetType() ) )
+            return regionManagers.Where( kvp => typeof( TView ).IsAssignableFrom( kvp.Key.GetType() ) )
                 .Select( kvp => kvp.Value )
                 .FirstOrDefault();
         }
@@ -185,9 +185,9 @@ namespace Radical.Windows.Presentation.Regions
         /// </summary>
         /// <param name="filter">A predicate executed for all the registered region managers.</param>
         /// <returns>The found region manager or null.</returns>
-        public IRegionManager FindRegionManager( Func<DependencyObject, IRegionManager, Boolean> filter )
+        public IRegionManager FindRegionManager( Func<DependencyObject, IRegionManager, bool> filter )
         {
-            return this.regionManagers.Where( kvp => filter( kvp.Key, kvp.Value ) )
+            return regionManagers.Where( kvp => filter( kvp.Key, kvp.Value ) )
                 .Select( v => v.Value )
                 .SingleOrDefault();
         }
@@ -200,13 +200,13 @@ namespace Radical.Windows.Presentation.Regions
         /// <exception cref="NotSupportedException">A NotSupportedException is raised if this service has already registered a region manager for the supplied owner. Use HoldsRegionManager() to test.</exception>
         public IRegionManager RegisterRegionManager( DependencyObject owner )
         {
-            if ( this.HoldsRegionManager( owner ) )
+            if ( HoldsRegionManager( owner ) )
             {
                 throw new NotSupportedException();
             }
 
-            var manager = this.regionManagerFactory.Create();
-            this.regionManagers.Add( owner, manager );
+            var manager = regionManagerFactory.Create();
+            regionManagers.Add( owner, manager );
 
             /*
              * L'inghippo è:
@@ -227,16 +227,16 @@ namespace Radical.Windows.Presentation.Regions
              */
             Action<DependencyObject> closedCallback = d =>
             {
-                if ( this.conventions.ShouldUnregisterRegionManagerOfView( d ) )
+                if ( conventions.ShouldUnregisterRegionManagerOfView( d ) )
                 {
-                    this.UnregisterRegionManagers( d, UnregisterBehavior.WholeLogicalTreeChain );
+                    UnregisterRegionManagers( d, UnregisterBehavior.WholeLogicalTreeChain );
                 }
             };
 
-            var closableHost = this.conventions.TryHookClosedEventOfHostOf( owner, closedCallback );
+            var closableHost = conventions.TryHookClosedEventOfHostOf( owner, closedCallback );
             if ( closableHost != null )
             {
-                this.closableObjects.Add( closableHost );
+                closableObjects.Add( closableHost );
             }
 
             return manager;
@@ -246,17 +246,17 @@ namespace Radical.Windows.Presentation.Regions
         {
             if ( view != null )
             {
-                if ( this.HoldsRegionManager( view ) )
+                if ( HoldsRegionManager( view ) )
                 {
-                    var manager = this.regionManagers[ view ];
+                    var manager = regionManagers[ view ];
                     manager.Shutdown();
 
-                    this.regionManagers.Remove( view );
+                    regionManagers.Remove( view );
                 }
 
-                if ( this.closableObjects.Contains( view ) )
+                if ( closableObjects.Contains( view ) )
                 {
-                    this.closableObjects.Remove( view );
+                    closableObjects.Remove( view );
                 }
 
                 if ( behavior == UnregisterBehavior.WholeLogicalTreeChain )
@@ -268,7 +268,7 @@ namespace Radical.Windows.Presentation.Regions
 #endif
                     foreach ( var child in children )
                     {
-                        this.UnregisterRegionManagers( child as DependencyObject, behavior );
+                        UnregisterRegionManagers( child as DependencyObject, behavior );
                     }
                 }
             }
@@ -281,7 +281,7 @@ namespace Radical.Windows.Presentation.Regions
         /// <exception cref="NotSupportedException">A NotSupportedException is raised if this service has no region manager registered for the supplied owner. Use HoldsRegionManager() to test.</exception>
         public void UnregisterRegionManager( DependencyObject owner )
         {
-            this.UnregisterRegionManager( owner, UnregisterBehavior.Default );
+            UnregisterRegionManager( owner, UnregisterBehavior.Default );
         }
 
         /// <summary>
@@ -292,12 +292,12 @@ namespace Radical.Windows.Presentation.Regions
         /// <exception cref="NotSupportedException">A NotSupportedException is raised if this service has no region manager registered for the supplied owner. Use HoldsRegionManager() to test.</exception>
         public void UnregisterRegionManager( DependencyObject owner, UnregisterBehavior behavior )
         {
-            if ( !this.HoldsRegionManager( owner ) )
+            if ( !HoldsRegionManager( owner ) )
             {
                 throw new NotSupportedException();
             }
 
-            this.UnregisterRegionManagers( owner, behavior );
+            UnregisterRegionManagers( owner, behavior );
         }
     }
 }

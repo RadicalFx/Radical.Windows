@@ -14,8 +14,8 @@ namespace Radical.Windows.Presentation.Messaging
         /// <param name="viewOwner">The view owner.</param>
         public CloseViewRequest( object viewOwner )
         {
-            this.ViewOwner = viewOwner;
-            this.DialogResult = null;
+            ViewOwner = viewOwner;
+            DialogResult = null;
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace Radical.Windows
         /// <returns>
         /// 	<c>true</c> if the given dependency object is child of an object of the specified type T; otherwise, <c>false</c>.
         /// </returns>
-        public static Boolean IsChildOfType<T>(DependencyObject obj) where T : DependencyObject
+        public static bool IsChildOfType<T>(DependencyObject obj) where T : DependencyObject
         {
             if (obj == null)
             {
@@ -112,7 +112,7 @@ namespace Radical.Windows
             DependencyObject child = null;
 
             var count = VisualTreeHelper.GetChildrenCount(source);
-            for (Int32 i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 child = VisualTreeHelper.GetChild(source, i);
                 if (child != null && (child.GetType() == typeof(T)) && filter((T)child))
@@ -164,7 +164,7 @@ namespace Radical.Windows
             var childs = new List<T>();
 
             var count = VisualTreeHelper.GetChildrenCount(source);
-            for (Int32 i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 child = VisualTreeHelper.GetChild(source, i);
                 if (child != null && (child.GetType() == typeof(T)) && filter((T)child))

@@ -33,13 +33,13 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		/// A list of <seealso cref="ValidationError"/>.
 		/// </returns>
-		protected override IEnumerable<ValidationError> OnValidate( String ruleSet )
+		protected override IEnumerable<ValidationError> OnValidate(string ruleSet )
 		{
 			//TODO: è sbagliato che venga preso un singolo validatore se ruleSet è null, dovrebbero essere presi tutti
-			var validator = this.validators.SingleOrDefault( v => v.RuleSet == ruleSet );
+			var validator = validators.SingleOrDefault( v => v.RuleSet == ruleSet );
 			if( validator != null )
 			{
-				var result = validator.Validate( this.entity );
+				var result = validator.Validate( entity );
 				return result.Errors;
 			}
 
@@ -54,12 +54,12 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		/// A list of <seealso cref="ValidationError" />.
 		/// </returns>
-		protected override IEnumerable<ValidationError> OnValidateProperty( String ruleSet, string propertyName )
+		protected override IEnumerable<ValidationError> OnValidateProperty(string ruleSet, string propertyName )
 		{
-			var validator = this.validators.SingleOrDefault( v => v.RuleSet == ruleSet );
+			var validator = validators.SingleOrDefault( v => v.RuleSet == ruleSet );
 			if( validator != null )
 			{
-				var result = validator.Validate( this.entity, propertyName );
+				var result = validator.Validate( entity, propertyName );
 				if( !result.IsValid )
 				{
 					return result.Errors.Where( e => e.Key == propertyName );

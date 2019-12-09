@@ -9,27 +9,27 @@ namespace Radical.Windows.Presentation
 {
     class PropertyValidationState : IDisposable
     {
-        String actual = null;
+        string actual = null;
 
-        public IDisposable BeginPropertyValidation( String propertyName )
+        public IDisposable BeginPropertyValidation(string propertyName )
         {
             Ensure.That( actual )
                 .WithMessage( "Cannot begin property validation for '{0}', there is already an ongoing property validation for '{1}'", propertyName, actual )
                 .Is( null );
 
-            this.actual = propertyName;
+            actual = propertyName;
 
             return this;
         }
 
-        public Boolean IsValidatingProperty( String propertyName )
+        public bool IsValidatingProperty(string propertyName )
         {
-            return this.actual == propertyName;
+            return actual == propertyName;
         }
 
         public void Dispose()
         {
-            this.actual = null;
+            actual = null;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Radical.Windows.Presentation.Regions
 	/// </summary>
 	public class RegionManager : IRegionManager
 	{
-		readonly IDictionary<String, IRegion> regions = new Dictionary<String, IRegion>();
+		readonly IDictionary<string, IRegion> regions = new Dictionary<string, IRegion>();
 
 		/// <summary>
 		/// Registers the supplied region in this region manager.
@@ -18,12 +18,12 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="region">The region to register.</param>
 		public void RegisterRegion( IRegion region )
 		{
-			if( this.regions.ContainsKey( region.Name ) )
+			if( regions.ContainsKey( region.Name ) )
 			{
 				throw new InvalidOperationException();
 			}
 
-			this.regions.Add( region.Name, region );
+			regions.Add( region.Name, region );
 		}
 
 		/// <summary>
@@ -31,7 +31,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// </summary>
 		public IRegion this[ string name ]
 		{
-			get { return this.regions[ name ]; }
+			get { return regions[ name ]; }
 		}
 
 
@@ -57,7 +57,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// </returns>
 		public TRegion GetRegion<TRegion>( string name ) where TRegion : IRegion
 		{
-			return ( TRegion )this.GetRegion( name );
+			return ( TRegion )GetRegion( name );
 		}
 
 		/// <summary>
@@ -66,9 +66,9 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="name">The name.</param>
 		/// <param name="region">The region.</param>
 		/// <returns></returns>
-		public Boolean TryGetRegion( string name, out IRegion region )
+		public bool TryGetRegion( string name, out IRegion region )
 		{
-			return this.regions.TryGetValue( name, out region );
+			return regions.TryGetValue( name, out region );
 		}
 
 		/// <summary>
@@ -83,7 +83,7 @@ namespace Radical.Windows.Presentation.Regions
 		public bool TryGetRegion<TRegion>( string regionName, out TRegion region ) where TRegion : IRegion
 		{
 			IRegion rg;
-			if( this.TryGetRegion( regionName, out rg ) && rg is TRegion )
+			if( TryGetRegion( regionName, out rg ) && rg is TRegion )
 			{
 				region = ( TRegion )rg;
 				return true;
@@ -98,8 +98,8 @@ namespace Radical.Windows.Presentation.Regions
 		/// </summary>
 		public void Shutdown()
 		{
-			this.regions.Values.ForEach( r => r.Shutdown() );
-			this.regions.Clear();
+			regions.Values.ForEach( r => r.Shutdown() );
+			regions.Clear();
 		}
 
 		/// <summary>
@@ -110,7 +110,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// </returns>
 		public IEnumerable<IRegion> GetAllRegisteredRegions()
 		{
-			return this.regions.Values;
+			return regions.Values;
 		}
 	}
 }

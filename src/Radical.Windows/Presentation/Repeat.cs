@@ -18,7 +18,7 @@ namespace Radical.Windows.Presentation
 
 			internal Repeater( TimeSpan delay )
 			{
-				this.timer = new DispatcherTimer()
+				timer = new DispatcherTimer()
 				{
 					Interval = delay
 				};
@@ -26,7 +26,7 @@ namespace Radical.Windows.Presentation
 				timer.Tick += ( s, a ) =>
 				{
 					timer.Stop();
-					this.action();
+					action();
 					timer.Start();
 				};
 			}
@@ -42,7 +42,7 @@ namespace Radical.Windows.Presentation
 				Ensure.That( action ).Named( () => action ).IsNotNull();
 
 				this.action = action;
-				this.timer.Start();
+				timer.Start();
 			}
 
 			/// <summary>

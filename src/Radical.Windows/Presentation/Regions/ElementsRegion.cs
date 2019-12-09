@@ -29,7 +29,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// Initializes a new instance of the <see cref="ElementsRegion&lt;T&gt;"/> class.
 		/// </summary>
 		/// <param name="name">The name.</param>
-		protected ElementsRegion( String name )
+		protected ElementsRegion(string name )
 			: base( name )
 		{
 
@@ -46,11 +46,11 @@ namespace Radical.Windows.Presentation.Regions
 				return;
 			}
 
-			this.views.ForEach( v =>
+			views.ForEach( v =>
 			{
-				this.NotifyClosedAndEnsureRelease( v );
+				NotifyClosedAndEnsureRelease( v );
 			} );
-			this.views.Clear();
+			views.Clear();
 		}
 
 		readonly List<DependencyObject> views = new List<DependencyObject>();
@@ -61,9 +61,9 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="view">The view.</param>
 		public void Add( DependencyObject view )
 		{
-			this.OnAdd( view );
-			this.views.Add( view );
-			this.OnAdded( view );
+			OnAdd( view );
+			views.Add( view );
+			OnAdded( view );
 		}
 
 		/// <summary>
@@ -87,7 +87,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="view">The view.</param>
 		public void Remove( DependencyObject view )
 		{
-			this.Remove( view, RemoveReason.UserRequest );
+			Remove( view, RemoveReason.UserRequest );
 		}
 
 		/// <summary>
@@ -112,9 +112,9 @@ namespace Radical.Windows.Presentation.Regions
 
 			if ( !args.Cancel )
 			{
-				this.OnRemove( view, reason );
-				this.views.Remove( view );
-				this.OnRemoved( view, reason );
+				OnRemove( view, reason );
+				views.Remove( view );
+				OnRemoved( view, reason );
 			}
 		}
 
@@ -132,7 +132,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="reason">The reason.</param>
 		protected virtual void OnRemoved( DependencyObject view, RemoveReason reason )
 		{
-			this.NotifyClosedAndEnsureRelease( view );
+			NotifyClosedAndEnsureRelease( view );
 		}
 
 		/// <summary>
@@ -144,7 +144,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// </returns>
 		public IEnumerable<TView> GetElements<TView>() where TView : DependencyObject
 		{
-			return this.views.OfType<TView>();
+			return views.OfType<TView>();
 		}
 	}
 

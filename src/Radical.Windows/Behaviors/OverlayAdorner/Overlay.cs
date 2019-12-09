@@ -9,17 +9,17 @@ namespace Radical.Windows.Behaviors
     {
         public static readonly DependencyProperty ContentProperty = DependencyProperty.RegisterAttached(
                                       "Content",
-                                      typeof(Object),
+                                      typeof(object),
                                       typeof(Overlay),
                                       new FrameworkPropertyMetadata(null, OnContentPropertyChanged));
 
 
-        public static Object GetContent(UIElement control)
+        public static object GetContent(UIElement control)
         {
             return control.GetValue(ContentProperty);
         }
 
-        public static void SetContent(UIElement control, Object value)
+        public static void SetContent(UIElement control, object value)
         {
             control.SetValue(ContentProperty, value);
         }

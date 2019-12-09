@@ -21,7 +21,7 @@ namespace Radical.Windows.Input
         /// <param name="source">The source.</param>
         /// <param name="properties">The properties to monitor.</param>
         /// <returns>The original command.</returns>
-        public static IDelegateCommand Observe<TSource>(this IDelegateCommand command, TSource source, params Expression<Func<TSource, Object>>[] properties)
+        public static IDelegateCommand Observe<TSource>(this IDelegateCommand command, TSource source, params Expression<Func<TSource, object>>[] properties)
             where TSource : INotifyPropertyChanged
         {
             Ensure.That(properties).Named(() => properties).IsNotNull();

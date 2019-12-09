@@ -12,10 +12,10 @@ namespace Radical.Windows.Behaviors
 
             var cb = new CommandBinding();
             cb.Command = ApplicationCommands.Undo;
-            cb.CanExecute += (s, e) => e.CanExecute = this.AssociatedObject.IsFocused;
+            cb.CanExecute += (s, e) => e.CanExecute = AssociatedObject.IsFocused;
             cb.Executed += (s, e) => e.Handled = true;
 
-            this.AssociatedObject.CommandBindings.Add(cb);
+            AssociatedObject.CommandBindings.Add(cb);
         }
     }
 }

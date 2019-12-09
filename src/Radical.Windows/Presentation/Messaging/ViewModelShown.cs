@@ -11,7 +11,7 @@
         /// <param name="viewModel">The view model.</param>
         public ViewModelShown( object viewModel )
         {
-            this.ViewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         /// <summary>

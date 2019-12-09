@@ -15,7 +15,7 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// Gets a value indicating whether this instance is valid.
         /// </summary>
         /// <value><c>true</c> if this instance is valid; otherwise, <c>false</c>.</value>
-        Boolean IsValid { get; }
+        bool IsValid { get; }
 
         /// <summary>
         /// Gets the validation errors.
@@ -27,7 +27,7 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// Validates this instance.
         /// </summary>
         /// <returns><c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
-        Boolean Validate();
+        bool Validate();
 
         /// <summary>
         /// Validates this instance.
@@ -36,7 +36,7 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
         /// </returns>
-        Boolean Validate(ValidationBehavior behavior);
+        bool Validate(ValidationBehavior behavior);
 
         /// <summary>
         /// Validates this instance.
@@ -46,7 +46,7 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
         /// </returns>
-        Boolean Validate(String ruleSet, ValidationBehavior behavior);
+        bool Validate(string ruleSet, ValidationBehavior behavior);
 
         /// <summary>
         /// Occurs when the validation process is completed.

@@ -19,7 +19,7 @@
 
         protected override Visual GetVisualChild(int index)
         {
-            return this.Content;
+            return Content;
         }
 
         protected override int VisualChildrenCount
@@ -29,14 +29,14 @@
 
         protected override Size MeasureOverride(Size constraint)
         {
-            this.Content.Measure(this.AdornedElement.RenderSize);
+            Content.Measure(AdornedElement.RenderSize);
 
-            return this.AdornedElement.RenderSize;
+            return AdornedElement.RenderSize;
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            this.Content.Arrange(new Rect(finalSize));
+            Content.Arrange(new Rect(finalSize));
 
             return finalSize;
         }

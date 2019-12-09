@@ -15,34 +15,34 @@ namespace Radical.Windows.Behaviors
 
         MemoryStream ms = null;
 
-        public MultiThreadingBusyAdorner(UIElement adornedElement, Object userContent)
+        public MultiThreadingBusyAdorner(UIElement adornedElement, object userContent)
             : base(adornedElement)
         {
-            this.userContentPresenter = BusyStatusManager.WrapUserContent(userContent);
+            userContentPresenter = BusyStatusManager.WrapUserContent(userContent);
 
-            this._busyHost = new BackgroundVisualHost(() =>
+            _busyHost = new BackgroundVisualHost(() =>
            {
                var s = (ContentPresenter)XamlReader.Load(ms);
 
-               this.ms.Dispose();
-               this.ms = null;
+               ms.Dispose();
+               ms = null;
 
                return s;
            });
 
-            this.AddLogicalChild(this._busyHost);
-            this.AddVisualChild(this._busyHost);
+            AddLogicalChild(_busyHost);
+            AddVisualChild(_busyHost);
         }
 
         protected override UIElement Content
         {
-            get { return this._busyHost; }
+            get { return _busyHost; }
         }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
             var brush = new SolidColorBrush(Color.FromArgb(100, 220, 220, 220));
-            var rect = new Rect(new Point(0, 0), this.DesiredSize);
+            var rect = new Rect(new Point(0, 0), DesiredSize);
 
             drawingContext.DrawRectangle(brush, null, rect);
 
@@ -51,17 +51,17 @@ namespace Radical.Windows.Behaviors
 
         internal void Setup()
         {
-            this.ms = new MemoryStream();
-            XamlWriter.Save(this.userContentPresenter, ms);
+            ms = new MemoryStream();
+            XamlWriter.Save(userContentPresenter, ms);
             ms.Flush();
             ms.Position = 0;
 
-            this._busyHost.Setup();
+            _busyHost.Setup();
         }
 
         internal void Teardown()
         {
-            this._busyHost.Teardown();
+            _busyHost.Teardown();
 
             //this.ms.Dispose();
             //this.ms = null;

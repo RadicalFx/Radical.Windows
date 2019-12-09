@@ -14,7 +14,7 @@ namespace Radical.Windows.Presentation.Messaging
 		/// <param name="viewModel">The view model.</param>
 		public ViewModelActivated(object viewModel)
 		{
-			this.ViewModel = viewModel;
+			ViewModel = viewModel;
 		}
 
 		/// <summary>

@@ -14,15 +14,15 @@ namespace Radical.Windows.Presentation.Boot
 		/// </summary>
 		public SplashScreenConfiguration()
 		{
-			this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-			this.SizeToContent = SizeToContent.WidthAndHeight;
-			this.MinWidth = 485;
-			this.MinHeight = 335;
-			this.WindowStyle = WindowStyle.None;
-			this.MinimumDelay = 1500;
-			this.SplashScreenViewType = typeof( SplashScreenView );
+			WindowStartupLocation = WindowStartupLocation.CenterScreen;
+			SizeToContent = SizeToContent.WidthAndHeight;
+			MinWidth = 485;
+			MinHeight = 335;
+			WindowStyle = WindowStyle.None;
+			MinimumDelay = 1500;
+			SplashScreenViewType = typeof( SplashScreenView );
 
-			this.StartupAsyncWork = obj => Task.Delay( this.MinimumDelay );
+			StartupAsyncWork = obj => Task.Delay( MinimumDelay );
 		}
 
 		/// <summary>
@@ -48,17 +48,17 @@ namespace Radical.Windows.Presentation.Boot
 		/// <summary>
 		/// Defines the Height of the splash screen window if the SizeToContent value is Manual or Width; otherwise is ignored.
 		/// </summary>
-		public Double Height { get; set; }
+		public double Height { get; set; }
 
 		/// <summary>
 		/// Defines the Width of the splash screen window if the SizeToContent value is Manual or Height; otherwise is ignored.
 		/// </summary>
-		public Double Width { get; set; }
+		public double Width { get; set; }
 
 		/// <summary>
 		/// Represents the minimum time, in milliseconds, the splash screen will be shown.
 		/// </summary>
-		public Int32 MinimumDelay { get; set; }
+		public int MinimumDelay { get; set; }
 
 		/// <summary>
 		/// Defines the default view that Radical use to host the splash screen content.
@@ -68,11 +68,11 @@ namespace Radical.Windows.Presentation.Boot
 		/// <summary>
 		/// The Minimum Width of the splash screen window. The default value is 585.
 		/// </summary>
-		public Double? MinWidth { get; set; }
+		public double? MinWidth { get; set; }
 
 		/// <summary>
 		/// The Minimum Height of the splash screen window. The default value is 335.
 		/// </summary>
-		public Double? MinHeight { get; set; }
+		public double? MinHeight { get; set; }
 	}
 }

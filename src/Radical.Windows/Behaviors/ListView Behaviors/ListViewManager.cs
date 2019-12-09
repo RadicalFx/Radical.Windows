@@ -143,7 +143,7 @@ namespace Radical.Windows.Behaviors
                 var commandParam = GridViewColumnManager.GetSortProperty(column);
                 var command = ListViewManager.GetSortCommand(listView);
 
-                if (!String.IsNullOrEmpty(commandParam) && command != null && command.CanExecute(commandParam))
+                if (!string.IsNullOrEmpty(commandParam) && command != null && command.CanExecute(commandParam))
                 {
                     command.Execute(commandParam);
                 }
@@ -154,17 +154,17 @@ namespace Radical.Windows.Behaviors
 
         static readonly DependencyProperty IsLoadEventAttachedProperty = DependencyProperty.RegisterAttached(
                                       "IsLoadEventAttached",
-                                      typeof(Boolean),
+                                      typeof(bool),
                                       typeof(ListViewManager),
                                       new FrameworkPropertyMetadata(false));
 
 
-        static Boolean GetIsLoadEventAttached(ListView owner)
+        static bool GetIsLoadEventAttached(ListView owner)
         {
-            return (Boolean)owner.GetValue(IsLoadEventAttachedProperty);
+            return (bool)owner.GetValue(IsLoadEventAttachedProperty);
         }
 
-        static void SetIsLoadEventAttached(ListView owner, Boolean value)
+        static void SetIsLoadEventAttached(ListView owner, bool value)
         {
             owner.SetValue(IsLoadEventAttachedProperty, value);
         }
@@ -316,17 +316,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty AutoSizeColumnsProperty = DependencyProperty.RegisterAttached(
                                       "AutoSizeColumns",
-                                      typeof(Boolean),
+                                      typeof(bool),
                                       typeof(ListViewManager),
                                       new FrameworkPropertyMetadata(false, OnAutoSizeColumnsChanged));
 
 
-        public static Boolean GetAutoSizeColumns(ListView owner)
+        public static bool GetAutoSizeColumns(ListView owner)
         {
-            return (Boolean)owner.GetValue(AutoSizeColumnsProperty);
+            return (bool)owner.GetValue(AutoSizeColumnsProperty);
         }
 
-        public static void SetAutoSizeColumns(ListView owner, Boolean value)
+        public static void SetAutoSizeColumns(ListView owner, bool value)
         {
             owner.SetValue(AutoSizeColumnsProperty, value);
         }

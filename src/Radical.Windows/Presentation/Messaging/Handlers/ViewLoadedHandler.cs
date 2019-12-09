@@ -20,21 +20,21 @@ namespace Radical.Windows.Presentation.Messaging.Handlers
             this.autoMappingHandler = autoMappingHandler;
         }
 
-        public override void Handle( Object sender, ViewLoaded message )
+        public override void Handle(object sender, ViewLoaded message )
         {
             var view = message.View;
-            if ( this.regionService.HoldsRegionManager( view ) )
+            if ( regionService.HoldsRegionManager( view ) )
             {
-                var manager = this.regionService.GetRegionManager( view );
+                var manager = regionService.GetRegionManager( view );
                 var regions = manager.GetAllRegisteredRegions();
 
                 foreach ( var region in regions )
                 {
-                    var allViewTypes = this.autoMappingHandler.GetViewsInterestedIn( region.Name );
+                    var allViewTypes = autoMappingHandler.GetViewsInterestedIn( region.Name );
 
                     foreach ( var viewType in allViewTypes )
                     {
-                        this.autoMappingHandler.Inject( 
+                        autoMappingHandler.Inject( 
 							()=> viewProvider.GetView( viewType ), 
 							region );
                     }

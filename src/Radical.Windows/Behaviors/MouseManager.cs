@@ -46,7 +46,7 @@ namespace Radical.Windows.Behaviors
 
         static readonly DependencyProperty OnLoadedAttachedProperty = DependencyProperty.RegisterAttached(
                              "OnLoadedAttached",
-                             typeof(Boolean),
+                             typeof(bool),
                              typeof(MouseManager),
                              new FrameworkPropertyMetadata(false));
 

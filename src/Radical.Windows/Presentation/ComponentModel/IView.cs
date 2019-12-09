@@ -8,12 +8,12 @@ namespace Radical.Windows.Presentation.ComponentModel
 	[Obsolete( "Use the behaviors via messaging." )]
 	public interface IView
 	{
-		/// <summary>
-		/// Gets or sets the data context.
-		/// </summary>
-		/// <value>
-		/// The data context.
-		/// </value>
-		Object DataContext { get; set; }
+        /// <summary>
+        /// Gets or sets the data context.
+        /// </summary>
+        /// <value>
+        /// The data context.
+        /// </value>
+        object DataContext { get; set; }
 	}
 }

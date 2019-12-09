@@ -11,7 +11,7 @@
 		/// <param name="reason">The reason.</param>
 		public ApplicationShutdown( Boot.ApplicationShutdownReason reason)
 		{
-			this.Reason = reason;
+			Reason = reason;
 		}
 
         /// <summary>

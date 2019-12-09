@@ -13,12 +13,12 @@ namespace Radical.Windows.Behaviors
         /// <param name="keyStates">The key states.</param>
         /// <param name="dropTarget">The drop target.</param>
         /// <param name="allowedEffects">The allowed effects.</param>
-        public DragLeaveArgs(IDataObject data, DragDropKeyStates keyStates, Object dropTarget, DragDropEffects allowedEffects)
+        public DragLeaveArgs(IDataObject data, DragDropKeyStates keyStates, object dropTarget, DragDropEffects allowedEffects)
             : base(data, keyStates, dropTarget)
         {
             Ensure.That(allowedEffects).Named("allowedEffects").IsTrue(v => v.IsDefined());
 
-            this.AllowedEffects = allowedEffects;
+            AllowedEffects = allowedEffects;
         }
 
         /// <summary>

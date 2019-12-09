@@ -14,7 +14,7 @@ namespace Radical.Windows.Presentation.Messaging
         /// <param name="reason">The reason.</param>
         public ApplicationShutdownCanceled( Boot.ApplicationShutdownReason reason )
         {
-            this.Reason = reason;
+            Reason = reason;
         }
 
         /// <summary>

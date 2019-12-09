@@ -48,7 +48,7 @@ namespace Radical.Windows.Presentation.Regions
 		protected Region()
 		{
 #if !SILVERLIGHT
-			Logger = new TraceSource( this.GetType().Name );
+			Logger = new TraceSource( GetType().Name );
 #endif
 		}
 
@@ -56,10 +56,10 @@ namespace Radical.Windows.Presentation.Regions
 		/// Initializes a new instance of the <see cref="Region&lt;T&gt;"/> class.
 		/// </summary>
 		/// <param name="name">The name.</param>
-		protected Region( String name )
+		protected Region(string name )
 			: this()
 		{
-			this.Name = name;
+			Name = name;
 		}
 
 		/// <summary>
@@ -73,12 +73,12 @@ namespace Radical.Windows.Presentation.Regions
 		/// <value>
 		/// The name.
 		/// </value>
-		public String Name { get; set; }
+		public string Name { get; set; }
 
 		/// <summary>
 		/// The number of milliseconds to wait before loading the region content.
 		/// </summary>
-		public Int32 AsyncLoadDelay { get; set; }
+		public int AsyncLoadDelay { get; set; }
 
 		/// <summary>
 		/// Gets the element.
@@ -115,17 +115,17 @@ namespace Radical.Windows.Presentation.Regions
 					if ( element == null )
 					{
 						//TODO: migliorare l'exception
-						var msg = String.Format( "The TargetObject of this {0} is null.", this.GetType().ToString( "SN" ) );
+						var msg = string.Format( "The TargetObject of this {0} is null.", GetType().ToString( "SN" ) );
 						throw new NotSupportedException( msg );
 					}
 
-					if ( this.Element != element )
+					if ( Element != element )
 					{
-						this.Element = element;
-						this.OnElementChanged();
+						Element = element;
+						OnElementChanged();
 					}
 
-					if ( !DesignerProperties.GetIsInDesignMode( this.Element ) )
+					if ( !DesignerProperties.GetIsInDesignMode( Element ) )
 					{
 #if SILVERLIGHT
 
@@ -155,27 +155,27 @@ namespace Radical.Windows.Presentation.Regions
 						this.Element.Loaded += loaded;
 #else
 
-						var view = this.FindHostingViewOf( this.Element );
+						var view = FindHostingViewOf( Element );
 
 						if ( view == null )
 						{
 							//TODO: migliorare l'exception
-							var msg = String.Format( "Cannot find any hosting view for this {0}.",
-								this.GetType().ToString( "SN" ) );
+							var msg = string.Format( "Cannot find any hosting view for this {0}.",
+								GetType().ToString( "SN" ) );
 
 							throw new NotSupportedException( msg );
 						}
 
-						this.HostingView = view;
+						HostingView = view;
 #endif
 
 #if !SILVERLIGHT
 
 						if ( CommandLine.GetCurrent().Contains( "hr" ) )
 						{
-							this.Logger.Warning( "Regions hilighting is turned on." );
+							Logger.Warning( "Regions hilighting is turned on." );
 
-							this.Element.Loaded += ( s, e ) =>
+							Element.Loaded += ( s, e ) =>
 							{
 								var obj = ( UIElement )s;
 								var layer = AdornerLayer.GetAdornerLayer( obj );
@@ -187,7 +187,7 @@ namespace Radical.Windows.Presentation.Regions
 								}
 							};
 
-							this.Element.Unloaded += ( s, e ) =>
+							Element.Unloaded += ( s, e ) =>
 							{
 								var obj = ( UIElement )s;
 								var layer = AdornerLayer.GetAdornerLayer( obj );

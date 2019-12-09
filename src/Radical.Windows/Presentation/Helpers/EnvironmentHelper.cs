@@ -16,7 +16,7 @@ namespace Radical.Windows.Presentation.Helpers
         /// Gets the current directory.
         /// </summary>
         /// <returns>The directory the executable is running from.</returns>
-        public static String GetCurrentDirectory()
+        public static string GetCurrentDirectory()
         {
             return Path.GetDirectoryName( Assembly.GetEntryAssembly().Location );
         }

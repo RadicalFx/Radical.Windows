@@ -15,7 +15,7 @@ namespace Radical.Windows.Presentation.Messaging
 		/// <param name="view">The view.</param>
 		public ViewLoaded(DependencyObject view)
 		{
-			this.View = view;
+			View = view;
 		}
 
         /// <summary>

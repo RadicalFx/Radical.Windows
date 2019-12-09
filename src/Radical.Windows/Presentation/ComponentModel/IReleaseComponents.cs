@@ -14,7 +14,7 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// Releases the given component.
 		/// </summary>
 		/// <param name="component">The component to release.</param>
-		void Release( Object component );
+		void Release(object component );
 	}
 
 

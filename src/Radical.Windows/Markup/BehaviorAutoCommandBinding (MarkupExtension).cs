@@ -14,7 +14,7 @@ namespace Radical.Windows.Markup
             DependencyObject fe;
             DependencyProperty dp;
 
-            if (this.TryGetTargetItems(provider, out fe, out dp))
+            if (TryGetTargetItems(provider, out fe, out dp))
             {
                 var inab = fe as INotifyAttachedOjectLoaded;
                 if (inab != null)
@@ -23,7 +23,7 @@ namespace Radical.Windows.Markup
                     h = (s, e) =>
                     {
                         inab.AttachedObjectLoaded -= h;
-                        this.OnTargetLoaded(fe, dp);
+                        OnTargetLoaded(fe, dp);
                     };
 
                     inab.AttachedObjectLoaded += h;

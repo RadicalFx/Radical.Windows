@@ -12,14 +12,14 @@ namespace Radical.Windows.Presentation.Messaging
         /// Initializes a new instance of the <see cref="ViewModelLoaded"/> class.
         /// </summary>
         /// <param name="viewModel">The view model.</param>
-        public ViewModelLoaded(Object viewModel)
+        public ViewModelLoaded(object viewModel)
         {
-            this.ViewModel = viewModel;
+            ViewModel = viewModel;
         }
 
         /// <summary>
         /// Gets the view model.
         /// </summary>
-        public Object ViewModel { get; private set; }
+        public object ViewModel { get; private set; }
     }
 }

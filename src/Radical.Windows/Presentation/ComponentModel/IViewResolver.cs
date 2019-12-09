@@ -21,7 +21,7 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// <typeparam name="T"></typeparam>
 		/// <param name="viewModelInterceptor">The view model interceptor.</param>
 		/// <returns></returns>
-		T GetView<T>( Action<Object> viewModelInterceptor ) where T : DependencyObject;
+		T GetView<T>( Action<object> viewModelInterceptor ) where T : DependencyObject;
 
 		/// <summary>
 		/// Gets the view.
@@ -45,7 +45,7 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// <param name="viewType">Type of the view.</param>
 		/// <param name="viewModelInterceptor">The view model interceptor.</param>
 		/// <returns></returns>
-		DependencyObject GetView( Type viewType, Action<Object> viewModelInterceptor );
+		DependencyObject GetView( Type viewType, Action<object> viewModelInterceptor );
 
 		///// <summary>
 		///// Releases the given view

@@ -33,7 +33,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 		/// <returns>
 		/// A list of <seealso cref="ValidationError"/>.
 		/// </returns>
-		protected override IEnumerable<ValidationError> OnValidate( String ruleSet )
+		protected override IEnumerable<ValidationError> OnValidate(string ruleSet )
 		{
 			return emptyErrors;
 		}

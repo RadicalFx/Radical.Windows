@@ -21,7 +21,7 @@ namespace Radical.Windows.Behaviors
                 if (clickedHeader != null && clickedHeader.Role != GridViewColumnHeaderRole.Padding)
                 {
                     var column = clickedHeader.Column;
-                    String commandParam = null;
+                    string commandParam = null;
 
                     if (column.DisplayMemberBinding is Binding)
                     {
@@ -32,16 +32,16 @@ namespace Radical.Windows.Behaviors
                         commandParam = GridViewColumnManager.GetSortProperty(column);
                     }
 
-                    if (!String.IsNullOrEmpty(commandParam) && this.Command != null && this.Command.CanExecute(commandParam))
+                    if (!string.IsNullOrEmpty(commandParam) && Command != null && Command.CanExecute(commandParam))
                     {
-                        this.Command.Execute(commandParam);
+                        Command.Execute(commandParam);
                     }
                 }
             };
 
             onLoaded = (s, e) =>
             {
-                this.AssociatedObject.AddHandler(
+                AssociatedObject.AddHandler(
                     GridViewColumnHeader.ClickEvent,
                     onColumnHeaderClick);
             };
@@ -57,8 +57,8 @@ namespace Radical.Windows.Behaviors
 
         public ICommand Command
         {
-            get { return (ICommand)this.GetValue(CommandProperty); }
-            set { this.SetValue(CommandProperty, value); }
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
         }
 
         #endregion
@@ -67,15 +67,15 @@ namespace Radical.Windows.Behaviors
         {
             base.OnAttached();
 
-            this.AssociatedObject.Loaded += onLoaded;
+            AssociatedObject.Loaded += onLoaded;
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
 
-            this.AssociatedObject.Loaded -= onLoaded;
-            this.AssociatedObject.RemoveHandler(
+            AssociatedObject.Loaded -= onLoaded;
+            AssociatedObject.RemoveHandler(
                     GridViewColumnHeader.ClickEvent,
                     onColumnHeaderClick);
         }
@@ -92,7 +92,7 @@ namespace Radical.Windows.Behaviors
         /// <value></value>
         public IInputElement CommandTarget
         {
-            get { return this.AssociatedObject as IInputElement; }
+            get { return AssociatedObject as IInputElement; }
         }
     }
 }

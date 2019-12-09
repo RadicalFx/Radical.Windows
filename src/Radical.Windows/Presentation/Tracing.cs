@@ -9,7 +9,7 @@ namespace Radical.Windows.Presentation
 {
     static class Tracing
     {
-        static readonly Object syncRoot = new Object();
+        static readonly object syncRoot = new object();
         static TraceSource _source;
 
         public static TraceSource Source 

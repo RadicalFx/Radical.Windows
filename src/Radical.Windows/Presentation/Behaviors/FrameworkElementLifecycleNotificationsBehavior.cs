@@ -29,9 +29,9 @@ namespace Radical.Windows.Presentation.Behaviors
 
             if ( !DesignTimeHelper.GetIsInDesignMode() )
             {
-                this.loaded = ( s, e ) =>
+                loaded = ( s, e ) =>
                 {
-                    var view = this.AssociatedObject;
+                    var view = AssociatedObject;
                     var dc = this.conventions.GetViewDataContext( view, this.conventions.DefaultViewDataContextSearchBehavior );
 
                     if ( this.conventions.ShouldNotifyViewModelLoaded( view, dc ) )
@@ -62,7 +62,7 @@ namespace Radical.Windows.Presentation.Behaviors
 
             if ( !DesignTimeHelper.GetIsInDesignMode() )
             {
-                this.AssociatedObject.Loaded += this.loaded;
+                AssociatedObject.Loaded += loaded;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Radical.Windows.Presentation.Behaviors
         {
             if ( !DesignTimeHelper.GetIsInDesignMode() )
             {
-                this.AssociatedObject.Loaded -= this.loaded;
+                AssociatedObject.Loaded -= loaded;
             }
             base.OnDetaching();
         }

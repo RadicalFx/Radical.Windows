@@ -19,7 +19,7 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// </summary>
 		/// <value>THe requested region.</value>
 		/// <exception cref="ArgumentOutOfRangeException">An ArgumentOutOfRangeException is raised if a region with the specifed name cannot be found.</exception>
-		IRegion this[ String name ] { get; }
+		IRegion this[string name ] { get; }
 
 		/// <summary>
 		/// Gets all the registered the regions.
@@ -32,7 +32,7 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// </summary>
 		/// <param name="name">The name of the region.</param>
 		/// <returns>The searched region, or an ArgumentOutOfRangeException if no region is registered with the given name.</returns>
-		IRegion GetRegion( String name );
+		IRegion GetRegion(string name );
 
 		/// <summary>
 		/// Gets the region.
@@ -40,27 +40,27 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// <typeparam name="TRegion">The type of the region.</typeparam>
 		/// <param name="name">The name.</param>
 		/// <returns>The searched region, or an ArgumentOutOfRangeException if no region is registered with the given name.</returns>
-		TRegion GetRegion<TRegion>( String name ) 
+		TRegion GetRegion<TRegion>(string name ) 
 			where TRegion : IRegion;
 
-		/// <summary>
-		/// Tries to get the region.
-		/// </summary>
-		/// <param name="regionName">Name of the region.</param>
-		/// <param name="region">The region.</param>
-		/// <returns>
-		///   <c>True</c> if the region has been found; otherwise <c>false</c>.
-		/// </returns>
-		Boolean TryGetRegion( String regionName, out IRegion region );
+        /// <summary>
+        /// Tries to get the region.
+        /// </summary>
+        /// <param name="regionName">Name of the region.</param>
+        /// <param name="region">The region.</param>
+        /// <returns>
+        ///   <c>True</c> if the region has been found; otherwise <c>false</c>.
+        /// </returns>
+        bool TryGetRegion(string regionName, out IRegion region );
 
-		/// <summary>
-		/// Tries to get the region.
-		/// </summary>
-		/// <typeparam name="TRegion">The type of the region.</typeparam>
-		/// <param name="regionName">Name of the region.</param>
-		/// <param name="region">The region.</param>
-		/// <returns><c>True</c> if the region has been found; otherwise <c>false</c>.</returns>
-		Boolean TryGetRegion<TRegion>( String regionName, out TRegion region ) 
+        /// <summary>
+        /// Tries to get the region.
+        /// </summary>
+        /// <typeparam name="TRegion">The type of the region.</typeparam>
+        /// <param name="regionName">Name of the region.</param>
+        /// <param name="region">The region.</param>
+        /// <returns><c>True</c> if the region has been found; otherwise <c>false</c>.</returns>
+        bool TryGetRegion<TRegion>(string regionName, out TRegion region ) 
 			where TRegion : IRegion;
 
 		/// <summary>

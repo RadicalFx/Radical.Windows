@@ -21,13 +21,13 @@ namespace Radical.Windows.Presentation.Boot
         /// </summary>
         public BootstrapConventions()
         {
-            this.DefaultIsConcreteType = t => !t.IsInterface && !t.IsAbstract && !t.IsGenericType;
-            this.IsConcreteType = t => this.DefaultIsConcreteType( t );
+            DefaultIsConcreteType = t => !t.IsInterface && !t.IsAbstract && !t.IsGenericType;
+            IsConcreteType = t => DefaultIsConcreteType( t );
 
-            this.DefaultIsService = t => this.IsConcreteType( t ) && t.Namespace.IsLike( "*.Services" );
-            this.IsService = t => this.DefaultIsService( t );
+            DefaultIsService = t => IsConcreteType( t ) && t.Namespace.IsLike( "*.Services" );
+            IsService = t => DefaultIsService( t );
 
-            this.DefaultSelectServiceContracts = type =>
+            DefaultSelectServiceContracts = type =>
             {
                 var types = new HashSet<Type>( type.GetInterfaces() );
                 if( types.None() || type.IsAttributeDefined<ContractAttribute>() )
@@ -37,9 +37,9 @@ namespace Radical.Windows.Presentation.Boot
 
                 return types;
             };
-            this.SelectServiceContracts = type => this.DefaultSelectServiceContracts( type );
+            SelectServiceContracts = type => DefaultSelectServiceContracts( type );
 
-            this.DefaultIsMessageHandler = t =>
+            DefaultIsMessageHandler = t =>
             {
                 return t.Namespace != null && t.Namespace.IsLike(new string[] 
                     { 
@@ -48,38 +48,38 @@ namespace Radical.Windows.Presentation.Boot
                     } )
                     && t.Is<IHandleMessage>();
             };
-            this.IsMessageHandler = t => this.DefaultIsMessageHandler( t );
+            IsMessageHandler = t => DefaultIsMessageHandler( t );
 
-            this.DefaultSelectMessageHandlerContracts = type => type.GetInterfaces().Take( 1 );
-            this.SelectMessageHandlerContracts = type => this.DefaultSelectMessageHandlerContracts( type );
+            DefaultSelectMessageHandlerContracts = type => type.GetInterfaces().Take( 1 );
+            SelectMessageHandlerContracts = type => DefaultSelectMessageHandlerContracts( type );
 
-            this.DefaultIsViewModel = t => this.IsConcreteType( t ) && t.FullName.IsLike( "*.Presentation.*ViewModel" );
-            this.IsViewModel = t => this.DefaultIsViewModel( t );
+            DefaultIsViewModel = t => IsConcreteType( t ) && t.FullName.IsLike( "*.Presentation.*ViewModel" );
+            IsViewModel = t => DefaultIsViewModel( t );
 
-            this.DefaultIsShellViewModel = ( services, implementation ) =>
+            DefaultIsShellViewModel = ( services, implementation ) =>
             {
                 return services.Any( t => t.Name.IsLike( "Main*" ) || t.Name.IsLike( "Shell*" ) );
             };
-            this.IsShellViewModel = ( services, implementation ) => this.DefaultIsShellViewModel( services, implementation );
+            IsShellViewModel = ( services, implementation ) => DefaultIsShellViewModel( services, implementation );
 
-            this.DefaultSelectViewModelContracts = type => new[] { type };
-            this.SelectViewModelContracts = type => this.DefaultSelectViewModelContracts( type );
+            DefaultSelectViewModelContracts = type => new[] { type };
+            SelectViewModelContracts = type => DefaultSelectViewModelContracts( type );
 
-            this.DefaultIsView = t => this.IsConcreteType( t ) && t.FullName.IsLike( "*.Presentation.*View" );
-            this.IsView = t => this.DefaultIsView( t );
+            DefaultIsView = t => IsConcreteType( t ) && t.FullName.IsLike( "*.Presentation.*View" );
+            IsView = t => DefaultIsView( t );
 
-            this.DefaultIsShellView = ( services, implementation ) =>
+            DefaultIsShellView = ( services, implementation ) =>
             {
                 return services.Any( t => t.Name.IsLike( "Main*" ) || t.Name.IsLike( "Shell*" ) );
             };
-            this.IsShellView = ( services, implementation ) => this.DefaultIsShellView( services, implementation );
+            IsShellView = ( services, implementation ) => DefaultIsShellView( services, implementation );
 
-            this.DefaultSelectViewContracts = type => new[] { type };
-            this.SelectViewContracts = type => this.DefaultSelectViewContracts( type );
+            DefaultSelectViewContracts = type => new[] { type };
+            SelectViewContracts = type => DefaultSelectViewContracts( type );
 
-            this.DefaultGetInterestedRegionNameIfAny = type =>
+            DefaultGetInterestedRegionNameIfAny = type =>
             {
-                if( this.IsView( type ) )
+                if( IsView( type ) )
                 {
 
                     if( type.IsAttributeDefined<InjectViewInRegionAttribute>() )
@@ -96,46 +96,46 @@ namespace Radical.Windows.Presentation.Boot
 
                 return null;
             };
-            this.GetInterestedRegionNameIfAny = type => this.DefaultGetInterestedRegionNameIfAny( type );
+            GetInterestedRegionNameIfAny = type => DefaultGetInterestedRegionNameIfAny( type );
 
-            this.DefaultIsExcluded = t =>
+            DefaultIsExcluded = t =>
             {
                 return t.IsAttributeDefined<DisableAutomaticRegistrationAttribute>();
             };
-            this.IsExcluded = t => this.DefaultIsExcluded( t );
+            IsExcluded = t => DefaultIsExcluded( t );
 
-            this.DefaultAssemblyFileScanPatterns = entryAssembly =>
+            DefaultAssemblyFileScanPatterns = entryAssembly =>
             {
                 var name = entryAssembly.GetName().Name;
 
-                var dllPattern = String.Format( "{0}*.dll", name );
+                var dllPattern = string.Format( "{0}*.dll", name );
                 var radical = "Radical.*.dll";
 
                 return new[] { dllPattern, radical };
             };
-            this.AssemblyFileScanPatterns = entryAssembly => this.DefaultAssemblyFileScanPatterns( entryAssembly );
+            AssemblyFileScanPatterns = entryAssembly => DefaultAssemblyFileScanPatterns( entryAssembly );
 
-            this.DefaultIncludeAssemblyInContainerScan = assembly => true;
-            this.IncludeAssemblyInContainerScan = assembly => this.DefaultIncludeAssemblyInContainerScan(assembly);
+            DefaultIncludeAssemblyInContainerScan = assembly => true;
+            IncludeAssemblyInContainerScan = assembly => DefaultIncludeAssemblyInContainerScan(assembly);
 
-            this.DefaultIgnorePropertyInjection = pi =>
+            DefaultIgnorePropertyInjection = pi =>
             {
                 var isDefined = pi.IsAttributeDefined<IgnorePropertyInjectionAttribue>();
                 return isDefined;
             };
-            this.IgnorePropertyInjection = pi => this.DefaultIgnorePropertyInjection( pi );
+            IgnorePropertyInjection = pi => DefaultIgnorePropertyInjection( pi );
 
-            this.DefaultIgnoreViewPropertyInjection = pi =>
+            DefaultIgnoreViewPropertyInjection = pi =>
             {
                 return true;
             };
-            this.IgnoreViewPropertyInjection = pi => this.DefaultIgnoreViewPropertyInjection( pi );
+            IgnoreViewPropertyInjection = pi => DefaultIgnoreViewPropertyInjection( pi );
 
-            this.DefaultIgnoreViewModelPropertyInjection = pi =>
+            DefaultIgnoreViewModelPropertyInjection = pi =>
             {
                 return true;
             };
-            this.IgnoreViewModelPropertyInjection = pi => this.DefaultIgnoreViewModelPropertyInjection( pi );
+            IgnoreViewModelPropertyInjection = pi => DefaultIgnoreViewModelPropertyInjection( pi );
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The is shell view.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<IEnumerable<Type>, Type, Boolean> DefaultIsShellView { get; private set; }
+        public Func<IEnumerable<Type>, Type, bool> DefaultIsShellView { get; private set; }
 
         /// <summary>
         /// Gets or sets the is shell view.
@@ -280,7 +280,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The is shell view.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<IEnumerable<Type>, Type, Boolean> IsShellView { get; set; }
+        public Func<IEnumerable<Type>, Type, bool> IsShellView { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the is shell view model.
@@ -289,7 +289,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The is shell view model.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<IEnumerable<Type>, Type, Boolean> DefaultIsShellViewModel { get; private set; }
+        public Func<IEnumerable<Type>, Type, bool> DefaultIsShellViewModel { get; private set; }
 
         /// <summary>
         /// Gets or sets the is shell view model.
@@ -298,7 +298,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The is shell view model.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<IEnumerable<Type>, Type, Boolean> IsShellViewModel { get; set; }
+        public Func<IEnumerable<Type>, Type, bool> IsShellViewModel { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the select view contracts.
@@ -343,7 +343,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The get interested region name if any.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<Type, String> DefaultGetInterestedRegionNameIfAny { get; private set; }
+        public Func<Type, string> DefaultGetInterestedRegionNameIfAny { get; private set; }
 
         /// <summary>
         /// Gets or sets the get interested region name if any.
@@ -352,7 +352,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The get interested region name if any.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<Type, String> GetInterestedRegionNameIfAny { get; set; }
+        public Func<Type, string> GetInterestedRegionNameIfAny { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the is excluded.
@@ -361,7 +361,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The is excluded.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<Type, Boolean> DefaultIsExcluded { get; private set; }
+        public Func<Type, bool> DefaultIsExcluded { get; private set; }
 
         /// <summary>
         /// Gets or sets the is excluded.
@@ -370,7 +370,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The is excluded.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<Type, Boolean> IsExcluded { get; set; }
+        public Func<Type, bool> IsExcluded { get; set; }
 
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The assembly file scan patterns.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<Assembly, IEnumerable<String>> DefaultAssemblyFileScanPatterns { get; private set; }
+        public Func<Assembly, IEnumerable<string>> DefaultAssemblyFileScanPatterns { get; private set; }
 
         /// <summary>
         /// Gets or sets the assembly file scan patterns.
@@ -389,7 +389,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The assembly file scan patterns.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<Assembly, IEnumerable<String>> AssemblyFileScanPatterns { get; set; }
+        public Func<Assembly, IEnumerable<string>> AssemblyFileScanPatterns { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the include assembly in container scan.
@@ -416,7 +416,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The injectable properties predicate.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<PropertyInfo, Boolean> DefaultIgnorePropertyInjection { get; private set; }
+        public Func<PropertyInfo, bool> DefaultIgnorePropertyInjection { get; private set; }
 
         /// <summary>
         /// Gets or sets the predicate that determines if a property is injectable or not.
@@ -425,7 +425,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The injectable properties predicate.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<PropertyInfo, Boolean> IgnorePropertyInjection { get; set; }
+        public Func<PropertyInfo, bool> IgnorePropertyInjection { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the predicate that determines if a property of a View is injectable or not.
@@ -434,7 +434,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The injectable properties predicate.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<PropertyInfo, Boolean> DefaultIgnoreViewPropertyInjection { get; private set; }
+        public Func<PropertyInfo, bool> DefaultIgnoreViewPropertyInjection { get; private set; }
 
         /// <summary>
         /// Gets or sets the predicate that determines if a property of a View is injectable or not.
@@ -443,7 +443,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The injectable properties predicate.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<PropertyInfo, Boolean> IgnoreViewPropertyInjection { get; set; }
+        public Func<PropertyInfo, bool> IgnoreViewPropertyInjection { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the predicate that determines if a property of a ViewModel is injectable or not.
@@ -452,7 +452,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The injectable properties predicate.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<PropertyInfo, Boolean> DefaultIgnoreViewModelPropertyInjection { get; private set; }
+        public Func<PropertyInfo, bool> DefaultIgnoreViewModelPropertyInjection { get; private set; }
 
         /// <summary>
         /// Gets or sets the predicate that determines if a property of a ViewModel is injectable or not.
@@ -461,6 +461,6 @@ namespace Radical.Windows.Presentation.Boot
         /// The injectable properties predicate.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Func<PropertyInfo, Boolean> IgnoreViewModelPropertyInjection { get; set; }
+        public Func<PropertyInfo, bool> IgnoreViewModelPropertyInjection { get; set; }
     }
 }

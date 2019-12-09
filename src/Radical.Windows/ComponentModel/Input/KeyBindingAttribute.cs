@@ -11,7 +11,7 @@ namespace Radical.ComponentModel.Windows.Input
         /// <param name="key">The keyboard key.</param>
         public KeyBindingAttribute(System.Windows.Input.Key key)
         {
-            this.Key = key;
+            Key = key;
         }
 
         /// <summary>

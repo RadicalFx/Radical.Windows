@@ -27,13 +27,13 @@ namespace Radical.Windows.Threading
         /// <param name="action">The action.</param>
         public void Dispatch(Action action)
         {
-            if (this.dispatcher.CheckAccess())
+            if (dispatcher.CheckAccess())
             {
                 action();
             }
             else
             {
-                this.dispatcher.Invoke(action);
+                dispatcher.Invoke(action);
             }
         }
 
@@ -45,13 +45,13 @@ namespace Radical.Windows.Threading
         /// <param name="action">The action to dispatch.</param>
         public void Dispatch<T>(T arg, Action<T> action)
         {
-            if (this.dispatcher.CheckAccess())
+            if (dispatcher.CheckAccess())
             {
                 action(arg);
             }
             else
             {
-                this.dispatcher.Invoke(action, arg);
+                dispatcher.Invoke(action, arg);
             }
         }
 
@@ -65,13 +65,13 @@ namespace Radical.Windows.Threading
         /// <param name="action">The action to dispatch.</param>
         public void Dispatch<T1, T2>(T1 arg1, T2 arg2, Action<T1, T2> action)
         {
-            if (this.dispatcher.CheckAccess())
+            if (dispatcher.CheckAccess())
             {
                 action(arg1, arg2);
             }
             else
             {
-                this.dispatcher.Invoke(action, arg1, arg2);
+                dispatcher.Invoke(action, arg1, arg2);
             }
         }
 
@@ -83,13 +83,13 @@ namespace Radical.Windows.Threading
         /// <returns>The result of Func invocation.</returns>
         public TResult Dispatch<TResult>(Func<TResult> func)
         {
-            if (this.dispatcher.CheckAccess())
+            if (dispatcher.CheckAccess())
             {
                 return func();
             }
             else
             {
-                return (TResult)this.dispatcher.Invoke(func);
+                return (TResult)dispatcher.Invoke(func);
             }
         }
 
@@ -98,9 +98,9 @@ namespace Radical.Windows.Threading
         /// </summary>
         /// <param name="d">The delegate to invoke.</param>
         /// <param name="args">The delegate arguments, or null if no arguments shuold passed to the delegate.</param>
-        public void Invoke(Delegate d, params Object[] args)
+        public void Invoke(Delegate d, params object[] args)
         {
-            this.dispatcher.Invoke(d, args);
+            dispatcher.Invoke(d, args);
         }
 
 
@@ -110,7 +110,7 @@ namespace Radical.Windows.Threading
         /// <value><c>true</c> if the call is safe; otherwise, <c>false</c>.</value>
         public bool IsSafe
         {
-            get { return this.dispatcher.CheckAccess(); }
+            get { return dispatcher.CheckAccess(); }
         }
     }
 }

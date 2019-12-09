@@ -30,7 +30,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// </returns>
 		public IRegionManager Create()
 		{
-			return ( IRegionManager )this.container.GetService( typeof( IRegionManager ) );
+			return ( IRegionManager )container.GetService( typeof( IRegionManager ) );
 		}
 	}
 }

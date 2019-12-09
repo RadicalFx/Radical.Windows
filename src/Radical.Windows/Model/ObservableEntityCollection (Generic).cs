@@ -28,7 +28,7 @@ namespace Radical.Windows.Model
         /// Initializes a new instance of the <see cref="ObservableEntityCollection&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="capcity">The capcity.</param>
-        public ObservableEntityCollection(Int32 capcity)
+        public ObservableEntityCollection(int capcity)
             : base(capcity)
         {
 
@@ -59,33 +59,33 @@ namespace Radical.Windows.Model
         {
             base.OnAddCompleted(index, value);
 
-            this.OnPropertyChanged(() => this.Count);
+            OnPropertyChanged(() => Count);
         }
 
         protected override void OnRemoveCompleted(T value, int index)
         {
             base.OnRemoveCompleted(value, index);
 
-            this.OnPropertyChanged(() => this.Count);
+            OnPropertyChanged(() => Count);
         }
 
         protected override void OnClearCompleted(IEnumerable<T> clearedItems)
         {
             base.OnClearCompleted(clearedItems);
 
-            this.OnPropertyChanged(() => this.Count);
+            OnPropertyChanged(() => Count);
         }
 
         protected override void OnInsertCompleted(int index, T value)
         {
             base.OnInsertCompleted(index, value);
 
-            this.OnPropertyChanged(() => this.Count);
+            OnPropertyChanged(() => Count);
         }
 
         protected override void OnDeserializationCompleted(SerializationInfo info, StreamingContext context)
         {
-            this.OnPropertyChanged(() => this.Count);
+            OnPropertyChanged(() => Count);
 
             base.OnDeserializationCompleted(info, context);
         }
@@ -96,16 +96,16 @@ namespace Radical.Windows.Model
 
             if (notify)
             {
-                foreach (var e in this.propertyChangesNotificationQueue)
+                foreach (var e in propertyChangesNotificationQueue)
                 {
-                    this.OnPropertyChanged(new PropertyChangedEventArgs(e));
+                    OnPropertyChanged(new PropertyChangedEventArgs(e));
                 }
 
-                this.propertyChangesNotificationQueue.Clear();
+                propertyChangesNotificationQueue.Clear();
             }
         }
 
-        readonly HashSet<String> propertyChangesNotificationQueue = new HashSet<string>();
+        readonly HashSet<string> propertyChangesNotificationQueue = new HashSet<string>();
         static readonly object propertyChangedEventKey = new object();
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Radical.Windows.Model
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged
         {
-            add { this.Events.AddHandler(propertyChangedEventKey, value); }
-            remove { this.Events.RemoveHandler(propertyChangedEventKey, value); }
+            add { Events.AddHandler(propertyChangedEventKey, value); }
+            remove { Events.RemoveHandler(propertyChangedEventKey, value); }
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Radical.Windows.Model
         protected void OnPropertyChanged<TValue>(Expression<Func<TValue>> property)
         {
             var propertyName = property.GetMemberName();
-            this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -133,10 +133,10 @@ namespace Radical.Windows.Model
         /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            this.EnsureNotDisposed();
-            if (!this.IsInitializing)
+            EnsureNotDisposed();
+            if (!IsInitializing)
             {
-                var handler = this.Events[propertyChangedEventKey] as PropertyChangedEventHandler;
+                var handler = Events[propertyChangedEventKey] as PropertyChangedEventHandler;
                 if (handler != null)
                 {
                     handler(this, e);
@@ -144,9 +144,9 @@ namespace Radical.Windows.Model
             }
             else
             {
-                if (!this.propertyChangesNotificationQueue.Contains(e.PropertyName))
+                if (!propertyChangesNotificationQueue.Contains(e.PropertyName))
                 {
-                    this.propertyChangesNotificationQueue.Add(e.PropertyName);
+                    propertyChangesNotificationQueue.Add(e.PropertyName);
                 }
             }
         }
@@ -165,16 +165,16 @@ namespace Radical.Windows.Model
         {
             base.OnAddRange(rangeToAdd);
 
-            this.BeginInit();
+            BeginInit();
         }
 
         protected override void OnAddRangeCompleted(IEnumerable<T> addedRange)
         {
             base.OnAddRangeCompleted(addedRange);
 
-            this.OnPropertyChanged(() => this.Count);
+            OnPropertyChanged(() => Count);
 
-            this.EndInit();
+            EndInit();
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Radical.Windows.Model
         {
             base.OnCollectionChanged(e);
 
-            if (!this.IsInitializing)
+            if (!IsInitializing)
             {
                 /*
                  * Non facciamo altro che mappare il "nostro" evento
@@ -194,11 +194,11 @@ namespace Radical.Windows.Model
                 switch (e.ChangeType)
                 {
                     case CollectionChangeType.SortChanged:
-                        this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                        OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                         break;
 
                     case CollectionChangeType.ItemAdded:
-                        this.OnCollectionChanged(
+                        OnCollectionChanged(
                             new NotifyCollectionChangedEventArgs(
                                 NotifyCollectionChangedAction.Add,
                                 e.Item,
@@ -206,7 +206,7 @@ namespace Radical.Windows.Model
                         break;
 
                     case CollectionChangeType.ItemRemoved:
-                        this.OnCollectionChanged(
+                        OnCollectionChanged(
                             new NotifyCollectionChangedEventArgs(
                                 NotifyCollectionChangedAction.Remove,
                                 e.Item,
@@ -214,11 +214,11 @@ namespace Radical.Windows.Model
                         break;
 
                     case CollectionChangeType.Reset:
-                        this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                        OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                         break;
 
                     case CollectionChangeType.ItemMoved:
-                        this.OnCollectionChanged(
+                        OnCollectionChanged(
                             new NotifyCollectionChangedEventArgs(
                                 NotifyCollectionChangedAction.Move,
                                 e.Item,
@@ -231,7 +231,7 @@ namespace Radical.Windows.Model
 
                         var newValue = this[e.Index];
 
-                        this.OnCollectionChanged(
+                        OnCollectionChanged(
                             new NotifyCollectionChangedEventArgs(
                                 NotifyCollectionChangedAction.Replace,
                                 newValue,
@@ -257,8 +257,8 @@ namespace Radical.Windows.Model
         /// </summary>
         event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
         {
-            add { this.Events.AddHandler(notifyCollectionChangedEventKey, value); }
-            remove { this.Events.RemoveHandler(notifyCollectionChangedEventKey, value); }
+            add { Events.AddHandler(notifyCollectionChangedEventKey, value); }
+            remove { Events.RemoveHandler(notifyCollectionChangedEventKey, value); }
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Radical.Windows.Model
         /// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
         protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            var handler = this.Events[notifyCollectionChangedEventKey] as NotifyCollectionChangedEventHandler;
+            var handler = Events[notifyCollectionChangedEventKey] as NotifyCollectionChangedEventHandler;
             if (handler != null)
             {
                 handler(this, e);

@@ -23,9 +23,9 @@ namespace Radical.Windows.Presentation.Regions
 		/// Initializes a new instance of the <see cref="PanelRegion"/> class.
 		/// </summary>
 		/// <param name="name">The name.</param>
-		public PanelRegion( String name )
+		public PanelRegion(string name )
 		{
-			this.Name = name;
+			Name = name;
 		}
 
 		/// <summary>
@@ -34,7 +34,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="view">The view.</param>
 		protected override void OnAdd( DependencyObject view )
 		{
-			this.Element.Children.Add( ( UIElement )view );
+			Element.Children.Add( ( UIElement )view );
 		}
 
 		/// <summary>
@@ -46,9 +46,9 @@ namespace Radical.Windows.Presentation.Regions
 		{
 			view.As<UIElement>(e=>
 			{
-				if( this.Element.Children.Contains( e ) )
+				if( Element.Children.Contains( e ) )
 				{
-					this.Element.Children.Remove( e );
+					Element.Children.Remove( e );
 				}
 			});
 		}

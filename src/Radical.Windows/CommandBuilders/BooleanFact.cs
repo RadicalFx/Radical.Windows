@@ -4,7 +4,7 @@ namespace Radical.Windows.CommandBuilders
 {
     public class BooleanFact
     {
-        public Func<Boolean> FastGetter;
-        public String Name;
+        public Func<bool> FastGetter;
+        public string Name;
     }
 }

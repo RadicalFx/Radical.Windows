@@ -9,13 +9,13 @@ namespace Radical.Windows.Presentation.ComponentModel
 	/// </summary>
 	public interface IRegionService
 	{
-		/// <summary>
-		/// Determines if this region service has knowledge of a region manager owned
-		/// by the supplied owner.
-		/// </summary>
-		/// <param name="owner">The owner.</param>
-		/// <returns>True if this region service has a reference to a region manager owned by the supplied owner, otherwise false.</returns>
-		Boolean HoldsRegionManager( DependencyObject owner );
+        /// <summary>
+        /// Determines if this region service has knowledge of a region manager owned
+        /// by the supplied owner.
+        /// </summary>
+        /// <param name="owner">The owner.</param>
+        /// <returns>True if this region service has a reference to a region manager owned by the supplied owner, otherwise false.</returns>
+        bool HoldsRegionManager( DependencyObject owner );
 
 		/// <summary>
 		/// Gets the region manager owned by the supplied view.
@@ -41,7 +41,7 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// </summary>
         /// <param name="filter">A predicate executed for all the registered region managers.</param>
         /// <returns>The found region manager or null.</returns>
-        IRegionManager FindRegionManager( Func<DependencyObject, IRegionManager, Boolean> filter );
+        IRegionManager FindRegionManager( Func<DependencyObject, IRegionManager, bool> filter );
 
 		/// <summary>
 		/// Registers a new region manager for the given owner.

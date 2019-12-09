@@ -38,9 +38,9 @@ namespace Radical.Windows.Behaviors
 
         internal string Join()
         {
-            string[] array = new string[this.Count];
-            this.CopyTo(array, 0);
-            return String.Join(",", array);
+            string[] array = new string[Count];
+            CopyTo(array, 0);
+            return string.Join(",", array);
         }
     }
 

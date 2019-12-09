@@ -25,7 +25,7 @@ namespace Radical.Windows.Presentation.Regions
         /// Initializes a new instance of the <see cref="SwitchingElementsRegion&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        protected SwitchingElementsRegion( String name )
+        protected SwitchingElementsRegion(string name )
             : base( name )
         {
 
@@ -49,21 +49,21 @@ namespace Radical.Windows.Presentation.Regions
         /// </summary>
         protected virtual void OnActiveContentChanged()
         {
-            var h = this.ActiveContentChanged;
+            var h = ActiveContentChanged;
             if( h != null )
             {
-                h( this, new ActiveContentChangedEventArgs( this.ActiveContent, this.PreviousActiveContent ) );
+                h( this, new ActiveContentChangedEventArgs( ActiveContent, PreviousActiveContent ) );
             }
 
-            var vm = this.TryGetViewModel( this.ActiveContent ) as IExpectViewActivatedCallback;
+            var vm = TryGetViewModel( ActiveContent ) as IExpectViewActivatedCallback;
             if( vm != null )
             {
                 vm.OnViewActivated();
             }
 
-            if( this.ActiveContent != this.PreviousActiveContent )
+            if( ActiveContent != PreviousActiveContent )
             {
-                this.PreviousActiveContent = this.ActiveContent;
+                PreviousActiveContent = ActiveContent;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Radical.Windows.Presentation.Regions
         /// </summary>
         /// <param name="view">The view.</param>
         /// <returns></returns>
-        protected virtual Object TryGetViewModel( DependencyObject view )
+        protected virtual object TryGetViewModel( DependencyObject view )
         {
             if( RegionService.Conventions != null )
             {

@@ -8,7 +8,7 @@ namespace Radical.Windows.Behaviors
         protected override void OnAttached()
         {
             base.OnAttached();
-            this.AssociatedObject.ManipulationBoundaryFeedback += listBox_ManipulationBoundaryFeedback;
+            AssociatedObject.ManipulationBoundaryFeedback += listBox_ManipulationBoundaryFeedback;
         }
 
         void listBox_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
@@ -19,7 +19,7 @@ namespace Radical.Windows.Behaviors
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            this.AssociatedObject.ManipulationBoundaryFeedback -= listBox_ManipulationBoundaryFeedback;
+            AssociatedObject.ManipulationBoundaryFeedback -= listBox_ManipulationBoundaryFeedback;
         }
     }
 }

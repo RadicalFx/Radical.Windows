@@ -25,7 +25,7 @@ namespace Radical.Windows.Presentation.Regions
         /// <param name="name">The name.</param>
         public TabControlRegion( string name )
         {
-            this.Name = name;
+            Name = name;
         }
 
         /// <summary>
@@ -37,13 +37,13 @@ namespace Radical.Windows.Presentation.Regions
             var tabItem = new TabItem();
             tabItem.Content = view;
 
-            var header = this.TryGetHeader( view );
+            var header = TryGetHeader( view );
             if( header != null )
             {
                 tabItem.Header = header;
             }
 
-            this.Element.Items.Add( tabItem );
+            Element.Items.Add( tabItem );
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Radical.Windows.Presentation.Regions
         /// </summary>
         /// <param name="view">The view.</param>
         /// <returns></returns>
-        protected virtual Object TryGetHeader( DependencyObject view )
+        protected virtual object TryGetHeader( DependencyObject view )
         {
             return RegionHeaderedElement.GetHeader( view );
         }
@@ -66,7 +66,7 @@ namespace Radical.Windows.Presentation.Regions
             var element = GetElement( view );
             if( element != null )
             {
-                this.Element.Items.Remove( element );
+                Element.Items.Remove( element );
             }
         }
 
@@ -79,7 +79,7 @@ namespace Radical.Windows.Presentation.Regions
             var element = GetElement( content );
             if( element != null )
             {
-                this.Element.SelectedIndex = this.Element.Items.IndexOf( element );
+                Element.SelectedIndex = Element.Items.IndexOf( element );
                 OnActiveContentChanged();
             }
         }
@@ -94,8 +94,8 @@ namespace Radical.Windows.Presentation.Regions
         {
             get
             {
-                if( this.Element.SelectedIndex == -1 ) return null;
-                var selectedItem = this.Element.Items[ this.Element.SelectedIndex ];
+                if( Element.SelectedIndex == -1 ) return null;
+                var selectedItem = Element.Items[ Element.SelectedIndex ];
                 var tabItem = selectedItem as TabItem;
                 if( tabItem != null )
                 {
@@ -107,15 +107,15 @@ namespace Radical.Windows.Presentation.Regions
 
         private object GetElement( DependencyObject content )
         {
-            if( this.Element.Items.Contains( content ) )
+            if( Element.Items.Contains( content ) )
             {
                 return content;
             }
 
-            var element = this.Element.Items
+            var element = Element.Items
                               .OfType<TabItem>()
                               .Where( t => t.Content == content )
-                              .FirstOrDefault( t => this.Element.Items.Contains( t ) );
+                              .FirstOrDefault( t => Element.Items.Contains( t ) );
             return element;
         }
     }

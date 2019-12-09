@@ -27,7 +27,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// Initializes a new instance of the <see cref="ContentRegion&lt;T&gt;"/> class.
 		/// </summary>
 		/// <param name="name">The name.</param>
-		protected ContentRegion( String name )
+		protected ContentRegion(string name )
 			: base( name )
 		{
 
@@ -38,7 +38,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// </summary>
 		public override void Shutdown()
 		{
-			this.NotifyClosedAndEnsureRelease( this.Content );
+			NotifyClosedAndEnsureRelease( Content );
 		}
 
 		/// <summary>
@@ -49,21 +49,21 @@ namespace Radical.Windows.Presentation.Regions
 		/// </value>
 		public DependencyObject Content
 		{
-			get { return this.OnGetContent(); }
+			get { return OnGetContent(); }
 			set
 			{
-				if ( value != this.Content )
+				if ( value != Content )
 				{
 					var args = new CancelEventArgs()
 					{
 						Cancel = false
 					};
 
-					var previous = this.Content;
-					this.OnSetContent( value, args );
+					var previous = Content;
+					OnSetContent( value, args );
 					if ( !args.Cancel )
 					{
-						this.OnContentSet( value, previous );
+						OnContentSet( value, previous );
 					}
 				}
 			}
@@ -89,7 +89,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="previous">The previous.</param>
 		protected virtual void OnContentSet( DependencyObject actual, DependencyObject previous )
 		{
-			this.NotifyClosedAndEnsureRelease( previous );
+			NotifyClosedAndEnsureRelease( previous );
 		}
 	}
 }

@@ -21,16 +21,16 @@ namespace Radical.Windows.Presentation.Regions
 		public RegionHilightAdorner( UIElement adornedElement, IRegion region, Brush brush )
 			: base( adornedElement )
 		{
-			this.IsHitTestVisible = false;
+			IsHitTestVisible = false;
 
 			this.brush = brush;
 
-			this.userContent = new ContentPresenter();
+			userContent = new ContentPresenter();
 
-			this.userContent.Content = new TextBlock()
+			userContent.Content = new TextBlock()
 			{
 				FontStyle = FontStyles.Italic,
-				Text = String.Format( "{0}, {1}", region.GetType().Name, region.Name ),
+				Text = string.Format( "{0}, {1}", region.GetType().Name, region.Name ),
 				VerticalAlignment = VerticalAlignment.Bottom,
 				HorizontalAlignment = HorizontalAlignment.Right,
 				Margin = new Thickness( 0, 0, 4, 4 ),
@@ -40,7 +40,7 @@ namespace Radical.Windows.Presentation.Regions
 				Foreground = this.brush
 			};
 
-			this.AddVisualChild( this.userContent );
+			AddVisualChild( userContent );
 		}
 
 		/// <summary>
@@ -50,7 +50,7 @@ namespace Radical.Windows.Presentation.Regions
 		protected override void OnRender( DrawingContext drawingContext )
 		{
 			var pen = new Pen( brush, 2 );
-			var rect = new Rect( new Point( 0, 0 ), this.DesiredSize );
+			var rect = new Rect( new Point( 0, 0 ), DesiredSize );
 
 			drawingContext.DrawRectangle( null, pen, rect );
 
@@ -63,7 +63,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// <value>The content.</value>
 		protected override UIElement Content
 		{
-			get { return this.userContent; }
+			get { return userContent; }
 		}
 	}
 }

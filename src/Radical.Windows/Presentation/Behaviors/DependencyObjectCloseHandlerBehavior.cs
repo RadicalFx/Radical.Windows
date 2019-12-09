@@ -32,13 +32,13 @@ namespace Radical.Windows.Presentation.Behaviors
         {
             base.OnAttached();
 
-            var view = this.AssociatedObject;
-            this.broker.Subscribe<CloseViewRequest>( this, InvocationModel.Safe, ( s, m ) =>
+            var view = AssociatedObject;
+            broker.Subscribe<CloseViewRequest>( this, InvocationModel.Safe, ( s, m ) =>
             {
-                var dc = this.conventions.GetViewDataContext( view, this.conventions.DefaultViewDataContextSearchBehavior );
+                var dc = conventions.GetViewDataContext( view, conventions.DefaultViewDataContextSearchBehavior );
                 if ( m.ViewOwner == dc )
                 {
-                    var w = this.conventions.FindHostingWindowOf( m.ViewOwner );
+                    var w = conventions.FindHostingWindowOf( m.ViewOwner );
                     if ( w != null )
                     {
 #if !SILVERLIGHT
@@ -59,9 +59,9 @@ namespace Radical.Windows.Presentation.Behaviors
         /// </summary>
         protected override void OnDetaching()
         {
-            if ( this.broker != null )
+            if ( broker != null )
             {
-                this.broker.Unsubscribe( this );
+                broker.Unsubscribe( this );
             }
 
             base.OnDetaching();

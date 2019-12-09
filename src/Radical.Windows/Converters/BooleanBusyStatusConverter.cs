@@ -41,10 +41,10 @@ namespace Radical.Windows.Converters
         /// </returns>
         public override object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            Ensure.That(value).IsNotNull().IsTrue(o => o is Boolean);
+            Ensure.That(value).IsNotNull().IsTrue(o => o is bool);
             Ensure.That(targetType).IsNotNull().Is(typeof(BusyStatus));
 
-            var actual = (Boolean)value;
+            var actual = (bool)value;
             var status = actual ? BusyStatus.Busy : BusyStatus.Idle;
 
             return status;
@@ -63,7 +63,7 @@ namespace Radical.Windows.Converters
         public override object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             Ensure.That(value).IsNotNull().IsTrue(o => o is BusyStatus);
-            Ensure.That(targetType).IsNotNull().Is(typeof(Boolean));
+            Ensure.That(targetType).IsNotNull().Is(typeof(bool));
 
             var status = (BusyStatus)value;
             switch (status)

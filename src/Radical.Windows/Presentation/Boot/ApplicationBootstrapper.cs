@@ -59,7 +59,7 @@ namespace Radical.Windows.Presentation.Boot
             {
                 logger.Warning("Application is waiting for the debugger...");
 
-                Int32 waitCycle = 0;
+                int waitCycle = 0;
                 while (!Debugger.IsAttached && waitCycle <= 100)
                 {
                     Thread.Sleep(600);
@@ -333,7 +333,7 @@ namespace Radical.Windows.Presentation.Boot
         {
             if (args.Scope != SingletonApplicationScope.NotSupported)
             {
-                String mutexName = key;
+                string mutexName = key;
                 switch (args.Scope)
                 {
                     case SingletonApplicationScope.Local:
@@ -488,7 +488,7 @@ namespace Radical.Windows.Presentation.Boot
                     var sw = Stopwatch.StartNew();
                     splashScreenConfiguration.StartupAsyncWork(serviceProvider);
                     sw.Stop();
-                    var elapsed = (Int32)sw.ElapsedMilliseconds;
+                    var elapsed = (int)sw.ElapsedMilliseconds;
                     var remaining = splashScreenConfiguration.MinimumDelay - elapsed;
                     if (remaining > 0)
                     {
@@ -613,7 +613,7 @@ namespace Radical.Windows.Presentation.Boot
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        public ApplicationBootstrapper RegisterAsSingleton(String key)
+        public ApplicationBootstrapper RegisterAsSingleton(string key)
         {
             return RegisterAsSingleton(key, SingletonApplicationScope.Local);
         }
@@ -624,7 +624,7 @@ namespace Radical.Windows.Presentation.Boot
         /// <param name="key">The key.</param>
         /// <param name="scope">The scope.</param>
         /// <returns></returns>
-        public ApplicationBootstrapper RegisterAsSingleton(String key, SingletonApplicationScope scope)
+        public ApplicationBootstrapper RegisterAsSingleton(string key, SingletonApplicationScope scope)
         {
             this.key = key;
             singleton = scope;
@@ -661,7 +661,7 @@ namespace Radical.Windows.Presentation.Boot
         /// <value>
         /// 	<c>true</c> if the operating system session is ending; otherwise, <c>false</c>.
         /// </value>
-        protected Boolean IsSessionEnding
+        protected bool IsSessionEnding
         {
             get;
             private set;
@@ -695,7 +695,7 @@ namespace Radical.Windows.Presentation.Boot
         /// <value>
         /// 	<c>true</c> if this application is shutting down; otherwise, <c>false</c>.
         /// </value>
-        protected Boolean IsShuttingDown
+        protected bool IsShuttingDown
         {
             get;
             private set;

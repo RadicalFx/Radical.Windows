@@ -17,7 +17,7 @@ namespace Radical.Windows.Presentation.Behaviors
 		/// </summary>
 		public static readonly DependencyProperty ControlledByProperty = DependencyProperty.Register(
 			"ControlledBy",
-			typeof( String ),
+			typeof(string),
 			typeof( Focus ),
 			new FrameworkPropertyMetadata( null, new PropertyChangedCallback( OnControlledByChanged ) ) { BindsTwoWayByDefault = true } );
 
@@ -27,23 +27,23 @@ namespace Radical.Windows.Presentation.Behaviors
 		/// <value>
 		/// The controlled by.
 		/// </value>
-		public String ControlledBy
+		public string ControlledBy
 		{
-			get { return ( String )this.GetValue( ControlledByProperty ); }
-			set { this.SetValue( ControlledByProperty, value ); }
+			get { return (string)GetValue( ControlledByProperty ); }
+			set { SetValue( ControlledByProperty, value ); }
 		}
 
 		static void OnControlledByChanged( DependencyObject sender, DependencyPropertyChangedEventArgs e )
 		{
-			( ( Focus )sender ).OnFocusChanged( ( String )e.NewValue );
+			( ( Focus )sender ).OnFocusChanged( (string)e.NewValue );
 		}
 
-		private void OnFocusChanged( String focusKey )
+		private void OnFocusChanged(string focusKey )
 		{
-			if ( String.Equals( this.UsingKey, focusKey ) && this.AssociatedObject.Focusable && !this.AssociatedObject.IsFocused )
+			if (string.Equals( UsingKey, focusKey ) && AssociatedObject.Focusable && !AssociatedObject.IsFocused )
 			{
-				this.AssociatedObject.Focus();
-				Keyboard.Focus( this.AssociatedObject );
+				AssociatedObject.Focus();
+				Keyboard.Focus( AssociatedObject );
 			}
 		}
 
@@ -56,8 +56,8 @@ namespace Radical.Windows.Presentation.Behaviors
 		{
 			base.OnAttached();
 
-			this.AssociatedObject.GotFocus += OnGotFocus;
-			this.AssociatedObject.LostFocus += OnLostFocus;
+			AssociatedObject.GotFocus += OnGotFocus;
+			AssociatedObject.LostFocus += OnLostFocus;
 		}
 
 		/// <summary>
@@ -65,20 +65,20 @@ namespace Radical.Windows.Presentation.Behaviors
 		/// </summary>
 		protected override void OnDetaching()
 		{
-			this.AssociatedObject.GotFocus -= OnGotFocus;
-			this.AssociatedObject.LostFocus -= OnLostFocus;
+			AssociatedObject.GotFocus -= OnGotFocus;
+			AssociatedObject.LostFocus -= OnLostFocus;
 
 			base.OnDetaching();
 		}
 
 		void OnGotFocus( object sender, RoutedEventArgs e )
 		{
-			this.ControlledBy = this.UsingKey;
+			ControlledBy = UsingKey;
 		}
 
 		void OnLostFocus( object sender, RoutedEventArgs e )
 		{
-			if ( this.ControlledBy == this.UsingKey ) 
+			if ( ControlledBy == UsingKey ) 
 			{
 				/*
 				 * if, when we loose focus, the FocusedElementKey is still
@@ -87,7 +87,7 @@ namespace Radical.Windows.Presentation.Behaviors
 				 * we set the FocusedElementKey to null so to detach and 
 				 * correctly react if the focus gets back.
 				 */
-				this.ControlledBy = null;
+				ControlledBy = null;
 			}
 		}
 
@@ -97,6 +97,6 @@ namespace Radical.Windows.Presentation.Behaviors
 		/// <value>
 		/// The using key.
 		/// </value>
-		public String UsingKey { get; set; }
+		public string UsingKey { get; set; }
 	}
 }

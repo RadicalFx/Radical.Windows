@@ -7,34 +7,34 @@ namespace Radical.Windows
 {
     public class Fact : IMonitor, IWeakEventListener
     {
-        public static Fact Create(Func<Object, Boolean> evaluator)
+        public static Fact Create(Func<object, bool> evaluator)
         {
             return new Fact(evaluator);
         }
 
-        readonly Func<Object, Boolean> evaluator;
+        readonly Func<object, bool> evaluator;
 
-        public Fact(Func<Object, Boolean> evaluator)
+        public Fact(Func<object, bool> evaluator)
         {
             this.evaluator = evaluator;
         }
 
-        public Boolean Eval(Object parameter)
+        public bool Eval(object parameter)
         {
-            return this.evaluator(parameter);
+            return evaluator(parameter);
         }
 
         public event EventHandler Changed;
 
         public void NotifyChanged()
         {
-            if (this.Changed != null)
+            if (Changed != null)
             {
-                this.Changed(this, EventArgs.Empty);
+                Changed(this, EventArgs.Empty);
             }
         }
 
-        public static implicit operator Boolean(Fact fact)
+        public static implicit operator bool(Fact fact)
         {
             return fact.Eval(null);
         }
@@ -58,14 +58,14 @@ namespace Radical.Windows
 
         void OnMonitorChanged(IMonitor source)
         {
-            this.NotifyChanged();
+            NotifyChanged();
         }
 
-        Boolean IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+        bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             if (managerType == typeof(MonitorChangedWeakEventManager))
             {
-                this.OnMonitorChanged((IMonitor)sender);
+                OnMonitorChanged((IMonitor)sender);
             }
             else
             {

@@ -38,14 +38,14 @@ namespace Radical.Windows.Presentation
         /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
         protected override void OnPropertyChanged( PropertyChangedEventArgs e )
         {
-            if( this.IsValidationEnabled
-                && this.RunValidationOnPropertyChanged
-                && !this.IsResettingValidation
-                && !this.IsTriggeringValidation
+            if( IsValidationEnabled
+                && RunValidationOnPropertyChanged
+                && !IsResettingValidation
+                && !IsTriggeringValidation
                 && !SkipPropertyValidation( e.PropertyName )
-                && !this.validationState.IsValidatingProperty( e.PropertyName ) )
+                && !validationState.IsValidatingProperty( e.PropertyName ) )
             {
-                this.ValidateProperty( e.PropertyName );
+                ValidateProperty( e.PropertyName );
             }
 
             base.OnPropertyChanged( e );
@@ -56,9 +56,9 @@ namespace Radical.Windows.Presentation
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns></returns>
-        protected virtual Boolean SkipPropertyValidation( String propertyName )
+        protected virtual bool SkipPropertyValidation(string propertyName )
         {
-            var pi = this.GetType().GetProperty( propertyName );
+            var pi = GetType().GetProperty( propertyName );
             if( pi == null )
             {
                 return true;
@@ -76,19 +76,12 @@ namespace Radical.Windows.Presentation
         /// Gets a value indication if validation is enabled or not.
         /// </summary>
         [SkipPropertyValidation]
-        protected virtual Boolean IsValidationEnabled
+        protected virtual bool IsValidationEnabled
         {
             get
             {
-#if FX45
-                return this is IDataErrorInfo
-                    || this is ICanBeValidated
-                    || this is INotifyDataErrorInfo
+                return this is INotifyDataErrorInfo
                     || this is IRequireValidation;
-#else
-                return this is IDataErrorInfo
-                    || this is ICanBeValidated;
-#endif
             }
         }
 
@@ -103,51 +96,47 @@ namespace Radical.Windows.Presentation
         {
             get
             {
-                if( this._validationService == null )
+                if( _validationService == null )
                 {
-                    this._validationService = this.GetValidationService();
-                    this._validationService.StatusChanged += ( s, e ) =>
+                    _validationService = GetValidationService();
+                    _validationService.StatusChanged += ( s, e ) =>
                     {
-                        this.ValidationErrors.Clear();
-                        foreach( var error in this._validationService.ValidationErrors )
+                        ValidationErrors.Clear();
+                        foreach( var error in _validationService.ValidationErrors )
                         {
-                            this.ValidationErrors.Add( error );
+                            ValidationErrors.Add( error );
                         }
 
-#if FX45
                         this.OnErrorsChanged( null );
                         this.OnPropertyChanged( () => this.HasErrors );
-#endif
                     };
 
-                    this._validationService.ValidationReset += ( s, e ) =>
+                    _validationService.ValidationReset += ( s, e ) =>
                     {
-                        var shouldSetStatus = !this.IsResettingValidation;
+                        var shouldSetStatus = !IsResettingValidation;
                         if( shouldSetStatus )
                         {
-                            this.IsResettingValidation = true;
+                            IsResettingValidation = true;
                         }
 
-                        this.ValidationErrors.Clear();
-                        this.GetType()
+                        ValidationErrors.Clear();
+                        GetType()
                             .GetProperties()
                             .Where( p => !SkipPropertyValidation( p.Name ) )
                             .Select( p => p.Name )
-                            .ForEach( p => this.OnPropertyChanged( p ) );
+                            .ForEach( p => OnPropertyChanged( p ) );
 
-#if FX45
                         this.OnErrorsChanged( null );
                         this.OnPropertyChanged( () => this.HasErrors );
-#endif
 
                         if( shouldSetStatus )
                         {
-                            this.IsResettingValidation = false;
+                            IsResettingValidation = false;
                         }
                     };
                 }
 
-                return this._validationService;
+                return _validationService;
             }
         }
 
@@ -168,8 +157,8 @@ namespace Radical.Windows.Presentation
         protected AbstractMementoViewModel()
             : base( ChangeTrackingRegistration.AsTransient )
         {
-            this.ValidationErrors = new ObservableCollection<ValidationError>();
-            this.RunValidationOnPropertyChanged = true;
+            ValidationErrors = new ObservableCollection<ValidationError>();
+            RunValidationOnPropertyChanged = true;
         }
 
         /// <summary>
@@ -179,39 +168,39 @@ namespace Radical.Windows.Presentation
         protected AbstractMementoViewModel( ChangeTrackingRegistration registration )
             : base( registration )
         {
-            this.ValidationErrors = new ObservableCollection<ValidationError>();
-            this.RunValidationOnPropertyChanged = true;
+            ValidationErrors = new ObservableCollection<ValidationError>();
+            RunValidationOnPropertyChanged = true;
         }
 
-        /// <summary>
-        /// Gets the error.
-        /// </summary>
-        /// <value>The error.</value>
-        /// <remarks>Used only in order to satisfy IDataErrorInfo interface implementation, the default implementation always returns null.</remarks>
-        [Bindable( false )]
-        [SkipPropertyValidation]
-        public virtual String Error
-        {
-            get { return null; }
-        }
+        ///// <summary>
+        ///// Gets the error.
+        ///// </summary>
+        ///// <value>The error.</value>
+        ///// <remarks>Used only in order to satisfy IDataErrorInfo interface implementation, the default implementation always returns null.</remarks>
+        //[Bindable( false )]
+        //[SkipPropertyValidation]
+        //public virtual string Error
+        //{
+        //    get { return null; }
+        //}
 
-        /// <summary>
-        /// Gets the error message, if any, for the property with the given name.
-        /// </summary>
-        [Bindable( false )]
-        [SkipPropertyValidation]
-        public virtual String this[ String propertyName ]
-        {
-            get
-            {
-                var error = this.ValidationErrors
-                    .Where( e => e.Key == propertyName )
-                    .Select( err => err.ToString() )
-                    .FirstOrDefault();
+        ///// <summary>
+        ///// Gets the error message, if any, for the property with the given name.
+        ///// </summary>
+        //[Bindable( false )]
+        //[SkipPropertyValidation]
+        //public virtual string this[string propertyName ]
+        //{
+        //    get
+        //    {
+        //        var error = ValidationErrors
+        //            .Where( e => e.Key == propertyName )
+        //            .Select( err => err.ToString() )
+        //            .FirstOrDefault();
 
-                return error;
-            }
-        }
+        //        return error;
+        //    }
+        //}
 
         /// <summary>
         /// Validates the given property.
@@ -220,9 +209,9 @@ namespace Radical.Windows.Presentation
         /// <returns>
         /// The first validation error, if any; Otherwise <c>null</c>.
         /// </returns>
-        protected String ValidateProperty( String propertyName )
+        protected string ValidateProperty(string propertyName )
         {
-            return this.ValidateProperty( propertyName, ValidationBehavior.Default );
+            return ValidateProperty( propertyName, ValidationBehavior.Default );
         }
 
         PropertyValidationState validationState = new PropertyValidationState();
@@ -235,28 +224,28 @@ namespace Radical.Windows.Presentation
         /// <returns>
         /// The first validation error, if any; Otherwise <c>null</c>.
         /// </returns>
-        protected virtual String ValidateProperty( String propertyName, ValidationBehavior behavior )
+        protected virtual string ValidateProperty(string propertyName, ValidationBehavior behavior )
         {
-            String error = null;
+            string error = null;
 
-            if( this.ValidationService.IsValidationSuspended )
+            if( ValidationService.IsValidationSuspended )
             {
                 return error;
             }
 
-            using( this.validationState.BeginPropertyValidation( propertyName ) )
+            using( validationState.BeginPropertyValidation( propertyName ) )
             {
-                var wasValid = this.IsValid;
+                var wasValid = IsValid;
                 
-                var beforeDetectedProblems = this.ValidationService.ValidationErrors
+                var beforeDetectedProblems = ValidationService.ValidationErrors
                    .Where( ve => ve.Key == propertyName )
                    .SelectMany( ve => ve.DetectedProblems )
                    .OrderBy( dp => dp )
                    .ToArray();
 
-                error = this.ValidationService.Validate( propertyName );
+                error = ValidationService.Validate( propertyName );
 
-                var afterDetectedProblems = this.ValidationService.ValidationErrors
+                var afterDetectedProblems = ValidationService.ValidationErrors
                     .Where( ve => ve.Key == propertyName )
                     .SelectMany( ve => ve.DetectedProblems )
                     .OrderBy( dp => dp )
@@ -265,23 +254,18 @@ namespace Radical.Windows.Presentation
                 var validationStatusChanged = !beforeDetectedProblems.SequenceEqual( afterDetectedProblems );
                 if( validationStatusChanged && behavior == ValidationBehavior.TriggerValidationErrorsOnFailure )
                 {
-                    this.OnPropertyChanged( propertyName );
-
-#if FX45
+                    OnPropertyChanged( propertyName );
                     this.OnErrorsChanged( propertyName );
-#endif
                 }
 
-                if( this.IsValid != wasValid )
+                if( IsValid != wasValid )
                 {
-                    this.OnPropertyChanged( () => this.IsValid );
-#if FX45
-                    this.OnPropertyChanged( () => this.HasErrors );
-#endif
+                    OnPropertyChanged( () => IsValid );
+                    OnPropertyChanged( () => this.HasErrors );
                 }
             }
 
-            this.OnValidated();
+            OnValidated();
 
             return error;
         }
@@ -292,9 +276,9 @@ namespace Radical.Windows.Presentation
         /// <value><c>true</c> if this instance is valid; otherwise, <c>false</c>.</value>
         [Bindable( false )]
         [SkipPropertyValidation]
-        public virtual Boolean IsValid
+        public virtual bool IsValid
         {
-            get { return this.ValidationService.IsValid; }
+            get { return ValidationService.IsValid; }
         }
 
         /// <summary>
@@ -313,9 +297,9 @@ namespace Radical.Windows.Presentation
         /// Validates this instance.
         /// </summary>
         /// <returns><c>True</c> if this instance is valid; otherwise <c>false</c>.</returns>
-        public Boolean Validate()
+        public bool Validate()
         {
-            return this.Validate( null, ValidationBehavior.Default );
+            return Validate( null, ValidationBehavior.Default );
         }
 
         /// <summary>
@@ -325,9 +309,9 @@ namespace Radical.Windows.Presentation
         /// <returns>
         ///   <c>True</c> if this instance is valid; otherwise <c>false</c>.
         /// </returns>
-        public Boolean Validate( ValidationBehavior behavior )
+        public bool Validate( ValidationBehavior behavior )
         {
-            return this.Validate( null, behavior );
+            return Validate( null, behavior );
         }
 
         /// <summary>
@@ -338,32 +322,30 @@ namespace Radical.Windows.Presentation
         /// <returns>
         ///   <c>True</c> if this instance is valid; otherwise <c>false</c>.
         /// </returns>
-        public virtual Boolean Validate( String ruleSet, ValidationBehavior behavior )
+        public virtual bool Validate(string ruleSet, ValidationBehavior behavior )
         {
-            if( this.ValidationService.IsValidationSuspended )
+            if( ValidationService.IsValidationSuspended )
             {
-                return this.ValidationService.IsValid;
+                return ValidationService.IsValid;
             }
 
-            var wasValid = this.IsValid;
+            var wasValid = IsValid;
 
-            this.ValidationService.ValidateRuleSet( ruleSet );
-            this.OnValidated();
+            ValidationService.ValidateRuleSet( ruleSet );
+            OnValidated();
 
-            if( behavior == ValidationBehavior.TriggerValidationErrorsOnFailure && !this.ValidationService.IsValid )
+            if( behavior == ValidationBehavior.TriggerValidationErrorsOnFailure && !ValidationService.IsValid )
             {
-                this.TriggerValidation();
+                TriggerValidation();
             }
 
-            if( this.IsValid != wasValid )
+            if( IsValid != wasValid )
             {
-                this.OnPropertyChanged( () => this.IsValid );
-#if FX45
-                this.OnPropertyChanged( () => this.HasErrors );
-#endif
+                OnPropertyChanged( () => IsValid );
+                OnPropertyChanged( () => this.HasErrors );
             }
 
-            return this.ValidationService.IsValid;
+            return ValidationService.IsValid;
         }
 
         /// <summary>
@@ -376,9 +358,9 @@ namespace Radical.Windows.Presentation
         /// </summary>
         protected virtual void OnValidated()
         {
-            if( this.Validated != null )
+            if( Validated != null )
             {
-                this.Validated( this, EventArgs.Empty );
+                Validated( this, EventArgs.Empty );
             }
         }
 
@@ -387,16 +369,16 @@ namespace Radical.Windows.Presentation
         /// </summary>
         public virtual void TriggerValidation()
         {
-            if( !this.IsTriggeringValidation )
+            if( !IsTriggeringValidation )
             {
-                this.IsTriggeringValidation = true;
+                IsTriggeringValidation = true;
 
-                foreach( var invalid in this.ValidationService.GetInvalidProperties() )
+                foreach( var invalid in ValidationService.GetInvalidProperties() )
                 {
-                    this.OnPropertyChanged( invalid );
+                    OnPropertyChanged( invalid );
                 }
 
-                this.IsTriggeringValidation = false;
+                IsTriggeringValidation = false;
             }
         }
 
@@ -407,7 +389,7 @@ namespace Radical.Windows.Presentation
         /// 	<c>true</c> if this instance is triggering validation; otherwise, <c>false</c>.
         /// </value>
         [SkipPropertyValidation]
-        protected virtual Boolean IsTriggeringValidation
+        protected virtual bool IsTriggeringValidation
         {
             get;
             private set;
@@ -443,22 +425,22 @@ namespace Radical.Windows.Presentation
 
         void OnAcceptingChanges( object sender, CancelEventArgs e )
         {
-            this.OnAcceptingChanges( e );
+            OnAcceptingChanges( e );
         }
 
         void OnRejectingChanges( object sender, CancelEventArgs e )
         {
-            this.OnRejectingChanges( e );
+            OnRejectingChanges( e );
         }
 
         void OnChangesAccepted( object sender, EventArgs e )
         {
-            this.OnChangesAccepted();
+            OnChangesAccepted();
         }
 
         void OnChangesRejected( object sender, EventArgs e )
         {
-            this.OnChangesRejected();
+            OnChangesRejected();
         }
 
         /// <summary>
@@ -504,10 +486,10 @@ namespace Radical.Windows.Presentation
         [MementoPropertyMetadata( TrackChanges = false )]
         [Bindable( false )]
         [SkipPropertyValidation]
-        public String FocusedElementKey
+        public string FocusedElementKey
         {
-            get { return this.GetPropertyValue( () => this.FocusedElementKey ); }
-            set { this.SetPropertyValue( () => this.FocusedElementKey, value ); }
+            get { return GetPropertyValue( () => FocusedElementKey ); }
+            set { SetPropertyValue( () => FocusedElementKey, value ); }
         }
 
         /// <summary>
@@ -516,36 +498,34 @@ namespace Radical.Windows.Presentation
         /// <param name="property">The property.</param>
         protected virtual void MoveFocusTo<T>( Expression<Func<T>> property )
         {
-            this.EnsureNotDisposed();
+            EnsureNotDisposed();
 
             var propertyName = property.GetMemberName();
-            this.MoveFocusTo( propertyName );
+            MoveFocusTo( propertyName );
         }
 
         /// <summary>
         /// Moves the focus to.
         /// </summary>
         /// <param name="focusedElementKey">The focused element key.</param>
-        protected virtual void MoveFocusTo( String focusedElementKey )
+        protected virtual void MoveFocusTo(string focusedElementKey )
         {
-            this.EnsureNotDisposed();
+            EnsureNotDisposed();
 
-            this.FocusedElementKey = focusedElementKey;
+            FocusedElementKey = focusedElementKey;
         }
 
         /// <summary>
         /// Determines if each time a property changes the validation process should be run. The default value is <c>true</c>.
         /// </summary>
         [SkipPropertyValidation]
-        protected Boolean RunValidationOnPropertyChanged { get; set; }
+        protected bool RunValidationOnPropertyChanged { get; set; }
 
         /// <summary>
         /// <c>True</c> if the current ValidationService is resetting the validation status; Otherwise <c>false</c>.
         /// </summary>
         [SkipPropertyValidation]
-        protected Boolean IsResettingValidation { get; private set; }
-
-#if FX45
+        protected bool IsResettingValidation { get; private set; }
 
         /// <summary>
         /// Resets the validation status.
@@ -568,11 +548,7 @@ namespace Radical.Windows.Presentation
         /// <param name="propertyName">Name of the property.</param>
         protected void OnErrorsChanged( String propertyName )
         {
-            var h = this.ErrorsChanged;
-            if( h != null )
-            {
-                h( this, new DataErrorsChangedEventArgs( propertyName ) );
-            }
+            ErrorsChanged?.Invoke( this, new DataErrorsChangedEventArgs( propertyName ) );
         }
 
         /// <summary>
@@ -607,7 +583,5 @@ namespace Radical.Windows.Presentation
                 return hasErrors;
             }
         }
-
-#endif
     }
 }

@@ -46,12 +46,12 @@ namespace Radical.Windows.Presentation.Behaviors
                 logger.Debug( "We are not running within a designer." );
                 logger.Debug( "Ready to attach events." );
 
-				this.loaded = ( s, e ) =>
+				loaded = ( s, e ) =>
 				{
                     logger.Debug( "Loaded event raised." );
-                    Ensure.That( this.AssociatedObject ).Named( "AssociatedObject" ).IsNotNull();
+                    Ensure.That( AssociatedObject ).Named( "AssociatedObject" ).IsNotNull();
 
-                    var view = this.AssociatedObject;
+                    var view = AssociatedObject;
                     var dc = this.conventions.GetViewDataContext( view, this.conventions.DefaultViewDataContextSearchBehavior );
 
 					if( this.conventions.ShouldNotifyViewModelLoaded( view, dc ) )
@@ -85,9 +85,9 @@ namespace Radical.Windows.Presentation.Behaviors
 
                 logger.Debug( "Loaded event attached." );
 
-				this.activated = ( s, e ) =>
+				activated = ( s, e ) =>
 				{
-                    var view = this.AssociatedObject;
+                    var view = AssociatedObject;
                     var dc = this.conventions.GetViewDataContext( view, this.conventions.DefaultViewDataContextSearchBehavior );
 
                     if ( dc != null && dc.GetType().IsAttributeDefined<NotifyActivatedAttribute>() )
@@ -108,11 +108,11 @@ namespace Radical.Windows.Presentation.Behaviors
 
                 logger.Debug( "Activated event attached." );
 
-				this.rendered = ( s, e ) =>
+				rendered = ( s, e ) =>
 				{
                     logger.Debug( "Rendered event raised." );
 
-                    var view = this.AssociatedObject;
+                    var view = AssociatedObject;
                     var dc = this.conventions.GetViewDataContext( view, this.conventions.DefaultViewDataContextSearchBehavior );
 
 					if( dc != null && dc.GetType().IsAttributeDefined<NotifyShownAttribute>() )
@@ -134,11 +134,11 @@ namespace Radical.Windows.Presentation.Behaviors
 
                 logger.Debug( "Rendered event attached." );
 
-				this.closed = ( s, e ) =>
+				closed = ( s, e ) =>
 				{
                     logger.Debug( "Closed event raised." );
 
-                    var view = this.AssociatedObject;
+                    var view = AssociatedObject;
                     var dc = this.conventions.GetViewDataContext( view, this.conventions.DefaultViewDataContextSearchBehavior );
 
 					if ( dc != null && dc.GetType().IsAttributeDefined<NotifyClosedAttribute>() )
@@ -165,11 +165,11 @@ namespace Radical.Windows.Presentation.Behaviors
 
                 logger.Debug( "Closed event attached." );
 
-				this.closing = ( s, e ) =>
+				closing = ( s, e ) =>
 				{
                     logger.Debug( "Closing event raised." );
 
-                    var view = this.AssociatedObject;
+                    var view = AssociatedObject;
                     var dc = this.conventions.GetViewDataContext( view, this.conventions.DefaultViewDataContextSearchBehavior );
 
 					var temp = dc as IExpectViewClosingCallback;
@@ -201,11 +201,11 @@ namespace Radical.Windows.Presentation.Behaviors
 
             if ( !DesignTimeHelper.GetIsInDesignMode() )
 			{
-				this.AssociatedObject.Loaded += this.loaded;
-				this.AssociatedObject.Activated += this.activated;
-				this.AssociatedObject.ContentRendered += this.rendered;
-				this.AssociatedObject.Closing += this.closing;
-				this.AssociatedObject.Closed += this.closed;
+				AssociatedObject.Loaded += loaded;
+				AssociatedObject.Activated += activated;
+				AssociatedObject.ContentRendered += rendered;
+				AssociatedObject.Closing += closing;
+				AssociatedObject.Closed += closed;
 			}
 		}
 
@@ -216,11 +216,11 @@ namespace Radical.Windows.Presentation.Behaviors
 		{
             if ( !DesignTimeHelper.GetIsInDesignMode() )
 			{
-				this.AssociatedObject.Loaded -= this.loaded;
-				this.AssociatedObject.Activated -= this.activated;
-				this.AssociatedObject.ContentRendered -= this.rendered;
-				this.AssociatedObject.Closing -= this.closing;
-				this.AssociatedObject.Closed -= this.closed;
+				AssociatedObject.Loaded -= loaded;
+				AssociatedObject.Activated -= activated;
+				AssociatedObject.ContentRendered -= rendered;
+				AssociatedObject.Closing -= closing;
+				AssociatedObject.Closed -= closed;
 			}
 			base.OnDetaching();
 		}

@@ -15,8 +15,8 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// <param name="previousActiveContent">Content of the previous active.</param>
 		public ActiveContentChangedEventArgs( DependencyObject activeContent, DependencyObject previousActiveContent )
 		{
-			this.ActiveContent = activeContent;
-			this.PreviousActiveContent = previousActiveContent;
+			ActiveContent = activeContent;
+			PreviousActiveContent = previousActiveContent;
 		}
 
 		/// <summary>
@@ -49,9 +49,9 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// <value>
 		/// 	<c>true</c> if there is an active content; otherwise, <c>false</c>.
 		/// </value>
-		public Boolean HasActiveContent
+		public bool HasActiveContent
 		{
-			get { return this.ActiveContent != null; }
+			get { return ActiveContent != null; }
 		}
 	}
 }

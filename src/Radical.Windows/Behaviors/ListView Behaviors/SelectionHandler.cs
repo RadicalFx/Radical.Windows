@@ -30,12 +30,12 @@ namespace Radical.Windows.Behaviors
 				 * dalla gestione delle notifiche in modo da non
 				 * innescare un meccanismo ricorsivo infinito
 				 */
-                this.Unwire();
+                Unwire();
 
-                var bag = this.GetSelectedItemsBag();
+                var bag = GetSelectedItemsBag();
                 e.RemovedItems.Enumerate(obj =>
                {
-                   var item = this.GetRealItem(obj);
+                   var item = GetRealItem(obj);
                    if (bag.Contains(item))
                    {
                        bag.Remove(item);
@@ -44,38 +44,38 @@ namespace Radical.Windows.Behaviors
 
                 e.AddedItems.Enumerate(obj =>
                {
-                   var item = this.GetRealItem(obj);
+                   var item = GetRealItem(obj);
                    if (!bag.Contains(item))
                    {
                        bag.Add(item);
                    }
                });
 
-                this.Wire();
+                Wire();
             };
 
             ncceh = (s, e) =>
             {
-                this.Unwire();
+                Unwire();
 
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
                         {
-                            this.AddToListViewSelection(e.NewItems);
+                            AddToListViewSelection(e.NewItems);
                         }
                         break;
 
                     case NotifyCollectionChangedAction.Remove:
                         {
-                            this.RemoveFromListViewSelection(e.OldItems);
+                            RemoveFromListViewSelection(e.OldItems);
                         }
                         break;
 
                     case NotifyCollectionChangedAction.Reset:
                         {
-                            this.ClearListViewSelection();
-                            this.AddToListViewSelection(this.GetSelectedItemsBag());
+                            ClearListViewSelection();
+                            AddToListViewSelection(GetSelectedItemsBag());
                         }
                         break;
 
@@ -88,34 +88,34 @@ namespace Radical.Windows.Behaviors
                         throw new NotSupportedException();
                 }
 
-                this.Wire();
+                Wire();
             };
 
             lceh = (s, e) =>
             {
-                this.Unwire();
+                Unwire();
 
                 switch (e.ListChangedType)
                 {
                     case ListChangedType.ItemAdded:
                         {
-                            var bag = (IEntityView)this.selectedItems;
+                            var bag = (IEntityView)selectedItems;
                             var item = bag[e.NewIndex];
 
-                            this.AddToListViewSelection(new[] { item });
+                            AddToListViewSelection(new[] { item });
                         }
                         break;
 
                     case ListChangedType.Reset:
                         {
-                            this.ClearListViewSelection();
-                            this.AddToListViewSelection(this.selectedItems);
+                            ClearListViewSelection();
+                            AddToListViewSelection(selectedItems);
                         }
                         break;
 
                     case ListChangedType.ItemDeleted:
                         {
-                            this.RemoveFromListViewSelectionAtIndex(e.NewIndex);
+                            RemoveFromListViewSelectionAtIndex(e.NewIndex);
                         }
                         break;
 
@@ -131,89 +131,89 @@ namespace Radical.Windows.Behaviors
                         throw new NotSupportedException();
                 }
 
-                this.Wire();
+                Wire();
             };
         }
 
         void ClearListViewSelection()
         {
-            switch (this.owner.SelectionMode)
+            switch (owner.SelectionMode)
             {
                 case SelectionMode.Extended:
                 case SelectionMode.Multiple:
-                    this.owner.SelectedItems.Clear();
+                    owner.SelectedItems.Clear();
                     break;
                 case SelectionMode.Single:
-                    this.owner.SelectedItem = null;
+                    owner.SelectedItem = null;
                     break;
 
                 default:
-                    throw new NotSupportedException(String.Format("Unsupported ListView SelectionMode: {0}", this.owner.SelectionMode));
+                    throw new NotSupportedException(string.Format("Unsupported ListView SelectionMode: {0}", owner.SelectionMode));
             }
         }
 
         void AddToListViewSelection(IEnumerable items)
         {
-            switch (this.owner.SelectionMode)
+            switch (owner.SelectionMode)
             {
                 case SelectionMode.Extended:
                 case SelectionMode.Multiple:
-                    items.Enumerate(o => this.owner.SelectedItems.Add(o));
+                    items.Enumerate(o => owner.SelectedItems.Add(o));
                     break;
                 case SelectionMode.Single:
-                    this.owner.SelectedItem = items.OfType<Object>().FirstOrDefault();
+                    owner.SelectedItem = items.OfType<object>().FirstOrDefault();
                     break;
 
                 default:
-                    throw new NotSupportedException(String.Format("Unsupported ListView SelectionMode: {0}", this.owner.SelectionMode));
+                    throw new NotSupportedException(string.Format("Unsupported ListView SelectionMode: {0}", owner.SelectionMode));
             }
         }
 
         void RemoveFromListViewSelection(IEnumerable items)
         {
-            switch (this.owner.SelectionMode)
+            switch (owner.SelectionMode)
             {
                 case SelectionMode.Extended:
                 case SelectionMode.Multiple:
-                    items.Enumerate(o => this.owner.SelectedItems.Remove(o));
+                    items.Enumerate(o => owner.SelectedItems.Remove(o));
                     break;
                 case SelectionMode.Single:
-                    this.owner.SelectedItem = null;
+                    owner.SelectedItem = null;
                     break;
 
                 default:
-                    throw new NotSupportedException(String.Format("Unsupported ListView SelectionMode: {0}", this.owner.SelectionMode));
+                    throw new NotSupportedException(string.Format("Unsupported ListView SelectionMode: {0}", owner.SelectionMode));
             }
         }
 
-        void RemoveFromListViewSelectionAtIndex(Int32 index)
+        void RemoveFromListViewSelectionAtIndex(int index)
         {
-            switch (this.owner.SelectionMode)
+            switch (owner.SelectionMode)
             {
                 case SelectionMode.Extended:
                 case SelectionMode.Multiple:
-                    this.owner.SelectedItems.RemoveAt(index);
+                    owner.SelectedItems.RemoveAt(index);
                     break;
                 case SelectionMode.Single:
-                    this.owner.SelectedItem = null;
+                    owner.SelectedItem = null;
                     break;
 
                 default:
-                    throw new NotSupportedException(String.Format("Unsupported ListView SelectionMode: {0}", this.owner.SelectionMode));
+                    throw new NotSupportedException(string.Format("Unsupported ListView SelectionMode: {0}", owner.SelectionMode));
             }
         }
 
         IList GetSelectedItemsBag()
         {
-            var ev = this.selectedItems as IEntityView;
+            var ev = selectedItems as IEntityView;
             if (ev != null)
             {
                 return ev.DataSource;
             }
-            return this.selectedItems;
+            return selectedItems;
         }
 
-        Object GetRealItem(Object source)
+        object GetRealItem(object source)
         {
             var eiv = source as IEntityItemView;
             if (eiv != null)
@@ -229,33 +229,33 @@ namespace Radical.Windows.Behaviors
             this.owner = owner;
             this.selectedItems = selectedItems;
 
-            this.Wire();
+            Wire();
         }
 
         public void StopSync()
         {
-            this.Unwire();
+            Unwire();
 
-            this.owner = null;
-            this.selectedItems = null;
+            owner = null;
+            selectedItems = null;
         }
 
-        Boolean CanSyncFromSource
+        bool CanSyncFromSource
         {
             get
             {
-                var bag = this.selectedItems;
-                return this.owner.SelectionMode != SelectionMode.Single && (bag is INotifyCollectionChanged || bag is IEntityView);
+                var bag = selectedItems;
+                return owner.SelectionMode != SelectionMode.Single && (bag is INotifyCollectionChanged || bag is IEntityView);
             }
         }
 
         void Wire()
         {
-            this.owner.SelectionChanged += sceh;
+            owner.SelectionChanged += sceh;
 
-            if (this.CanSyncFromSource)
+            if (CanSyncFromSource)
             {
-                var bag = this.selectedItems;
+                var bag = selectedItems;
                 if (bag is INotifyCollectionChanged)
                 {
                     ((INotifyCollectionChanged)bag).CollectionChanged += ncceh;
@@ -269,10 +269,10 @@ namespace Radical.Windows.Behaviors
 
         void Unwire()
         {
-            this.owner.SelectionChanged -= sceh;
-            if (this.CanSyncFromSource)
+            owner.SelectionChanged -= sceh;
+            if (CanSyncFromSource)
             {
-                var bag = this.selectedItems;
+                var bag = selectedItems;
                 if (bag is INotifyCollectionChanged)
                 {
                     ((INotifyCollectionChanged)bag).CollectionChanged -= ncceh;

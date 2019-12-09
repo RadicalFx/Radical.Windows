@@ -69,7 +69,7 @@ namespace Radical.Windows.Behaviors
                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnItemTemplatePropertyChanged)));
 
             ChoosenItemProperty = DependencyProperty.RegisterAttached("ChoosenItem",
-                typeof(Object),
+                typeof(object),
                 typeof(AutoComplete),
                 new FrameworkPropertyMetadata(null)
                 {
@@ -138,12 +138,12 @@ namespace Radical.Windows.Behaviors
             d.SetValue(ItemTemplateProperty, value);
         }
 
-        public static Object GetChoosenItem(DependencyObject d)
+        public static object GetChoosenItem(DependencyObject d)
         {
-            return (Object)d.GetValue(ChoosenItemProperty);
+            return (object)d.GetValue(ChoosenItemProperty);
         }
 
-        public static void SetChoosenItem(DependencyObject d, Object value)
+        public static void SetChoosenItem(DependencyObject d, object value)
         {
             d.SetValue(ChoosenItemProperty, value);
         }

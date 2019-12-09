@@ -32,12 +32,12 @@ namespace Radical.Windows.Presentation.ComponentModel
 	/// </summary>
 	public interface IValidationService
 	{
-		/// <summary>
-		/// Gets a value indicating whether the validation process
-		/// returns a valid response or not.
-		/// </summary>
-		/// <value><c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.</value>
-		Boolean IsValid { get; }
+        /// <summary>
+        /// Gets a value indicating whether the validation process
+        /// returns a valid response or not.
+        /// </summary>
+        /// <value><c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.</value>
+        bool IsValid { get; }
 
 		/// <summary>
 		/// Occurs when validation status changes.
@@ -53,37 +53,37 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// Gets the invalid properties.
 		/// </summary>
 		/// <returns>A list of property names that identifies the invalid properties.</returns>
-		IEnumerable<String> GetInvalidProperties();
+		IEnumerable<string> GetInvalidProperties();
 
-		/// <summary>
-		/// Starts the validation process.
-		/// </summary>
-		/// <returns><c>True</c> if the validation process succedeed; otherwise <c>false</c>.</returns>
-		Boolean Validate();
+        /// <summary>
+        /// Starts the validation process.
+        /// </summary>
+        /// <returns><c>True</c> if the validation process succedeed; otherwise <c>false</c>.</returns>
+        bool Validate();
 
-		/// <summary>
-		/// Starts the validation process.
-		/// </summary>
-		/// <param name="ruleSet">The rule set.</param>
-		/// <returns>
-		///   <c>True</c> if the validation process succedeed; otherwise <c>false</c>.
-		/// </returns>
-		Boolean ValidateRuleSet( String ruleSet );
+        /// <summary>
+        /// Starts the validation process.
+        /// </summary>
+        /// <param name="ruleSet">The rule set.</param>
+        /// <returns>
+        ///   <c>True</c> if the validation process succedeed; otherwise <c>false</c>.
+        /// </returns>
+        bool ValidateRuleSet(string ruleSet );
 
-		/// <summary>
-		/// Validates the specified property.
-		/// </summary>
-		/// <param name="propertyName">The name of the property.</param>
-		/// <returns>The validation error message if any; otherwise a null or empty string.</returns>
-		String Validate( String propertyName );
+        /// <summary>
+        /// Validates the specified property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <returns>The validation error message if any; otherwise a null or empty string.</returns>
+        string Validate(string propertyName );
 
-		/// <summary>
-		/// Starts the validation process.
-		/// </summary>
-		/// <param name="ruleSet">The rule set.</param>
-		/// <param name="propertyName">The name of the property to validate.</param>
-		/// <returns>The validation error message if any; otherwise a null or empty string.</returns>
-		String ValidateRuleSet( String ruleSet, String propertyName );
+        /// <summary>
+        /// Starts the validation process.
+        /// </summary>
+        /// <param name="ruleSet">The rule set.</param>
+        /// <param name="propertyName">The name of the property to validate.</param>
+        /// <returns>The validation error message if any; otherwise a null or empty string.</returns>
+        string ValidateRuleSet(string ruleSet, string propertyName );
 
 		/// <summary>
 		/// Gets the validation errors.
@@ -102,13 +102,13 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// <param name="resetBehavior">The reset behavior.</param>
 		void Reset(ValidationResetBehavior resetBehavior);
 
-		/// <summary>
-		/// Gets a value indicating whether the validation process is suspended.
-		/// </summary>
-		/// <value>
-		/// 	<c>true</c> if the validation process is suspended; otherwise, <c>false</c>.
-		/// </value>
-		Boolean IsValidationSuspended { get; }
+        /// <summary>
+        /// Gets a value indicating whether the validation process is suspended.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if the validation process is suspended; otherwise, <c>false</c>.
+        /// </value>
+        bool IsValidationSuspended { get; }
 
 		/// <summary>
 		/// Suspends the validation.
@@ -121,29 +121,29 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// </summary>
 		void ResumeValidation();
 
-		/// <summary>
-		/// Gets the display name of the property.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="entity">The entity.</param>
-		/// <param name="property">The property.</param>
-		/// <returns></returns>
-		String GetPropertyDisplayName<T>( T entity, Expression<Func<T, Object>> property );
+        /// <summary>
+        /// Gets the display name of the property.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity">The entity.</param>
+        /// <param name="property">The property.</param>
+        /// <returns></returns>
+        string GetPropertyDisplayName<T>( T entity, Expression<Func<T, object>> property );
 
-		/// <summary>
-		/// Gets the display name of the property.
-		/// </summary>
-		/// <param name="entity">The entity.</param>
-		/// <param name="propertyName">Name of the property.</param>
-		/// <returns></returns>
-		String GetPropertyDisplayName( Object entity, String propertyName );
+        /// <summary>
+        /// Gets the display name of the property.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns></returns>
+        string GetPropertyDisplayName(object entity, string propertyName );
 
-		/// <summary>
-		/// Gets or sets if the service should merge validation errors related to the same property.
-		/// </summary>
-		/// <value>
-		/// <c>True</c> if the service should merge validation errors related to the same property; otherwise <c>False</c>.
-		/// </value>
-		Boolean MergeValidationErrors { get; set; }
+        /// <summary>
+        /// Gets or sets if the service should merge validation errors related to the same property.
+        /// </summary>
+        /// <value>
+        /// <c>True</c> if the service should merge validation errors related to the same property; otherwise <c>False</c>.
+        /// </value>
+        bool MergeValidationErrors { get; set; }
 	}
 }

@@ -18,7 +18,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="region">The region</param>
 		/// <param name="viewFactory">the view factory</param>
 		/// <param name="millisecondsDelay">The async load delay.</param>
-		public static void SetContentAsync( this IContentRegion region, Func<DependencyObject> viewFactory, Int32 millisecondsDelay = 2000 )
+		public static void SetContentAsync( this IContentRegion region, Func<DependencyObject> viewFactory, int millisecondsDelay = 2000 )
 		{
 			Wait.For( TimeSpan.FromMilliseconds( millisecondsDelay ) )
 				.AndThen( () =>
@@ -34,7 +34,7 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="region">the region.</param>
 		/// <param name="viewFactory">the view factory</param>
 		/// <param name="millisecondsDelay">The async load delay.</param>
-		public static void AddContentAsync( this IElementsRegion region, Func<DependencyObject> viewFactory, Int32 millisecondsDelay = 2000 )
+		public static void AddContentAsync( this IElementsRegion region, Func<DependencyObject> viewFactory, int millisecondsDelay = 2000 )
 		{
 			Wait.For( TimeSpan.FromMilliseconds( millisecondsDelay ) )
 				.AndThen( () =>

@@ -9,15 +9,15 @@ namespace Radical.ComponentModel.Windows.Input
         /// Initializes a new instance of the <see cref="CommandDescriptionAttribute"/> class.
         /// </summary>
         /// <param name="displayText">The display text.</param>
-        public CommandDescriptionAttribute(String displayText)
+        public CommandDescriptionAttribute(string displayText)
         {
-            this.DisplayText = displayText;
+            DisplayText = displayText;
         }
 
         /// <summary>
         /// Gets the command display text.
         /// </summary>
         /// <value>The display text.</value>
-        public virtual String DisplayText { get; private set; }
+        public virtual string DisplayText { get; private set; }
     }
 }
