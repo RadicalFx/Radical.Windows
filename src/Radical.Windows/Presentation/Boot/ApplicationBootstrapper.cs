@@ -15,6 +15,7 @@ using System.Diagnostics;
 using Radical.Diagnostics;
 using Radical.Validation;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Radical.Windows.Presentation.Boot
 {
@@ -22,7 +23,7 @@ namespace Radical.Windows.Presentation.Boot
     /// The application bootstrapper. Provides a way to dramatically simplify the
     /// application boot process.
     /// </summary>
-    public abstract class ApplicationBootstrapper : IServiceProvider
+    public class ApplicationBootstrapper
     {
         static readonly TraceSource logger = new TraceSource(typeof(ApplicationBootstrapper).Name);
 
@@ -43,7 +44,14 @@ namespace Radical.Windows.Presentation.Boot
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationBootstrapper"/> class.
         /// </summary>
-        protected ApplicationBootstrapper()
+        public ApplicationBootstrapper()
+            : this(new ServiceCollection())
+        {
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationBootstrapper"/> class.
+        /// </summary>
+        public ApplicationBootstrapper(IServiceCollection services)
         {
             var commandLine = CommandLine.GetCurrent();
 
@@ -68,42 +76,11 @@ namespace Radical.Windows.Presentation.Boot
                 Debugger.Break();
             }
 
-            //this.DefineCatalogs = () =>
-            //{
-            //    var tmp = new List<ComposablePartCatalog>();
-
-            //    if (this.catalogDefinitionHandler != null)
-            //    {
-            //        tmp.AddRange(this.catalogDefinitionHandler());
-            //    }
-
-            //    var entry = Assembly.GetEntryAssembly();
-
-            //    var currentDirectory = Helpers.EnvironmentHelper.GetCurrentDirectory();
-            //    var conventions = this.serviceProvider.GetService<BootstrapConventions>();
-            //    var patterns = conventions.AssemblyFileScanPatterns(entry);
-
-            //    foreach (var p in patterns)
-            //    {
-            //        tmp.Add(new DirectoryCatalog(currentDirectory, p));
-            //    }
-
-            //    //var name = entry.GetName().Name;
-
-            //    //var dllPattern = String.Format( "{0}*.dll", name );
-
-            //    //tmp.Add( new DirectoryCatalog( currentDirectory, "Radical.*.dll" ) );
-            //    //tmp.Add( new DirectoryCatalog( currentDirectory, dllPattern ) );
-            //    tmp.Add(new AssemblyCatalog(entry));
-
-            //    return tmp;
-            //};
-
             Application.Current.Startup += (s, e) =>
             {
                 if (this.isAutoBootEnabled)
                 {
-                    this.OnBoot();
+                    this.OnBoot(services);
                 }
             };
 
@@ -191,12 +168,6 @@ namespace Radical.Windows.Presentation.Boot
         }
 
         /// <summary>
-        /// Creates the IoC service provider.
-        /// </summary>
-        /// <returns>The IoC service provider.</returns>
-        protected abstract IServiceProvider CreateServiceProvider();
-
-        /// <summary>
         /// Setups the UI composition engine.
         /// </summary>
         /// <param name="serviceProvider">The service provider.</param>
@@ -213,7 +184,7 @@ namespace Radical.Windows.Presentation.Boot
         /// </summary>
         /// <param name="onBeforeInstall">The on before install.</param>
         /// <returns></returns>
-        public ApplicationBootstrapper OnBeforeInstall(Action<Boot.BootstrapConventions> onBeforeInstall)
+        public ApplicationBootstrapper OnBeforeInstall(Action<BootstrapConventions> onBeforeInstall)
         {
             this.onBeforeInstall = onBeforeInstall;
 
@@ -234,19 +205,18 @@ namespace Radical.Windows.Presentation.Boot
             return this;
         }
 
-        void OnBoot()
+        void OnBoot(IServiceCollection services)
         {
-            this.serviceProvider = this.CreateServiceProvider();
-            this.onServiceProviderCreated?.Invoke(this.serviceProvider);
-
-            if (this.onBeforeInstall != null)
-            {
-                var conventions = this.serviceProvider.GetService<Boot.BootstrapConventions>();
-                this.onBeforeInstall(conventions);
-            }
+            var conventions = new BootstrapConventions();
+            this.onBeforeInstall?.Invoke(conventions);
+            services.AddSingleton(conventions);
 
             //assembly scanning
-            this.compositionContainer.ComposeParts(this);
+
+            //invoke installers passing in conventions and services
+
+            this.serviceProvider = services.BuildServiceProvider();
+            this.onServiceProviderCreated?.Invoke(this.serviceProvider);
 
             this.SetupUICompositionEngine(this.serviceProvider);
 
@@ -269,7 +239,7 @@ namespace Radical.Windows.Presentation.Boot
 
                 this.bootCompletedHandler?.Invoke(serviceProvider);
 
-                var callbacks = this.ResolveAll<IExpectBootCallback>();
+                var callbacks = this.serviceProvider.GetServices<IExpectBootCallback>();
                 if (callbacks != null && callbacks.Any())
                 {
                     foreach (var cb in callbacks)
@@ -420,7 +390,18 @@ namespace Radical.Windows.Presentation.Boot
         {
             if (!this.isAutoBootEnabled && !this.isBootCompleted)
             {
-                this.OnBoot();
+                this.OnBoot(new ServiceCollection());
+            }
+        }
+
+        // <summary>
+        /// Boots this instance.
+        /// </summary>
+        public void Boot(IServiceCollection services)
+        {
+            if (!this.isAutoBootEnabled && !this.isBootCompleted)
+            {
+                this.OnBoot(services);
             }
         }
 
@@ -431,13 +412,6 @@ namespace Radical.Windows.Presentation.Boot
         {
             this.OnShutdownCore(ApplicationShutdownReason.UserRequest);
         }
-
-        /// <summary>
-        /// Called to ask to the concrete container to resolve all the registered components of type T.
-        /// </summary>
-        /// <typeparam name="T">The type to resolve.</typeparam>
-        /// <returns>A list of resolved types.</returns>
-        protected abstract IEnumerable<T> ResolveAll<T>();
 
         /// <summary>
         /// Called when the boot process has been completed.
@@ -553,7 +527,7 @@ namespace Radical.Windows.Presentation.Boot
                     //messaggio per notificare ed eventualmente cancellare
                     var msg = new ApplicationShutdownRequested(reason);
 
-                    var broker = this.GetService<IMessageBroker>();
+                    var broker = this.serviceProvider.GetService<IMessageBroker>();
                     broker.Dispatch(this, msg);
 
                     canceled = msg.Cancel;
@@ -569,8 +543,11 @@ namespace Radical.Windows.Presentation.Boot
 
                 if (this.isBootCompleted)
                 {
-                    this.GetService<IMessageBroker>().Broadcast(this, new ApplicationShutdown(reason));
-                    var callbacks = this.ResolveAll<IExpectShutdownCallback>();
+                    this.serviceProvider
+                        .GetService<IMessageBroker>()
+                        .Broadcast(this, new ApplicationShutdown(reason));
+
+                    var callbacks = this.serviceProvider.GetServices<IExpectShutdownCallback>();
                     if (callbacks != null && callbacks.Any())
                     {
                         foreach (var cb in callbacks)
@@ -736,18 +713,6 @@ namespace Radical.Windows.Presentation.Boot
         {
             this.shutdownHandler = shutdownHandler;
             return this;
-        }
-
-        /// <summary>
-        /// Gets the service object of the specified type.
-        /// </summary>
-        /// <param name="serviceType">An object that specifies the type of service object to get.</param>
-        /// <returns>
-        /// A service object of type <paramref name="serviceType"/>.-or- null if there is no service object of type <paramref name="serviceType"/>.
-        /// </returns>
-        public object GetService(Type serviceType)
-        {
-            return this.serviceProvider.GetService(serviceType);
         }
     }
 }
