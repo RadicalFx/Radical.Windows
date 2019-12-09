@@ -40,6 +40,10 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Presentation\Boot\Installers\" />
+  </ItemGroup>
+
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="if exist &quot;$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe&quot; &quot;$(DXSDK_DIR)Utilities\Bin\x86\fxc.exe&quot; /T ps_2_0 /E main /Fo&quot;$(ProjectDir)Resources\Effects\GrayscaleEffect.ps&quot; &quot;$(ProjectDir)Resources\Effects\GrayscaleEffect.fx&quot;" />
   </Target>

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Radical.Windows.Presentation.Boot
@@ -21,11 +21,8 @@ namespace Radical.Windows.Presentation.Boot
 			this.WindowStyle = WindowStyle.None;
 			this.MinimumDelay = 1500;
 			this.SplashScreenViewType = typeof( SplashScreenView );
-#if FX40
-			this.StartupAsyncWork = obj => Thread.Sleep( this.MinimumDelay );
-#else
+
 			this.StartupAsyncWork = obj => Task.Delay( this.MinimumDelay );
-#endif
 		}
 
 		/// <summary>
@@ -39,17 +36,17 @@ namespace Radical.Windows.Presentation.Boot
 		public WindowStartupLocation WindowStartupLocation { get; set; }
 		
 		/// <summary>
-		/// The splash screen window style, the default valkue is <c>None</c>.
+		/// The splash screen window style, the default value is <c>None</c>.
 		/// </summary>
 		public WindowStyle WindowStyle { get; set; }
 
 		/// <summary>
-		/// Defines the work that shopuld be executed asynchronously while the splash screen is running.
+		/// Defines the work that should be executed asynchronously while the splash screen is running.
 		/// </summary>
 		public Action<IServiceProvider> StartupAsyncWork { get; set; }
 
 		/// <summary>
-		/// Defines the Height of the splash screen window if the SizeToContent value is Manual or Widht; otherwise is ignored.
+		/// Defines the Height of the splash screen window if the SizeToContent value is Manual or Width; otherwise is ignored.
 		/// </summary>
 		public Double Height { get; set; }
 

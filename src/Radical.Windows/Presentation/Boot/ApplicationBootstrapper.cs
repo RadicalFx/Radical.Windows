@@ -29,16 +29,17 @@ namespace Radical.Windows.Presentation.Boot
         Type shellViewType = null;
         IServiceProvider serviceProvider;
 
-        Boolean isAutoBootEnabled = true;
-        Boolean isBootCompleted;
+        bool isAutoBootEnabled = true;
+        bool isBootCompleted;
 
         private Action<IServiceProvider> bootCompletedHandler;
         private Action<ApplicationShutdownArgs> shutdownHandler;
         private Action<IServiceProvider> bootHandler;
         ShutdownMode? mode = null;
         Mutex mutex;
-        String key;
+        string key;
         SingletonApplicationScope singleton = SingletonApplicationScope.NotSupported;
+        AssemblyScanner assemblyScanner = new AssemblyScanner();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationBootstrapper"/> class.
@@ -176,14 +177,14 @@ namespace Radical.Windows.Presentation.Boot
             RegionService.Conventions = serviceProvider.GetService<IConventionsHandler>();
         }
 
-        Action<BootstrapConventions> onBeforeInstall;
+        Action<BootstrapConventions, AssemblyScanner> onBeforeInstall;
 
         /// <summary>
         /// Called before the install and boot process begins, right after the service provider creation.
         /// </summary>
         /// <param name="onBeforeInstall">The on before install.</param>
         /// <returns></returns>
-        public ApplicationBootstrapper OnBeforeInstall(Action<BootstrapConventions> onBeforeInstall)
+        public ApplicationBootstrapper OnBeforeInstall(Action<BootstrapConventions, AssemblyScanner> onBeforeInstall)
         {
             this.onBeforeInstall = onBeforeInstall;
 
@@ -207,12 +208,20 @@ namespace Radical.Windows.Presentation.Boot
         void OnBoot(IServiceCollection services)
         {
             var conventions = new BootstrapConventions();
-            onBeforeInstall?.Invoke(conventions);
+            onBeforeInstall?.Invoke(conventions, assemblyScanner);
             services.AddSingleton(conventions);
 
-            //assembly scanning
+            var assemblies = assemblyScanner.Scan();
+            var allTypes = assemblies
+                .SelectMany(assembly => assembly.GetTypes())
+                .Distinct()
+                .ToArray();
 
-            //invoke installers passing in conventions and services
+            foreach (var installerType in allTypes.Where(t => typeof(IDependenciesInstaller).IsAssignableFrom(t) && !t.IsAbstract))
+            {
+                var installer = (IDependenciesInstaller)Activator.CreateInstance(installerType);
+                installer.Install(conventions, services, allTypes);
+            }
 
             serviceProvider = services.BuildServiceProvider();
             onServiceProviderCreated?.Invoke(serviceProvider);
