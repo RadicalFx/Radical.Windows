@@ -6,15 +6,11 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Radical.ChangeTracking;
-using Radical.ComponentModel.ChangeTracking;
 using Radical.ComponentModel.Validation;
 using Radical.Validation;
 using Radical.Windows.Presentation;
-using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Services.Validation;
+using Radical.Windows.Presentation.ComponentModel;
 
 namespace Test.Radical.Windows.Presentation
 {
