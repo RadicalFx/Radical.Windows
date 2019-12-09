@@ -20,20 +20,20 @@ namespace Test.Radical.Windows.Presentation
         abstract class TestViewModel : AbstractMementoViewModel
         {
             IValidationService _validationService;
-            Boolean? _forceIsValidationEnabledTo;
-            internal void ValidateUsing( IValidationService validationService, Boolean? forceIsValidationEnabledTo = null )
+            bool? _forceIsValidationEnabledTo;
+            internal void ValidateUsing( IValidationService validationService, bool? forceIsValidationEnabledTo = null )
             {
-                this._validationService = validationService;
-                this._forceIsValidationEnabledTo = forceIsValidationEnabledTo;
+                _validationService = validationService;
+                _forceIsValidationEnabledTo = forceIsValidationEnabledTo;
             }
 
             protected override bool IsValidationEnabled
             {
                 get
                 {
-                    if( this._forceIsValidationEnabledTo.HasValue )
+                    if( _forceIsValidationEnabledTo.HasValue )
                     {
-                        return this._forceIsValidationEnabledTo.Value;
+                        return _forceIsValidationEnabledTo.Value;
                     }
 
                     return base.IsValidationEnabled;
@@ -42,34 +42,34 @@ namespace Test.Radical.Windows.Presentation
 
             protected override IValidationService GetValidationService()
             {
-                if( this._validationService != null )
+                if( _validationService != null )
                 {
-                    return this._validationService;
+                    return _validationService;
                 }
 
                 return base.GetValidationService();
             }
 
-            public Boolean Test_IsValidationEnabled { get { return this.IsValidationEnabled; } }
+            public bool Test_IsValidationEnabled { get { return IsValidationEnabled; } }
 
-            public String Test_ValidateProperty( String propertyName )
+            public string Test_ValidateProperty(string propertyName )
             {
-                return this.Test_ValidateProperty( propertyName, ValidationBehavior.Default );
+                return Test_ValidateProperty( propertyName, ValidationBehavior.Default );
             }
 
-            public String Test_ValidateProperty( String propertyName, ValidationBehavior behavior )
+            public string Test_ValidateProperty(string propertyName, ValidationBehavior behavior )
             {
-                return this.ValidateProperty( propertyName, behavior );
+                return ValidateProperty( propertyName, behavior );
             }
 
             public void Test_RaisePropertyChanged<T>( Expression<Func<T>> property ) 
             {
-                this.OnPropertyChanged( property );
+                OnPropertyChanged( property );
             }
 
             public void Test_SetInitialPropertyValue<T>( Expression<Func<T>> property, T value ) 
             {
-                this.SetInitialPropertyValue( property, value );
+                SetInitialPropertyValue( property, value );
             }
         }
 
@@ -77,28 +77,28 @@ namespace Test.Radical.Windows.Presentation
         {
             [Required( AllowEmptyStrings = false )]
             [StringLength( 10, MinimumLength = 5 )]
-            public String NotNullNotEmpty
+            public string NotNullNotEmpty
             {
-                get { return this.GetPropertyValue( () => this.NotNullNotEmpty ); }
-                set { this.SetPropertyValue( () => this.NotNullNotEmpty, value ); }
+                get { return GetPropertyValue( () => NotNullNotEmpty ); }
+                set { SetPropertyValue( () => NotNullNotEmpty, value ); }
             }
 
-            public String Another
+            public string Another
             {
-                get { return this.GetPropertyValue( () => this.Another ); }
-                set { this.SetPropertyValue( () => this.Another, value ); }
+                get { return GetPropertyValue( () => Another ); }
+                set { SetPropertyValue( () => Another, value ); }
             }
 
-            public String AnotherOne
+            public string AnotherOne
             {
-                get { return this.GetPropertyValue( () => this.AnotherOne ); }
-                set { this.SetPropertyValue( () => this.AnotherOne, value ); }
+                get { return GetPropertyValue( () => AnotherOne ); }
+                set { SetPropertyValue( () => AnotherOne, value ); }
             }
 
-            public String OnceMore
+            public string OnceMore
             {
-                get { return this.GetPropertyValue( () => this.OnceMore ); }
-                set { this.SetPropertyValue( () => this.OnceMore, value ); }
+                get { return GetPropertyValue( () => OnceMore ); }
+                set { SetPropertyValue( () => OnceMore, value ); }
             }
         }
 
@@ -108,20 +108,20 @@ namespace Test.Radical.Windows.Presentation
 
             public void OnValidate( ValidationContext<SampleTestViewModelWithValidationCallback> context )
             {
-                this.Test_OnValidate( context );
+                Test_OnValidate( context );
             }
         }
 
 
-        class ImplementsIDataErrorInfo : TestViewModel, IDataErrorInfo
-        {
+        //class ImplementsIDataErrorInfo : TestViewModel, IDataErrorInfo
+        //{
 
-        }
+        //}
 
-        class ImplementsICanBeValidated : TestViewModel, ICanBeValidated
-        {
+        //class ImplementsICanBeValidated : TestViewModel, ICanBeValidated
+        //{
 
-        }
+        //}
 
         class ImplementsINotifyDataErrorInfo : TestViewModel, INotifyDataErrorInfo
         {
@@ -176,33 +176,33 @@ namespace Test.Radical.Windows.Presentation
             Assert.IsTrue( errors.Count == 1 );
         }
 
-        [TestMethod]
-        [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
-        public void AbstractMementoViewModel_as_IDataErrorInfo_with_validation_service_invalid_property_not_validated_is_valid()
-        {
-            var sut = new SampleTestViewModel();
-            sut.ValidateUsing(
-                new DataAnnotationValidationService<SampleTestViewModel>( sut ) );
+        //[TestMethod]
+        //[TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
+        //public void AbstractMementoViewModel_as_IDataErrorInfo_with_validation_service_invalid_property_not_validated_is_valid()
+        //{
+        //    var sut = new SampleTestViewModel();
+        //    sut.ValidateUsing(
+        //        new DataAnnotationValidationService<SampleTestViewModel>( sut ) );
 
-            var error = sut[ "NotNullNotEmpty" ];
+        //    var error = sut[ "NotNullNotEmpty" ];
 
-            Assert.IsNull( error );
-        }
+        //    Assert.IsNull( error );
+        //}
 
-        [TestMethod]
-        [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
-        public void AbstractMementoViewModel_as_IDataErrorInfo_with_validation_service_invalid_property_not_validated_is_valid_even_if_called_multiple_times()
-        {
-            var sut = new SampleTestViewModel();
-            sut.ValidateUsing(
-                new DataAnnotationValidationService<SampleTestViewModel>( sut ) );
+        //[TestMethod]
+        //[TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
+        //public void AbstractMementoViewModel_as_IDataErrorInfo_with_validation_service_invalid_property_not_validated_is_valid_even_if_called_multiple_times()
+        //{
+        //    var sut = new SampleTestViewModel();
+        //    sut.ValidateUsing(
+        //        new DataAnnotationValidationService<SampleTestViewModel>( sut ) );
 
-            var error = sut[ "NotNullNotEmpty" ];
-            error = sut[ "NotNullNotEmpty" ];
-            error = sut[ "NotNullNotEmpty" ];
+        //    var error = sut[ "NotNullNotEmpty" ];
+        //    error = sut[ "NotNullNotEmpty" ];
+        //    error = sut[ "NotNullNotEmpty" ];
 
-            Assert.IsNull( error );
-        }
+        //    Assert.IsNull( error );
+        //}
 
         [TestMethod]
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
@@ -212,7 +212,7 @@ namespace Test.Radical.Windows.Presentation
             sut.ValidateUsing(
                 new DataAnnotationValidationService<SampleTestViewModel>( sut ) );
 
-            var errors = sut.GetErrors( "NotNullNotEmpty" ).OfType<Object>();
+            var errors = sut.GetErrors( "NotNullNotEmpty" ).OfType<object>();
 
             Assert.AreEqual( 0, errors.Count() );
         }
@@ -225,9 +225,9 @@ namespace Test.Radical.Windows.Presentation
             sut.ValidateUsing(
                 new DataAnnotationValidationService<SampleTestViewModel>( sut ) );
 
-            var errors = sut.GetErrors( "NotNullNotEmpty" ).OfType<Object>();
-            errors = sut.GetErrors( "NotNullNotEmpty" ).OfType<Object>();
-            errors = sut.GetErrors( "NotNullNotEmpty" ).OfType<Object>();
+            var errors = sut.GetErrors( "NotNullNotEmpty" ).OfType<object>();
+            errors = sut.GetErrors( "NotNullNotEmpty" ).OfType<object>();
+            errors = sut.GetErrors( "NotNullNotEmpty" ).OfType<object>();
 
             Assert.AreEqual( 0, errors.Count() );
         }
@@ -240,21 +240,21 @@ namespace Test.Radical.Windows.Presentation
             Assert.IsTrue( sut.Test_IsValidationEnabled );
         }
 
-        [TestMethod]
-        [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
-        public void AbstractMementoViewModel_IDataErrorInfo_IsValidationEnabled_should_be_true()
-        {
-            var sut = new ImplementsIDataErrorInfo();
-            Assert.IsTrue( sut.Test_IsValidationEnabled );
-        }
+        //[TestMethod]
+        //[TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
+        //public void AbstractMementoViewModel_IDataErrorInfo_IsValidationEnabled_should_be_true()
+        //{
+        //    var sut = new ImplementsIDataErrorInfo();
+        //    Assert.IsTrue( sut.Test_IsValidationEnabled );
+        //}
 
-        [TestMethod]
-        [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
-        public void AbstractMementoViewModel_ICanBeValidated_IsValidationEnabled_should_be_true()
-        {
-            var sut = new ImplementsICanBeValidated();
-            Assert.IsTrue( sut.Test_IsValidationEnabled );
-        }
+        //[TestMethod]
+        //[TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
+        //public void AbstractMementoViewModel_ICanBeValidated_IsValidationEnabled_should_be_true()
+        //{
+        //    var sut = new ImplementsICanBeValidated();
+        //    Assert.IsTrue( sut.Test_IsValidationEnabled );
+        //}
 
         [TestMethod]
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
@@ -268,12 +268,12 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
         public void AbstractMementoViewModel_PropertyChanged_is_raised_GetErrors_should_contain_expected_errors()
         {
-            IEnumerable<Object> errors = null;
+            IEnumerable<object> errors = null;
 
             var sut = new SampleTestViewModel();
             sut.PropertyChanged += ( s, e ) =>
             {
-                errors = sut.GetErrors( "NotNullNotEmpty" ).OfType<Object>();
+                errors = sut.GetErrors( "NotNullNotEmpty" ).OfType<object>();
             };
 
             sut.ValidateUsing(
@@ -284,31 +284,31 @@ namespace Test.Radical.Windows.Presentation
             Assert.AreEqual( 0, errors.Count() );
         }
 
-        [TestMethod]
-        [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
-        public void AbstractMementoViewModel_PropertyChanged_is_raised_Error_indexer_should_contain_expected_errors()
-        {
-            String errors = null;
+        //[TestMethod]
+        //[TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
+        //public void AbstractMementoViewModel_PropertyChanged_is_raised_Error_indexer_should_contain_expected_errors()
+        //{
+        //    string errors = null;
 
-            var sut = new SampleTestViewModel();
-            sut.PropertyChanged += ( s, e ) =>
-            {
-                errors = sut[ "NotNullNotEmpty" ];
-            };
+        //    var sut = new SampleTestViewModel();
+        //    sut.PropertyChanged += ( s, e ) =>
+        //    {
+        //        errors = sut[ "NotNullNotEmpty" ];
+        //    };
 
-            sut.ValidateUsing(
-                new DataAnnotationValidationService<SampleTestViewModel>( sut ),
-                forceIsValidationEnabledTo: true );
-            sut.NotNullNotEmpty = "";
+        //    sut.ValidateUsing(
+        //        new DataAnnotationValidationService<SampleTestViewModel>( sut ),
+        //        forceIsValidationEnabledTo: true );
+        //    sut.NotNullNotEmpty = "";
 
-            Assert.IsFalse( String.IsNullOrWhiteSpace( errors ) );
-        }
+        //    Assert.IsFalse(string.IsNullOrWhiteSpace( errors ) );
+        //}
 
         [TestMethod]
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
         public void AbstractMementoViewModel_PropertyChanged_is_raised_IsValid_should_be_false()
         {
-            Boolean isValid = true;
+            bool isValid = true;
 
             var sut = new SampleTestViewModel();
             sut.PropertyChanged += ( s, e ) =>
@@ -517,7 +517,7 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
         public void AbstractMementoViewModel_When_ValidateProperty_PropertyChanged_event_should_not_be_raised()
         {
-            List<String> raised = new List<string>();
+            List<string> raised = new List<string>();
             var propName = "NotNullNotEmpty";
 
             var sut = new SampleTestViewModel();
@@ -534,7 +534,7 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
         public void AbstractMementoViewModel_When_ValidateProperty_with_Trigger_berhavior_PropertyChanged_event_should_be_raised()
         {
-            List<String> raised = new List<string>();
+            List<string> raised = new List<string>();
             var propName = "NotNullNotEmpty";
 
             var sut = new SampleTestViewModel();
@@ -551,7 +551,7 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
         public void AbstractMementoViewModel_When_ValidateProperty_with_Trigger_berhavior_ErrorsChanged_event_should_not_be_raised()
         {
-            List<String> raised = new List<string>();
+            List<string> raised = new List<string>();
             var propName = "NotNullNotEmpty";
 
             var sut = new SampleTestViewModel();
@@ -568,7 +568,7 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
         public void AbstractMementoViewModel_When_ValidateProperty_with_Trigger_berhavior_ErrorsChanged_event_should_be_raised()
         {
-            List<String> raised = new List<string>();
+            List<string> raised = new List<string>();
             var propName = "NotNullNotEmpty";
 
             var sut = new SampleTestViewModel();
@@ -585,7 +585,7 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
         public void AbstractMementoViewModel_When_ValidateProperty_with_Trigger_berhavior_ErrorsChanged_event_should_be_raised_if_the_status_of_errors_changes()
         {
-            List<String> raised = new List<string>();
+            List<string> raised = new List<string>();
             var propName = "NotNullNotEmpty";
 
             var sut = new SampleTestViewModel();
@@ -609,7 +609,7 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
         public void AbstractMementoViewModel_When_ValidateProperty_with_Trigger_berhavior_PropertyChanged_event_should_be_raised_if_the_status_of_errors_changes()
         {
-            List<String> raised = new List<string>();
+            List<string> raised = new List<string>();
             var propName = "NotNullNotEmpty";
 
             var sut = new SampleTestViewModel();
@@ -633,7 +633,7 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
         public void AbstractMementoViewModel_When_ValidateProperty_and_Validation_is_suspended_Validated_event_should_not_be_raised()
         {
-            Boolean raised = false;
+            bool raised = false;
             var propName = "NotNullNotEmpty";
 
             var sut = new SampleTestViewModel();
@@ -653,7 +653,7 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory( "AbstractMementoViewModel" ), TestCategory( "Validation" )]
         public void AbstractMementoViewModel_When_Validate_and_Validation_is_suspended_Validated_event_should_not_be_raised()
         {
-            Boolean raised = false;
+            bool raised = false;
             
             var sut = new SampleTestViewModel();
             var svc = new DataAnnotationValidationService<SampleTestViewModel>( sut );

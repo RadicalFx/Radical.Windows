@@ -6,9 +6,7 @@
     using Radical.ComponentModel.ChangeTracking;
     using Radical.Observers;
     using Radical.Windows.Input;
-    using Rhino.Mocks;
     using SharpTestsEx;
-    using System;
     using System.ComponentModel;
 
     [TestClass]
@@ -17,46 +15,46 @@
         class TestStub : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
-            void OnPropertyChanged(String name)
+            void OnPropertyChanged(string name)
             {
-                if (this.PropertyChanged != null)
+                if (PropertyChanged != null)
                 {
-                    this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+                    PropertyChanged(this, new PropertyChangedEventArgs(name));
                 }
             }
 
-            private String _value = null;
-            public String Value
+            private string _value = null;
+            public string Value
             {
-                get { return this._value; }
+                get { return _value; }
                 set
                 {
-                    if (value != this.Value)
+                    if (value != Value)
                     {
-                        this._value = value;
-                        this.OnPropertyChanged("Value");
+                        _value = value;
+                        OnPropertyChanged("Value");
                     }
                 }
             }
 
-            private String _anotherValue = null;
-            public String AnotherValue
+            private string _anotherValue = null;
+            public string AnotherValue
             {
-                get { return this._anotherValue; }
+                get { return _anotherValue; }
                 set
                 {
-                    if (value != this.AnotherValue)
+                    if (value != AnotherValue)
                     {
-                        this._anotherValue = value;
-                        this.OnPropertyChanged("AnotherValue");
+                        _anotherValue = value;
+                        OnPropertyChanged("AnotherValue");
                     }
                 }
             }
 
-            private readonly Observable<String> _text = new Observable<String>();
-            public Observable<String> Text
+            private readonly Observable<string> _text = new Observable<string>();
+            public Observable<string> Text
             {
-                get { return this._text; }
+                get { return _text; }
             }
         }
 

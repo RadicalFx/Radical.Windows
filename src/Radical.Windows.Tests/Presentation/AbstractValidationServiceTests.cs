@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using Radical.Validation;
-using Radical.Windows.Presentation;
-using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Services.Validation;
 
 namespace Test.Radical.Windows.Presentation
@@ -20,12 +16,12 @@ namespace Test.Radical.Windows.Presentation
             public TestValidationService( ValidationError[] errorsToReturnUnderTest )
             {
                 //this.errorsToReturnUnderTest = errorsToReturnUnderTest;
-                this.AddValidationErrors( errorsToReturnUnderTest );
+                AddValidationErrors( errorsToReturnUnderTest );
             }
 
             protected override IEnumerable<ValidationError> OnValidate( string ruleSet )
             {
-                var errors = new List<ValidationError>( this.ValidationErrors );
+                var errors = new List<ValidationError>( ValidationErrors );
 
                 return errors;
             }
