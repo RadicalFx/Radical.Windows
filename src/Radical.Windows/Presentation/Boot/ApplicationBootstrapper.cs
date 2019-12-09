@@ -5,7 +5,6 @@ using Radical.ComponentModel.Messaging;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
 using Radical.Windows.Presentation.Regions;
-using System.Collections.Generic;
 using System.Threading;
 using System.Security.Principal;
 using System.Globalization;
@@ -78,35 +77,35 @@ namespace Radical.Windows.Presentation.Boot
 
             Application.Current.Startup += (s, e) =>
             {
-                if (this.isAutoBootEnabled)
+                if (isAutoBootEnabled)
                 {
-                    this.OnBoot(services);
+                    OnBoot(services);
                 }
             };
 
             Application.Current.SessionEnding += (s, e) =>
             {
-                this.IsSessionEnding = true;
+                IsSessionEnding = true;
             };
 
             Application.Current.DispatcherUnhandledException += (s, e) =>
             {
                 var ex = e.Exception;
-                this.OnUnhandledException(ex);
+                OnUnhandledException(ex);
             };
 
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             {
                 var ex = e.ExceptionObject as Exception;
-                this.OnUnhandledException(ex);
+                OnUnhandledException(ex);
             };
 
             Application.Current.Exit += (s, e) =>
             {
-                if (!this.IsShuttingDown)
+                if (!IsShuttingDown)
                 {
-                    var reason = this.IsSessionEnding ? ApplicationShutdownReason.SessionEnding : ApplicationShutdownReason.ApplicationRequest;
-                    this.OnShutdownCore(reason);
+                    var reason = IsSessionEnding ? ApplicationShutdownReason.SessionEnding : ApplicationShutdownReason.ApplicationRequest;
+                    OnShutdownCore(reason);
                 }
             };
         }
@@ -118,7 +117,7 @@ namespace Radical.Windows.Presentation.Boot
         /// <returns></returns>
         public ApplicationBootstrapper UsingAsShell<TShellType>() where TShellType : Window
         {
-            return this.UsingAsShell(typeof(TShellType));
+            return UsingAsShell(typeof(TShellType));
         }
 
         /// <summary>
@@ -149,10 +148,10 @@ namespace Radical.Windows.Presentation.Boot
         {
             if (config != null)
             {
-                this.splashScreenConfiguration = config;
+                splashScreenConfiguration = config;
             }
 
-            this.isSplashScreenEnabled = true;
+            isSplashScreenEnabled = true;
 
             return this;
         }
@@ -162,7 +161,7 @@ namespace Radical.Windows.Presentation.Boot
         /// </summary>
         public ApplicationBootstrapper DisableAutoBoot()
         {
-            this.isAutoBootEnabled = false;
+            isAutoBootEnabled = false;
 
             return this;
         }
@@ -177,7 +176,7 @@ namespace Radical.Windows.Presentation.Boot
             RegionService.Conventions = serviceProvider.GetService<IConventionsHandler>();
         }
 
-        Action<Boot.BootstrapConventions> onBeforeInstall;
+        Action<BootstrapConventions> onBeforeInstall;
 
         /// <summary>
         /// Called before the install and boot process begins, right after the service provider creation.
@@ -208,38 +207,38 @@ namespace Radical.Windows.Presentation.Boot
         void OnBoot(IServiceCollection services)
         {
             var conventions = new BootstrapConventions();
-            this.onBeforeInstall?.Invoke(conventions);
+            onBeforeInstall?.Invoke(conventions);
             services.AddSingleton(conventions);
 
             //assembly scanning
 
             //invoke installers passing in conventions and services
 
-            this.serviceProvider = services.BuildServiceProvider();
-            this.onServiceProviderCreated?.Invoke(this.serviceProvider);
+            serviceProvider = services.BuildServiceProvider();
+            onServiceProviderCreated?.Invoke(serviceProvider);
 
-            this.SetupUICompositionEngine(this.serviceProvider);
+            SetupUICompositionEngine(serviceProvider);
 
-            if (this.mode != null && this.mode.HasValue)
+            if (mode != null && mode.HasValue)
             {
-                Application.Current.ShutdownMode = this.mode.Value;
+                Application.Current.ShutdownMode = mode.Value;
             }
 
-            this.InitializeCurrentPrincipal();
-            this.InitializeCultures();
+            InitializeCurrentPrincipal();
+            InitializeCultures();
 
-            this.OnBoot(this.serviceProvider);
+            OnBoot(serviceProvider);
 
-            if (!this.IsShuttingDown)
+            if (!IsShuttingDown)
             {
-                this.OnBootCompleted(this.serviceProvider);
+                OnBootCompleted(serviceProvider);
 
                 var broker = serviceProvider.TryGetService<IMessageBroker>();
                 broker?.Broadcast(this, new ApplicationBootCompleted());
 
-                this.bootCompletedHandler?.Invoke(serviceProvider);
+                bootCompletedHandler?.Invoke(serviceProvider);
 
-                var callbacks = this.serviceProvider.GetServices<IExpectBootCallback>();
+                var callbacks = serviceProvider.GetServices<IExpectBootCallback>();
                 if (callbacks != null && callbacks.Any())
                 {
                     foreach (var cb in callbacks)
@@ -248,7 +247,7 @@ namespace Radical.Windows.Presentation.Boot
                     }
                 }
 
-                this.isBootCompleted = true;
+                isBootCompleted = true;
             }
         }
 
@@ -293,8 +292,8 @@ namespace Radical.Windows.Presentation.Boot
         /// </summary>
         protected virtual void InitializeCultures()
         {
-            var currentCulture = this.currentCultureHandler();
-            var currentUICulture = this.currentUICultureHandler();
+            var currentCulture = currentCultureHandler();
+            var currentUICulture = currentUICultureHandler();
 
             Thread.CurrentThread.CurrentCulture = currentCulture;
             Thread.CurrentThread.CurrentUICulture = currentUICulture;
@@ -325,7 +324,7 @@ namespace Radical.Windows.Presentation.Boot
         {
             if (args.Scope != SingletonApplicationScope.NotSupported)
             {
-                String mutexName = this.key;
+                String mutexName = key;
                 switch (args.Scope)
                 {
                     case SingletonApplicationScope.Local:
@@ -337,10 +336,10 @@ namespace Radical.Windows.Presentation.Boot
                         break;
                 }
 
-                this.mutex = new Mutex(false, mutexName);
-                args.AllowStartup = this.mutex.WaitOne(TimeSpan.Zero, false);
+                mutex = new Mutex(false, mutexName);
+                args.AllowStartup = mutex.WaitOne(TimeSpan.Zero, false);
 
-                this.onSingletonApplicationStartup?.Invoke(args);
+                onSingletonApplicationStartup?.Invoke(args);
             }
         }
 
@@ -367,19 +366,19 @@ namespace Radical.Windows.Presentation.Boot
             var broker = serviceProvider.GetService<IMessageBroker>();
             broker.Subscribe<ApplicationShutdownRequest>(this, InvocationModel.Safe, (s, m) =>
             {
-                this.OnShutdownCore(ApplicationShutdownReason.UserRequest);
+                OnShutdownCore(ApplicationShutdownReason.UserRequest);
             });
 
-            var args = new SingletonApplicationStartupArgs(this.singleton);
-            this.HandleSingletonApplicationStartup(args);
+            var args = new SingletonApplicationStartupArgs(singleton);
+            HandleSingletonApplicationStartup(args);
 
             if (args.AllowStartup)
             {
-                this.bootHandler?.Invoke(serviceProvider);
+                bootHandler?.Invoke(serviceProvider);
             }
             else
             {
-                this.OnShutdownCore(ApplicationShutdownReason.MultipleInstanceNotAllowed);
+                OnShutdownCore(ApplicationShutdownReason.MultipleInstanceNotAllowed);
             }
         }
 
@@ -388,9 +387,9 @@ namespace Radical.Windows.Presentation.Boot
         /// </summary>
         public void Boot()
         {
-            if (!this.isAutoBootEnabled && !this.isBootCompleted)
+            if (!isAutoBootEnabled && !isBootCompleted)
             {
-                this.OnBoot(new ServiceCollection());
+                OnBoot(new ServiceCollection());
             }
         }
 
@@ -399,9 +398,9 @@ namespace Radical.Windows.Presentation.Boot
         /// </summary>
         public void Boot(IServiceCollection services)
         {
-            if (!this.isAutoBootEnabled && !this.isBootCompleted)
+            if (!isAutoBootEnabled && !isBootCompleted)
             {
-                this.OnBoot(services);
+                OnBoot(services);
             }
         }
 
@@ -410,7 +409,7 @@ namespace Radical.Windows.Presentation.Boot
         /// </summary>
         public void Shutdown()
         {
-            this.OnShutdownCore(ApplicationShutdownReason.UserRequest);
+            OnShutdownCore(ApplicationShutdownReason.UserRequest);
         }
 
         /// <summary>
@@ -423,35 +422,35 @@ namespace Radical.Windows.Presentation.Boot
 
             Func<Window> showSplash = () =>
             {
-                var splashScreen = (Window)resolver.GetView(this.splashScreenConfiguration.SplashScreenViewType);
+                var splashScreen = (Window)resolver.GetView(splashScreenConfiguration.SplashScreenViewType);
                 Application.Current.MainWindow = splashScreen;
 
-                splashScreen.WindowStartupLocation = this.splashScreenConfiguration.WindowStartupLocation;
-                if (this.splashScreenConfiguration.MinWidth.HasValue)
+                splashScreen.WindowStartupLocation = splashScreenConfiguration.WindowStartupLocation;
+                if (splashScreenConfiguration.MinWidth.HasValue)
                 {
-                    splashScreen.MinWidth = this.splashScreenConfiguration.MinWidth.Value;
+                    splashScreen.MinWidth = splashScreenConfiguration.MinWidth.Value;
                 }
 
-                if (this.splashScreenConfiguration.MinHeight.HasValue)
+                if (splashScreenConfiguration.MinHeight.HasValue)
                 {
-                    splashScreen.MinHeight = this.splashScreenConfiguration.MinHeight.Value;
+                    splashScreen.MinHeight = splashScreenConfiguration.MinHeight.Value;
                 }
 
-                splashScreen.WindowStyle = this.splashScreenConfiguration.WindowStyle;
-                splashScreen.SizeToContent = this.splashScreenConfiguration.SizeToContent;
+                splashScreen.WindowStyle = splashScreenConfiguration.WindowStyle;
+                splashScreen.SizeToContent = splashScreenConfiguration.SizeToContent;
                 switch (splashScreen.SizeToContent)
                 {
                     case SizeToContent.Manual:
-                        splashScreen.Width = this.splashScreenConfiguration.Width;
-                        splashScreen.Height = this.splashScreenConfiguration.Height;
+                        splashScreen.Width = splashScreenConfiguration.Width;
+                        splashScreen.Height = splashScreenConfiguration.Height;
                         break;
 
                     case SizeToContent.Height:
-                        splashScreen.Width = this.splashScreenConfiguration.Width;
+                        splashScreen.Width = splashScreenConfiguration.Width;
                         break;
 
                     case SizeToContent.Width:
-                        splashScreen.Height = this.splashScreenConfiguration.Height;
+                        splashScreen.Height = splashScreenConfiguration.Height;
                         break;
                 }
 
@@ -462,26 +461,26 @@ namespace Radical.Windows.Presentation.Boot
 
             Action showShell = () =>
             {
-                if (this.shellViewType != null)
+                if (shellViewType != null)
                 {
-                    var mainView = (Window)resolver.GetView(this.shellViewType);
+                    var mainView = (Window)resolver.GetView(shellViewType);
                     Application.Current.MainWindow = mainView;
 
                     mainView.Show();
                 }
             };
 
-            if (this.isSplashScreenEnabled)
+            if (isSplashScreenEnabled)
             {
                 var splashScreen = showSplash();
 
                 Action action = () =>
                 {
                     var sw = Stopwatch.StartNew();
-                    this.splashScreenConfiguration.StartupAsyncWork(serviceProvider);
+                    splashScreenConfiguration.StartupAsyncWork(serviceProvider);
                     sw.Stop();
                     var elapsed = (Int32)sw.ElapsedMilliseconds;
-                    var remaining = this.splashScreenConfiguration.MinimumDelay - elapsed;
+                    var remaining = splashScreenConfiguration.MinimumDelay - elapsed;
                     if (remaining > 0)
                     {
 #if FX40
@@ -502,7 +501,7 @@ namespace Radical.Windows.Presentation.Boot
                {
                    if (t.IsFaulted)
                    {
-                       this.OnUnhandledException(t.Exception);
+                       OnUnhandledException(t.Exception);
                        throw t.Exception;
                    }
 
@@ -522,12 +521,12 @@ namespace Radical.Windows.Presentation.Boot
 
             try
             {
-                if (reason == ApplicationShutdownReason.UserRequest && this.isBootCompleted)
+                if (reason == ApplicationShutdownReason.UserRequest && isBootCompleted)
                 {
                     //messaggio per notificare ed eventualmente cancellare
                     var msg = new ApplicationShutdownRequested(reason);
 
-                    var broker = this.serviceProvider.GetService<IMessageBroker>();
+                    var broker = serviceProvider.GetService<IMessageBroker>();
                     broker.Dispatch(this, msg);
 
                     canceled = msg.Cancel;
@@ -539,15 +538,15 @@ namespace Radical.Windows.Presentation.Boot
                     }
                 }
 
-                this.IsShuttingDown = true;
+                IsShuttingDown = true;
 
-                if (this.isBootCompleted)
+                if (isBootCompleted)
                 {
-                    this.serviceProvider
+                    serviceProvider
                         .GetService<IMessageBroker>()
                         .Broadcast(this, new ApplicationShutdown(reason));
 
-                    var callbacks = this.serviceProvider.GetServices<IExpectShutdownCallback>();
+                    var callbacks = serviceProvider.GetServices<IExpectShutdownCallback>();
                     if (callbacks != null && callbacks.Any())
                     {
                         foreach (var cb in callbacks)
@@ -560,19 +559,19 @@ namespace Radical.Windows.Presentation.Boot
                 var args = new ApplicationShutdownArgs()
                 {
                     Reason = reason,
-                    IsBootCompleted = this.isBootCompleted
+                    IsBootCompleted = isBootCompleted
                 };
 
-                this.OnShutdown(args);
-                this.shutdownHandler?.Invoke(args);
+                OnShutdown(args);
+                shutdownHandler?.Invoke(args);
 
-                if (this.isBootCompleted)
+                if (isBootCompleted)
                 {
-                    (this.serviceProvider as IDisposable)?.Dispose();
+                    (serviceProvider as IDisposable)?.Dispose();
                 }
 
-                this.mutex?.Dispose();
-                this.mutex = null;
+                mutex?.Dispose();
+                mutex = null;
 
             }
             finally
@@ -584,7 +583,7 @@ namespace Radical.Windows.Presentation.Boot
 
                 if (!canceled)
                 {
-                    this.serviceProvider = null;
+                    serviceProvider = null;
 
                     RegionService.CurrentService = null;
                     RegionService.Conventions = null;
@@ -607,7 +606,7 @@ namespace Radical.Windows.Presentation.Boot
         /// <returns></returns>
         public ApplicationBootstrapper RegisterAsSingleton(String key)
         {
-            return this.RegisterAsSingleton(key, SingletonApplicationScope.Local);
+            return RegisterAsSingleton(key, SingletonApplicationScope.Local);
         }
 
         /// <summary>
@@ -619,7 +618,7 @@ namespace Radical.Windows.Presentation.Boot
         public ApplicationBootstrapper RegisterAsSingleton(String key, SingletonApplicationScope scope)
         {
             this.key = key;
-            this.singleton = scope;
+            singleton = scope;
 
             return this;
         }
@@ -667,7 +666,7 @@ namespace Radical.Windows.Presentation.Boot
         /// <param name="exception">The exception.</param>
         protected virtual void OnUnhandledException(Exception exception)
         {
-            this.unhandledExceptionHandler?.Invoke(exception);
+            unhandledExceptionHandler?.Invoke(exception);
         }
 
         /// <summary>
