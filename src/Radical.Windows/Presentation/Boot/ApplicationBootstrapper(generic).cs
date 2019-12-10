@@ -9,11 +9,5 @@ namespace Radical.Windows.Presentation.Boot
         {
             UsingAsShell<TMainView>();
         }
-
-        public ApplicationBootstrapper(IServiceCollection services)
-            : base(services)
-        {
-            UsingAsShell<TMainView>();
-        }
     }
 }
