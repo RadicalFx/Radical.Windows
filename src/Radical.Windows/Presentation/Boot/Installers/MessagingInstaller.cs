@@ -13,6 +13,7 @@ namespace Radical.Windows.Presentation.Boot.Installers
         public void Install(BootstrapConventions conventions, IServiceCollection services, IEnumerable<Type> assemblyScanningResults)
         {
             var collector = new Collector();
+            services.AddSingleton(collector);
 
             assemblyScanningResults.Where(t => conventions.IsMessageHandler(t) && !conventions.IsExcluded(t))
                 .Select(t => new
