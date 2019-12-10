@@ -3,6 +3,7 @@ using Radical.ComponentModel.Messaging;
 using Radical.Diagnostics;
 using Radical.Helpers;
 using Radical.Validation;
+using Radical.Reflection;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
 using Radical.Windows.Presentation.Regions;
@@ -15,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
+using Radical.Linq;
 
 namespace Radical.Windows.Presentation.Boot
 {
@@ -226,6 +228,32 @@ namespace Radical.Windows.Presentation.Boot
             serviceProvider = services.BuildServiceProvider();
             onServiceProviderCreated?.Invoke(serviceProvider);
 
+            var collector = serviceProvider.GetRequiredService<Installers.Collector>();
+            var broker = serviceProvider.GetRequiredService<IMessageBroker>();
+
+            foreach (var entry in collector.Entries)
+            {
+                var invocationModel = entry.Implementation.Is<INeedSafeSubscription>() ?
+                    InvocationModel.Safe :
+                    InvocationModel.Default;
+
+                entry.Implementation.GetInterfaces()
+                    .Where(i => i.Is<IHandleMessage>() && i.IsGenericType)
+                    .ForEach(genericHandler =>
+                    {
+                        var messageType = genericHandler.GetGenericArguments().Single();
+                        broker.Subscribe(this, messageType, invocationModel, (s, msg) =>
+                        {
+                            var handler = serviceProvider.GetService(entry.Contracts.First()) as IHandleMessage;
+
+                            if (handler.ShouldHandle(s, msg))
+                            {
+                                handler.Handle(s, msg);
+                            }
+                        });
+                    });
+            }
+
             SetupUICompositionEngine(serviceProvider);
 
             if (mode != null && mode.HasValue)
@@ -242,8 +270,10 @@ namespace Radical.Windows.Presentation.Boot
             {
                 OnBootCompleted(serviceProvider);
 
-                var broker = serviceProvider.TryGetService<IMessageBroker>();
-                broker?.Broadcast(this, new ApplicationBootCompleted());
+                //var broker = serviceProvider.TryGetService<IMessageBroker>();
+                //broker?.Broadcast(this, new ApplicationBootCompleted());
+
+                broker.Broadcast(this, new ApplicationBootCompleted());
 
                 bootCompletedHandler?.Invoke(serviceProvider);
 

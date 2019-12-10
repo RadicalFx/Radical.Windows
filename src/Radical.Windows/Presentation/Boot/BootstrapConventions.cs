@@ -22,98 +22,98 @@ namespace Radical.Windows.Presentation.Boot
         public BootstrapConventions()
         {
             DefaultIsConcreteType = t => !t.IsInterface && !t.IsAbstract && !t.IsGenericType;
-            IsConcreteType = t => DefaultIsConcreteType( t );
+            IsConcreteType = t => DefaultIsConcreteType(t);
 
-            DefaultIsService = t => IsConcreteType( t ) && t.Namespace.IsLike( "*.Services" );
-            IsService = t => DefaultIsService( t );
+            DefaultIsService = t => IsConcreteType(t) && t.Namespace.IsLike("*.Services");
+            IsService = t => DefaultIsService(t);
 
             DefaultSelectServiceContracts = type =>
             {
-                var types = new HashSet<Type>( type.GetInterfaces() );
-                if( types.None() || type.IsAttributeDefined<ContractAttribute>() )
+                var types = new HashSet<Type>(type.GetInterfaces());
+                if (types.None() || type.IsAttributeDefined<ContractAttribute>())
                 {
-                    types.Add( type );
+                    types.Add(type);
                 }
 
                 return types;
             };
-            SelectServiceContracts = type => DefaultSelectServiceContracts( type );
+            SelectServiceContracts = type => DefaultSelectServiceContracts(type);
 
             DefaultIsMessageHandler = t =>
             {
-                return t.Namespace != null && t.Namespace.IsLike(new string[] 
-                    { 
-                        "*.Messaging.Handlers", 
-                        "*.Messaging.Handlers.*" 
-                    } )
+                return t.Namespace != null && t.Namespace.IsLike(new string[]
+                    {
+                        "*.Messaging.Handlers",
+                        "*.Messaging.Handlers.*"
+                    })
                     && t.Is<IHandleMessage>();
             };
-            IsMessageHandler = t => DefaultIsMessageHandler( t );
+            IsMessageHandler = t => DefaultIsMessageHandler(t);
 
-            DefaultSelectMessageHandlerContracts = type => type.GetInterfaces().Take( 1 );
-            SelectMessageHandlerContracts = type => DefaultSelectMessageHandlerContracts( type );
+            DefaultSelectMessageHandlerContracts = type => type.GetInterfaces().Except(new[] { typeof(INeedSafeSubscription) });
+            SelectMessageHandlerContracts = type => DefaultSelectMessageHandlerContracts(type);
 
-            DefaultIsViewModel = t => IsConcreteType( t ) && t.FullName.IsLike( "*.Presentation.*ViewModel" );
-            IsViewModel = t => DefaultIsViewModel( t );
+            DefaultIsViewModel = t => IsConcreteType(t) && t.FullName.IsLike("*.Presentation.*ViewModel");
+            IsViewModel = t => DefaultIsViewModel(t);
 
-            DefaultIsShellViewModel = ( services, implementation ) =>
+            DefaultIsShellViewModel = (services, implementation) =>
             {
-                return services.Any( t => t.Name.IsLike( "Main*" ) || t.Name.IsLike( "Shell*" ) );
+                return services.Any(t => t.Name.IsLike("Main*") || t.Name.IsLike("Shell*"));
             };
-            IsShellViewModel = ( services, implementation ) => DefaultIsShellViewModel( services, implementation );
+            IsShellViewModel = (services, implementation) => DefaultIsShellViewModel(services, implementation);
 
             DefaultSelectViewModelContracts = type => new[] { type };
-            SelectViewModelContracts = type => DefaultSelectViewModelContracts( type );
+            SelectViewModelContracts = type => DefaultSelectViewModelContracts(type);
 
-            DefaultIsView = t => IsConcreteType( t ) && t.FullName.IsLike( "*.Presentation.*View" );
-            IsView = t => DefaultIsView( t );
+            DefaultIsView = t => IsConcreteType(t) && t.FullName.IsLike("*.Presentation.*View");
+            IsView = t => DefaultIsView(t);
 
-            DefaultIsShellView = ( services, implementation ) =>
+            DefaultIsShellView = (services, implementation) =>
             {
-                return services.Any( t => t.Name.IsLike( "Main*" ) || t.Name.IsLike( "Shell*" ) );
+                return services.Any(t => t.Name.IsLike("Main*") || t.Name.IsLike("Shell*"));
             };
-            IsShellView = ( services, implementation ) => DefaultIsShellView( services, implementation );
+            IsShellView = (services, implementation) => DefaultIsShellView(services, implementation);
 
             DefaultSelectViewContracts = type => new[] { type };
-            SelectViewContracts = type => DefaultSelectViewContracts( type );
+            SelectViewContracts = type => DefaultSelectViewContracts(type);
 
             DefaultGetInterestedRegionNameIfAny = type =>
             {
-                if( IsView( type ) )
+                if (IsView(type))
                 {
 
-                    if( type.IsAttributeDefined<InjectViewInRegionAttribute>() )
+                    if (type.IsAttributeDefined<InjectViewInRegionAttribute>())
                     {
                         return type.GetAttribute<InjectViewInRegionAttribute>().Named;
                     }
 
-                    if( type.Namespace.IsLike( "*.Presentation.Partial.*" ) )
+                    if (type.Namespace.IsLike("*.Presentation.Partial.*"))
                     {
-                        var regionName = type.Namespace.Split( '.' ).Last();
+                        var regionName = type.Namespace.Split('.').Last();
                         return regionName;
                     }
                 }
 
                 return null;
             };
-            GetInterestedRegionNameIfAny = type => DefaultGetInterestedRegionNameIfAny( type );
+            GetInterestedRegionNameIfAny = type => DefaultGetInterestedRegionNameIfAny(type);
 
             DefaultIsExcluded = t =>
             {
                 return t.IsAttributeDefined<DisableAutomaticRegistrationAttribute>();
             };
-            IsExcluded = t => DefaultIsExcluded( t );
+            IsExcluded = t => DefaultIsExcluded(t);
 
             DefaultAssemblyFileScanPatterns = entryAssembly =>
             {
                 var name = entryAssembly.GetName().Name;
 
-                var dllPattern = string.Format( "{0}*.dll", name );
+                var dllPattern = string.Format("{0}*.dll", name);
                 var radical = "Radical.*.dll";
 
                 return new[] { dllPattern, radical };
             };
-            AssemblyFileScanPatterns = entryAssembly => DefaultAssemblyFileScanPatterns( entryAssembly );
+            AssemblyFileScanPatterns = entryAssembly => DefaultAssemblyFileScanPatterns(entryAssembly);
 
             DefaultIncludeAssemblyInContainerScan = assembly => true;
             IncludeAssemblyInContainerScan = assembly => DefaultIncludeAssemblyInContainerScan(assembly);
@@ -123,19 +123,19 @@ namespace Radical.Windows.Presentation.Boot
                 var isDefined = pi.IsAttributeDefined<IgnorePropertyInjectionAttribue>();
                 return isDefined;
             };
-            IgnorePropertyInjection = pi => DefaultIgnorePropertyInjection( pi );
+            IgnorePropertyInjection = pi => DefaultIgnorePropertyInjection(pi);
 
             DefaultIgnoreViewPropertyInjection = pi =>
             {
                 return true;
             };
-            IgnoreViewPropertyInjection = pi => DefaultIgnoreViewPropertyInjection( pi );
+            IgnoreViewPropertyInjection = pi => DefaultIgnoreViewPropertyInjection(pi);
 
             DefaultIgnoreViewModelPropertyInjection = pi =>
             {
                 return true;
             };
-            IgnoreViewModelPropertyInjection = pi => DefaultIgnoreViewModelPropertyInjection( pi );
+            IgnoreViewModelPropertyInjection = pi => DefaultIgnoreViewModelPropertyInjection(pi);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Radical.Windows.Presentation.Boot
         /// The is service.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public Predicate<Type> DefaultIsService { get;private set; }
+        public Predicate<Type> DefaultIsService { get; private set; }
 
         /// <summary>
         /// Gets or sets the is service.
