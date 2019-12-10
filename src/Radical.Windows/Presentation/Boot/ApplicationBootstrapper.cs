@@ -47,13 +47,6 @@ namespace Radical.Windows.Presentation.Boot
         /// Initializes a new instance of the <see cref="ApplicationBootstrapper"/> class.
         /// </summary>
         public ApplicationBootstrapper()
-            : this(new ServiceCollection())
-        {
-        }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationBootstrapper"/> class.
-        /// </summary>
-        public ApplicationBootstrapper(IServiceCollection services)
         {
             var commandLine = CommandLine.GetCurrent();
 
@@ -82,7 +75,7 @@ namespace Radical.Windows.Presentation.Boot
             {
                 if (isAutoBootEnabled)
                 {
-                    OnBoot(services);
+                    OnBoot();
                 }
             };
 
@@ -207,8 +200,10 @@ namespace Radical.Windows.Presentation.Boot
             return this;
         }
 
-        void OnBoot(IServiceCollection services)
+        void OnBoot()
         {
+            var services = new ServiceCollection();
+
             var conventions = new BootstrapConventions();
             onBeforeInstall?.Invoke(conventions, assemblyScanner);
             services.AddSingleton(conventions);
@@ -228,30 +223,10 @@ namespace Radical.Windows.Presentation.Boot
             serviceProvider = services.BuildServiceProvider();
             onServiceProviderCreated?.Invoke(serviceProvider);
 
-            var collector = serviceProvider.GetRequiredService<Installers.Collector>();
-            var broker = serviceProvider.GetRequiredService<IMessageBroker>();
-
-            foreach (var entry in collector.Entries)
+            var features = serviceProvider.GetServices<IFeature>();
+            foreach (var feature in features)
             {
-                var invocationModel = entry.Implementation.Is<INeedSafeSubscription>() ?
-                    InvocationModel.Safe :
-                    InvocationModel.Default;
-
-                entry.Implementation.GetInterfaces()
-                    .Where(i => i.Is<IHandleMessage>() && i.IsGenericType)
-                    .ForEach(genericHandler =>
-                    {
-                        var messageType = genericHandler.GetGenericArguments().Single();
-                        broker.Subscribe(this, messageType, invocationModel, (s, msg) =>
-                        {
-                            var handler = serviceProvider.GetService(entry.Contracts.First()) as IHandleMessage;
-
-                            if (handler.ShouldHandle(s, msg))
-                            {
-                                handler.Handle(s, msg);
-                            }
-                        });
-                    });
+                feature.Setup(serviceProvider);
             }
 
             SetupUICompositionEngine(serviceProvider);
@@ -270,10 +245,8 @@ namespace Radical.Windows.Presentation.Boot
             {
                 OnBootCompleted(serviceProvider);
 
-                //var broker = serviceProvider.TryGetService<IMessageBroker>();
-                //broker?.Broadcast(this, new ApplicationBootCompleted());
-
-                broker.Broadcast(this, new ApplicationBootCompleted());
+                var broker = serviceProvider.TryGetService<IMessageBroker>();
+                broker?.Broadcast(this, new ApplicationBootCompleted());
 
                 bootCompletedHandler?.Invoke(serviceProvider);
 
@@ -428,18 +401,7 @@ namespace Radical.Windows.Presentation.Boot
         {
             if (!isAutoBootEnabled && !isBootCompleted)
             {
-                OnBoot(new ServiceCollection());
-            }
-        }
-
-        // <summary>
-        /// Boots this instance.
-        /// </summary>
-        public void Boot(IServiceCollection services)
-        {
-            if (!isAutoBootEnabled && !isBootCompleted)
-            {
-                OnBoot(services);
+                OnBoot();
             }
         }
 
