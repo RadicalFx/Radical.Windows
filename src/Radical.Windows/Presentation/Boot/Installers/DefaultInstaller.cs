@@ -1,6 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Radical.ComponentModel;
+using Radical.ComponentModel.Messaging;
+using Radical.Linq;
+using Radical.Messaging;
+using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.Threading;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Windows;
 
 namespace Radical.Windows.Presentation.Boot.Installers
 {
@@ -8,72 +17,57 @@ namespace Radical.Windows.Presentation.Boot.Installers
     {
         public void Install(BootstrapConventions conventions, IServiceCollection services, IEnumerable<Type> assemblyScanningResults)
         {
-            //        allTypes.Where(t => conventions.IsMessageHandler(t) && !conventions.IsExcluded(t))
-            //            .Select(t => new
-            //            {
-            //                Contracts = conventions.SelectMessageHandlerContracts(t),
-            //                Implementation = t
-            //            })
-            //            .ForEach(descriptor =>
-            //            {
-            //                var entry = EntryBuilder.For(descriptor.Contracts.First())
-            //                        .ImplementedBy(descriptor.Implementation);
+            assemblyScanningResults.Where(t => conventions.IsMessageHandler(t) && !conventions.IsExcluded(t))
+                .Select(t => new
+                {
+                    Contracts = conventions.SelectMessageHandlerContracts(t),
+                    Implementation = t
+                })
+                .ForEach(descriptor =>
+                {
+                    foreach (var contract in descriptor.Contracts)
+                    {
+                        services.AddTransient(contract, descriptor.Implementation);
+                    }
 
-            //                foreach (var fw in descriptor.Contracts.Skip(1))
-            //                {
-            //                    entry = entry.Forward(fw);
-            //                }
+                    //var entry = EntryBuilder.For(descriptor.Contracts.First())
+                    //        .ImplementedBy(descriptor.Implementation);
 
-            //                container.Register(entry);
-            //            });
+                    //foreach (var fw in descriptor.Contracts.Skip(1))
+                    //{
+                    //    entry = entry.Forward(fw);
+                    //}
 
-            //        container.Register
-            //        (
-            //            EntryBuilder.For<TraceSource>()
-            //                .UsingFactory(() =>
-            //                {
-            //                    var name = ConfigurationManager
-            //                        .AppSettings["radical/windows/presentation/diagnostics/applicationTraceSourceName"]
-            //                        .Return(s => s, "default");
+                    //container.Register(entry);
+                });
 
-            //                    return new TraceSource(name);
-            //                })
-            //                .WithLifestyle(Lifestyle.Singleton)
-            //        );
+            services.AddSingleton(container => 
+            {
+                //TODO: figure out best way to do settings
+                //var name = ConfigurationManager
+                //            .AppSettings["radical/windows/presentation/diagnostics/applicationTraceSourceName"]
+                //            .Return(s => s, "default");
 
+                return new TraceSource("default");
+            });
 
-            //        container.Register(
-            //            EntryBuilder.For<Dispatcher>()
-            //                .UsingFactory(() => Application.Current.Dispatcher)
-            //                .WithLifestyle(Lifestyle.Singleton)
-            //        );
+            services.AddSingleton(container => Application.Current);
+            services.AddSingleton(container => Application.Current.Dispatcher);
 
-            //        container.Register(
-            //            EntryBuilder.For<IDispatcher>()
-            //                .ImplementedBy<WpfDispatcher>()
-            //                .WithLifestyle(Lifestyle.Singleton)
-            //                .Overridable()
-            //        );
+            if (!services.IsRegistered<IDispatcher>())
+            {
+                services.AddSingleton<IDispatcher, WpfDispatcher>();
+            }
 
-            //        container.Register(
-            //            EntryBuilder.For<Application>()
-            //                .UsingFactory(() => Application.Current)
-            //                .WithLifestyle(Lifestyle.Singleton)
-            //        );
+            if (!services.IsRegistered<IMessageBroker>())
+            {
+                services.AddSingleton<IMessageBroker, MessageBroker>();
+            }
 
-            //        container.Register(
-            //            EntryBuilder.For<IMessageBroker>()
-            //                .ImplementedBy<MessageBroker>()
-            //                .WithLifestyle(Lifestyle.Singleton)
-            //                .Overridable()
-            //        );
-
-            //        container.Register(
-            //            EntryBuilder.For<IReleaseComponents>()
-            //                .ImplementedBy<PuzzleComponentReleaser>()
-            //                .WithLifestyle(Lifestyle.Singleton)
-            //                .Overridable()
-            //        );
+            if (!services.IsRegistered<IReleaseComponents>())
+            {
+                services.AddSingleton<IReleaseComponents, DefaultComponentReleaser>();
+            }
         }
     }
 }

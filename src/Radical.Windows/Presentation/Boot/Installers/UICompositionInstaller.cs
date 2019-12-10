@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.Presentation.Regions;
 using System;
 using System.Collections.Generic;
 
@@ -8,21 +10,20 @@ namespace Radical.Windows.Presentation.Boot.Installers
     {
         public void Install(BootstrapConventions conventions, IServiceCollection services, IEnumerable<Type> assemblyScanningResults)
         {
-            //container.Register(
-            //    EntryBuilder.For<IRegionManagerFactory>()
-            //        .ImplementedBy<RegionManagerFactory>()
-            //        .Overridable());
+            if (!services.IsRegistered<IRegionManagerFactory>())
+            {
+                services.AddSingleton<IRegionManagerFactory, RegionManagerFactory>();
+            }
 
-            //container.Register(
-            //    EntryBuilder.For<IRegionService>()
-            //        .ImplementedBy<RegionService>()
-            //        .Overridable());
+            if (!services.IsRegistered<IRegionService>())
+            {
+                services.AddSingleton<IRegionService, RegionService>();
+            }
 
-            //container.Register(
-            //    EntryBuilder.For<IRegionManager>()
-            //        .ImplementedBy<RegionManager>()
-            //        .WithLifestyle(Lifestyle.Transient)
-            //        .Overridable());
+            if (!services.IsRegistered<IRegionManager>())
+            {
+                services.AddTransient<IRegionManager, RegionManager>();
+            }
         }
     }
 }

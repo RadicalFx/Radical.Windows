@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Radical.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Radical.Windows.Presentation.Boot.Installers
 {
@@ -8,59 +10,69 @@ namespace Radical.Windows.Presentation.Boot.Installers
     {
         public void Install(BootstrapConventions conventions, IServiceCollection services, IEnumerable<Type> assemblyScanningResults)
         {
-            //allTypes.Where(t => conventions.IsViewModel(t) && !conventions.IsExcluded(t))
-            //    .Select(t =>
-            //    {
-            //        var contracts = conventions.SelectViewModelContracts(t);
+            assemblyScanningResults.Where(t => conventions.IsViewModel(t) && !conventions.IsExcluded(t))
+                .Select(t =>
+                {
+                    var contracts = conventions.SelectViewModelContracts(t);
 
-            //        return new
-            //        {
-            //            Contracts = conventions.SelectViewModelContracts(t),
-            //            Implementation = t,
-            //            Lifestyle = conventions.IsShellViewModel(contracts, t) ?
-            //               Lifestyle.Singleton :
-            //               Lifestyle.Transient
-            //        };
-            //    })
-            //    .ForEach(descriptor =>
-            //    {
-            //        var builder = EntryBuilder.For(descriptor.Contracts.First())
-            //            .WithLifestyle(descriptor.Lifestyle);
+                    return new
+                    {
+                        Contracts = conventions.SelectViewModelContracts(t),
+                        Implementation = t,
+                        Lifetime = conventions.IsShellViewModel(contracts, t) ?
+                            ServiceLifetime.Singleton :
+                            ServiceLifetime.Transient
+                    };
+                })
+                .ForEach(descriptor =>
+                {
+                    foreach (var contract in descriptor.Contracts)
+                    {
+                        services.Add(new ServiceDescriptor(contract, descriptor.Implementation, descriptor.Lifetime));
+                    }
 
-            //        foreach (var c in descriptor.Contracts.Skip(1))
-            //        {
-            //            builder = builder.Forward(c);
-            //        }
+                    //var builder = EntryBuilder.For(descriptor.Contracts.First())
+                    //    .WithLifestyle(descriptor.Lifestyle);
 
-            //        container.Register(builder);
-            //    });
+                    //foreach (var c in descriptor.Contracts.Skip(1))
+                    //{
+                    //    builder = builder.Forward(c);
+                    //}
 
-            //allTypes.Where(t => conventions.IsView(t) && !conventions.IsExcluded(t))
-            //    .Select(t =>
-            //    {
-            //        var contracts = conventions.SelectViewContracts(t);
+                    //container.Register(builder);
+                });
 
-            //        return new
-            //        {
-            //            Contracts = contracts,
-            //            Implementation = t,
-            //            Lifestyle = conventions.IsShellView(contracts, t) ?
-            //             Lifestyle.Singleton :
-            //             Lifestyle.Transient
-            //        };
-            //    })
-            //    .ForEach(descriptor =>
-            //    {
-            //        var builder = EntryBuilder.For(descriptor.Contracts.First())
-            //            .WithLifestyle(descriptor.Lifestyle);
+            assemblyScanningResults.Where(t => conventions.IsView(t) && !conventions.IsExcluded(t))
+                .Select(t =>
+                {
+                    var contracts = conventions.SelectViewContracts(t);
 
-            //        foreach (var c in descriptor.Contracts.Skip(1))
-            //        {
-            //            builder = builder.Forward(c);
-            //        }
+                    return new
+                    {
+                        Contracts = contracts,
+                        Implementation = t,
+                        Lifetime = conventions.IsShellView(contracts, t) ?
+                            ServiceLifetime.Singleton :
+                            ServiceLifetime.Transient
+                    };
+                })
+                .ForEach(descriptor =>
+                {
+                    foreach (var contract in descriptor.Contracts)
+                    {
+                        services.Add(new ServiceDescriptor(contract, descriptor.Implementation, descriptor.Lifetime));
+                    }
 
-            //        container.Register(builder);
-            //    });
+                    //var builder = EntryBuilder.For(descriptor.Contracts.First())
+                    //    .WithLifestyle(descriptor.Lifestyle);
+
+                    //foreach (var c in descriptor.Contracts.Skip(1))
+                    //{
+                    //    builder = builder.Forward(c);
+                    //}
+
+                    //container.Register(builder);
+                });
         }
     }
 }
