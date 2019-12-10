@@ -34,8 +34,8 @@ namespace Radical.Windows.Presentation.Messaging.Handlers
                     foreach ( var viewType in allViewTypes )
                     {
                         autoMappingHandler.Inject( 
-							()=> viewProvider.GetView( viewType ), 
-							region );
+                            ()=> viewProvider.GetView( viewType ), 
+                            region );
                     }
                 }
             }

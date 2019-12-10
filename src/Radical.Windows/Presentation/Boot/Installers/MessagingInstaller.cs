@@ -2,6 +2,7 @@
 using Radical.ComponentModel.Messaging;
 using Radical.Linq;
 using Radical.Messaging;
+using Radical.Windows.Presentation.Boot.Features;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace Radical.Windows.Presentation.Boot.Installers
     {
         public void Install(BootstrapConventions conventions, IServiceCollection services, IEnumerable<Type> assemblyScanningResults)
         {
-            var collector = new Collector();
-            services.AddSingleton(collector);
+            var autoSubscribeFeature = new AutoSubscribe();
+            services.AddSingleton<IFeature>(autoSubscribeFeature);
 
             assemblyScanningResults.Where(t => conventions.IsMessageHandler(t) && !conventions.IsExcluded(t))
                 .Select(t => new
@@ -25,24 +26,10 @@ namespace Radical.Windows.Presentation.Boot.Installers
                 {
                     foreach (var contract in descriptor.Contracts)
                     {
-                        services.AddTransient(contract, descriptor.Implementation);
+                        services.AddTransient(descriptor.Implementation);
                     }
 
-                    collector.Entries.Add(new Entry() 
-                    {
-                        Implementation = descriptor.Implementation,
-                        Contracts = descriptor.Contracts
-                    });
-
-                    //var entry = EntryBuilder.For(descriptor.Contracts.First())
-                    //        .ImplementedBy(descriptor.Implementation);
-
-                    //foreach (var fw in descriptor.Contracts.Skip(1))
-                    //{
-                    //    entry = entry.Forward(fw);
-                    //}
-
-                    //container.Register(entry);
+                    autoSubscribeFeature.Add(descriptor.Implementation, descriptor.Contracts);
                 });
 
             if (!services.IsRegistered<IMessageBroker>())
@@ -50,16 +37,5 @@ namespace Radical.Windows.Presentation.Boot.Installers
                 services.AddSingleton<IMessageBroker, MessageBroker>();
             }
         }
-    }
-
-    class Collector 
-    {
-        public List<Entry> Entries { get; set; } = new List<Entry>();
-    }
-
-    public class Entry
-    {
-        public Type Implementation { get; set; }
-        public IEnumerable<Type> Contracts { get; set; }
     }
 }

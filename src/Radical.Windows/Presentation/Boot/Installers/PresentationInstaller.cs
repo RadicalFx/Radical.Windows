@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Radical.Linq;
+using Radical.Windows.Presentation.Boot.Features;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,18 +43,27 @@ namespace Radical.Windows.Presentation.Boot.Installers
                     //container.Register(builder);
                 });
 
+            var regionsInjection = new AutoRegionsInjection();
+            services.AddSingleton<IFeature>(regionsInjection);
+
             assemblyScanningResults.Where(t => conventions.IsView(t) && !conventions.IsExcluded(t))
                 .Select(t =>
                 {
                     var contracts = conventions.SelectViewContracts(t);
+
+                    var regionName = conventions.GetInterestedRegionNameIfAny(t);
+                    if (!string.IsNullOrWhiteSpace(regionName)) 
+                    {
+                        regionsInjection.Add(regionName, t);
+                    }
 
                     return new
                     {
                         Contracts = contracts,
                         Implementation = t,
                         Lifetime = conventions.IsShellView(contracts, t) ?
-                            ServiceLifetime.Singleton :
-                            ServiceLifetime.Transient
+                        ServiceLifetime.Singleton :
+                        ServiceLifetime.Transient
                     };
                 })
                 .ForEach(descriptor =>
