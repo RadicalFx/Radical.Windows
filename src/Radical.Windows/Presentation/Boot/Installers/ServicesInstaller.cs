@@ -20,21 +20,13 @@ namespace Radical.Windows.Presentation.Boot.Installers
                 {
                     foreach (var contract in descriptor.Contracts)
                     {
-                        if (!services.IsRegistered(contract))
+                        if (conventions.AllowServiceOverride(contract) && services.IsRegistered(contract)) 
                         {
-                            services.AddSingleton(contract, descriptor.Implementation);
+                            continue;
                         }
+
+                        services.AddSingleton(contract, descriptor.Implementation);
                     }
-                    //var entry = EntryBuilder.For(descriptor.Contracts.First())
-                    //        .ImplementedBy(descriptor.Implementation)
-                    //        .Overridable();
-
-                    //foreach (var fw in descriptor.Contracts.Skip(1))
-                    //{
-                    //    entry = entry.Forward(fw);
-                    //}
-
-                    //container.Register(entry);
                 });
         }
     }

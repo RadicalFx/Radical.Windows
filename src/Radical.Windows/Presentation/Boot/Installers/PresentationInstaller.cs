@@ -31,16 +31,6 @@ namespace Radical.Windows.Presentation.Boot.Installers
                     {
                         services.Add(new ServiceDescriptor(contract, descriptor.Implementation, descriptor.Lifetime));
                     }
-
-                    //var builder = EntryBuilder.For(descriptor.Contracts.First())
-                    //    .WithLifestyle(descriptor.Lifestyle);
-
-                    //foreach (var c in descriptor.Contracts.Skip(1))
-                    //{
-                    //    builder = builder.Forward(c);
-                    //}
-
-                    //container.Register(builder);
                 });
 
             var regionsInjection = new AutoRegionsInjection();
@@ -72,16 +62,6 @@ namespace Radical.Windows.Presentation.Boot.Installers
                     {
                         services.Add(new ServiceDescriptor(contract, descriptor.Implementation, descriptor.Lifetime));
                     }
-
-                    //var builder = EntryBuilder.For(descriptor.Contracts.First())
-                    //    .WithLifestyle(descriptor.Lifestyle);
-
-                    //foreach (var c in descriptor.Contracts.Skip(1))
-                    //{
-                    //    builder = builder.Forward(c);
-                    //}
-
-                    //container.Register(builder);
                 });
         }
     }
