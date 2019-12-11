@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xaml.Behaviors;
+using System;
 using System.Windows;
-using Microsoft.Xaml.Behaviors;
 
 namespace Radical.Windows.Behaviors
 {
@@ -21,47 +21,47 @@ namespace Radical.Windows.Behaviors
         /// </summary>
         public RadicalBehavior()
         {
-            loaded = (s, e) => this.OnAttachedObjectLoaded();
+            loaded = (s, e) => OnAttachedObjectLoaded();
         }
 
         protected override void OnAttached()
         {
             base.OnAttached();
 
-            LoadedWeakEventManager.AddListener(this.AssociatedObject, this);
+            LoadedWeakEventManager.AddListener(AssociatedObject, this);
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            LoadedWeakEventManager.RemoveListener(this.AssociatedObject, this);
+            LoadedWeakEventManager.RemoveListener(AssociatedObject, this);
         }
 
         public event EventHandler AttachedObjectLoaded;
 
         protected virtual void OnAttachedObjectLoaded()
         {
-            if (this.AttachedObjectLoaded != null)
+            if (AttachedObjectLoaded != null)
             {
-                this.AttachedObjectLoaded(this, EventArgs.Empty);
+                AttachedObjectLoaded(this, EventArgs.Empty);
             }
         }
 
         public T GetAttachedObject<T>() where T : FrameworkElement
         {
-            return this.AssociatedObject as T;
+            return AssociatedObject as T;
         }
 
         bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
-            return this.OnReceiveWeakEvent(managerType, sender, e);
+            return OnReceiveWeakEvent(managerType, sender, e);
         }
 
-        protected virtual Boolean OnReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+        protected virtual bool OnReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             if (managerType == typeof(LoadedWeakEventManager))
             {
-                this.OnAttachedObjectLoaded();
+                OnAttachedObjectLoaded();
             }
             else
             {

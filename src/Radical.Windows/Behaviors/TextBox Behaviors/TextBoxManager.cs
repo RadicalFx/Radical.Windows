@@ -1,6 +1,5 @@
 ﻿using Radical.Linq;
 using Radical.Windows.Input;
-using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -103,17 +102,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.RegisterAttached(
                                       "CommandParameter",
-                                      typeof(Object),
+                                      typeof(object),
                                       typeof(TextBoxManager),
                                       new FrameworkPropertyMetadata(null));
 
 
-        public static Object GetCommandParameter(DependencyObject owner)
+        public static object GetCommandParameter(DependencyObject owner)
         {
-            return (Object)owner.GetValue(CommandParameterProperty);
+            return (object)owner.GetValue(CommandParameterProperty);
         }
 
-        public static void SetCommandParameter(DependencyObject owner, Object value)
+        public static void SetCommandParameter(DependencyObject owner, object value)
         {
             owner.SetValue(CommandParameterProperty, value);
         }
@@ -136,17 +135,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty AutoSelectTextProperty = DependencyProperty.RegisterAttached(
                                       "AutoSelectText",
-                                      typeof(Boolean),
+                                      typeof(bool),
                                       typeof(TextBoxManager),
                                       new FrameworkPropertyMetadata(false, OnAutoSelectTextChanged));
 
 
-        public static Boolean GetAutoSelectText(TextBox owner)
+        public static bool GetAutoSelectText(TextBox owner)
         {
-            return (Boolean)owner.GetValue(AutoSelectTextProperty);
+            return (bool)owner.GetValue(AutoSelectTextProperty);
         }
 
-        public static void SetAutoSelectText(TextBox owner, Boolean value)
+        public static void SetAutoSelectText(TextBox owner, bool value)
         {
             owner.SetValue(AutoSelectTextProperty, value);
         }

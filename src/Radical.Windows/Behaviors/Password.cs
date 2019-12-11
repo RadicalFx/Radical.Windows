@@ -1,6 +1,5 @@
 ﻿using Radical.Linq;
 using Radical.Windows.Input;
-using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,17 +17,17 @@ namespace Radical.Windows.Behaviors
 
         static readonly DependencyProperty IsLoadedAttachedProperty = DependencyProperty.RegisterAttached(
                                       "IsLoadedAttached",
-                                      typeof(Boolean),
+                                      typeof(bool),
                                       typeof(Password),
                                       new FrameworkPropertyMetadata(false));
 
 
-        static Boolean GetIsLoadedAttached(DependencyObject owner)
+        static bool GetIsLoadedAttached(DependencyObject owner)
         {
-            return (Boolean)owner.GetValue(IsLoadedAttachedProperty);
+            return (bool)owner.GetValue(IsLoadedAttachedProperty);
         }
 
-        static void SetIsLoadedAttached(DependencyObject owner, Boolean value)
+        static void SetIsLoadedAttached(DependencyObject owner, bool value)
         {
             owner.SetValue(IsLoadedAttachedProperty, value);
         }
@@ -70,17 +69,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.RegisterAttached(
                                       "CommandParameter",
-                                      typeof(System.Object),
+                                      typeof(object),
                                       typeof(Password),
                                       new FrameworkPropertyMetadata(null, OnCommandParameterChanged));
 
 
-        public static System.Object GetCommandParameter(PasswordBox owner)
+        public static object GetCommandParameter(PasswordBox owner)
         {
-            return (System.Object)owner.GetValue(CommandParameterProperty);
+            return (object)owner.GetValue(CommandParameterProperty);
         }
 
-        public static void SetCommandParameter(PasswordBox owner, System.Object value)
+        public static void SetCommandParameter(PasswordBox owner, object value)
         {
             owner.SetValue(CommandParameterProperty, value);
         }
@@ -147,7 +146,7 @@ namespace Radical.Windows.Behaviors
             else
             {
                 var box = (PasswordBox)d;
-                var newPassword = (String)e.NewValue;
+                var newPassword = (string)e.NewValue;
 
                 SetPasswordOnPasswordBox(box, newPassword);
 
@@ -162,7 +161,7 @@ namespace Radical.Windows.Behaviors
             }
         }
 
-        static void SetPasswordOnPasswordBox(PasswordBox box, String newPassword)
+        static void SetPasswordOnPasswordBox(PasswordBox box, string newPassword)
         {
             if (!Password.GetIsUpdating(box))
             {

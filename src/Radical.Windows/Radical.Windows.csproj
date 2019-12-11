@@ -24,13 +24,14 @@
 
   <Target Name="AppVeyorPullRequestsTarget" AfterTargets="MinVer" Condition="'$(APPVEYOR_PULL_REQUEST_NUMBER)' != ''">
     <PropertyGroup>
-      <PackageVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)-PR.$(APPVEYOR_PULL_REQUEST_NUMBER).$(MinVerPreRelease)</PackageVersion>
+      <PackageVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)-PR.$(APPVEYOR_PULL_REQUEST_NUMBER).$(APPVEYOR_BUILD_ID).$(MinVerPreRelease)</PackageVersion>
       <PackageVersion Condition="'$(MinVerBuildMetadata)' != ''">$(PackageVersion)+$(MinVerBuildMetadata)</PackageVersion>
       <Version>$(PackageVersion)</Version>
     </PropertyGroup>
   </Target>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
     <PackageReference Include="MinVer" Version="2.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

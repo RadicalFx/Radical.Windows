@@ -34,12 +34,12 @@ namespace Radical.Windows.Behaviors
     {
         public interface ICanRepresentMyself
         {
-            String AsString();
+            string AsString();
         }
 
         public interface IHaveAnOpinionOnFilter
         {
-            Boolean Match(String userText);
+            bool Match(string userText);
         }
 
         private ControlUnderAutoComplete controlUnderAutocomplete;
@@ -57,30 +57,30 @@ namespace Radical.Windows.Behaviors
         {
             InitializeComponent();
 
-            this.controlUnderAutocomplete = ControlUnderAutoComplete.Create(value);
+            controlUnderAutocomplete = ControlUnderAutoComplete.Create(value);
 
-            this.viewSource = controlUnderAutocomplete.GetViewSource((Style)this[this.controlUnderAutocomplete.StyleKey]);
-            this.viewSource.Filter += OnCollectionViewSourceFilter;
+            viewSource = controlUnderAutocomplete.GetViewSource((Style)this[controlUnderAutocomplete.StyleKey]);
+            viewSource.Filter += OnCollectionViewSourceFilter;
 
-            this.controlUnderAutocomplete.Control.SetValue(Control.StyleProperty, this[this.controlUnderAutocomplete.StyleKey]);
-            this.controlUnderAutocomplete.Control.ApplyTemplate();
+            controlUnderAutocomplete.Control.SetValue(Control.StyleProperty, this[controlUnderAutocomplete.StyleKey]);
+            controlUnderAutocomplete.Control.ApplyTemplate();
 
-            this.autoCompletePopup = (Popup)this.controlUnderAutocomplete.Control.Template.FindName("autoCompletePopup", this.controlUnderAutocomplete.Control);
-            this._listBox = (ListBox)this.controlUnderAutocomplete.Control.Template.FindName("autoCompleteListBox", this.controlUnderAutocomplete.Control);
+            autoCompletePopup = (Popup)controlUnderAutocomplete.Control.Template.FindName("autoCompletePopup", controlUnderAutocomplete.Control);
+            _listBox = (ListBox)controlUnderAutocomplete.Control.Template.FindName("autoCompleteListBox", controlUnderAutocomplete.Control);
 
             var b = new Binding("ActualWidth")
             {
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
-                Source = this.controlUnderAutocomplete.Control
+                Source = controlUnderAutocomplete.Control
             };
 
-            this.ListBox.SetBinding(ListBox.MinWidthProperty, b);
-            this.ListBox.PreviewMouseDown += OnListBoxPreviewMouseDown;
+            ListBox.SetBinding(ListBox.MinWidthProperty, b);
+            ListBox.PreviewMouseDown += OnListBoxPreviewMouseDown;
 
-            this.controlUnderAutocomplete.Control.AddHandler(TextBox.TextChangedEvent, new TextChangedEventHandler(OnTextBoxTextChanged));
-            this.controlUnderAutocomplete.Control.LostFocus += OnTextBoxLostFocus;
-            this.controlUnderAutocomplete.Control.PreviewKeyUp += OnTextBoxPreviewKeyUp;
-            this.controlUnderAutocomplete.Control.PreviewKeyDown += OnTextBoxPreviewKeyDown;
+            controlUnderAutocomplete.Control.AddHandler(TextBox.TextChangedEvent, new TextChangedEventHandler(OnTextBoxTextChanged));
+            controlUnderAutocomplete.Control.LostFocus += OnTextBoxLostFocus;
+            controlUnderAutocomplete.Control.PreviewKeyUp += OnTextBoxPreviewKeyUp;
+            controlUnderAutocomplete.Control.PreviewKeyDown += OnTextBoxPreviewKeyDown;
         }
 
         internal CollectionViewSource ViewSource
@@ -91,7 +91,7 @@ namespace Radical.Windows.Behaviors
         private ListBox _listBox;
         private ListBox ListBox
         {
-            get { return this._listBox; }
+            get { return _listBox; }
         }
 
         private void OnCollectionViewSourceFilter(object sender, FilterEventArgs e)
@@ -142,20 +142,20 @@ namespace Radical.Windows.Behaviors
             return null;
         }
 
-        Boolean ignoreOnTextBoxTextChanged = false;
+        bool ignoreOnTextBoxTextChanged = false;
 
         private void OnTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!this.ignoreOnTextBoxTextChanged)
+            if (!ignoreOnTextBoxTextChanged)
             {
-                SetUserText(this.controlUnderAutocomplete.Control, this.controlUnderAutocomplete.Text);
+                SetUserText(controlUnderAutocomplete.Control, controlUnderAutocomplete.Text);
 
                 if (controlUnderAutocomplete.Text == "")
                 {
                     autoCompletePopup.IsOpen = false;
                     return;
                 }
-                if (!iteratingListItems && this.controlUnderAutocomplete.Text != "")
+                if (!iteratingListItems && controlUnderAutocomplete.Text != "")
                 {
                     ICollectionView v = viewSource.View;
                     v.Refresh();
@@ -172,17 +172,17 @@ namespace Radical.Windows.Behaviors
                             v.MoveCurrentToFirst();
                         }
 
-                        if (!this.deletingText && v.CurrentItem != null)
+                        if (!deletingText && v.CurrentItem != null)
                         {
-                            var item = this.GetTextForTextBox(v.CurrentItem);
+                            var item = GetTextForTextBox(v.CurrentItem);
 
                             //var userText = this.controlUnderAutocomplete.Text;
                             //var diff = item.Remove( 0, userText.Length );
                             //var firstAppendedCharIndex = item.IndexOf( diff );
 
-                            this.ignoreOnTextBoxTextChanged = true;
-                            this.controlUnderAutocomplete.Text = item;
-                            this.ignoreOnTextBoxTextChanged = false;
+                            ignoreOnTextBoxTextChanged = true;
+                            controlUnderAutocomplete.Text = item;
+                            ignoreOnTextBoxTextChanged = false;
 
                             //this.controlUnderAutocomplete.Select( firstAppendedCharIndex, item.Length );
                         }
@@ -193,7 +193,7 @@ namespace Radical.Windows.Behaviors
 
         private void OnTextBoxPreviewKeyDown(object sender, KeyEventArgs e)
         {
-            this.deletingText = e.Key == ik.Key.Delete || e.Key == ik.Key.Back;
+            deletingText = e.Key == ik.Key.Delete || e.Key == ik.Key.Back;
 
             //if( e.Key == ik.Key.Tab )
             //{
@@ -205,12 +205,12 @@ namespace Radical.Windows.Behaviors
         {
             if (e.Key == ik.Key.Up || e.Key == ik.Key.Down)
             {
-                if (this.rememberedText == null)
+                if (rememberedText == null)
                 {
-                    this.rememberedText = controlUnderAutocomplete.Text;
+                    rememberedText = controlUnderAutocomplete.Text;
                 }
 
-                this.iteratingListItems = true;
+                iteratingListItems = true;
                 var view = viewSource.View;
 
                 if (e.Key == ik.Key.Up)
@@ -230,24 +230,24 @@ namespace Radical.Windows.Behaviors
 
                 if (view.CurrentItem == null)
                 {
-                    this.controlUnderAutocomplete.Text = rememberedText;
+                    controlUnderAutocomplete.Text = rememberedText;
                 }
                 else
                 {
-                    this.controlUnderAutocomplete.Text = this.GetTextForTextBox(view.CurrentItem);
+                    controlUnderAutocomplete.Text = GetTextForTextBox(view.CurrentItem);
                 }
             }
             else
             {
-                this.iteratingListItems = false;
-                this.rememberedText = null;
-                if (this.autoCompletePopup.IsOpen && (e.Key == ik.Key.Escape || e.Key == ik.Key.Enter))
+                iteratingListItems = false;
+                rememberedText = null;
+                if (autoCompletePopup.IsOpen && (e.Key == ik.Key.Escape || e.Key == ik.Key.Enter))
                 {
-                    this.autoCompletePopup.IsOpen = false;
+                    autoCompletePopup.IsOpen = false;
                     if (e.Key == ik.Key.Enter)
                     {
-                        this.controlUnderAutocomplete.SelectAll();
-                        this.OnItemChoosen();
+                        controlUnderAutocomplete.SelectAll();
+                        OnItemChoosen();
                     }
                 }
             }
@@ -255,36 +255,36 @@ namespace Radical.Windows.Behaviors
 
         private void OnItemChoosen()
         {
-            var view = this.viewSource.View;
+            var view = viewSource.View;
             var ci = view.CurrentItem;
 
-            SetChoosenItem(this.controlUnderAutocomplete.Control, ci);
+            SetChoosenItem(controlUnderAutocomplete.Control, ci);
         }
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            this.autoCompletePopup.IsOpen = false;
-            this.OnItemChoosen();
+            autoCompletePopup.IsOpen = false;
+            OnItemChoosen();
         }
 
         private void OnListBoxPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var pt = e.GetPosition((IInputElement)sender);
-            var hr = VisualTreeHelper.HitTest(this.ListBox, pt);
+            var hr = VisualTreeHelper.HitTest(ListBox, pt);
             if (hr != null)
             {
                 var lbi = hr.VisualHit.FindParent<ListBoxItem>();
                 if (lbi != null && lbi.DataContext != null)
                 {
-                    this.controlUnderAutocomplete.Text = this.GetTextForTextBox(lbi.DataContext);
-                    this.autoCompletePopup.IsOpen = false;
-                    this.controlUnderAutocomplete.SelectAll();
-                    this.OnItemChoosen();
+                    controlUnderAutocomplete.Text = GetTextForTextBox(lbi.DataContext);
+                    autoCompletePopup.IsOpen = false;
+                    controlUnderAutocomplete.SelectAll();
+                    OnItemChoosen();
                 }
             }
         }
 
-        String GetTextForTextBox(Object selectedItem)
+        string GetTextForTextBox(object selectedItem)
         {
             var icrm = selectedItem as ICanRepresentMyself;
             var value = icrm != null ? icrm.AsString() : selectedItem.ToString();

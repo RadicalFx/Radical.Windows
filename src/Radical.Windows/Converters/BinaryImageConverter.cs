@@ -39,9 +39,9 @@ namespace Radical.Windows.Converters
         /// <returns>
         /// A converted value. If the method returns null, the valid null value is used.
         /// </returns>
-        public override Object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var valueIsValid = value is Byte[];
+            var valueIsValid = value is byte[];
             var targetTypeIsValid = targetType == typeof(ImageSource);
 
             if (value == null)
@@ -55,7 +55,7 @@ namespace Radical.Windows.Converters
 
             if (targetTypeIsValid && valueIsValid)
             {
-                var stream = new MemoryStream((Byte[])value);
+                var stream = new MemoryStream((byte[])value);
                 var image = new BitmapImage();
                 image.BeginInit();
                 image.StreamSource = stream;
@@ -77,7 +77,7 @@ namespace Radical.Windows.Converters
         /// <returns>
         /// A converted value. If the method returns null, the valid null value is used.
         /// </returns>
-        public override Object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             //var valueIsValid = value is BitmapImage;
             //var targetTypeIsValid = targetType == typeof( Byte[] );

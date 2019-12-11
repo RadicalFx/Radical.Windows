@@ -19,7 +19,7 @@ namespace Radical.Windows.CommandBuilders
     {
         readonly static TraceSource logger = new TraceSource(typeof(DelegateCommandBuilder).FullName);
 
-        public virtual Boolean CanCreateCommand(PropertyPath path, DependencyObject target)
+        public virtual bool CanCreateCommand(PropertyPath path, DependencyObject target)
         {
             if (DesignTimeHelper.GetIsInDesignMode())
             {
@@ -29,7 +29,7 @@ namespace Radical.Windows.CommandBuilders
             return path != null && (target is FrameworkElement || target is FrameworkContentElement);
         }
 
-        public virtual Object GetDataContext(DependencyObject target)
+        public virtual object GetDataContext(DependencyObject target)
         {
             if (target is FrameworkElement)
             {
@@ -48,7 +48,7 @@ namespace Radical.Windows.CommandBuilders
         /// <param name="dataContext">The data context.</param>
         /// <param name="data">The data.</param>
         /// <returns></returns>
-        public virtual Boolean TryGenerateCommandData(PropertyPath path, Object dataContext, out CommandData data)
+        public virtual bool TryGenerateCommandData(PropertyPath path, object dataContext, out CommandData data)
         {
             var propertyPath = path.Path;
             var nestedProperties = propertyPath
@@ -135,12 +135,12 @@ namespace Radical.Windows.CommandBuilders
                 BooleanFact = properties.Where(pi =>
                 {
                     return dataContext is INotifyPropertyChanged
-                        && pi.PropertyType == typeof(Boolean)
+                        && pi.PropertyType == typeof(bool)
                         && pi.Name.Equals(factName);
                 })
                 .Select(pi => new BooleanFact
                 {
-                    FastGetter = dataContext.CreateFastPropertyGetter<Boolean>(pi),
+                    FastGetter = dataContext.CreateFastPropertyGetter<bool>(pi),
                     Name = pi.Name
                 })
                 .SingleOrDefault(),
@@ -155,7 +155,7 @@ namespace Radical.Windows.CommandBuilders
         public virtual IDelegateCommand CreateCommand(CommandData commandData)
         {
             var text = (commandData.Description == null) ?
-                        String.Empty :
+                        string.Empty :
                         commandData.Description.DisplayText;
 
             var command = (DelegateCommand)DelegateCommand.Create(text);

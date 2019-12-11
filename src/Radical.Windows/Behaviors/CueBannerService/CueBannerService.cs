@@ -15,16 +15,16 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty CueBannerProperty = DependencyProperty.RegisterAttached(
                                       "CueBanner",
-                                      typeof(Object),
+                                      typeof(object),
                                       typeof(CueBannerService),
                                       new FrameworkPropertyMetadata(null, OnCueBannerPropertyChanged));
 
-        public static Object GetCueBanner(TextBoxBase control)
+        public static object GetCueBanner(TextBoxBase control)
         {
             return control.GetValue(CueBannerProperty);
         }
 
-        public static void SetCueBanner(TextBoxBase control, Object value)
+        public static void SetCueBanner(TextBoxBase control, object value)
         {
             control.SetValue(CueBannerProperty, value);
         }
@@ -35,17 +35,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty PasswordCueBannerProperty = DependencyProperty.RegisterAttached(
                                       "PasswordCueBanner",
-                                      typeof(Object),
+                                      typeof(object),
                                       typeof(CueBannerService),
                                       new FrameworkPropertyMetadata(null, OnCueBannerPropertyChanged));
 
 
-        public static Object GetPasswordCueBanner(PasswordBox owner)
+        public static object GetPasswordCueBanner(PasswordBox owner)
         {
-            return (Object)owner.GetValue(PasswordCueBannerProperty);
+            return (object)owner.GetValue(PasswordCueBannerProperty);
         }
 
-        public static void SetPasswordCueBanner(PasswordBox owner, Object value)
+        public static void SetPasswordCueBanner(PasswordBox owner, object value)
         {
             owner.SetValue(PasswordCueBannerProperty, value);
         }
@@ -198,7 +198,7 @@ namespace Radical.Windows.Behaviors
             }
         }
 
-        static void ShowCueBanner(FrameworkElement control, Object content)
+        static void ShowCueBanner(FrameworkElement control, object content)
         {
             var layer = AdornerLayer.GetAdornerLayer(control);
             Debug.WriteLineIf(layer == null, "CueBannerService: cannot find any AdornerLayer.");
@@ -209,20 +209,20 @@ namespace Radical.Windows.Behaviors
             }
         }
 
-        static Boolean ShouldShowCueBanner(TextBoxBase c)
+        static bool ShouldShowCueBanner(TextBoxBase c)
         {
-            var value = c.GetValue(TextBox.TextProperty) as String;
+            var value = c.GetValue(TextBox.TextProperty) as string;
             var isVisible = Convert.ToBoolean(c.GetValue(TextBox.IsVisibleProperty));
 
-            return isVisible && String.IsNullOrEmpty(value);
+            return isVisible && string.IsNullOrEmpty(value);
         }
 
-        static Boolean ShouldShowCueBanner(PasswordBox c)
+        static bool ShouldShowCueBanner(PasswordBox c)
         {
             var value = c.Password;
             var isVisible = c.IsVisible;
 
-            return isVisible && String.IsNullOrEmpty(value);
+            return isVisible && string.IsNullOrEmpty(value);
         }
     }
 }

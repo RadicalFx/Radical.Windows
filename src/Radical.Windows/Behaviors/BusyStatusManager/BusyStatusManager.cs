@@ -9,10 +9,10 @@
 
     public static class BusyStatusManager
     {
-        internal static ContentPresenter WrapUserContent(Object userContent)
+        internal static ContentPresenter WrapUserContent(object userContent)
         {
             ContentPresenter userContentPresenter;
-            var text = userContent as String;
+            var text = userContent as string;
             if (text != null)
             {
                 userContentPresenter = new ContentPresenter()
@@ -39,17 +39,17 @@
 
         public static readonly DependencyProperty EnableMultiThreadingHostProperty = DependencyProperty.RegisterAttached(
                                       "EnableMultiThreadingHost",
-                                      typeof(Boolean),
+                                      typeof(bool),
                                       typeof(BusyStatusManager),
                                       new FrameworkPropertyMetadata(false /*, OnEnableMultiThreadingHostChanged */ ));
 
 
-        public static Boolean GetEnableMultiThreadingHost(DependencyObject owner)
+        public static bool GetEnableMultiThreadingHost(DependencyObject owner)
         {
-            return (Boolean)owner.GetValue(EnableMultiThreadingHostProperty);
+            return (bool)owner.GetValue(EnableMultiThreadingHostProperty);
         }
 
-        public static void SetEnableMultiThreadingHost(DependencyObject owner, Boolean value)
+        public static void SetEnableMultiThreadingHost(DependencyObject owner, bool value)
         {
             owner.SetValue(EnableMultiThreadingHostProperty, value);
         }
@@ -79,17 +79,17 @@
 
         public static readonly DependencyProperty ContentProperty = DependencyProperty.RegisterAttached(
                                       "Content",
-                                      typeof(Object),
+                                      typeof(object),
                                       typeof(BusyStatusManager),
                                       new FrameworkPropertyMetadata(null, OnPropertyChanged));
 
 
-        public static Object GetContent(UIElement control)
+        public static object GetContent(UIElement control)
         {
             return control.GetValue(ContentProperty);
         }
 
-        public static void SetContent(UIElement control, Object value)
+        public static void SetContent(UIElement control, object value)
         {
             control.SetValue(ContentProperty, value);
         }
@@ -112,16 +112,16 @@
 
         static readonly DependencyProperty handledProperty = DependencyProperty.RegisterAttached(
                               "handled",
-                              typeof(Boolean),
+                              typeof(bool),
                               typeof(BusyStatusManager),
                               new FrameworkPropertyMetadata(false));
 
-        static Boolean Gethandled(DependencyObject control)
+        static bool Gethandled(DependencyObject control)
         {
-            return (Boolean)control.GetValue(handledProperty);
+            return (bool)control.GetValue(handledProperty);
         }
 
-        static void Sethandled(DependencyObject control, Boolean value)
+        static void Sethandled(DependencyObject control, bool value)
         {
             control.SetValue(handledProperty, value);
         }

@@ -11,7 +11,7 @@ namespace Radical.Windows.Converters
     {
         public NullToVisibilityConverter()
         {
-            this.NullValue = Visibility.Collapsed;
+            NullValue = Visibility.Collapsed;
         }
 
         public Visibility NullValue
@@ -22,8 +22,8 @@ namespace Radical.Windows.Converters
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            Boolean inverted;
-            if (!Boolean.TryParse(parameter.As<String>(), out inverted))
+            bool inverted;
+            if (!bool.TryParse(parameter.As<string>(), out inverted))
             {
                 inverted = false;
             }
@@ -41,11 +41,11 @@ namespace Radical.Windows.Converters
 
             if (inverted)
             {
-                return (value == null ? Visibility.Visible : this.NullValue);
+                return (value == null ? Visibility.Visible : NullValue);
             }
             else
             {
-                return (value == null ? this.NullValue : Visibility.Visible);
+                return (value == null ? NullValue : Visibility.Visible);
             }
         }
 

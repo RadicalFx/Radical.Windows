@@ -6,7 +6,7 @@ using System.Windows.Markup;
 namespace Radical.Windows.Converters
 {
     [MarkupExtensionReturnType(typeof(NotConverter))]
-    [ValueConversion(typeof(Boolean), typeof(Boolean))]
+    [ValueConversion(typeof(bool), typeof(bool))]
     public sealed class NotConverter : AbstractSingletonConverter
     {
         //static WeakReference singleton = new WeakReference( null );
@@ -27,19 +27,19 @@ namespace Radical.Windows.Converters
         {
             Ensure.That(value).Named("value")
                 .IsNotNull()
-                .IsTrue(v => v is Boolean);
+                .IsTrue(v => v is bool);
 
-            Ensure.That(targetType).Is<Boolean>();
+            Ensure.That(targetType).Is<bool>();
 
-            return !((Boolean)value);
+            return !((bool)value);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             Ensure.That(value).Named("value").IsNotNull();
-            Ensure.That(targetType).Is(typeof(Boolean));
+            Ensure.That(targetType).Is(typeof(bool));
 
-            return !((Boolean)value);
+            return !((bool)value);
         }
     }
 }

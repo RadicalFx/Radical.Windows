@@ -91,12 +91,12 @@ namespace Radical.Windows.Controls
 
         internal void Setup()
         {
-            this.CreateContentHelper();
+            CreateContentHelper();
         }
 
         internal void Teardown()
         {
-            this.HideContentHelper();
+            HideContentHelper();
         }
 
         protected override int VisualChildrenCount
@@ -123,7 +123,7 @@ namespace Radical.Windows.Controls
 
         private void CreateContentHelper()
         {
-            _threadedHelper = new ThreadedVisualHelper(this.createContent, SafeInvalidateMeasure);
+            _threadedHelper = new ThreadedVisualHelper(createContent, SafeInvalidateMeasure);
             _hostVisual = _threadedHelper.HostVisual;
         }
 
@@ -185,12 +185,12 @@ namespace Radical.Windows.Controls
 
             private void CreateAndShowContent()
             {
-                this.Dispatcher = Dispatcher.CurrentDispatcher;
+                Dispatcher = Dispatcher.CurrentDispatcher;
                 var source = new VisualTargetPresentationSource(_hostVisual);
-                this._sync.Set();
+                _sync.Set();
                 source.RootVisual = _createContent();
-                this.DesiredSize = source.DesiredSize;
-                this._invalidateMeasure();
+                DesiredSize = source.DesiredSize;
+                _invalidateMeasure();
 
                 Dispatcher.Run();
                 source.Dispose();

@@ -15,15 +15,15 @@ namespace Radical.Windows.Input
     /// </summary>
     public class DelegateCommand : IDelegateCommand, IWeakEventListener
     {
-        Object _data;
+        object _data;
 
         /// <summary>
         /// Used by the AutoCommandBinding...shuold be rewritten better :-)
         /// </summary>
         /// <param name="data">The data.</param>
-        internal void SetData(Object data)
+        internal void SetData(object data)
         {
-            this._data = data;
+            _data = data;
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Radical.Windows.Input
         /// <returns></returns>
         internal T GetData<T>()
         {
-            return (T)this._data;
+            return (T)_data;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Radical.Windows.Input
         /// <returns>The new command.</returns>
         public static IDelegateCommand Create()
         {
-            return new DelegateCommand(null, null, String.Empty);
+            return new DelegateCommand(null, null, string.Empty);
         }
 
         /// <summary>
@@ -57,13 +57,13 @@ namespace Radical.Windows.Input
         /// </summary>
         /// <param name="displayText">The display text.</param>
         /// <returns>The new command.</returns>
-        public static IDelegateCommand Create(String displayText)
+        public static IDelegateCommand Create(string displayText)
         {
             return new DelegateCommand(null, null, displayText);
         }
 
-        private Action<Object> executeMethod = null;
-        private Func<Object, Boolean> canExecuteMethod = null;
+        private Action<object> executeMethod = null;
+        private Func<object, bool> canExecuteMethod = null;
 
         /// <summary>
         /// Occurs when changes occur that affect whether the command should execute.
@@ -75,9 +75,9 @@ namespace Radical.Windows.Input
         /// </summary>
         protected virtual void OnCanExecuteChanged()
         {
-            if (this.CanExecuteChanged != null)
+            if (CanExecuteChanged != null)
             {
-                this.CanExecuteChanged(this, EventArgs.Empty);
+                CanExecuteChanged(this, EventArgs.Empty);
             }
         }
 
@@ -93,11 +93,11 @@ namespace Radical.Windows.Input
         /// <param name="executeMethod">Delegate to execute when Execute is called on the command.  This can be null to just hook up a CanExecute delegate.</param>
         /// <param name="canExecuteMethod">Delegate to execute when CanExecute is called on the command.  This can be null.</param>
         /// <param name="displayText">Text displayed by elements this command is bound to</param>
-        public DelegateCommand(Action<Object> executeMethod, Func<Object, Boolean> canExecuteMethod, String displayText)
+        public DelegateCommand(Action<object> executeMethod, Func<object, bool> canExecuteMethod, string displayText)
         {
             this.executeMethod = executeMethod;
             this.canExecuteMethod = canExecuteMethod;
-            this.DisplayText = displayText;
+            DisplayText = displayText;
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Radical.Windows.Input
         /// <returns>
         /// An instance of the current command.
         /// </returns>
-        public virtual IDelegateCommand OnExecute(Action<Object> executeMethod)
+        public virtual IDelegateCommand OnExecute(Action<object> executeMethod)
         {
             this.executeMethod = executeMethod;
             return this;
@@ -122,7 +122,7 @@ namespace Radical.Windows.Input
         /// <returns>
         /// An instance of the current command.
         /// </returns>
-        public virtual IDelegateCommand OnCanExecute(Func<Object, Boolean> canExecuteMethod)
+        public virtual IDelegateCommand OnCanExecute(Func<object, bool> canExecuteMethod)
         {
             this.canExecuteMethod = canExecuteMethod;
             return this;
@@ -135,29 +135,29 @@ namespace Radical.Windows.Input
         /// </summary>
         public IDelegateCommand AddGesture(InputGesture gesture)
         {
-            if (this.inputBindings == null)
+            if (inputBindings == null)
             {
-                this.inputBindings = new InputBindingCollection();
+                inputBindings = new InputBindingCollection();
             }
 
-            this.inputBindings.Add(new InputBinding(this, gesture));
+            inputBindings.Add(new InputBinding(this, gesture));
 
             return this;
         }
 
         public IDelegateCommand AddKeyGesture(System.Windows.Input.Key key)
         {
-            return this.AddKeyGesture(key, ModifierKeys.None);
+            return AddKeyGesture(key, ModifierKeys.None);
         }
 
         public IDelegateCommand AddKeyGesture(System.Windows.Input.Key key, ModifierKeys mk)
         {
-            if (this.inputBindings == null)
+            if (inputBindings == null)
             {
-                this.inputBindings = new InputBindingCollection();
+                inputBindings = new InputBindingCollection();
             }
 
-            this.inputBindings.Add(new InputBinding(this, new KeyGesture(key, mk)));
+            inputBindings.Add(new InputBinding(this, new KeyGesture(key, mk)));
 
             return this;
         }
@@ -180,7 +180,7 @@ namespace Radical.Windows.Input
         /// </summary>
         public InputBindingCollection InputBindings
         {
-            get { return this.inputBindings; }
+            get { return inputBindings; }
         }
 
 #endif
@@ -219,7 +219,7 @@ namespace Radical.Windows.Input
             {
                 onBeforeTracking(new CommandEvent()
                 {
-                    Name = this.DisplayText,
+                    Name = DisplayText,
                     Data = new Dictionary<string, object>()
                     {
                         {"parameter", parameter}
@@ -250,7 +250,7 @@ namespace Radical.Windows.Input
         /// </summary>
         public virtual void EvaluateCanExecute()
         {
-            this.OnCanExecuteChanged();
+            OnCanExecuteChanged();
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Radical.Windows.Input
             {
                 foreach (var monitor in triggers)
                 {
-                    this.AddMonitor(monitor);
+                    AddMonitor(monitor);
                 }
             }
 
@@ -310,7 +310,7 @@ namespace Radical.Windows.Input
         /// <param name="source">The source trigger.</param>
         protected virtual void OnTriggerChanged(IMonitor source)
         {
-            this.EvaluateCanExecute();
+            EvaluateCanExecute();
         }
 
         /// <summary>
@@ -322,11 +322,11 @@ namespace Radical.Windows.Input
         /// <returns>
         /// true if the listener handled the event. It is considered an error by the <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a listener for an event that the listener does not handle. Regardless, the method should return false if it receives an event that it does not recognize or handle.
         /// </returns>
-        Boolean IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+        bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             if (managerType == typeof(MonitorChangedWeakEventManager))
             {
-                this.OnTriggerChanged((IMonitor)sender);
+                OnTriggerChanged((IMonitor)sender);
             }
             else
             {

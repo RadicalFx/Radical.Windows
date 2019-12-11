@@ -21,7 +21,7 @@ namespace Radical.Windows.Markup
         /// Initializes a new instance of the <see cref="CommandBinding" /> class.
         /// </summary>
         /// <param name="path">The path.</param>
-        public CommandBinding(String path)
+        public CommandBinding(string path)
             : base(path)
         {
 
@@ -43,59 +43,59 @@ namespace Radical.Windows.Markup
         /// </returns>
         public override object ProvideValue(IServiceProvider provider)
         {
-            if (this.IsUsingSharedDependencyProperty(provider))
+            if (IsUsingSharedDependencyProperty(provider))
             {
                 return this;
             }
 
             var b = base.ProvideValue(provider);
 
-            this.OnProvideValue(provider, b);
+            OnProvideValue(provider, b);
 
             return b;
         }
 
-        protected virtual void OnProvideValue(IServiceProvider provider, Object value)
+        protected virtual void OnProvideValue(IServiceProvider provider, object value)
         {
             if (!DesignTimeHelper.GetIsInDesignMode())
             {
                 FrameworkElement fe;
                 DependencyProperty dp;
 
-                if (this.TryGetTargetItems<FrameworkElement>(provider, out fe, out dp))
+                if (TryGetTargetItems<FrameworkElement>(provider, out fe, out dp))
                 {
                     RoutedEventHandler reh = null;
                     reh = (s, e) =>
                     {
                         fe.Loaded -= reh;
-                        this.OnTargetLoaded(fe, dp);
+                        OnTargetLoaded(fe, dp);
                     };
 
                     fe.Loaded += reh;
 
                     fe.DataContextChanged += (s, e) =>
                     {
-                        this.OnDataContextChanged(fe, dp, e.NewValue, e.OldValue);
+                        OnDataContextChanged(fe, dp, e.NewValue, e.OldValue);
                     };
                 }
 #if !SILVERLIGHT
                 else
                 {
                     FrameworkContentElement fce;
-                    if (this.TryGetTargetItems<FrameworkContentElement>(provider, out fce, out dp))
+                    if (TryGetTargetItems<FrameworkContentElement>(provider, out fce, out dp))
                     {
                         RoutedEventHandler reh = null;
                         reh = (s, e) =>
                         {
                             fce.Loaded -= reh;
-                            this.OnTargetLoaded(fce, dp);
+                            OnTargetLoaded(fce, dp);
                         };
 
                         fce.Loaded += reh;
 
                         fce.DataContextChanged += (s, e) =>
                         {
-                            this.OnDataContextChanged(fce, dp, e.NewValue, e.OldValue);
+                            OnDataContextChanged(fce, dp, e.NewValue, e.OldValue);
                         };
                     }
                 }
@@ -103,7 +103,7 @@ namespace Radical.Windows.Markup
             }
         }
 
-        protected virtual void OnDataContextChanged(DependencyObject obj, DependencyProperty targetProperty, Object newValue, Object oldValue)
+        protected virtual void OnDataContextChanged(DependencyObject obj, DependencyProperty targetProperty, object newValue, object oldValue)
         {
 
         }
@@ -111,16 +111,16 @@ namespace Radical.Windows.Markup
         protected virtual void OnTargetLoaded(DependencyObject target, DependencyProperty targetProperty)
         {
             var source = target as ICommandSource;
-            var command = this.GetCommand(target, targetProperty);
+            var command = GetCommand(target, targetProperty);
 
-            this.SetInputBindings(target, source, command);
+            SetInputBindings(target, source, command);
         }
 
         protected virtual void SetInputBindings(DependencyObject target, ICommandSource source, IDelegateCommand command)
         {
             if (source != null && command != null && command.InputBindings != null)
             {
-                var rootElement = this.GetRootElement(target as FrameworkElement);
+                var rootElement = GetRootElement(target as FrameworkElement);
                 foreach (InputBinding ib in command.InputBindings)
                 {
                     if (ib.CommandParameter != source.CommandParameter)
@@ -146,7 +146,7 @@ namespace Radical.Windows.Markup
             }
             else
             {
-                return this.GetRootElement(fe.Parent as FrameworkElement);
+                return GetRootElement(fe.Parent as FrameworkElement);
             }
         }
     }

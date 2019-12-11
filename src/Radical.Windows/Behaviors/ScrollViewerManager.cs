@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace Radical.Windows.Behaviors
@@ -11,7 +10,7 @@ namespace Radical.Windows.Behaviors
 
         static readonly DependencyProperty IsSetupProperty = DependencyProperty.RegisterAttached(
                             "IsSetup",
-                            typeof(Boolean),
+                            typeof(bool),
                             typeof(ScrollViewerManager),
                             new FrameworkPropertyMetadata(false));
 
@@ -20,7 +19,7 @@ namespace Radical.Windows.Behaviors
             return (bool)owner.GetValue(IsSetupProperty);
         }
 
-        static void SetIsSetup(DependencyObject owner, Boolean value)
+        static void SetIsSetup(DependencyObject owner, bool value)
         {
             owner.SetValue(IsSetupProperty, value);
         }

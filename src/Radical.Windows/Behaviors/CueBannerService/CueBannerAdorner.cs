@@ -1,7 +1,6 @@
 ﻿namespace Radical.Windows.Behaviors
 {
     using Radical.Windows.Controls;
-    using System;
     using System.Windows;
     using System.Windows.Controls;
 
@@ -9,16 +8,16 @@
     {
         private readonly ContentPresenter userContent;
 
-        public CueBannerAdorner(UIElement adornedElement, Object content) :
+        public CueBannerAdorner(UIElement adornedElement, object content) :
             base(adornedElement)
         {
-            this.IsHitTestVisible = false;
-            this.userContent = new ContentPresenter();
+            IsHitTestVisible = false;
+            userContent = new ContentPresenter();
 
-            var cueBannerText = content as String;
+            var cueBannerText = content as string;
             if (cueBannerText != null)
             {
-                this.userContent.Content = new TextBlock()
+                userContent.Content = new TextBlock()
                 {
                     FontStyle = FontStyles.Italic,
                     Text = cueBannerText,
@@ -30,15 +29,15 @@
             }
             else
             {
-                this.userContent.Content = content;
+                userContent.Content = content;
             }
 
-            this.AddVisualChild(this.userContent);
+            AddVisualChild(userContent);
         }
 
         protected override UIElement Content
         {
-            get { return this.userContent; }
+            get { return userContent; }
         }
     }
 }

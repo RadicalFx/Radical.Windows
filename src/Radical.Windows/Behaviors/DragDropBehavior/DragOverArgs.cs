@@ -1,5 +1,4 @@
 ﻿using Radical.Validation;
-using System;
 using System.Windows;
 
 namespace Radical.Windows.Behaviors
@@ -14,13 +13,13 @@ namespace Radical.Windows.Behaviors
         /// <param name="dropTarget">The drop target.</param>
         /// <param name="allowedEffects">The allowed effects.</param>
         /// <param name="position">The position.</param>
-        public DragOverArgs(IDataObject data, DragDropKeyStates keyStates, Object dropTarget, DragDropEffects allowedEffects, Point position)
+        public DragOverArgs(IDataObject data, DragDropKeyStates keyStates, object dropTarget, DragDropEffects allowedEffects, Point position)
             : base(data, keyStates, dropTarget)
         {
             Ensure.That(allowedEffects).Named("allowedEffects").IsTrue(v => v.IsDefined());
 
-            this.AllowedEffects = allowedEffects;
-            this.Position = position;
+            AllowedEffects = allowedEffects;
+            Position = position;
         }
 
         /// <summary>

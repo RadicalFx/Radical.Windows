@@ -1,7 +1,6 @@
 ﻿using Radical.Conversions;
 using Radical.Linq;
 using Radical.Validation;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -18,17 +17,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty ContentProperty = DependencyProperty.RegisterAttached(
                                       "Content",
-                                      typeof(Object),
+                                      typeof(object),
                                       typeof(EmptyPlaceHolderService),
                                       new FrameworkPropertyMetadata(null, OnContentChanged));
 
 
-        public static Object GetContent(ItemsControl owner)
+        public static object GetContent(ItemsControl owner)
         {
-            return (Object)owner.GetValue(ContentProperty);
+            return (object)owner.GetValue(ContentProperty);
         }
 
-        public static void SetContent(ItemsControl owner, Object value)
+        public static void SetContent(ItemsControl owner, object value)
         {
             owner.SetValue(ContentProperty, value);
         }

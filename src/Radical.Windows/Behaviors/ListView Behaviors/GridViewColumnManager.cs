@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace Radical.Windows.Behaviors
@@ -10,16 +9,16 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty FillProperty = DependencyProperty.RegisterAttached(
                                       "Fill",
-                                      typeof(Boolean),
+                                      typeof(bool),
                                       typeof(GridViewColumnManager),
                                       new FrameworkPropertyMetadata(false));
 
-        public static Boolean GetFill(GridViewColumn owner)
+        public static bool GetFill(GridViewColumn owner)
         {
-            return (Boolean)owner.GetValue(FillProperty);
+            return (bool)owner.GetValue(FillProperty);
         }
 
-        public static void SetFill(GridViewColumn owner, Boolean value)
+        public static void SetFill(GridViewColumn owner, bool value)
         {
             owner.SetValue(FillProperty, value);
         }
@@ -30,16 +29,16 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty SortPropertyProperty = DependencyProperty.RegisterAttached(
                                       "SortProperty",
-                                      typeof(String),
+                                      typeof(string),
                                       typeof(GridViewColumnManager),
                                       new FrameworkPropertyMetadata(null));
 
-        public static String GetSortProperty(GridViewColumn owner)
+        public static string GetSortProperty(GridViewColumn owner)
         {
-            return (String)owner.GetValue(SortPropertyProperty);
+            return (string)owner.GetValue(SortPropertyProperty);
         }
 
-        public static void SetSortProperty(GridViewColumn owner, String value)
+        public static void SetSortProperty(GridViewColumn owner, string value)
         {
             owner.SetValue(SortPropertyProperty, value);
         }

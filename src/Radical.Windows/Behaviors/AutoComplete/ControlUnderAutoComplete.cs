@@ -120,19 +120,19 @@ namespace Radical.Windows.Behaviors
 
         TextBox GetTextBox()
         {
-            var t = (TextBox)this.Control.Template.FindName("PART_EditableTextBox", this.Control);
+            var t = (TextBox)Control.Template.FindName("PART_EditableTextBox", Control);
             return t;
         }
 
         public override void SelectAll()
         {
-            var t = this.GetTextBox();
+            var t = GetTextBox();
             t.SelectAll();
         }
 
         public override void Select(int start, int lenght)
         {
-            var t = this.GetTextBox();
+            var t = GetTextBox();
             t.Select(start, lenght);
         }
 

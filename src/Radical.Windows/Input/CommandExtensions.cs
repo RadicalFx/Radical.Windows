@@ -32,7 +32,7 @@ namespace Radical.Windows.Input
             }
             else
             {
-                throw new NotSupportedException(String.Format("Unsupported command type: {0}", source));
+                throw new NotSupportedException(string.Format("Unsupported command type: {0}", source));
             }
 
             return gestures ?? new InputGesture[0];

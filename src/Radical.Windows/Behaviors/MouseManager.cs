@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -46,7 +45,7 @@ namespace Radical.Windows.Behaviors
 
         static readonly DependencyProperty OnLoadedAttachedProperty = DependencyProperty.RegisterAttached(
                              "OnLoadedAttached",
-                             typeof(Boolean),
+                             typeof(bool),
                              typeof(MouseManager),
                              new FrameworkPropertyMetadata(false));
 

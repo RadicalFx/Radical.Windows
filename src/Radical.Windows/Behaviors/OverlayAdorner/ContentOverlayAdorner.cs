@@ -1,7 +1,6 @@
 ﻿namespace Radical.Windows.Behaviors
 {
     using Radical.Windows.Controls;
-    using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
@@ -10,16 +9,16 @@
     {
         private readonly ContentPresenter userContent;
 
-        public ContentOverlayAdorner(UIElement adornedElement, Object content) :
+        public ContentOverlayAdorner(UIElement adornedElement, object content) :
             base(adornedElement)
         {
-            this.IsHitTestVisible = true;
-            this.userContent = new ContentPresenter();
+            IsHitTestVisible = true;
+            userContent = new ContentPresenter();
 
-            var cueBannerText = content as String;
+            var cueBannerText = content as string;
             if (cueBannerText != null)
             {
-                this.userContent.Content = new TextBlock()
+                userContent.Content = new TextBlock()
                 {
                     FontStyle = FontStyles.Italic,
                     Text = cueBannerText,
@@ -31,25 +30,25 @@
             }
             else
             {
-                this.userContent.Content = content;
+                userContent.Content = content;
             }
 
             //WARN: if this is in a template the...
-            this.AddVisualChild(this.userContent);
+            AddVisualChild(userContent);
         }
 
         protected override UIElement Content
         {
-            get { return this.userContent; }
+            get { return userContent; }
         }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            if (this.Background != null)
+            if (Background != null)
             {
-                var rect = new Rect(new Point(0, 0), this.DesiredSize);
+                var rect = new Rect(new Point(0, 0), DesiredSize);
 
-                drawingContext.DrawRectangle(this.Background, null, rect);
+                drawingContext.DrawRectangle(Background, null, rect);
             }
 
             base.OnRender(drawingContext);

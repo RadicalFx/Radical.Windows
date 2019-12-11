@@ -1,5 +1,4 @@
 ﻿using Radical.ComponentModel;
-using System;
 using System.Collections.Specialized;
 
 namespace Radical.Observers
@@ -41,21 +40,21 @@ namespace Radical.Observers
         {
             base.StartMonitoring(source);
 
-            handler = (s, e) => this.OnChanged();
-            this.Source.CollectionChanged += handler;
+            handler = (s, e) => OnChanged();
+            Source.CollectionChanged += handler;
         }
 
         public void Observe(INotifyCollectionChanged source)
         {
-            this.StopMonitoring();
-            this.StartMonitoring(source);
+            StopMonitoring();
+            StartMonitoring(source);
         }
 
-        protected override void OnStopMonitoring(Boolean targetDisposed)
+        protected override void OnStopMonitoring(bool targetDisposed)
         {
-            if (!targetDisposed && this.WeakSource != null && this.WeakSource.IsAlive)
+            if (!targetDisposed && WeakSource != null && WeakSource.IsAlive)
             {
-                this.Source.CollectionChanged -= handler;
+                Source.CollectionChanged -= handler;
             }
 
             handler = null;

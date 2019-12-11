@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 
 namespace Radical.Windows.Behaviors
@@ -10,13 +9,13 @@ namespace Radical.Windows.Behaviors
         /// Gets a value indicating whether we are in design mode.
         /// </summary>
         /// <returns><c>True</c> if we are in design mode, otherwise <c>false</c>.</returns>
-        public static Boolean GetIsInDesignMode()
+        public static bool GetIsInDesignMode()
         {
             var descriptor = DependencyPropertyDescriptor.FromProperty(
                 DesignerProperties.IsInDesignModeProperty,
                 typeof(DependencyObject));
 
-            var isInDesignMode = (Boolean)descriptor.Metadata.DefaultValue;
+            var isInDesignMode = (bool)descriptor.Metadata.DefaultValue;
 
             return isInDesignMode;
         }

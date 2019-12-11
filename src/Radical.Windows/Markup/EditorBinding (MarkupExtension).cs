@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Data;
+﻿using System.Windows.Data;
 
 namespace Radical.Windows.Markup
 {
@@ -8,21 +7,21 @@ namespace Radical.Windows.Markup
         public EditorBinding()
             : base()
         {
-            this.InitDefaults();
+            InitDefaults();
         }
 
-        public EditorBinding(String path)
+        public EditorBinding(string path)
             : base(path)
         {
-            this.InitDefaults();
+            InitDefaults();
         }
 
         void InitDefaults()
         {
-            this.NotifyOnValidationError = true;
-            this.ValidatesOnDataErrors = true;
-            this.ValidatesOnExceptions = true;
-            this.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            NotifyOnValidationError = true;
+            ValidatesOnDataErrors = true;
+            ValidatesOnExceptions = true;
+            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
         }
     }
 }

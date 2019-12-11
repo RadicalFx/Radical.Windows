@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -15,7 +14,7 @@ namespace Radical.Windows.Behaviors
         /// </summary>
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
             "Content",
-            typeof(System.Object),
+            typeof(object),
             typeof(OverlayBehavior),
             new PropertyMetadata(null));
 
@@ -23,10 +22,10 @@ namespace Radical.Windows.Behaviors
         /// Gets or sets the content.
         /// </summary>
         /// <value>The content.</value>
-        public System.Object Content
+        public object Content
         {
-            get { return (System.Object)this.GetValue(ContentProperty); }
-            set { this.SetValue(ContentProperty, value); }
+            get { return (object)GetValue(ContentProperty); }
+            set { SetValue(ContentProperty, value); }
         }
 
         #endregion
@@ -35,17 +34,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty IsVisibleProperty = DependencyProperty.Register(
             "IsVisible",
-            typeof(Boolean),
+            typeof(bool),
             typeof(OverlayBehavior),
             new PropertyMetadata(true, (s, e) =>
            {
                ((OverlayBehavior)s).OnIsVisibleChanged(e);
            }));
 
-        public Boolean IsVisible
+        public bool IsVisible
         {
-            get { return (Boolean)this.GetValue(IsVisibleProperty); }
-            set { this.SetValue(IsVisibleProperty, value); }
+            get { return (bool)GetValue(IsVisibleProperty); }
+            set { SetValue(IsVisibleProperty, value); }
         }
 
         #endregion
@@ -54,14 +53,14 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty DisableAdornedElementProperty = DependencyProperty.Register(
             "DisableAdornedElement",
-            typeof(Boolean),
+            typeof(bool),
             typeof(OverlayBehavior),
             new PropertyMetadata(false));
 
-        public Boolean DisableAdornedElement
+        public bool DisableAdornedElement
         {
-            get { return (Boolean)this.GetValue(DisableAdornedElementProperty); }
-            set { this.SetValue(DisableAdornedElementProperty, value); }
+            get { return (bool)GetValue(DisableAdornedElementProperty); }
+            set { SetValue(DisableAdornedElementProperty, value); }
         }
 
         #endregion
@@ -70,17 +69,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty IsHitTestVisibleProperty = DependencyProperty.Register(
             "IsHitTestVisible",
-            typeof(Boolean),
+            typeof(bool),
             typeof(OverlayBehavior),
             new PropertyMetadata(true,(s, e) =>
             {
                 ((OverlayBehavior)s).IsHitTestVisibleChanged(e);
             }));
 
-        public Boolean IsHitTestVisible
+        public bool IsHitTestVisible
         {
-            get { return (Boolean)this.GetValue(IsHitTestVisibleProperty); }
-            set { this.SetValue(IsHitTestVisibleProperty, value); }
+            get { return (bool)GetValue(IsHitTestVisibleProperty); }
+            set { SetValue(IsHitTestVisibleProperty, value); }
         }
 
         #endregion
@@ -98,8 +97,8 @@ namespace Radical.Windows.Behaviors
 
         public Brush Background
         {
-            get { return (Brush)this.GetValue(BackgroundProperty); }
-            set { this.SetValue(BackgroundProperty, value); }
+            get { return (Brush)GetValue(BackgroundProperty); }
+            set { SetValue(BackgroundProperty, value); }
         }
 
         #endregion
@@ -125,27 +124,27 @@ namespace Radical.Windows.Behaviors
 
         private void OnBackgroundChanged(DependencyPropertyChangedEventArgs e)
         {
-            if (this.isAdornerVisible)
+            if (isAdornerVisible)
             {
-                this.adorner.InvalidateVisual();
+                adorner.InvalidateVisual();
             }
         }
 
         private void IsHitTestVisibleChanged(DependencyPropertyChangedEventArgs e)
         {
-            if (this.adorner != null)
+            if (adorner != null)
             {
-               this.adorner.IsHitTestVisible = this.IsHitTestVisible;
+               adorner.IsHitTestVisible = IsHitTestVisible;
             }
-            if (this.isAdornerVisible)
+            if (isAdornerVisible)
             {
-                this.adorner.InvalidateVisual();
+                adorner.InvalidateVisual();
             }
         }
 
         private void OnIsVisibleChanged(DependencyPropertyChangedEventArgs e)
         {
-            this.Toggle();
+            Toggle();
         }
 
         //private void OnBackgroundOpacityChanged( DependencyPropertyChangedEventArgs e )
@@ -157,85 +156,85 @@ namespace Radical.Windows.Behaviors
         //}
 
         ContentOverlayAdorner adorner;
-        Boolean isAdornerVisible;
+        bool isAdornerVisible;
         private bool wasEnabled;
 
         protected override void OnAttached()
         {
             base.OnAttached();
 
-            if (this.Content != null)
+            if (Content != null)
             {
-                this.AssociatedObject.Loaded += new RoutedEventHandler(OnLoaded);
+                AssociatedObject.Loaded += new RoutedEventHandler(OnLoaded);
             }
         }
 
         void OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (this.IsVisible)
+            if (IsVisible)
             {
-                this.ShowAdorner();
+                ShowAdorner();
             }
         }
 
         private void Toggle()
         {
-            if (this.IsVisible)
+            if (IsVisible)
             {
-                this.ShowAdorner();
+                ShowAdorner();
             }
             else
             {
-                this.HideAdorner();
+                HideAdorner();
             }
         }
 
         void ShowAdorner()
         {
-            if (!this.isAdornerVisible)
+            if (!isAdornerVisible)
             {
-                var layer = AdornerLayer.GetAdornerLayer(this.AssociatedObject);
+                var layer = AdornerLayer.GetAdornerLayer(AssociatedObject);
                 Debug.WriteLineIf(layer == null, "Overlay: cannot find any AdornerLayer on the given element.");
 
                 if (layer != null)
                 {
-                    this.adorner = new ContentOverlayAdorner(this.AssociatedObject, this.Content)
+                    adorner = new ContentOverlayAdorner(AssociatedObject, Content)
                     {
-                        IsHitTestVisible = this.IsHitTestVisible,
-                        Background = this.Background
+                        IsHitTestVisible = IsHitTestVisible,
+                        Background = Background
                     };
-                    layer.Add(this.adorner);
+                    layer.Add(adorner);
 
-                    this.wasEnabled = this.AssociatedObject.IsEnabled;
-                    this.AssociatedObject.IsEnabled = !this.DisableAdornedElement;
+                    wasEnabled = AssociatedObject.IsEnabled;
+                    AssociatedObject.IsEnabled = !DisableAdornedElement;
 
-                    this.isAdornerVisible = true;
+                    isAdornerVisible = true;
                 }
             }
         }
 
         void HideAdorner()
         {
-            if (this.isAdornerVisible && this.adorner != null)
+            if (isAdornerVisible && adorner != null)
             {
-                var layer = AdornerLayer.GetAdornerLayer(this.AssociatedObject);
+                var layer = AdornerLayer.GetAdornerLayer(AssociatedObject);
                 Debug.WriteLineIf(layer == null, "Overlay: cannot find any AdornerLayer on the given element.");
 
                 if (layer != null)
                 {
-                    layer.Remove(this.adorner);
-                    this.adorner = null;
-                    this.isAdornerVisible = false;
+                    layer.Remove(adorner);
+                    adorner = null;
+                    isAdornerVisible = false;
                 }
 
-                this.AssociatedObject.IsEnabled = this.wasEnabled;
+                AssociatedObject.IsEnabled = wasEnabled;
             }
         }
 
         protected override void OnDetaching()
         {
-            this.AssociatedObject.Loaded -= new RoutedEventHandler(OnLoaded);
-            this.HideAdorner();
+            AssociatedObject.Loaded -= new RoutedEventHandler(OnLoaded);
+            HideAdorner();
 
             base.OnDetaching();
         }

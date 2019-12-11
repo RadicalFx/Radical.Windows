@@ -47,7 +47,7 @@ namespace Radical.Windows.Converters
                     .IsTrue(v => v.GetType().Is<IEnumerable>())
                     .GetValue<IEnumerable>();
 
-            return list.OfType<Object>().FirstOrDefault();
+            return list.OfType<object>().FirstOrDefault();
         }
 
         /// <summary>

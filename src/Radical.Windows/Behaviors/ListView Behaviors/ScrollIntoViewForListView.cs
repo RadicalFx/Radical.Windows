@@ -9,7 +9,7 @@ namespace Radical.Windows.Behaviors
         protected override void OnAttached()
         {
             base.OnAttached();
-            this.AssociatedObject.SelectionChanged += OnAssociatedObjectSelectionChanged;
+            AssociatedObject.SelectionChanged += OnAssociatedObjectSelectionChanged;
         }
 
         void OnAssociatedObjectSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -32,7 +32,7 @@ namespace Radical.Windows.Behaviors
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            this.AssociatedObject.SelectionChanged -= OnAssociatedObjectSelectionChanged;
+            AssociatedObject.SelectionChanged -= OnAssociatedObjectSelectionChanged;
 
         }
     }

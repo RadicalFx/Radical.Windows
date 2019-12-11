@@ -1,25 +1,23 @@
-﻿using System;
-
-namespace Radical.Windows.Markup
+﻿namespace Radical.Windows.Markup
 {
     public class ChoosenItemBinding : BindingDecoratorBase
     {
         public ChoosenItemBinding()
             : base()
         {
-            this.InitDefaults();
+            InitDefaults();
         }
 
-        public ChoosenItemBinding(String path)
+        public ChoosenItemBinding(string path)
             : base(path)
         {
-            this.InitDefaults();
+            InitDefaults();
         }
 
         void InitDefaults()
         {
-            this.Mode = System.Windows.Data.BindingMode.OneWayToSource;
-            this.UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged;
+            Mode = System.Windows.Data.BindingMode.OneWayToSource;
+            UpdateSourceTrigger = System.Windows.Data.UpdateSourceTrigger.PropertyChanged;
         }
     }
 }

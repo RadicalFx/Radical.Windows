@@ -12,17 +12,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty IsDragSourceAttachedProperty = DependencyProperty.RegisterAttached(
                                       "IsDragSourceAttached",
-                                      typeof(Boolean),
+                                      typeof(bool),
                                       typeof(DragDropManager),
                                       new FrameworkPropertyMetadata(false));
 
 
-        static Boolean GetIsDragSourceAttached(DependencyObject owner)
+        static bool GetIsDragSourceAttached(DependencyObject owner)
         {
-            return (Boolean)owner.GetValue(IsDragSourceAttachedProperty);
+            return (bool)owner.GetValue(IsDragSourceAttachedProperty);
         }
 
-        static void SetIsDragSourceAttached(DependencyObject owner, Boolean value)
+        static void SetIsDragSourceAttached(DependencyObject owner, bool value)
         {
             owner.SetValue(IsDragSourceAttachedProperty, value);
         }
@@ -33,17 +33,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty IsDropTargetAttachedProperty = DependencyProperty.RegisterAttached(
                                       "IsDropTargetAttached",
-                                      typeof(Boolean),
+                                      typeof(bool),
                                       typeof(DragDropManager),
                                       new FrameworkPropertyMetadata(false));
 
 
-        static Boolean GetIsDropTargetAttached(DependencyObject owner)
+        static bool GetIsDropTargetAttached(DependencyObject owner)
         {
-            return (Boolean)owner.GetValue(IsDropTargetAttachedProperty);
+            return (bool)owner.GetValue(IsDropTargetAttachedProperty);
         }
 
-        static void SetIsDropTargetAttached(DependencyObject owner, Boolean value)
+        static void SetIsDropTargetAttached(DependencyObject owner, bool value)
         {
             owner.SetValue(IsDropTargetAttachedProperty, value);
         }
@@ -54,17 +54,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty DropTargetProperty = DependencyProperty.RegisterAttached(
                                       "DropTarget",
-                                      typeof(Object),
+                                      typeof(object),
                                       typeof(DragDropManager),
                                       new FrameworkPropertyMetadata(null));
 
 
-        public static Object GetDropTarget(DependencyObject owner)
+        public static object GetDropTarget(DependencyObject owner)
         {
-            return (Object)owner.GetValue(DropTargetProperty);
+            return (object)owner.GetValue(DropTargetProperty);
         }
 
-        public static void SetDropTarget(DependencyObject owner, Object value)
+        public static void SetDropTarget(DependencyObject owner, object value)
         {
             owner.SetValue(DropTargetProperty, value);
         }
@@ -75,17 +75,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty DataObjectTypeProperty = DependencyProperty.RegisterAttached(
                                       "DataObjectType",
-                                      typeof(String),
+                                      typeof(string),
                                       typeof(DragDropManager),
                                       new FrameworkPropertyMetadata(null));
 
 
-        public static String GetDataObjectType(DependencyObject owner)
+        public static string GetDataObjectType(DependencyObject owner)
         {
-            return (String)owner.GetValue(DataObjectTypeProperty);
+            return (string)owner.GetValue(DataObjectTypeProperty);
         }
 
-        public static void SetDataObjectType(DependencyObject owner, String value)
+        public static void SetDataObjectType(DependencyObject owner, string value)
         {
             owner.SetValue(DataObjectTypeProperty, value);
         }
@@ -96,17 +96,17 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty DataObjectProperty = DependencyProperty.RegisterAttached(
                                       "DataObject",
-                                      typeof(Object),
+                                      typeof(object),
                                       typeof(DragDropManager),
                                       new FrameworkPropertyMetadata(null, OnDataObjectChanged));
 
 
-        public static Object GetDataObject(DependencyObject owner)
+        public static object GetDataObject(DependencyObject owner)
         {
-            return (Object)owner.GetValue(DataObjectProperty);
+            return (object)owner.GetValue(DataObjectProperty);
         }
 
-        public static void SetDataObject(DependencyObject owner, Object value)
+        public static void SetDataObject(DependencyObject owner, object value)
         {
             owner.SetValue(DataObjectProperty, value);
         }
@@ -165,7 +165,7 @@ namespace Radical.Windows.Behaviors
             var objType = DragDropManager.GetDataObjectType(sourceItem);
 
             DataObject data = null;
-            if (String.IsNullOrEmpty(objType))
+            if (string.IsNullOrEmpty(objType))
             {
                 data = new DataObject(obj.GetType(), obj);
             }
@@ -183,7 +183,7 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty IsDraggingProperty = DependencyProperty.RegisterAttached(
                                       "IsDragging",
-                                      typeof(Boolean),
+                                      typeof(bool),
                                       typeof(DragDropManager),
                                       new FrameworkPropertyMetadata(false));
 
@@ -193,12 +193,12 @@ namespace Radical.Windows.Behaviors
         /// </summary>
         /// <param name="owner">The owner.</param>
         /// <returns></returns>
-        public static Boolean GetIsDragging(DependencyObject owner)
+        public static bool GetIsDragging(DependencyObject owner)
         {
-            return (Boolean)owner.GetValue(IsDraggingProperty);
+            return (bool)owner.GetValue(IsDraggingProperty);
         }
 
-        static void SetIsDragging(DependencyObject owner, Boolean value)
+        static void SetIsDragging(DependencyObject owner, bool value)
         {
             owner.SetValue(IsDraggingProperty, value);
         }
@@ -332,7 +332,7 @@ namespace Radical.Windows.Behaviors
             return element;
         }
 
-        static Object FindDropTarget(DependencyObject originalSource)
+        static object FindDropTarget(DependencyObject originalSource)
         {
             var element = DragDropManager.FindDropTargetContainer(originalSource);
             if (element != null)

@@ -12,14 +12,14 @@ namespace Radical.Windows.Behaviors
         /// <param name="data">The data.</param>
         /// <param name="keyStates">The key states.</param>
         /// <param name="dropTarget">The drop target.</param>
-        protected DragDropOperationArgs(IDataObject data, DragDropKeyStates keyStates, Object dropTarget)
+        protected DragDropOperationArgs(IDataObject data, DragDropKeyStates keyStates, object dropTarget)
         {
             Ensure.That(data).Named("data").IsNotNull();
             Ensure.That(keyStates).Named("keyStates").IsTrue(ks => ks.IsDefined());
 
-            this.Data = data;
-            this.KeyStates = keyStates;
-            this.DropTarget = dropTarget;
+            Data = data;
+            KeyStates = keyStates;
+            DropTarget = dropTarget;
         }
 
         /// <summary>
@@ -38,6 +38,6 @@ namespace Radical.Windows.Behaviors
         /// Gets or sets the drop target.
         /// </summary>
         /// <value>The drop target.</value>
-        public Object DropTarget { get; private set; }
+        public object DropTarget { get; private set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Radical.Windows.Converters
         /// </returns>
         public override sealed object ProvideValue(IServiceProvider serviceProvider)
         {
-            var type = this.GetType();
+            var type = GetType();
             if (!singletons.ContainsKey(type))
             {
                 singletons.Add(type, new WeakReference(this));

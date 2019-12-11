@@ -15,18 +15,18 @@ namespace Radical.Windows.Behaviors
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text",
-            typeof(String),
+            typeof(string),
             typeof(PasswordBoxBehavior),
-            new FrameworkPropertyMetadata(null, (s, e) => ((PasswordBoxBehavior)s).OnTextChanged((String)e.NewValue))
+            new FrameworkPropertyMetadata(null, (s, e) => ((PasswordBoxBehavior)s).OnTextChanged((string)e.NewValue))
             {
                 DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 BindsTwoWayByDefault = true,
             });
 
-        public String Text
+        public string Text
         {
-            get { return (String)this.GetValue(TextProperty); }
-            set { this.SetValue(TextProperty, value); }
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
         }
 
         #endregion
@@ -41,8 +41,8 @@ namespace Radical.Windows.Behaviors
 
         public ICommand Command
         {
-            get { return (ICommand)this.GetValue(CommandProperty); }
-            set { this.SetValue(CommandProperty, value); }
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
         }
 
         #endregion
@@ -55,7 +55,7 @@ namespace Radical.Windows.Behaviors
 
         public IInputElement CommandTarget
         {
-            get { return this.AssociatedObject; }
+            get { return AssociatedObject; }
         }
 
         KeyEventHandler onPreviewKeyDown;
@@ -66,14 +66,14 @@ namespace Radical.Windows.Behaviors
 
         public PasswordBoxBehavior()
         {
-            this.onPasswordChanged = (s, e) =>
+            onPasswordChanged = (s, e) =>
             {
-                this.isPushing = true;
+                isPushing = true;
 
-                this.Text = this.AssociatedObject.Password;
+                Text = AssociatedObject.Password;
 
                 var text = BindingOperations.GetBindingExpression(this, PasswordBoxBehavior.TextProperty);
-                var tag = BindingOperations.GetBindingExpression(this.AssociatedObject, PasswordBox.TagProperty);
+                var tag = BindingOperations.GetBindingExpression(AssociatedObject, PasswordBox.TagProperty);
                 if (text.HasError)
                 {
                     System.Windows.Controls.Validation.MarkInvalid(tag, text.ValidationError);
@@ -83,17 +83,17 @@ namespace Radical.Windows.Behaviors
                     System.Windows.Controls.Validation.ClearInvalid(tag);
                 }
 
-                this.isPushing = false;
+                isPushing = false;
             };
 
             onPreviewKeyDown = (s, e) =>
             {
                 var d = (DependencyObject)s;
 
-                if (this.Command != null)
+                if (Command != null)
                 {
-                    var cmd = this.Command;
-                    var prm = this.CommandParameter;
+                    var cmd = Command;
+                    var prm = CommandParameter;
 
                     var gestures = cmd.GetGestures();
                     var senderGestures = gestures.Where(gesture => gesture.Matches(d, e));
@@ -122,13 +122,13 @@ namespace Radical.Windows.Behaviors
             };
         }
 
-        void OnTextChanged(String newValue)
+        void OnTextChanged(string newValue)
         {
-            if (!this.isPushing)
+            if (!isPushing)
             {
-                this.AssociatedObject.PasswordChanged -= this.onPasswordChanged;
-                this.AssociatedObject.Password = newValue;
-                this.AssociatedObject.PasswordChanged += this.onPasswordChanged;
+                AssociatedObject.PasswordChanged -= onPasswordChanged;
+                AssociatedObject.Password = newValue;
+                AssociatedObject.PasswordChanged += onPasswordChanged;
             }
         }
 
@@ -136,10 +136,10 @@ namespace Radical.Windows.Behaviors
         {
             base.OnAttached();
 
-            this.AssociatedObject.PasswordChanged += this.onPasswordChanged;
-            this.AssociatedObject.PreviewKeyDown += this.onPreviewKeyDown;
+            AssociatedObject.PasswordChanged += onPasswordChanged;
+            AssociatedObject.PreviewKeyDown += onPreviewKeyDown;
 
-            BindingOperations.SetBinding(this.AssociatedObject, PasswordBox.TagProperty, new Binding()
+            BindingOperations.SetBinding(AssociatedObject, PasswordBox.TagProperty, new Binding()
             {
                 Source = this,
                 Path = new PropertyPath(TextProperty.Name),
@@ -149,8 +149,8 @@ namespace Radical.Windows.Behaviors
 
         protected override void OnDetaching()
         {
-            this.AssociatedObject.PasswordChanged -= this.onPasswordChanged;
-            this.AssociatedObject.PreviewKeyDown -= this.onPreviewKeyDown;
+            AssociatedObject.PasswordChanged -= onPasswordChanged;
+            AssociatedObject.PreviewKeyDown -= onPreviewKeyDown;
 
             base.OnDetaching();
         }
@@ -158,16 +158,16 @@ namespace Radical.Windows.Behaviors
 
     public class PasswordBoxCommandArgs : EventArgs
     {
-        public PasswordBoxCommandArgs(System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifiers, Object commandParameter)
+        public PasswordBoxCommandArgs(System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifiers, object commandParameter)
         {
-            this.Key = key;
-            this.Modifiers = modifiers;
-            this.CommandParameter = commandParameter;
+            Key = key;
+            Modifiers = modifiers;
+            CommandParameter = commandParameter;
         }
 
         public System.Windows.Input.Key Key { get; private set; }
         public System.Windows.Input.ModifierKeys Modifiers { get; private set; }
 
-        public Object CommandParameter { get; private set; }
+        public object CommandParameter { get; private set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Radical.Windows.Markup
         /// Initializes a new instance of the <see cref="AutoCommandBinding" /> class.
         /// </summary>
         /// <param name="path">The path.</param>
-        public AutoCommandBinding(String path)
+        public AutoCommandBinding(string path)
             : base(path)
         {
 
@@ -68,7 +68,7 @@ namespace Radical.Windows.Markup
 
             base.ProvideValue(provider);
 
-            if (this.IsUsingSharedDependencyProperty(provider))
+            if (IsUsingSharedDependencyProperty(provider))
             {
                 return this;
             }
@@ -78,7 +78,7 @@ namespace Radical.Windows.Markup
             return fakePlaceholder;
         }
 
-        protected override void OnDataContextChanged(DependencyObject obj, DependencyProperty targetProperty, Object newValue, Object oldValue)
+        protected override void OnDataContextChanged(DependencyObject obj, DependencyProperty targetProperty, object newValue, object oldValue)
         {
             base.OnDataContextChanged(obj, targetProperty, newValue, oldValue);
 
@@ -97,7 +97,7 @@ namespace Radical.Windows.Markup
 
             if (!DesignTimeHelper.GetIsInDesignMode() && newValue != null)
             {
-                var newCommand = this.GetCommand(obj, targetProperty);
+                var newCommand = GetCommand(obj, targetProperty);
             }
         }
 
@@ -108,12 +108,12 @@ namespace Radical.Windows.Markup
 
         protected override IDelegateCommand GetCommand(DependencyObject target, DependencyProperty targetProperty)
         {
-            var builder = this.GetCommandBuilder();
+            var builder = GetCommandBuilder();
 
             CommandData commandData;
-            var dataContext = this.Source ?? builder.GetDataContext(target);
+            var dataContext = Source ?? builder.GetDataContext(target);
 
-            if (builder.CanCreateCommand(this.Path, target) && builder.TryGenerateCommandData(this.Path, dataContext, out commandData))
+            if (builder.CanCreateCommand(Path, target) && builder.TryGenerateCommandData(Path, dataContext, out commandData))
             {
                 var command = builder.CreateCommand(commandData);
                 target.SetValue(targetProperty, command);

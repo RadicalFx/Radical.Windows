@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Threading;
 
 namespace Radical.Windows
@@ -32,7 +31,7 @@ namespace Radical.Windows
             }
         }
 
-        private static Object ExitFrame(Object state)
+        private static object ExitFrame(object state)
         {
             DispatcherFrame frame = state as DispatcherFrame;
 

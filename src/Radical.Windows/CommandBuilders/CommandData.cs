@@ -9,13 +9,13 @@ namespace Radical.Windows.CommandBuilders
     {
         public string MethodName;
 
-        public Object DataContext;
+        public object DataContext;
         public LateBoundVoidMethod FastDelegate;
 
         public Fact Fact;
         public BooleanFact BooleanFact;
 
-        public Boolean HasParameter;
+        public bool HasParameter;
         public Type ParameterType;
 
         public KeyBindingAttribute[] KeyBindings;

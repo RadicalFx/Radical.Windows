@@ -17,7 +17,7 @@ namespace Radical.Windows.Markup
             DependencyObject fe;
             DependencyProperty dp;
 
-            if (this.TryGetTargetItems(provider, out fe, out dp))
+            if (TryGetTargetItems(provider, out fe, out dp))
             {
                 var inab = fe as INotifyAttachedOjectLoaded;
                 if (inab != null)
@@ -26,7 +26,7 @@ namespace Radical.Windows.Markup
                     h = (s, e) =>
                     {
                         inab.AttachedObjectLoaded -= h;
-                        this.OnTargetLoaded(fe, dp);
+                        OnTargetLoaded(fe, dp);
                     };
 
                     inab.AttachedObjectLoaded += h;
@@ -41,13 +41,13 @@ namespace Radical.Windows.Markup
 
         protected override IDelegateCommand GetCommand(DependencyObject target, DependencyProperty targetProperty)
         {
-            if (this.Path != null && target is INotifyAttachedOjectLoaded)
+            if (Path != null && target is INotifyAttachedOjectLoaded)
             {
                 var dataContext = ((INotifyAttachedOjectLoaded)target)
                     .GetAttachedObject<FrameworkElement>()
                     .DataContext;
 
-                var path = this.Path.Path;
+                var path = Path.Path;
                 var methodName = path.EndsWith("Command") ? path.Remove(path.IndexOf("Command")) : path;
                 var method = dataContext.GetType().GetMethod(methodName);
 
@@ -75,7 +75,7 @@ namespace Radical.Windows.Markup
                    })
                     .SingleOrDefault();
 
-                var text = (def.Description == null) ? String.Empty : def.Description.DisplayText;
+                var text = (def.Description == null) ? string.Empty : def.Description.DisplayText;
                 var cmd = DelegateCommand.Create(text)
                     .OnCanExecute(o =>
                    {

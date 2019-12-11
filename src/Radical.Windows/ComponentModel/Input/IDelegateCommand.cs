@@ -13,7 +13,7 @@ namespace Radical.ComponentModel.Windows.Input
         /// Gets the display text.
         /// </summary>
         /// <value>The display text.</value>
-        String DisplayText { get; }
+        string DisplayText { get; }
 
 #if !SILVERLIGHT
 
@@ -60,7 +60,7 @@ namespace Radical.ComponentModel.Windows.Input
         /// </summary>
         /// <param name="executeMethod">The delegate to execute at execution time.</param>
         /// <returns>An instance of the current command.</returns>
-        IDelegateCommand OnExecute(Action<Object> executeMethod);
+        IDelegateCommand OnExecute(Action<object> executeMethod);
 
         /// <summary>
         /// Sets the given Action as the delegate that must handle
@@ -68,7 +68,7 @@ namespace Radical.ComponentModel.Windows.Input
         /// </summary>
         /// <param name="canExecuteMethod">The delegate to invoke.</param>
         /// <returns>An instance of the current command.</returns>
-        IDelegateCommand OnCanExecute(Func<Object, Boolean> canExecuteMethod);
+        IDelegateCommand OnCanExecute(Func<object, bool> canExecuteMethod);
 
         /// <summary>
         /// Force the command to evaluates execution status.

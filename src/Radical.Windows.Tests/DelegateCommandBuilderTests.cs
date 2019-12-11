@@ -11,7 +11,7 @@ namespace Radical.Windows.Tests
         {
             public TestDataContext()
             {
-                this.MyProperty = new NestedPropertyClass();
+                MyProperty = new NestedPropertyClass();
             }
 
             public NestedPropertyClass MyProperty { get; private set; }

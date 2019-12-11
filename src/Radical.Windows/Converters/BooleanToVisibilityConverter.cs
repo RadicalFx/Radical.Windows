@@ -19,8 +19,8 @@ namespace Radical.Windows.Converters
         /// </summary>
         public BooleanToVisibilityConverter()
         {
-            this.FalseValue = Visibility.Collapsed;
-            this.TrueValue = Visibility.Visible;
+            FalseValue = Visibility.Collapsed;
+            TrueValue = Visibility.Visible;
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace Radical.Windows.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            Boolean inverted;
-            if (!Boolean.TryParse(parameter.As<String>(), out inverted))
+            bool inverted;
+            if (!bool.TryParse(parameter.As<string>(), out inverted))
             {
                 inverted = false;
             }
@@ -78,11 +78,11 @@ namespace Radical.Windows.Converters
 
             if (inverted)
             {
-                return (flag ? this.FalseValue : this.TrueValue);
+                return (flag ? FalseValue : TrueValue);
             }
             else
             {
-                return (flag ? this.TrueValue : this.FalseValue);
+                return (flag ? TrueValue : FalseValue);
             }
         }
 

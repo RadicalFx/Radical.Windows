@@ -7,3 +7,5 @@
 [assembly: XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/controls", "Radical.Windows.Controls")]
 [assembly: XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/effects", "Radical.Windows.Effects")]
 [assembly: XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/markup", "Radical.Windows.Markup")]
+[assembly: XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/presentation/behaviors", "Radical.Windows.Presentation.Behaviors")]
+[assembly: XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/presentation/regions", "Radical.Windows.Presentation.Regions")]

@@ -1,8 +1,8 @@
-﻿using Radical.Win32;
+﻿using Microsoft.Xaml.Behaviors;
+using Radical.Win32;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
-using Microsoft.Xaml.Behaviors;
 using System.Windows.Interop;
 
 namespace Radical.Windows.Behaviors
@@ -18,13 +18,13 @@ namespace Radical.Windows.Behaviors
         [DllImport("user32.dll")]
         private static extern bool SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter, int x, int y, int width, int height, uint flags);
 
-        public Boolean AllowMaximize
+        public bool AllowMaximize
         {
             get;
             set;
         }
 
-        public Boolean AllowMinimize
+        public bool AllowMinimize
         {
             get;
             set;
@@ -32,7 +32,7 @@ namespace Radical.Windows.Behaviors
 
         EventHandler h;
 
-        public Boolean ShowIcon { get; set; }
+        public bool ShowIcon { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowControlBoxBehavior"/> class.
@@ -42,18 +42,18 @@ namespace Radical.Windows.Behaviors
             h = (s, e) =>
             {
                 var isDesign = DesignTimeHelper.GetIsInDesignMode();
-                var hWnd = new WindowInteropHelper(this.AssociatedObject).Handle;
+                var hWnd = new WindowInteropHelper(AssociatedObject).Handle;
 
-                if (!isDesign && hWnd != IntPtr.Zero && (!this.AllowMaximize || !this.AllowMinimize))
+                if (!isDesign && hWnd != IntPtr.Zero && (!AllowMaximize || !AllowMinimize))
                 {
                     var windowLong = NativeMethods.GetWindowLong(hWnd, WindowLong.Style).ToInt32();
 
-                    if (!this.AllowMaximize)
+                    if (!AllowMaximize)
                     {
                         windowLong = windowLong & ~Constants.WS_MAXIMIZEBOX;
                     }
 
-                    if (!this.AllowMinimize)
+                    if (!AllowMinimize)
                     {
                         windowLong = windowLong & ~Constants.WS_MINIMIZEBOX;
                     }
@@ -61,11 +61,11 @@ namespace Radical.Windows.Behaviors
                     NativeMethods.SetWindowLong(hWnd, WindowLong.Style, (IntPtr)windowLong);
                 }
 
-                if (!isDesign && hWnd != IntPtr.Zero && !this.ShowIcon)
+                if (!isDesign && hWnd != IntPtr.Zero && !ShowIcon)
                 {
                     var windowLong = NativeMethods.GetWindowLong(hWnd, WindowLong.ExStyle).ToInt32();
 
-                    this.AssociatedObject.SourceInitialized += delegate
+                    AssociatedObject.SourceInitialized += delegate
                     {
                         NativeMethods.SetWindowLong(hWnd, WindowLong.ExStyle, (IntPtr)(windowLong | WsExDlgmodalframe));
                     };
@@ -86,7 +86,7 @@ namespace Radical.Windows.Behaviors
         {
             base.OnAttached();
 
-            this.AssociatedObject.SourceInitialized += h;
+            AssociatedObject.SourceInitialized += h;
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Radical.Windows.Behaviors
         /// <remarks>Override this to unhook functionality from the AssociatedObject.</remarks>
         protected override void OnDetaching()
         {
-            this.AssociatedObject.SourceInitialized -= h;
+            AssociatedObject.SourceInitialized -= h;
             base.OnDetaching();
         }
     }

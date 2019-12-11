@@ -35,7 +35,7 @@ namespace Radical.Windows.Markup
         /// Initializes a new instance of the <see cref="BindingDecoratorBase"/> class.
         /// </summary>
         /// <param name="path">The path.</param>
-        protected BindingDecoratorBase(String path)
+        protected BindingDecoratorBase(string path)
         {
             binding = new Binding(path);
         }
@@ -254,7 +254,7 @@ namespace Radical.Windows.Markup
         /// <returns>True if the provider supports all that's needed.</returns>
         protected bool TryGetTargetItems(IServiceProvider provider, out DependencyObject target, out DependencyProperty dp)
         {
-            return this.TryGetTargetItems<DependencyObject>(provider, out target, out dp);
+            return TryGetTargetItems<DependencyObject>(provider, out target, out dp);
         }
 
         protected virtual bool TryGetTargetItems<T>(IServiceProvider provider, out T target, out DependencyProperty dp)
@@ -281,7 +281,7 @@ namespace Radical.Windows.Markup
         /// <returns>
         /// 	<c>true</c> if is using a shared dependency property; otherwise, <c>false</c>.
         /// </returns>
-        protected Boolean IsUsingSharedDependencyProperty(IServiceProvider provider)
+        protected bool IsUsingSharedDependencyProperty(IServiceProvider provider)
         {
             var service = provider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
             if (service == null) return false;

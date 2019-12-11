@@ -1,5 +1,4 @@
 ﻿using Radical.Windows.Controls;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,16 +8,16 @@ namespace Radical.Windows.Behaviors
     {
         private readonly ContentPresenter userContent;
 
-        public EmptyContentAdorner(UIElement adornedElement, Object content) :
+        public EmptyContentAdorner(UIElement adornedElement, object content) :
             base(adornedElement)
         {
-            this.IsHitTestVisible = false;
-            this.userContent = new ContentPresenter();
+            IsHitTestVisible = false;
+            userContent = new ContentPresenter();
 
-            var emptyText = content as String;
+            var emptyText = content as string;
             if (emptyText != null)
             {
-                this.userContent.Content = new TextBlock()
+                userContent.Content = new TextBlock()
                 {
                     FontStyle = FontStyles.Italic,
                     Text = emptyText,
@@ -31,15 +30,15 @@ namespace Radical.Windows.Behaviors
             }
             else
             {
-                this.userContent.Content = content;
+                userContent.Content = content;
             }
 
-            this.AddVisualChild(this.userContent);
+            AddVisualChild(userContent);
         }
 
         protected override UIElement Content
         {
-            get { return this.userContent; }
+            get { return userContent; }
         }
     }
 }
