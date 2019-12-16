@@ -33,17 +33,6 @@ namespace Radical.Windows.Presentation.Regions
             get;
             set;
         }
-
-        //#if SILVERLIGHT
-        //        /// <summary>
-        //        /// The region attached property.
-        //        /// </summary>
-        //        public static readonly DependencyProperty RegionProperty = DependencyProperty.RegisterAttached(
-        //                                      "Region",
-        //                                      typeof( IRegion ),
-        //                                      typeof( RegionService ),
-        //                                      new PropertyMetadata( null, OnRegionPropertyChanged ) );
-        //#else
         /// <summary>
         /// The region attached property.
         /// </summary>
@@ -52,7 +41,7 @@ namespace Radical.Windows.Presentation.Regions
                                       typeof( IRegion ),
                                       typeof( RegionService ),
                                       new PropertyMetadata( null, OnRegionPropertyChanged ) );
-        //#endif
+
         /// <summary>
         /// Gets the region.
         /// </summary>
@@ -79,24 +68,6 @@ namespace Radical.Windows.Presentation.Regions
             {
                 var region = ( IRegion )args.NewValue;
 
-#if SILVERLIGHT
-				region.Ready += ( s, e ) => 
-				{
-					var service = RegionService.CurrentService;
-					IRegionManager manager = null;
-
-					if( service.HoldsRegionManager( region.HostingView ) )
-					{
-						manager = service.GetRegionManager( region.HostingView );
-					}
-					else
-					{
-						manager = service.RegisterRegionManager( region.HostingView );
-					}
-
-					manager.RegisterRegion( region );
-				};
-#else
                 var service = RegionService.CurrentService;
                 IRegionManager manager = null;
 
@@ -110,7 +81,6 @@ namespace Radical.Windows.Presentation.Regions
                 }
 
                 manager.RegisterRegion( region );
-#endif
             }
         }
 
@@ -261,11 +231,7 @@ namespace Radical.Windows.Presentation.Regions
 
                 if ( behavior == UnregisterBehavior.WholeLogicalTreeChain )
                 {
-#if SILVERLIGHT
-					var children = LogicalTreeHelper.GetChildren( (FrameworkElement)view );
-#else
                     var children = LogicalTreeHelper.GetChildren( view );
-#endif
                     foreach ( var child in children )
                     {
                         UnregisterRegionManagers( child as DependencyObject, behavior );
@@ -288,7 +254,7 @@ namespace Radical.Windows.Presentation.Regions
         /// Unregisters the region manager owned by the supplied owner.
         /// </summary>
         /// <param name="owner">The owner of the region manager to unregister.</param>
-        /// <param name="behavior">How to manage reguion manager found in child/nested views.</param>
+        /// <param name="behavior">How to manage region manager found in child/nested views.</param>
         /// <exception cref="NotSupportedException">A NotSupportedException is raised if this service has no region manager registered for the supplied owner. Use HoldsRegionManager() to test.</exception>
         public void UnregisterRegionManager( DependencyObject owner, UnregisterBehavior behavior )
         {
