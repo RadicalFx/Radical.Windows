@@ -2,18 +2,13 @@
 using Radical.Validation;
 using System.Collections.Generic;
 using System.Linq;
-
-#if !NETFX_CORE
 using System.Windows.Media;
 using System.Windows;
-#else
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
-#endif
+
 namespace Radical.Windows
 {
     /// <summary>
-    /// A helper calss for visual tree crawling.
+    /// A helper class for visual tree crawling.
     /// </summary>
     public static class VisualTreeCrawler
     {
