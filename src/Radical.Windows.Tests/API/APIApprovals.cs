@@ -2,7 +2,7 @@
 using ApprovalTests.Reporters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PublicApiGenerator;
-using Radical.ComponentModel.Messaging;
+using Radical.Windows;
 using System.Runtime.CompilerServices;
 
 namespace Radical.Tests.API
@@ -16,7 +16,7 @@ namespace Radical.Tests.API
         [UseReporter(typeof(DiffReporter))]
         public void Approve_API()
         {
-            var publicApi = ApiGenerator.GeneratePublicApi(typeof(IMessageBroker).Assembly, options: null);
+            var publicApi = ApiGenerator.GeneratePublicApi(typeof(VisualTreeCrawler).Assembly, options: null);
 
             Approvals.Verify(publicApi);
         }
