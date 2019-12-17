@@ -28,6 +28,8 @@ namespace Radical.Windows.Presentation.Boot
     {
         static readonly TraceSource logger = new TraceSource(typeof(ApplicationBootstrapper).Name);
 
+        readonly ApplicationSettings applicationSettings = new ApplicationSettings();
+
         Type shellViewType = null;
         IServiceProvider serviceProvider;
 
@@ -216,14 +218,13 @@ namespace Radical.Windows.Presentation.Boot
             var features = serviceProvider.GetServices<IFeature>();
             foreach (var feature in features)
             {
-                feature.Setup(serviceProvider);
+                feature.Setup(serviceProvider, applicationSettings);
             }
 
             if (shutdownMode != null && shutdownMode.HasValue)
             {
                 Application.Current.ShutdownMode = shutdownMode.Value;
             }
-            InitializeCultures();
 
             OnBoot(serviceProvider);
 
@@ -249,8 +250,6 @@ namespace Radical.Windows.Presentation.Boot
             }
         }
 
-        Func<CultureInfo> currentCultureHandler = () => CultureInfo.CurrentCulture;
-
         /// <summary>
         /// Using as current culture.
         /// </summary>
@@ -258,12 +257,10 @@ namespace Radical.Windows.Presentation.Boot
         /// <returns></returns>
         public ApplicationBootstrapper UsingAsCurrentCulture(Func<CultureInfo> currentCultureHandler)
         {
-            this.currentCultureHandler = currentCultureHandler;
+            this.applicationSettings.CurrentCultureHandler = currentCultureHandler;
 
             return this;
         }
-
-        Func<CultureInfo> currentUICultureHandler = () => CultureInfo.CurrentUICulture;
 
         /// <summary>
         /// Using as current UI culture.
@@ -272,44 +269,15 @@ namespace Radical.Windows.Presentation.Boot
         /// <returns></returns>
         public ApplicationBootstrapper UsingAsCurrentUICulture(Func<CultureInfo> currentUICultureHandler)
         {
-            this.currentUICultureHandler = currentUICultureHandler;
+            this.applicationSettings.CurrentUICultureHandler = currentUICultureHandler;
 
             return this;
         }
 
         /// <summary>
-        /// Initializes the cultures.
-        /// </summary>
-        protected virtual void InitializeCultures()
-        {
-            var currentCulture = currentCultureHandler();
-            var currentUICulture = currentUICultureHandler();
-
-            Thread.CurrentThread.CurrentCulture = currentCulture;
-            Thread.CurrentThread.CurrentUICulture = currentUICulture;
-
-            var xmlLang = XmlLanguage.GetLanguage(currentCulture.IetfLanguageTag);
-            FrameworkElement.LanguageProperty.OverrideMetadata
-            (
-                forType: typeof(FrameworkElement),
-                typeMetadata: new FrameworkPropertyMetadata(xmlLang)
-            );
-
-            var fd = currentUICulture.TextInfo.IsRightToLeft ?
-                FlowDirection.RightToLeft :
-                FlowDirection.LeftToRight;
-
-            FrameworkElement.FlowDirectionProperty.OverrideMetadata
-            (
-                forType: typeof(FrameworkElement),
-                typeMetadata: new FrameworkPropertyMetadata(fd)
-            );
-        }
-
-        /// <summary>
         /// Handles the singleton application scope.
         /// </summary>
-        /// <param name="args">The args.</param>
+        /// <param name="args">The SingletonApplicationStartupArgs instance.</param>
         protected virtual void HandleSingletonApplicationStartup(SingletonApplicationStartupArgs args)
         {
             if (args.Scope != SingletonApplicationScope.NotSupported)
@@ -502,7 +470,6 @@ namespace Radical.Windows.Presentation.Boot
             {
                 if (reason == ApplicationShutdownReason.UserRequest && isBootCompleted)
                 {
-                    //messaggio per notificare ed eventualmente cancellare
                     var msg = new ApplicationShutdownRequested(reason);
 
                     var broker = serviceProvider.GetService<IMessageBroker>();
