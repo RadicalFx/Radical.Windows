@@ -37,7 +37,7 @@ namespace Radical.Windows.Presentation.Boot
         private Action<IServiceProvider> bootCompletedHandler;
         private Action<ApplicationShutdownArgs> shutdownHandler;
         private Action<IServiceProvider> bootHandler;
-        ShutdownMode? mode = null;
+        ShutdownMode? shutdownMode = null;
         Mutex mutex;
         string key;
         SingletonApplicationScope singleton = SingletonApplicationScope.NotSupported;
@@ -162,16 +162,6 @@ namespace Radical.Windows.Presentation.Boot
             return this;
         }
 
-        /// <summary>
-        /// Setups the UI composition engine.
-        /// </summary>
-        /// <param name="serviceProvider">The service provider.</param>
-        protected virtual void SetupUICompositionEngine(IServiceProvider serviceProvider)
-        {
-            RegionService.CurrentService = serviceProvider.GetService<IRegionService>();
-            RegionService.Conventions = serviceProvider.GetService<IConventionsHandler>();
-        }
-
         Action<BootstrapConventions, AssemblyScanner> onBeforeInstall;
 
         /// <summary>
@@ -229,11 +219,9 @@ namespace Radical.Windows.Presentation.Boot
                 feature.Setup(serviceProvider);
             }
 
-            SetupUICompositionEngine(serviceProvider);
-
-            if (mode != null && mode.HasValue)
+            if (shutdownMode != null && shutdownMode.HasValue)
             {
-                Application.Current.ShutdownMode = mode.Value;
+                Application.Current.ShutdownMode = shutdownMode.Value;
             }
 
             InitializeCurrentPrincipal();
@@ -631,7 +619,7 @@ namespace Radical.Windows.Presentation.Boot
         /// <returns></returns>
         public ApplicationBootstrapper OverrideShutdownMode(ShutdownMode mode)
         {
-            this.mode = mode;
+            this.shutdownMode = mode;
 
             return this;
         }
