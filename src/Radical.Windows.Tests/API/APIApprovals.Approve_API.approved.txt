@@ -2883,8 +2883,6 @@ namespace Radical.Windows.Presentation.Boot
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper DisableAutoBoot() { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper EnableSplashScreen(Radical.Windows.Presentation.Boot.SplashScreenConfiguration config = null) { }
         protected virtual void HandleSingletonApplicationStartup(Radical.Windows.Presentation.Boot.SingletonApplicationStartupArgs args) { }
-        protected virtual void InitializeCultures() { }
-        protected virtual void InitializeCurrentPrincipal() { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBeforeInstall(System.Action<Radical.Windows.Presentation.Boot.BootstrapConventions, Radical.Windows.Presentation.Boot.AssemblyScanner> onBeforeInstall) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBoot(System.Action<System.IServiceProvider> bootHandler) { }
         protected virtual void OnBoot(System.IServiceProvider serviceProvider) { }
@@ -2899,7 +2897,6 @@ namespace Radical.Windows.Presentation.Boot
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OverrideShutdownMode(System.Windows.ShutdownMode mode) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper RegisterAsSingleton(string key) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper RegisterAsSingleton(string key, Radical.Windows.Presentation.Boot.SingletonApplicationScope scope) { }
-        protected virtual void SetupUICompositionEngine(System.IServiceProvider serviceProvider) { }
         public void Shutdown() { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper UsingAsCurrentCulture(System.Func<System.Globalization.CultureInfo> currentCultureHandler) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper UsingAsCurrentUICulture(System.Func<System.Globalization.CultureInfo> currentUICultureHandler) { }
