@@ -12,7 +12,6 @@ namespace Radical.Windows.CommandBuilders
         public object DataContext;
         public LateBoundVoidMethod FastDelegate;
 
-        public Fact Fact;
         public BooleanFact BooleanFact;
 
         public bool HasParameter;

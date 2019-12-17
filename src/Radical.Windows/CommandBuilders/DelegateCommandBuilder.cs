@@ -121,17 +121,6 @@ namespace Radical.Windows.CommandBuilders
                 DataContext = dataContext,
                 FastDelegate = method.CreateVoidDelegate(),
 
-                Fact = properties.Where(pi =>
-                {
-                    return pi.PropertyType == typeof(Fact) && pi.Name.Equals(factName);
-                })
-                .Select(pi =>
-                {
-                    var fact = (Fact)pi.GetValue(dataContext, null);
-                    return fact;
-                })
-                .SingleOrDefault(),
-
                 BooleanFact = properties.Where(pi =>
                 {
                     return dataContext is INotifyPropertyChanged
@@ -162,38 +151,34 @@ namespace Radical.Windows.CommandBuilders
             command.SetData(commandData);
 
             command.OnCanExecute(o =>
-           {
-               var data = command.GetData<CommandData>();
-               if (data.Fact != null)
-               {
-                   return data.Fact.Eval(o);
-               }
-               else if (data.BooleanFact != null)
-               {
-                   var can = data.BooleanFact.FastGetter();
-                   return can;
-               }
+            {
+                var data = command.GetData<CommandData>();
+                if (data.BooleanFact != null)
+                {
+                    var can = data.BooleanFact.FastGetter();
+                    return can;
+                }
 
-               return true;
-           })
-                .OnExecute(o =>
-               {
-                   var data = command.GetData<CommandData>();
-                   if (data.HasParameter)
-                   {
-                       var prm = o;
-                       if (o is IConvertible)
-                       {
-                           prm = Convert.ChangeType(o, data.ParameterType);
-                       }
+                return true;
+            })
+            .OnExecute(o =>
+            {
+                var data = command.GetData<CommandData>();
+                if (data.HasParameter)
+                {
+                    var prm = o;
+                    if (o is IConvertible)
+                    {
+                        prm = Convert.ChangeType(o, data.ParameterType);
+                    }
 
-                       data.FastDelegate(data.DataContext, new[] { prm });
-                   }
-                   else
-                   {
-                       data.FastDelegate(data.DataContext, null);
-                   }
-               });
+                    data.FastDelegate(data.DataContext, new[] { prm });
+                }
+                else
+                {
+                    data.FastDelegate(data.DataContext, null);
+                }
+            });
 
             if (commandData.KeyBindings != null)
             {
@@ -203,11 +188,7 @@ namespace Radical.Windows.CommandBuilders
 
             IMonitor monitor = null;
 
-            if (commandData.Fact != null)
-            {
-                monitor = commandData.Fact;
-            }
-            else if (commandData.BooleanFact != null)
+            if (commandData.BooleanFact != null)
             {
                 monitor = PropertyObserver.For((INotifyPropertyChanged)commandData.DataContext)
                         .Observe(commandData.BooleanFact.Name);

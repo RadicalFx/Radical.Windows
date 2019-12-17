@@ -17,10 +17,6 @@ namespace Radical.Windows.Converters
             {
                 flag = (bool)value;
             }
-            else if (value is Fact)
-            {
-                flag = (Fact)value;
-            }
             else if (value is bool?)
             {
                 var nullable = (bool?)value;

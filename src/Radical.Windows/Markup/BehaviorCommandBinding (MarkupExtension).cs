@@ -1,9 +1,11 @@
 ﻿using Radical.ComponentModel.Windows.Input;
 using Radical.Linq;
+using Radical.Observers;
 using Radical.Reflection;
 using Radical.Windows.Behaviors;
 using Radical.Windows.Input;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -49,52 +51,51 @@ namespace Radical.Windows.Markup
 
                 var path = Path.Path;
                 var methodName = path.EndsWith("Command") ? path.Remove(path.IndexOf("Command")) : path;
+                var factName = "Can" + methodName;
                 var method = dataContext.GetType().GetMethod(methodName);
 
                 var def = dataContext.GetType()
                     .GetMethods()
                     .Where(mi => mi.Name.Equals(methodName))
                     .Select(mi =>
-                   {
-                       var prms = mi.GetParameters();
+                    {
+                        var prms = mi.GetParameters();
 
-                       return new
-                       {
-                           FastDelegate = mi.CreateVoidDelegate(),
-                           DataContext = dataContext,
-                           HasParameter = prms.Length == 1,
-                           ParameterType = prms.Length != 1 ? null : prms[0].ParameterType,
-                           KeyBindings = mi.GetAttributes<KeyBindingAttribute>(),
-                           Description = method.GetAttribute<CommandDescriptionAttribute>(),
-                           Fact = dataContext.GetType()
-                                       .GetProperties()
-                                       .Where(pi => pi.PropertyType == typeof(Fact) && pi.Name.Equals("Can" + methodName))
-                                       .Select(pi => (Fact)pi.GetValue(dataContext, null))
-                                       .SingleOrDefault()
-                       };
-                   })
+                        return new
+                        {
+                            FastDelegate = mi.CreateVoidDelegate(),
+                            DataContext = dataContext,
+                            HasParameter = prms.Length == 1,
+                            ParameterType = prms.Length != 1 ? null : prms[0].ParameterType,
+                            KeyBindings = mi.GetAttributes<KeyBindingAttribute>(),
+                            Description = method.GetAttribute<CommandDescriptionAttribute>(),
+                            Fact = dataContext.GetType()
+                                        .GetProperties()
+                                        .Where(pi => pi.PropertyType == typeof(bool) && pi.Name.Equals(factName))
+                                        .Select(pi => new bool?((bool)pi.GetValue(dataContext, null)))
+                                        .SingleOrDefault()
+                        };
+                    })
                     .SingleOrDefault();
 
                 var text = (def.Description == null) ? string.Empty : def.Description.DisplayText;
                 var cmd = DelegateCommand.Create(text)
                     .OnCanExecute(o =>
-                   {
-                       return def.Fact != null ?
-                           def.Fact.Eval(o) :
-                           true;
-                   })
+                    {
+                       return def.Fact ?? true;
+                    })
                     .OnExecute(o =>
-                   {
-                       if (def.HasParameter)
-                       {
-                           var prm = Convert.ChangeType(o, def.ParameterType);
-                           def.FastDelegate(def.DataContext, new[] { prm });
-                       }
-                       else
-                       {
-                           def.FastDelegate(def.DataContext, null);
-                       }
-                   });
+                    {
+                        if (def.HasParameter)
+                        {
+                            var prm = Convert.ChangeType(o, def.ParameterType);
+                            def.FastDelegate(def.DataContext, new[] { prm });
+                        }
+                        else
+                        {
+                            def.FastDelegate(def.DataContext, null);
+                        }
+                    });
 
                 if (def.KeyBindings != null)
                 {
@@ -104,7 +105,8 @@ namespace Radical.Windows.Markup
 
                 if (def.Fact != null)
                 {
-                    cmd.AddMonitor(def.Fact);
+                    cmd.AddMonitor(PropertyObserver.For((INotifyPropertyChanged)dataContext)
+                        .Observe(factName));
                 }
 
                 target.SetValue(targetProperty, cmd);
