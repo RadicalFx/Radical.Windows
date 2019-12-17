@@ -223,8 +223,6 @@ namespace Radical.Windows.Presentation.Boot
             {
                 Application.Current.ShutdownMode = shutdownMode.Value;
             }
-
-            InitializeCurrentPrincipal();
             InitializeCultures();
 
             OnBoot(serviceProvider);
@@ -277,14 +275,6 @@ namespace Radical.Windows.Presentation.Boot
             this.currentUICultureHandler = currentUICultureHandler;
 
             return this;
-        }
-
-        /// <summary>
-        /// Initializes the current principal.
-        /// </summary>
-        protected virtual void InitializeCurrentPrincipal()
-        {
-            Thread.CurrentPrincipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
         }
 
         /// <summary>
