@@ -13,9 +13,7 @@ namespace Radical.Windows.Markup
     /// A base class for custom markup extension which provides properties
     /// that can be found on regular <see cref="Binding"/> markup extension.
     /// </summary>
-#if !SILVERLIGHT
     [MarkupExtensionReturnType(typeof(object))]
-#endif
     public abstract class BindingDecoratorBase : MarkupExtension
     {
         /// <summary>
@@ -50,16 +48,12 @@ namespace Radical.Windows.Markup
             set { binding = value; }
         }
 
-#if !SILVERLIGHT
-
         [DefaultValue(null)]
         public object AsyncState
         {
             get { return binding.AsyncState; }
             set { binding.AsyncState = value; }
         }
-
-#endif
 
         [DefaultValue(false)]
         public bool BindsDirectlyToSource
@@ -75,9 +69,7 @@ namespace Radical.Windows.Markup
             set { binding.Converter = value; }
         }
 
-#if !SILVERLIGHT
         [TypeConverter(typeof(CultureInfoIetfLanguageTagConverter)), DefaultValue(null)]
-#endif
         public CultureInfo ConverterCulture
         {
             get { return binding.ConverterCulture; }
@@ -105,26 +97,20 @@ namespace Radical.Windows.Markup
             set { binding.FallbackValue = value; }
         }
 
-#if !SILVERLIGHT
         [DefaultValue(false)]
         public bool IsAsync
         {
             get { return binding.IsAsync; }
             set { binding.IsAsync = value; }
         }
-#endif
-#if !SILVERLIGHT
+
         [DefaultValue(BindingMode.Default)]
-#else
-		[DefaultValue( BindingMode.TwoWay )]
-#endif
         public BindingMode Mode
         {
             get { return binding.Mode; }
             set { binding.Mode = value; }
         }
 
-#if !SILVERLIGHT
         [DefaultValue(false)]
         public bool NotifyOnSourceUpdated
         {
@@ -138,7 +124,6 @@ namespace Radical.Windows.Markup
             get { return binding.NotifyOnTargetUpdated; }
             set { binding.NotifyOnTargetUpdated = value; }
         }
-#endif
 
         [DefaultValue(false)]
         public bool NotifyOnValidationError
@@ -175,14 +160,12 @@ namespace Radical.Windows.Markup
             set { binding.TargetNullValue = value; }
         }
 
-#if !SILVERLIGHT
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public UpdateSourceExceptionFilterCallback UpdateSourceExceptionFilter
         {
             get { return binding.UpdateSourceExceptionFilter; }
             set { binding.UpdateSourceExceptionFilter = value; }
         }
-#endif
 
         [DefaultValue(UpdateSourceTrigger.Default)]
         public UpdateSourceTrigger UpdateSourceTrigger
@@ -205,7 +188,6 @@ namespace Radical.Windows.Markup
             set { binding.ValidatesOnExceptions = value; }
         }
 
-#if !SILVERLIGHT
         [DefaultValue(null)]
         public string XPath
         {
@@ -218,7 +200,6 @@ namespace Radical.Windows.Markup
         {
             get { return binding.ValidationRules; }
         }
-#endif
 
         /// <summary>
         /// This basic implementation just sets a binding on the targeted

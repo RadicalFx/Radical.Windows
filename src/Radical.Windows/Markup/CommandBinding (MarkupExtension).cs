@@ -59,17 +59,14 @@ namespace Radical.Windows.Markup
         {
             if (!DesignTimeHelper.GetIsInDesignMode())
             {
-                FrameworkElement fe;
-                DependencyProperty dp;
 
-                if (TryGetTargetItems<FrameworkElement>(provider, out fe, out dp))
+                if (TryGetTargetItems(provider, out FrameworkElement fe, out DependencyProperty dp))
                 {
-                    RoutedEventHandler reh = null;
-                    reh = (s, e) =>
+                    void reh(object s, RoutedEventArgs e)
                     {
                         fe.Loaded -= reh;
                         OnTargetLoaded(fe, dp);
-                    };
+                    }
 
                     fe.Loaded += reh;
 
@@ -78,18 +75,15 @@ namespace Radical.Windows.Markup
                         OnDataContextChanged(fe, dp, e.NewValue, e.OldValue);
                     };
                 }
-#if !SILVERLIGHT
                 else
                 {
-                    FrameworkContentElement fce;
-                    if (TryGetTargetItems<FrameworkContentElement>(provider, out fce, out dp))
+                    if (TryGetTargetItems(provider, out FrameworkContentElement fce, out dp))
                     {
-                        RoutedEventHandler reh = null;
-                        reh = (s, e) =>
+                        void reh(object s, RoutedEventArgs e)
                         {
                             fce.Loaded -= reh;
                             OnTargetLoaded(fce, dp);
-                        };
+                        }
 
                         fce.Loaded += reh;
 
@@ -99,7 +93,6 @@ namespace Radical.Windows.Markup
                         };
                     }
                 }
-#endif
             }
         }
 

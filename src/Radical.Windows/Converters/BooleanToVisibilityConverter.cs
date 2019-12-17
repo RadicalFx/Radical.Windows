@@ -6,9 +6,7 @@ using System.Windows.Markup;
 
 namespace Radical.Windows.Converters
 {
-#if !SILVERLIGHT
     [MarkupExtensionReturnType(typeof(BooleanToVisibilityConverter))]
-#endif
     /// <summary>
     /// A value converter to convert from bool to Visibility and back.
     /// </summary>
@@ -59,8 +57,7 @@ namespace Radical.Windows.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            bool inverted;
-            if (!bool.TryParse(parameter.As<string>(), out inverted))
+            if (!bool.TryParse(parameter.As<string>(), out bool inverted))
             {
                 inverted = false;
             }

@@ -5,7 +5,6 @@
     /// </summary>
     public enum ApplicationShutdownReason
     {
-#if !SILVERLIGHT
         /// <summary>
         /// The application has been shutdown using the Radical canonical behaviors.
         /// In this case the shutdown process can be canceled.
@@ -23,7 +22,7 @@
         /// The application is shutting down because the operating system session is ending.
         /// </summary>
         SessionEnding,
-#endif
+
         /// <summary>
         /// The application has been shut down using the App.Current.Shutdown() method.
         /// </summary>

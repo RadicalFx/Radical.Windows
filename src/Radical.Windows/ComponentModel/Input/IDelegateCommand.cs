@@ -15,8 +15,6 @@ namespace Radical.ComponentModel.Windows.Input
         /// <value>The display text.</value>
         string DisplayText { get; }
 
-#if !SILVERLIGHT
-
         /// <summary>
         /// Gets the input bindings.
         /// </summary>
@@ -44,8 +42,6 @@ namespace Radical.ComponentModel.Windows.Input
         /// <param name="modifiers">The key gesture modifiers.</param>
         /// <returns>An instance of the current command.</returns>
         IDelegateCommand AddKeyGesture(System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifiers);
-
-#endif
 
         /// <summary>
         /// Intercepts the analytics tracking information before sending to the analytics service.

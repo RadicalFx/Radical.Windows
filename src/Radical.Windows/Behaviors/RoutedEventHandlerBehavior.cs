@@ -62,12 +62,7 @@ namespace Radical.Windows.Behaviors
             handler = (s, e) =>
             {
                 object args = null;
-
-#if FX35
-                if ( !String.IsNullOrEmpty( this.PassingIn ) )
-#else 
                 if (!string.IsNullOrWhiteSpace(PassingIn))
-#endif
                 {
                     object referencedObject = null;
 

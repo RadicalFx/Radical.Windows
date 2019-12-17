@@ -8,9 +8,9 @@
   <PropertyGroup>
     <Authors>Mauro Servienti, Michael Denny, Nazareno Manco</Authors>
     <Description>Radical is an infrastructure framework whose primary role is to help in the development of composite WPF applications based on the Model View ViewModel pattern.</Description>
-    <PackageLicenseUrl>https://github.com/RadicalFx/radical.windows/blob/master/license.md</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>Radical Radical.Windows</PackageTags>
-    <PackageIconUrl>http://www.radicalframework.com/img/radical-ico.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
@@ -20,8 +20,16 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\..\assets\icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <MinVerMinimumMajorMinor>2</MinVerMinimumMajorMinor>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;NU5105;1591</NoWarn>
   </PropertyGroup>
 
   <Target Name="AppVeyorPullRequestsTarget" AfterTargets="MinVer" Condition="'$(APPVEYOR_PULL_REQUEST_NUMBER)' != ''">
@@ -38,8 +46,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
-    <PackageReference Include="Radical" Version="2.0.0-Beta.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Radical" Version="2.0.0-Beta.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.3" />
   </ItemGroup>
 

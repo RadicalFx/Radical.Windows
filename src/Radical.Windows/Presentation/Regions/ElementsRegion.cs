@@ -101,13 +101,9 @@ namespace Radical.Windows.Presentation.Regions
 				Cancel = false
 			};
 
-#if !SILVERLIGHT
-
 			RegionService.Conventions
                 .GetViewDataContext( view, RegionService.Conventions.DefaultViewDataContextSearchBehavior )
 				.As<IExpectViewClosingCallback>( i => i.OnViewClosing( args ) );
-
-#endif
 
 			if ( !args.Cancel )
 			{

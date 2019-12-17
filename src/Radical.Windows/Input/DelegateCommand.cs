@@ -81,11 +81,7 @@ namespace Radical.Windows.Input
             }
         }
 
-#if !SILVERLIGHT
-
         private InputBindingCollection inputBindings;
-
-#endif
 
         /// <summary>
         /// Constructor. Initializes delegate command with Execute delegate and CanExecute delegate
@@ -128,10 +124,8 @@ namespace Radical.Windows.Input
             return this;
         }
 
-#if !SILVERLIGHT
-
         /// <summary>
-        /// Adds a new gesture to associate inputbindings
+        /// Adds a new gesture to associate input bindings
         /// </summary>
         public IDelegateCommand AddGesture(InputGesture gesture)
         {
@@ -162,8 +156,6 @@ namespace Radical.Windows.Input
             return this;
         }
 
-#endif
-
         /// <summary>
         /// Gets command display text
         /// </summary>
@@ -173,8 +165,6 @@ namespace Radical.Windows.Input
             private set;
         }
 
-#if !SILVERLIGHT
-
         /// <summary>
         /// Command's associated input bindings
         /// </summary>
@@ -182,8 +172,6 @@ namespace Radical.Windows.Input
         {
             get { return inputBindings; }
         }
-
-#endif
 
         ///<summary>
         ///Defines the method that determines whether the command can execute in its current state.
@@ -245,7 +233,7 @@ namespace Radical.Windows.Input
         }
 
         /// <summary>
-        /// Raises <see cref="CanExecuteChanged"/> so every command invoker can requery to check if the command can execute.
+        /// Raises <see cref="CanExecuteChanged"/> so every command invoker can re-query to check if the command can execute.
         /// <remarks>Note that this will trigger the execution of <see cref="CanExecute"/> once for each invoker.</remarks>
         /// </summary>
         public virtual void EvaluateCanExecute()

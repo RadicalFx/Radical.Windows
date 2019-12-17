@@ -10,10 +10,7 @@ using Radical.Helpers;
 using Radical.Reflection;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Conversions;
-
-#if !SILVERLIGHT
 using Radical.Diagnostics;
-#endif
 
 namespace Radical.Windows.Presentation.Regions
 {
@@ -21,35 +18,22 @@ namespace Radical.Windows.Presentation.Regions
     /// A base abstract implementation of a region and it's relative markup extension.
     /// </summary>
     /// <typeparam name="T">The type of the element that hosts this region.</typeparam>
-#if !SILVERLIGHT
     [MarkupExtensionReturnType( typeof( IRegion ) )]
-#endif
 	public abstract class Region<T> :
 		MarkupExtension,
 		IRegion where T : FrameworkElement
 	{
-#if !SILVERLIGHT
 		/// <summary>
 		/// The logger.
 		/// </summary>
 		protected readonly TraceSource Logger;
-#endif
-
-#if SILVERLIGHT
-		/// <summary>
-		/// Occurs when this region is ready.
-		/// </summary>
-		public event EventHandler Ready = ( s, e ) => { };
-#endif
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Region&lt;T&gt;"/> class.
 		/// </summary>
 		protected Region()
 		{
-#if !SILVERLIGHT
 			Logger = new TraceSource( GetType().Name );
-#endif
 		}
 
 		/// <summary>
@@ -90,7 +74,7 @@ namespace Radical.Windows.Presentation.Regions
 		}
 
 		/// <summary>
-		/// Called when when the element is changed.
+		/// Called when the element is changed.
 		/// </summary>
 		protected virtual void OnElementChanged()
 		{
@@ -127,34 +111,6 @@ namespace Radical.Windows.Presentation.Regions
 
 					if ( !DesignerProperties.GetIsInDesignMode( Element ) )
 					{
-#if SILVERLIGHT
-
-						RoutedEventHandler loaded = null;
-
-						loaded = (s,e)=>
-						{
-						    var view = this.FindHostingViewOf( this.Element );
-
-						    if( view == null )
-						    {
-						        //TODO: migliorare l'exception
-						        var msg = String.Format( "Cannot find any hosting view for this {0}.",
-						            this.GetType().ToString( "SN" ) );
-
-						        throw new NotSupportedException( msg );
-						    }
-
-						    this.HostingView = view;
-
-							var h = this.Ready;
-							h( this, EventArgs.Empty );
-
-							this.Element.Loaded -= loaded;
-						};
-
-						this.Element.Loaded += loaded;
-#else
-
 						var view = FindHostingViewOf( Element );
 
 						if ( view == null )
@@ -167,13 +123,10 @@ namespace Radical.Windows.Presentation.Regions
 						}
 
 						HostingView = view;
-#endif
-
-#if !SILVERLIGHT
 
 						if ( CommandLine.GetCurrent().Contains( "hr" ) )
 						{
-							Logger.Warning( "Regions hilighting is turned on." );
+							Logger.Warning( "Regions highlighting is turned on." );
 
 							Element.Loaded += ( s, e ) =>
 							{
@@ -209,8 +162,6 @@ namespace Radical.Windows.Presentation.Regions
 								}
 							};
 						}
-
-#endif
 					}
 				}
 			}
@@ -253,12 +204,12 @@ namespace Radical.Windows.Presentation.Regions
 			}
 		}
 
-		/// <summary>
-		/// Finds the hosting view of the given FramerowkElement.
-		/// </summary>
-		/// <param name="fe">The fe.</param>
-		/// <returns></returns>
-		protected virtual DependencyObject FindHostingViewOf( FrameworkElement fe )
+        /// <summary>
+        /// Finds the hosting view of the given FramerowkElement.
+        /// </summary>
+        /// <param name="fe">The FramerowkElement for which to find the hosting view.</param>
+        /// <returns></returns>
+        protected virtual DependencyObject FindHostingViewOf( FrameworkElement fe )
 		{
 			if ( fe == null )
 			{

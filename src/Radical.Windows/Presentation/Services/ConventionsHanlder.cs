@@ -164,12 +164,10 @@ namespace Radical.Windows.Presentation.Services
                     {
                         return ((FrameworkElement)view).DataContext;
                     }
-#if !SILVERLIGHT
                     else if(view is FrameworkContentElement)
                     {
                         return ((FrameworkContentElement)view).DataContext;
                     }
-#endif
                 }
                 else
                 {
@@ -181,7 +179,6 @@ namespace Radical.Windows.Presentation.Services
                             return dc;
                         }
                     }
-#if !SILVERLIGHT
                     else if(view is FrameworkContentElement)
                     {
                         var dc = view.ReadLocalValue(FrameworkContentElement.DataContextProperty);
@@ -190,7 +187,6 @@ namespace Radical.Windows.Presentation.Services
                             return dc;
                         }
                     }
-#endif
                 }
 
                 return null;
@@ -207,12 +203,10 @@ namespace Radical.Windows.Presentation.Services
                 {
                     ((FrameworkElement)view).DataContext = dc;
                 }
-#if !SILVERLIGHT
                 else if(view is FrameworkContentElement)
                 {
                     ((FrameworkContentElement)view).DataContext = dc;
                 }
-#endif
             };
 
             SetViewDataContext = (view, dc) =>
@@ -252,26 +246,10 @@ namespace Radical.Windows.Presentation.Services
 
             DefaultTryHookClosedEventOfHostOf = (view, closedCallback) =>
             {
-                //dobbiamo anche cercare una IClosableView oltre che una Window
+                //TODO: dobbiamo anche cercare una IClosableView oltre che una Window
                 var window = FindWindowOf(view);
                 if(window != null)
                 {
-#if SILVERLIGHT
-                    EventHandler<System.ComponentModel.ClosingEventArgs> closing = null;
-                    closing = ( s, e ) =>
-                    {
-                        try
-                        {
-                            closedCallback( window );
-                        }
-                        finally
-                        {
-                            window.Closing -= closing;
-                        }
-                    };
-
-                    window.Closing += closing;
-#else
                     EventHandler closed = null;
                     closed = (s, e) =>
                     {
@@ -286,7 +264,6 @@ namespace Radical.Windows.Presentation.Services
                     };
 
                     window.Closed += closed;
-#endif
                 }
 
                 return window;
@@ -329,7 +306,6 @@ namespace Radical.Windows.Presentation.Services
                 return DefaultGetViewOfViewModel(viewModel);
             };
 
-#if !SILVERLIGHT
             DefaultAttachViewBehaviors = view =>
             {
                 var bhv = Interaction.GetBehaviors(view);
@@ -352,21 +328,7 @@ namespace Radical.Windows.Presentation.Services
             {
                 DefaultAttachViewBehaviors(view);
             };
-#else
-            this.AttachViewBehaviors = view =>
-            {
-                var bhv = Interaction.GetBehaviors( view );
-                //if( view is Page )
-                //{
-                //    bhv.Add( new PageNavigationNotifcationsBehavior( this.broker ) );
-                //}
-                
-                bhv.Add( new FrameworkElementLifecycleNotificationsBehavior( this.broker, this ) );
-                bhv.Add( new DependencyObjectCloseHandlerBehavior( this.broker, this ) );
-            };
-#endif
 
-#if !SILVERLIGHT
             DefaultDetachViewBehaviors = view =>
             {
                 var bhv = Interaction.GetBehaviors(view);
@@ -385,14 +347,6 @@ namespace Radical.Windows.Presentation.Services
             {
                 DefaultDetachViewBehaviors(view);
             };
-#else
-            this.DetachViewBehaviors = view =>
-            {
-                var bhv = Interaction.GetBehaviors( view );
-                bhv.OfType<FrameworkElementLifecycleNotificationsBehavior>().ToList().ForEach( x => bhv.Remove( x ) );
-                bhv.OfType<DependencyObjectCloseHandlerBehavior>().ToList().ForEach( x => bhv.Remove( x ) );
-            };
-#endif
 
             DefaultShouldNotifyViewModelLoaded = (view, dataContext) =>
             {
@@ -592,7 +546,7 @@ namespace Radical.Windows.Presentation.Services
 
         /// <summary>
         /// Tries to hook closed event of an the element in the visual tree that hosts this given view.
-        /// If the hook succedeed the given callback will be called once the hosting element is closed.
+        /// If the hook succeeded the given callback will be called once the hosting element is closed.
         /// </summary>
         /// <returns>
         /// The element, that supports closed notifications, in the visual tree that hosts the given view; otherwise <c>null</c>.
@@ -602,7 +556,7 @@ namespace Radical.Windows.Presentation.Services
 
         /// <summary>
         /// Default: Tries to hook closed event of an the element in the visual tree that hosts this given view.
-        /// If the hook succedeed the given callback will be called once the hosting element is closed.
+        /// If the hook succeeded the given callback will be called once the hosting element is closed.
         /// </summary>
         [IgnorePropertyInjectionAttribue]
         public Func<DependencyObject, Action<DependencyObject>, DependencyObject> DefaultTryHookClosedEventOfHostOf { get; private set; }
@@ -663,7 +617,7 @@ namespace Radical.Windows.Presentation.Services
         public Func<object, DependencyObject> DefaultGetViewOfViewModel { get; private set; }
 
         /// <summary>
-        /// Gets an opportunity toattach behaviors to the view.
+        /// Gets an opportunity to attach behaviors to the view.
         /// </summary>
         /// <value>
         /// The attach view behaviors handler.
@@ -735,7 +689,7 @@ namespace Radical.Windows.Presentation.Services
         public Func<DependencyObject, bool> DefaultShouldNotifyViewLoaded { get; private set; }
 
         /// <summary>
-        /// Gets or sets the view relase handler that is responsible to release views and view models.
+        /// Gets or sets the view release handler that is responsible to release views and view models.
         /// </summary>
         /// <value>
         /// The view release handler.
@@ -772,7 +726,7 @@ namespace Radical.Windows.Presentation.Services
         public Func<DependencyObject, bool> DefaultShouldUnregisterRegionManagerOfView { get; private set; }
 
         /// <summary>
-        /// Gets or sets the handler that determines if a view should be relased, the default behavior is that the view is released if not a singleton view.
+        /// Gets or sets the handler that determines if a view should be released, the default behavior is that the view is released if not a singleton view.
         /// </summary>
         /// <value>
         /// The view release handler.
@@ -781,7 +735,7 @@ namespace Radical.Windows.Presentation.Services
         public Func<DependencyObject, bool> ShouldReleaseView { get; set; }
 
         /// <summary>
-        /// Default: Gets or sets the handler that determines if a view should be relased, the default behavior is that the view is released if not a singleton view.
+        /// Default: Gets or sets the handler that determines if a view should be released, the default behavior is that the view is released if not a singleton view.
         /// </summary>
         /// <value>
         /// The view release handler.

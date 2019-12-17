@@ -421,7 +421,7 @@ namespace Radical.Windows.Presentation.Boot
             {
                 var splashScreen = showSplash();
 
-                Action action = () =>
+                void action()
                 {
                     var sw = Stopwatch.StartNew();
                     splashScreenConfiguration.StartupAsyncWork(serviceProvider);
@@ -430,22 +430,14 @@ namespace Radical.Windows.Presentation.Boot
                     var remaining = splashScreenConfiguration.MinimumDelay - elapsed;
                     if (remaining > 0)
                     {
-#if FX40
-                        Thread.Sleep( remaining );
-#else
                         Task.Delay(remaining);
-#endif
                     }
-                };
+                }
 
-#if FX40
-                var startup = Task.Factory.StartNew( action );
-#else
                 var startup = Task.Run(action);
-#endif
 
                 startup.ContinueWith(t =>
-               {
+                {
                    if (t.IsFaulted)
                    {
                        OnUnhandledException(t.Exception);
@@ -454,7 +446,7 @@ namespace Radical.Windows.Presentation.Boot
 
                    showShell();
                    splashScreen.Close();
-               }, TaskScheduler.FromCurrentSynchronizationContext());
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }
             else
             {

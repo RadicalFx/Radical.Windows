@@ -41,12 +41,10 @@ namespace Radical.Windows.Presentation.Behaviors
                     var w = conventions.FindHostingWindowOf( m.ViewOwner );
                     if ( w != null )
                     {
-#if !SILVERLIGHT
                         if ( m.DialogResult.HasValue )
                         {
                             w.DialogResult = m.DialogResult;
                         }
-#endif
                         w.Close();
                     }
                 }

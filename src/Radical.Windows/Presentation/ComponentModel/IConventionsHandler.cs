@@ -116,7 +116,6 @@ namespace Radical.Windows.Presentation.ComponentModel
 		[IgnorePropertyInjectionAttribue]
 		Func<DependencyObject, bool> DefaultShouldUnsubscribeViewModelOnRelease { get; }
 
-#if !WINDOWS_PHONE
 		/// <summary>
 		/// Gets or sets the ViewModel -> window finder that given a ViewModel finds the root Window that hosts that ViewModel.
 		/// </summary>
@@ -152,7 +151,6 @@ namespace Radical.Windows.Presentation.ComponentModel
 		/// </value>
 		[IgnorePropertyInjectionAttribue]
 		Func<DependencyObject, Window> DefaultFindWindowOf { get; }
-#endif
 		
 		/// <summary>
 		/// Gets or sets the logic that determines if view has data context.
