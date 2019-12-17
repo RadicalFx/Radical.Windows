@@ -13,7 +13,7 @@ namespace Radical.Windows.Presentation.Boot.Features
     {
         List<Entry> entries { get; set; } = new List<Entry>();
 
-        public void Setup(IServiceProvider serviceProvider)
+        public void Setup(IServiceProvider serviceProvider, ApplicationSettings applicationSettings)
         {
             var broker = serviceProvider.GetRequiredService<IMessageBroker>();
             foreach (var entry in entries)

@@ -6,6 +6,6 @@ namespace Radical.Windows.Presentation.Boot
 {
     interface IFeature
     {
-        void Setup(IServiceProvider serviceProvider);
+        void Setup(IServiceProvider serviceProvider, ApplicationSettings applicationSettings);
     }
 }

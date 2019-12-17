@@ -10,7 +10,7 @@ namespace Radical.Windows.Presentation.Boot.Features
     {
         Dictionary<string, List<Type>> buffer = new Dictionary<string, List<Type>>();
 
-        public void Setup(IServiceProvider serviceProvider)
+        public void Setup(IServiceProvider serviceProvider, ApplicationSettings applicationSettings)
         {
             var injectionHandler = serviceProvider.GetRequiredService<IRegionInjectionHandler>();
             foreach (var kvp in buffer)

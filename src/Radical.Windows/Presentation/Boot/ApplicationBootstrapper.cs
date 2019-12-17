@@ -28,6 +28,8 @@ namespace Radical.Windows.Presentation.Boot
     {
         static readonly TraceSource logger = new TraceSource(typeof(ApplicationBootstrapper).Name);
 
+        readonly ApplicationSettings applicationSettings = new ApplicationSettings();
+
         Type shellViewType = null;
         IServiceProvider serviceProvider;
 
@@ -37,7 +39,7 @@ namespace Radical.Windows.Presentation.Boot
         private Action<IServiceProvider> bootCompletedHandler;
         private Action<ApplicationShutdownArgs> shutdownHandler;
         private Action<IServiceProvider> bootHandler;
-        ShutdownMode? mode = null;
+        ShutdownMode? shutdownMode = null;
         Mutex mutex;
         string key;
         SingletonApplicationScope singleton = SingletonApplicationScope.NotSupported;
@@ -162,16 +164,6 @@ namespace Radical.Windows.Presentation.Boot
             return this;
         }
 
-        /// <summary>
-        /// Setups the UI composition engine.
-        /// </summary>
-        /// <param name="serviceProvider">The service provider.</param>
-        protected virtual void SetupUICompositionEngine(IServiceProvider serviceProvider)
-        {
-            RegionService.CurrentService = serviceProvider.GetService<IRegionService>();
-            RegionService.Conventions = serviceProvider.GetService<IConventionsHandler>();
-        }
-
         Action<BootstrapConventions, AssemblyScanner> onBeforeInstall;
 
         /// <summary>
@@ -226,18 +218,13 @@ namespace Radical.Windows.Presentation.Boot
             var features = serviceProvider.GetServices<IFeature>();
             foreach (var feature in features)
             {
-                feature.Setup(serviceProvider);
+                feature.Setup(serviceProvider, applicationSettings);
             }
 
-            SetupUICompositionEngine(serviceProvider);
-
-            if (mode != null && mode.HasValue)
+            if (shutdownMode != null && shutdownMode.HasValue)
             {
-                Application.Current.ShutdownMode = mode.Value;
+                Application.Current.ShutdownMode = shutdownMode.Value;
             }
-
-            InitializeCurrentPrincipal();
-            InitializeCultures();
 
             OnBoot(serviceProvider);
 
@@ -263,8 +250,6 @@ namespace Radical.Windows.Presentation.Boot
             }
         }
 
-        Func<CultureInfo> currentCultureHandler = () => CultureInfo.CurrentCulture;
-
         /// <summary>
         /// Using as current culture.
         /// </summary>
@@ -272,12 +257,10 @@ namespace Radical.Windows.Presentation.Boot
         /// <returns></returns>
         public ApplicationBootstrapper UsingAsCurrentCulture(Func<CultureInfo> currentCultureHandler)
         {
-            this.currentCultureHandler = currentCultureHandler;
+            this.applicationSettings.CurrentCultureHandler = currentCultureHandler;
 
             return this;
         }
-
-        Func<CultureInfo> currentUICultureHandler = () => CultureInfo.CurrentUICulture;
 
         /// <summary>
         /// Using as current UI culture.
@@ -286,52 +269,15 @@ namespace Radical.Windows.Presentation.Boot
         /// <returns></returns>
         public ApplicationBootstrapper UsingAsCurrentUICulture(Func<CultureInfo> currentUICultureHandler)
         {
-            this.currentUICultureHandler = currentUICultureHandler;
+            this.applicationSettings.CurrentUICultureHandler = currentUICultureHandler;
 
             return this;
         }
 
         /// <summary>
-        /// Initializes the current principal.
-        /// </summary>
-        protected virtual void InitializeCurrentPrincipal()
-        {
-            Thread.CurrentPrincipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-        }
-
-        /// <summary>
-        /// Initializes the cultures.
-        /// </summary>
-        protected virtual void InitializeCultures()
-        {
-            var currentCulture = currentCultureHandler();
-            var currentUICulture = currentUICultureHandler();
-
-            Thread.CurrentThread.CurrentCulture = currentCulture;
-            Thread.CurrentThread.CurrentUICulture = currentUICulture;
-
-            var xmlLang = XmlLanguage.GetLanguage(currentCulture.IetfLanguageTag);
-            FrameworkElement.LanguageProperty.OverrideMetadata
-            (
-                forType: typeof(FrameworkElement),
-                typeMetadata: new FrameworkPropertyMetadata(xmlLang)
-            );
-
-            var fd = currentUICulture.TextInfo.IsRightToLeft ?
-                FlowDirection.RightToLeft :
-                FlowDirection.LeftToRight;
-
-            FrameworkElement.FlowDirectionProperty.OverrideMetadata
-            (
-                forType: typeof(FrameworkElement),
-                typeMetadata: new FrameworkPropertyMetadata(fd)
-            );
-        }
-
-        /// <summary>
         /// Handles the singleton application scope.
         /// </summary>
-        /// <param name="args">The args.</param>
+        /// <param name="args">The SingletonApplicationStartupArgs instance.</param>
         protected virtual void HandleSingletonApplicationStartup(SingletonApplicationStartupArgs args)
         {
             if (args.Scope != SingletonApplicationScope.NotSupported)
@@ -524,7 +470,6 @@ namespace Radical.Windows.Presentation.Boot
             {
                 if (reason == ApplicationShutdownReason.UserRequest && isBootCompleted)
                 {
-                    //messaggio per notificare ed eventualmente cancellare
                     var msg = new ApplicationShutdownRequested(reason);
 
                     var broker = serviceProvider.GetService<IMessageBroker>();
@@ -631,7 +576,7 @@ namespace Radical.Windows.Presentation.Boot
         /// <returns></returns>
         public ApplicationBootstrapper OverrideShutdownMode(ShutdownMode mode)
         {
-            this.mode = mode;
+            this.shutdownMode = mode;
 
             return this;
         }
