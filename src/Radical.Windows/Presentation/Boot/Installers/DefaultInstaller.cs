@@ -3,6 +3,7 @@ using Radical.ComponentModel;
 using Radical.ComponentModel.Messaging;
 using Radical.Linq;
 using Radical.Messaging;
+using Radical.Windows.Presentation.Boot.Features;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Threading;
 using System;
@@ -17,6 +18,9 @@ namespace Radical.Windows.Presentation.Boot.Installers
     {
         public void Install(BootstrapConventions conventions, IServiceCollection services, IEnumerable<Type> assemblyScanningResults)
         {
+            services.AddSingleton<IFeature, Cultures>();
+            services.AddSingleton<IFeature, CurrentPrincipal>();
+
             services.AddSingleton(container => 
             {
                 //TODO: figure out best way to do settings

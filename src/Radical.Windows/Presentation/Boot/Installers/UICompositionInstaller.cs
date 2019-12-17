@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Radical.Windows.Presentation.Boot.Features;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Regions;
 using System;
@@ -10,6 +11,8 @@ namespace Radical.Windows.Presentation.Boot.Installers
     {
         public void Install(BootstrapConventions conventions, IServiceCollection services, IEnumerable<Type> assemblyScanningResults)
         {
+            services.AddSingleton<IFeature, UIComposition>();
+
             if (!services.IsRegistered<IRegionManagerFactory>())
             {
                 services.AddSingleton<IRegionManagerFactory, RegionManagerFactory>();
