@@ -31,8 +31,12 @@ namespace Radical.Windows.Presentation.Regions
         /// <param name="view">The view.</param>
         protected override void OnAdd( DependencyObject view )
         {
-            var tabItem = new TabItem();
-            tabItem.Content = view;
+            var tabItem = view as TabItem;
+            if (tabItem == null)
+            {
+                tabItem = new TabItem();
+                tabItem.Content = view;
+            }
 
             var header = TryGetHeader( view );
             if( header != null )
