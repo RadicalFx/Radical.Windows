@@ -15,6 +15,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Radical.Linq;
+using System.Collections.Generic;
+using Radical.Windows.Presentation.Services;
 
 namespace Radical.Windows.Presentation.Boot
 {
@@ -232,6 +234,8 @@ namespace Radical.Windows.Presentation.Boot
             {
                 OnBootCompleted(serviceProvider);
 
+                ExposeRegisteredAppResources();
+
                 var broker = serviceProvider.TryGetService<IMessageBroker>();
                 broker?.Broadcast(this, new ApplicationBootCompleted());
 
@@ -248,6 +252,69 @@ namespace Radical.Windows.Presentation.Boot
 
                 isBootCompleted = true;
             }
+        }
+
+        void ExposeRegisteredAppResources()
+        {
+            var holder = (ResourcesRegistrationHolder)serviceProvider.GetService(typeof(ResourcesRegistrationHolder));
+            holder.Registrations = resources;
+
+            if (holder.Registrations.TryGetValue(Application.Current.GetType(), out HashSet<Type> services) && services.Any())
+            {
+                var conventions = (IConventionsHandler)serviceProvider.GetService(typeof(IConventionsHandler));
+                foreach (var type in services)
+                {
+                    var instance = serviceProvider.GetService(type);
+                    var key = conventions.GenerateServiceStaticResourceKey(type);
+                    Application.Current.Resources.Add(key, instance);
+                }
+            }
+        }
+
+        readonly IDictionary<Type, HashSet<Type>> resources = new Dictionary<Type, HashSet<Type>>();
+
+        /// <summary>
+        /// Exposes the given service type as resource in the App resources.
+        /// </summary>
+        /// <typeparam name="TService">The type of the service.</typeparam>
+        /// <returns></returns>
+        public ApplicationBootstrapper ExposeAsResource<TService>()
+        {
+            return ExposeAsResource(typeof(TService), Application.Current.GetType());
+        }
+
+        /// <summary>
+        /// Exposes the given service type as resource in the supplied resource owner.
+        /// </summary>
+        /// <typeparam name="TService">The type of the service.</typeparam>
+        /// <typeparam name="TView">The type of the view.</typeparam>
+        /// <returns></returns>
+        public ApplicationBootstrapper ExposeAsResource<TService, TView>() where TView : FrameworkElement
+        {
+            return ExposeAsResource(typeof(TService), typeof(TView));
+        }
+
+        /// <summary>
+        /// Exposes the given service type as resource in the supplied resource owner.
+        /// </summary>
+        /// <param name="serviceType">Type of the service.</param>
+        /// <param name="resourceOwner">The resource owner.</param>
+        /// <returns></returns>
+        internal ApplicationBootstrapper ExposeAsResource(Type serviceType, Type resourceOwner)
+        {
+            if (!resources.TryGetValue(resourceOwner, out HashSet<Type> types))
+            {
+                types = new HashSet<Type>();
+                resources.Add(resourceOwner, new HashSet<Type>());
+            }
+
+            Ensure.That(types)
+                .WithMessage("Supplied service type ({0}) is already exposed as resource in {1}.", serviceType.Name, resourceOwner.Name)
+                .IsFalse(hs => hs.Contains(serviceType));
+
+            types.Add(serviceType);
+
+            return this;
         }
 
         /// <summary>

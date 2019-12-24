@@ -393,6 +393,9 @@ namespace Radical.Windows.Presentation.Services
             {
                 return DefaultShouldNotifyViewLoaded(view);
             };
+
+            DefaultGenerateServiceStaticResourceKey = type => type.Namespace + "." + type.Name;
+            GenerateServiceStaticResourceKey = type => DefaultGenerateServiceStaticResourceKey(type);
         }
 
         //Boolean TryFindWindowOrIClosableView( DependencyObject fe, out DependencyObject windowOrIClosableView )
@@ -788,5 +791,23 @@ namespace Radical.Windows.Presentation.Services
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the generate service static resource key convention.
+        /// </summary>
+        /// <value>
+        /// The generate service static resource key convention.
+        /// </value>
+        [IgnorePropertyInjectionAttribue]
+        public Func<Type, object> GenerateServiceStaticResourceKey { get; set; }
+
+        /// <summary>
+        /// Default: Gets or sets the generate service static resource key convention.
+        /// </summary>
+        /// <value>
+        /// The default generate service static resource key.
+        /// </value>
+        [IgnorePropertyInjectionAttribue]
+        public Func<Type, object> DefaultGenerateServiceStaticResourceKey { get; }
     }
 }
