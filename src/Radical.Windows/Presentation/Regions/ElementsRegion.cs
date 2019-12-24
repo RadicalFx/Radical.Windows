@@ -1,4 +1,5 @@
 ﻿using Radical.Conversions;
+using Radical.Validation;
 using Radical.Windows.Presentation.ComponentModel;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,6 +61,8 @@ namespace Radical.Windows.Presentation.Regions
 		/// <param name="view">The view.</param>
 		public void Add( DependencyObject view )
 		{
+            Ensure.That(view).Named(nameof(view)).IsNotNull();
+
 			OnAdd( view );
 			views.Add( view );
 			OnAdded( view );
