@@ -3601,12 +3601,6 @@ namespace Radical.Windows.Presentation.Services.Validation
         public DelegateValidationService(System.Func<string, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> validationCallback) { }
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate(string ruleSet) { }
     }
-    public class EntityValidationService<T> : Radical.Windows.Presentation.Services.Validation.AbstractValidationService
-    {
-        public EntityValidationService(T entity, params Radical.ComponentModel.Validation.IValidator<>[] validators) { }
-        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate(string ruleSet) { }
-        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidateProperty(string ruleSet, string propertyName) { }
-    }
     public sealed class NullValidationService : Radical.Windows.Presentation.Services.Validation.AbstractValidationService
     {
         public static readonly Radical.Windows.Presentation.ComponentModel.IValidationService Instance;

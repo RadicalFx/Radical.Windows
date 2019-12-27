@@ -5,13 +5,12 @@ using Radical.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Radical.Windows.Presentation.Boot.Features
 {
     class AutoSubscribe : IFeature
     {
-        List<Entry> entries { get; set; } = new List<Entry>();
+        readonly List<Entry> entries = new List<Entry>();
 
         public void Setup(IServiceProvider serviceProvider, ApplicationSettings applicationSettings)
         {
@@ -24,14 +23,13 @@ namespace Radical.Windows.Presentation.Boot.Features
 
         internal void Add(Type implementation, IEnumerable<Type> contracts)
         {
-            entries.Add(new Entry() { Implementation = implementation, Contracts = contracts });
+            entries.Add(new Entry() { Implementation = implementation });
         }
     }
 
     class Entry
     {
         public Type Implementation { get; set; }
-        public IEnumerable<Type> Contracts { get; set; }
 
         public void Subscribe(IMessageBroker broker, IServiceProvider serviceProvider)
         {
