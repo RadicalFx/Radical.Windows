@@ -21,6 +21,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Effects\GrayscaleEffect.ps" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Effects\GrayscaleEffect.ps" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\assets\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
