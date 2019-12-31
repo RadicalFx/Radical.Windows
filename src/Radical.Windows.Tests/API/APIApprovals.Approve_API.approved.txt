@@ -3591,7 +3591,7 @@ namespace Radical.Windows.Presentation.Services.Validation
     {
         public DataAnnotationValidationService(TEntity entity) { }
         public System.Func<string, object, object> PropertyValueGetter { get; set; }
-        public Radical.Windows.Presentation.Services.Validation.DataAnnotationValidationService<TEntity> AddRule(System.Linq.Expressions.Expression<System.Func<object>> property, System.Func<Radical.Validation.ValidationContext<TEntity>, string> error, System.Func<Radical.Validation.ValidationContext<TEntity>, bool> rule) { }
+        public Radical.Windows.Presentation.Services.Validation.DataAnnotationValidationService<TEntity> AddRule(System.Linq.Expressions.Expression<System.Func<TEntity, object>> property, System.Func<Radical.Validation.ValidationContext<TEntity>, Radical.Validation.ValidationResult> rule) { }
         public override string GetPropertyDisplayName(object entity, string propertyName) { }
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate(string ruleSet) { }
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidateProperty(string ruleSet, string propertyName) { }

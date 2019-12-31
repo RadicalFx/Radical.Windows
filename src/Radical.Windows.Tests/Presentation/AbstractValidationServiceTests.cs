@@ -39,7 +39,7 @@ namespace Test.Radical.Windows.Presentation
             sut.Validate( propName );
 
             Assert.AreEqual( sut.ValidationErrors.Count(), expected.Length );
-            Assert.AreEqual( sut.ValidationErrors.ElementAt( 0 ).Key, expected[ 0 ].Key );
+            Assert.AreEqual( sut.ValidationErrors.ElementAt( 0 ).PropertyName, expected[ 0 ].PropertyName);
         }
 
         [TestMethod]

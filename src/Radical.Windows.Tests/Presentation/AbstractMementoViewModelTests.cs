@@ -693,13 +693,12 @@ namespace Test.Radical.Windows.Presentation
             var sut = new SampleTestViewModel();
             var svc = DataAnnotationValidationService.CreateFor( sut );
             svc.AddRule(
-                property: () => sut.NotNullNotEmpty,
-                error: ctx => "error",
+                property: o => o.NotNullNotEmpty,
                 rule: ctx =>
                 {
                     sut.AnotherOne = "fail";
 
-                    return true;
+                    return ctx.Succeeded();
                 } );
 
             sut.ValidateUsing( svc, forceIsValidationEnabledTo: true );

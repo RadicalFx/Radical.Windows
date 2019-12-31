@@ -238,7 +238,7 @@ namespace Radical.Windows.Presentation
                 var wasValid = IsValid;
                 
                 var beforeDetectedProblems = ValidationService.ValidationErrors
-                   .Where( ve => ve.Key == propertyName )
+                   .Where( ve => ve.PropertyName == propertyName )
                    .SelectMany( ve => ve.DetectedProblems )
                    .OrderBy( dp => dp )
                    .ToArray();
@@ -246,7 +246,7 @@ namespace Radical.Windows.Presentation
                 error = ValidationService.Validate( propertyName );
 
                 var afterDetectedProblems = ValidationService.ValidationErrors
-                    .Where( ve => ve.Key == propertyName )
+                    .Where( ve => ve.PropertyName == propertyName )
                     .SelectMany( ve => ve.DetectedProblems )
                     .OrderBy( dp => dp )
                     .ToArray();
@@ -563,7 +563,7 @@ namespace Radical.Windows.Presentation
                 return this.ValidationErrors.ToArray();
             }
 
-            var temp = this.ValidationErrors.Where( e => e.Key == propertyName ).ToArray();
+            var temp = this.ValidationErrors.Where( e => e.PropertyName == propertyName ).ToArray();
             return temp;
         }
 
