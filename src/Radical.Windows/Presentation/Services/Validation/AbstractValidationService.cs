@@ -15,6 +15,51 @@ namespace Radical.Windows.Presentation.Services.Validation
     public abstract class AbstractValidationService : IValidationService
     {
         readonly List<ValidationError> _validationErrors = new List<ValidationError>();
+        
+        /// <summary>
+        /// Gets a value indicating whether the validation process
+        /// returns a valid response or not.
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsValid { get; private set; } = true;
+
+        /// <summary>
+        /// Occurs when this service is reset.
+        /// </summary>
+        public event EventHandler ValidationReset;
+
+        /// <summary>
+        /// Raises the <see cref="E:ValidationReset"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnValidationReset(EventArgs e)
+        {
+            var h = ValidationReset;
+            if (h != null)
+            {
+                h(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Occurs when validation status changes.
+        /// </summary>
+        public event EventHandler StatusChanged;
+
+        /// <summary>
+        /// Raises the <see cref="E:StatusChanged"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnStatusChanged(EventArgs e)
+        {
+            var h = StatusChanged;
+            if (h != null)
+            {
+                h(this, e);
+            }
+        }
 
         /// <summary>
         /// Validates the specified property.
@@ -63,48 +108,40 @@ namespace Radical.Windows.Presentation.Services.Validation
         }
 
         /// <summary>
-        /// Gets a value indicating whether the validation process
-        /// returns a valid response or not.
+        /// Called in order to execute the concrete validation process on the given property.
         /// </summary>
-        /// <value>
-        /// 	<c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsValid{ get; private set; } = true;
-
-        /// <summary>
-        /// Occurs when validation status changes.
-        /// </summary>
-        public event EventHandler StatusChanged;
-
-        /// <summary>
-        /// Occurs when this service is reset.
-        /// </summary>
-        public event EventHandler ValidationReset;
-
-        /// <summary>
-        /// Raises the <see cref="E:StatusChanged"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected virtual void OnStatusChanged( EventArgs e )
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns>
+        /// A list of <seealso cref="ValidationError" />.
+        /// </returns>
+        protected virtual IEnumerable<ValidationError> OnValidateProperty(string propertyName)
         {
-            var h = StatusChanged;
-            if( h != null )
+            if (!IsValidationSuspended && !Validate())
             {
-                h( this, e );
+                /*
+                 * The default implementation of property validation is
+                 * very basic and relies on running a full validation and
+                 * then on looking for errors related to the validated
+                 * property. 
+                 */
+                return ValidationErrors
+                    .Where(err => err.PropertyName == propertyName);
             }
+
+            return new ValidationError[0];
         }
 
         /// <summary>
-        /// Raises the <see cref="E:ValidationReset"/> event.
+        /// Gets the invalid properties.
         /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected virtual void OnValidationReset( EventArgs e )
+        /// <returns>
+        /// A list of property names that identifies the invalid properties.
+        /// </returns>
+        public virtual IEnumerable<string> GetInvalidProperties()
         {
-            var h = ValidationReset;
-            if( h != null )
-            {
-                h( this, e );
-            }
+            return ValidationErrors.Select(ve => ve.PropertyName)
+                .Distinct()
+                .AsReadOnly();
         }
 
         /// <summary>
@@ -191,43 +228,6 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// A list of <seealso cref="ValidationError"/>.
         /// </returns>
         protected abstract IEnumerable<ValidationError> OnValidate();
-
-        /// <summary>
-        /// Called in order to execute the concrete validation process on the given property.
-        /// </summary>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>
-        /// A list of <seealso cref="ValidationError" />.
-        /// </returns>
-        protected virtual IEnumerable<ValidationError> OnValidateProperty( string propertyName )
-        {
-            if( !IsValidationSuspended && !Validate() )
-            {
-                /*
-                 * The default implementation of property validation is
-                 * very basic and relies on running a full validation and
-                 * then on looking for errors related to the validated
-                 * property. 
-                 */
-                return ValidationErrors
-                    .Where( err => err.PropertyName == propertyName );
-            }
-
-            return new ValidationError[ 0 ];
-        }
-
-        /// <summary>
-        /// Gets the invalid properties.
-        /// </summary>
-        /// <returns>
-        /// A list of property names that identifies the invalid properties.
-        /// </returns>
-        public virtual IEnumerable<string> GetInvalidProperties()
-        {
-            return ValidationErrors.Select( ve => ve.PropertyName)
-                .Distinct()
-                .AsReadOnly();
-        }
 
         /// <summary>
         /// Clears the validation state resetting to its default valid value.
