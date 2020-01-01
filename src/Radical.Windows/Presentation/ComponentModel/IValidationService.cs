@@ -9,29 +9,29 @@ namespace Radical.Windows.Presentation.ComponentModel
     /// Determines the reset behavior.
     /// </summary>
     [Flags]
-	public enum ValidationResetBehavior
-	{
-		/// <summary>
-		/// Resets only the errors collection.
-		/// </summary>
-		ErrorsOnly,
+    public enum ValidationResetBehavior
+    {
+        /// <summary>
+        /// Resets only the errors collection.
+        /// </summary>
+        ErrorsOnly,
 
-		/// <summary>
-		/// Resets only the validation tracker that tracks if validation for properties has been called at least once.
-		/// </summary>
-		ValidationTracker,
+        /// <summary>
+        /// Resets only the validation tracker that tracks if validation for properties has been called at least once.
+        /// </summary>
+        ValidationTracker,
 
-		/// <summary>
-		/// Resets both the validation tracker and the errors collection.
-		/// </summary>
-		All = ErrorsOnly | ValidationTracker
-	}
+        /// <summary>
+        /// Resets both the validation tracker and the errors collection.
+        /// </summary>
+        All = ErrorsOnly | ValidationTracker
+    }
 
-	/// <summary>
-	/// Defines a validation service that can be used to validate an entity or a ViewModel.
-	/// </summary>
-	public interface IValidationService
-	{
+    /// <summary>
+    /// Defines a validation service that can be used to validate an entity or a ViewModel.
+    /// </summary>
+    public interface IValidationService
+    {
         /// <summary>
         /// Gets a value indicating whether the validation process
         /// returns a valid response or not.
@@ -39,26 +39,26 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// <value><c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.</value>
         bool IsValid { get; }
 
-		/// <summary>
-		/// Occurs when validation status changes.
-		/// </summary>
-		event EventHandler StatusChanged;
+        /// <summary>
+        /// Occurs when validation status changes.
+        /// </summary>
+        event EventHandler StatusChanged;
 
-		/// <summary>
-		/// Occurs when this service is resetted.
-		/// </summary>
-		event EventHandler ValidationReset;
+        /// <summary>
+        /// Occurs when this service is reset.
+        /// </summary>
+        event EventHandler ValidationReset;
 
-		/// <summary>
-		/// Gets the invalid properties.
-		/// </summary>
-		/// <returns>A list of property names that identifies the invalid properties.</returns>
-		IEnumerable<string> GetInvalidProperties();
+        /// <summary>
+        /// Gets the invalid properties.
+        /// </summary>
+        /// <returns>A list of property names that identifies the invalid properties.</returns>
+        IEnumerable<string> GetInvalidProperties();
 
         /// <summary>
         /// Starts the validation process.
         /// </summary>
-        /// <returns><c>True</c> if the validation process succedeed; otherwise <c>false</c>.</returns>
+        /// <returns><c>True</c> if the validation process succeeded; otherwise <c>false</c>.</returns>
         bool Validate();
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// </summary>
         /// <param name="ruleSet">The rule set.</param>
         /// <returns>
-        ///   <c>True</c> if the validation process succedeed; otherwise <c>false</c>.
+        ///   <c>True</c> if the validation process succeeded; otherwise <c>false</c>.
         /// </returns>
         bool ValidateRuleSet(string ruleSet );
 
@@ -85,22 +85,22 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// <returns>The validation error message if any; otherwise a null or empty string.</returns>
         string ValidateRuleSet(string ruleSet, string propertyName );
 
-		/// <summary>
-		/// Gets the validation errors.
-		/// </summary>
-		/// <value>All the validation errors.</value>
-		IEnumerable<ValidationError> ValidationErrors { get; }
+        /// <summary>
+        /// Gets the validation errors.
+        /// </summary>
+        /// <value>All the validation errors.</value>
+        IEnumerable<ValidationError> ValidationErrors { get; }
 
-		/// <summary>
-		/// Clears the validation state resetting to it its default valid value.
-		/// </summary>
-		void Reset();
+        /// <summary>
+        /// Clears the validation state resetting to it its default valid value.
+        /// </summary>
+        void Reset();
 
-		/// <summary>
-		/// Clears the validation state resetting to it its default valid value.
-		/// </summary>
-		/// <param name="resetBehavior">The reset behavior.</param>
-		void Reset(ValidationResetBehavior resetBehavior);
+        /// <summary>
+        /// Clears the validation state resetting to it its default valid value.
+        /// </summary>
+        /// <param name="resetBehavior">The reset behavior.</param>
+        void Reset(ValidationResetBehavior resetBehavior);
 
         /// <summary>
         /// Gets a value indicating whether the validation process is suspended.
@@ -110,16 +110,16 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// </value>
         bool IsValidationSuspended { get; }
 
-		/// <summary>
-		/// Suspends the validation.
-		/// </summary>
-		/// <returns>A disposable instance to automatically resume validation on dispose.</returns>
-		IDisposable SuspendValidation();
+        /// <summary>
+        /// Suspends the validation.
+        /// </summary>
+        /// <returns>A disposable instance to automatically resume validation on dispose.</returns>
+        IDisposable SuspendValidation();
 
-		/// <summary>
-		/// Resumes the validation.
-		/// </summary>
-		void ResumeValidation();
+        /// <summary>
+        /// Resumes the validation.
+        /// </summary>
+        void ResumeValidation();
 
         /// <summary>
         /// Gets the display name of the property.
@@ -145,5 +145,5 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// <c>True</c> if the service should merge validation errors related to the same property; otherwise <c>False</c>.
         /// </value>
         bool MergeValidationErrors { get; set; }
-	}
+    }
 }
