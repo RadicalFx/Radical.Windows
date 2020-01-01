@@ -15,15 +15,6 @@ namespace Radical.Windows.Presentation.Services.Validation
     public abstract class AbstractValidationService : IValidationService
     {
         readonly List<ValidationError> _validationErrors = new List<ValidationError>();
-        
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractValidationService"/> class.
-        /// </summary>
-        protected AbstractValidationService()
-        {
-            IsValid = true;
-            MergeValidationErrors = false;
-        }
 
         /// <summary>
         /// Validates the specified property.
@@ -78,11 +69,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <value>
         /// 	<c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.
         /// </value>
-        public bool IsValid
-        {
-            get;
-            private set;
-        }
+        public bool IsValid{ get; private set; } = true;
 
         /// <summary>
         /// Occurs when validation status changes.
@@ -349,18 +336,18 @@ namespace Radical.Windows.Presentation.Services.Validation
             get { return _mergeValidationErrors; }
             set
             {
-                if( value != MergeValidationErrors )
+                if (value != MergeValidationErrors)
                 {
                     _mergeValidationErrors = value;
 
-                    if( ValidationErrors.Any() )
+                    if (ValidationErrors.Any())
                     {
-                        //reset the errors if any so the have them gruoped
+                        //reset the errors if any so the have them grouped
                         var actual = ValidationErrors.ToArray();
                         _validationErrors.Clear();
-                        AddValidationErrors( actual );
+                        AddValidationErrors(actual);
 
-                        OnValidationReset( EventArgs.Empty );
+                        OnValidationReset(EventArgs.Empty);
                     }
                 }
             }
