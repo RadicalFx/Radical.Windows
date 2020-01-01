@@ -62,28 +62,11 @@ namespace Radical.Windows.Presentation.ComponentModel
         bool Validate();
 
         /// <summary>
-        /// Starts the validation process.
-        /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
-        /// <returns>
-        ///   <c>True</c> if the validation process succeeded; otherwise <c>false</c>.
-        /// </returns>
-        bool ValidateRuleSet(string ruleSet );
-
-        /// <summary>
         /// Validates the specified property.
         /// </summary>
         /// <param name="propertyName">The name of the property.</param>
         /// <returns>The validation error message if any; otherwise a null or empty string.</returns>
-        string Validate(string propertyName );
-
-        /// <summary>
-        /// Starts the validation process.
-        /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
-        /// <param name="propertyName">The name of the property to validate.</param>
-        /// <returns>The validation error message if any; otherwise a null or empty string.</returns>
-        string ValidateRuleSet(string ruleSet, string propertyName );
+        string ValidateProperty(string propertyName);
 
         /// <summary>
         /// Gets the validation errors.

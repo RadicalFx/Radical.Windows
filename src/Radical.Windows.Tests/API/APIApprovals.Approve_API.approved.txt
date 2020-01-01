@@ -2800,8 +2800,7 @@ namespace Radical.Windows.Presentation
         protected virtual bool SkipPropertyValidation(string propertyName) { }
         public virtual void TriggerValidation() { }
         public bool Validate() { }
-        public bool Validate(Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior) { }
-        public virtual bool Validate(string ruleSet, Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior) { }
+        public virtual bool Validate(Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior) { }
         protected string ValidateProperty(string propertyName) { }
         protected virtual string ValidateProperty(string propertyName, Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior) { }
     }
@@ -3226,7 +3225,6 @@ namespace Radical.Windows.Presentation.ComponentModel
         void TriggerValidation();
         bool Validate();
         bool Validate(Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior);
-        bool Validate(string ruleSet, Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior);
     }
     public interface ISwitchingElementsRegion : Radical.Windows.Presentation.ComponentModel.IElementsRegion, Radical.Windows.Presentation.ComponentModel.IRegion
     {
@@ -3251,9 +3249,7 @@ namespace Radical.Windows.Presentation.ComponentModel
         void ResumeValidation();
         System.IDisposable SuspendValidation();
         bool Validate();
-        string Validate(string propertyName);
-        bool ValidateRuleSet(string ruleSet);
-        string ValidateRuleSet(string ruleSet, string propertyName);
+        string ValidateProperty(string propertyName);
     }
     public interface IViewModel : System.ComponentModel.INotifyPropertyChanged
     {
@@ -3571,17 +3567,15 @@ namespace Radical.Windows.Presentation.Services.Validation
         public virtual string GetPropertyDisplayName(object entity, string propertyName) { }
         public string GetPropertyDisplayName<T>(T entity, System.Linq.Expressions.Expression<System.Func<T, object>> property) { }
         protected virtual void OnStatusChanged(System.EventArgs e) { }
-        protected abstract System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate(string ruleSet);
-        protected virtual System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidateProperty(string ruleSet, string propertyName) { }
+        protected abstract System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate();
+        protected virtual System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidateProperty(string propertyName) { }
         protected virtual void OnValidationReset(System.EventArgs e) { }
         public void Reset() { }
         public virtual void Reset(Radical.Windows.Presentation.ComponentModel.ValidationResetBehavior resetBehavior) { }
         public void ResumeValidation() { }
         public System.IDisposable SuspendValidation() { }
-        public bool Validate() { }
-        public string Validate(string propertyName) { }
-        public virtual bool ValidateRuleSet(string ruleSet) { }
-        public string ValidateRuleSet(string ruleSet, string propertyName) { }
+        public virtual bool Validate() { }
+        public string ValidateProperty(string propertyName) { }
     }
     public static class DataAnnotationValidationService
     {
@@ -3593,18 +3587,18 @@ namespace Radical.Windows.Presentation.Services.Validation
         public System.Func<string, object, object> PropertyValueGetter { get; set; }
         public Radical.Windows.Presentation.Services.Validation.DataAnnotationValidationService<TEntity> AddRule(System.Linq.Expressions.Expression<System.Func<TEntity, object>> property, System.Func<Radical.Validation.ValidationContext<TEntity>, Radical.Validation.ValidationResult> rule) { }
         public override string GetPropertyDisplayName(object entity, string propertyName) { }
-        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate(string ruleSet) { }
-        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidateProperty(string ruleSet, string propertyName) { }
+        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
+        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidateProperty(string propertyName) { }
     }
     public sealed class DelegateValidationService : Radical.Windows.Presentation.Services.Validation.AbstractValidationService
     {
-        public DelegateValidationService(System.Func<string, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> validationCallback) { }
-        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate(string ruleSet) { }
+        public DelegateValidationService(System.Func<System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> validationCallback) { }
+        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
     }
     public sealed class NullValidationService : Radical.Windows.Presentation.Services.Validation.AbstractValidationService
     {
         public static readonly Radical.Windows.Presentation.ComponentModel.IValidationService Instance;
-        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate(string ruleSet) { }
+        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
     }
 }
 namespace Radical.Windows.Threading

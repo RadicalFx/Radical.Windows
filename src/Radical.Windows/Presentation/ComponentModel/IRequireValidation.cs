@@ -39,16 +39,6 @@ namespace Radical.Windows.Presentation.ComponentModel
         bool Validate(ValidationBehavior behavior);
 
         /// <summary>
-        /// Validates this instance.
-        /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
-        /// <param name="behavior">The behavior.</param>
-        /// <returns>
-        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
-        /// </returns>
-        bool Validate(string ruleSet, ValidationBehavior behavior);
-
-        /// <summary>
         /// Occurs when the validation process is completed.
         /// </summary>
         event EventHandler Validated;

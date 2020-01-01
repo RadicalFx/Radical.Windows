@@ -19,7 +19,7 @@ namespace Test.Radical.Windows.Presentation
                 AddValidationErrors( errorsToReturnUnderTest );
             }
 
-            protected override IEnumerable<ValidationError> OnValidate( string ruleSet )
+            protected override IEnumerable<ValidationError> OnValidate()
             {
                 var errors = new List<ValidationError>( ValidationErrors );
 
@@ -37,7 +37,7 @@ namespace Test.Radical.Windows.Presentation
             var expected = new[] { new ValidationError( propName, propName, new[] { expectedError } ) };
             var sut = new TestValidationService( expected );
 
-            var error = sut.Validate( propName );
+            var error = sut.ValidateProperty( propName );
 
             Assert.AreEqual(expectedError, error);
             Assert.AreEqual( sut.ValidationErrors.Count(), expected.Length );
@@ -59,9 +59,9 @@ namespace Test.Radical.Windows.Presentation
             var sut = new TestValidationService( errors );
             sut.StatusChanged += ( s, e ) => actual += 1;
 
-            sut.Validate( "p1" );
-            sut.Validate( "p2" );
-            sut.Validate( "p3" );
+            sut.ValidateProperty( "p1" );
+            sut.ValidateProperty( "p2" );
+            sut.ValidateProperty( "p3" );
 
             Assert.AreEqual( 5, actual );
         }

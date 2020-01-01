@@ -69,7 +69,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <returns>
         /// A list of <seealso cref="ValidationError" />.
         /// </returns>
-        protected override IEnumerable<ValidationError> OnValidate(string ruleSet)
+        protected override IEnumerable<ValidationError> OnValidate()
         {
             var errors = new List<ValidationError>();
 
@@ -106,7 +106,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <returns>
         /// A list of <seealso cref="ValidationError" />.
         /// </returns>
-        protected override IEnumerable<ValidationError> OnValidateProperty(string ruleSet, string propertyName)
+        protected override IEnumerable<ValidationError> OnValidateProperty(string propertyName)
         {
             var errors = new List<ValidationError>();
 
@@ -159,13 +159,6 @@ namespace Radical.Windows.Presentation.Services.Validation
             return base.GetPropertyDisplayName(entity, propertyName);
         }
 
-        /// <summary>
-        /// Adds a custom validation rule.
-        /// </summary>
-        /// <param name="property">The property.</param>
-        /// <param name="error">The error.</param>
-        /// <param name="rule">The rule.</param>
-        /// <returns></returns>
         public DataAnnotationValidationService<TEntity> AddRule(Expression<Func<TEntity, object>> property, Func<ValidationContext<TEntity>, ValidationResult> rule)
         {
             customValidator.AddRule(property, rule);

@@ -32,20 +32,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <returns>
         /// The validation error message if any; otherwise a null or empty string.
         /// </returns>
-        public string Validate(string propertyName )
-        {
-            return ValidateRuleSet( null, propertyName );
-        }
-
-        /// <summary>
-        /// Starts the validation process.
-        /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
-        /// <param name="propertyName">The name of the property to validate.</param>
-        /// <returns>
-        /// The validation error message if any; otherwise a null or empty string.
-        /// </returns>
-        public string ValidateRuleSet(string ruleSet, string propertyName )
+        public string ValidateProperty(string propertyName)
         {
             if( IsValidationSuspended )
             {
@@ -54,7 +41,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 
             var isValidBeforeValidation = IsValid;
 
-            var results = OnValidateProperty( ruleSet, propertyName );
+            var results = OnValidateProperty(propertyName);
 
             var removedErrors = _validationErrors
                 .Where( e => e.PropertyName != propertyName )
@@ -187,19 +174,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <returns>
         ///   <c>True</c> if the validation process succeeded; otherwise <c>false</c>.
         /// </returns>
-        public bool Validate()
-        {
-            return ValidateRuleSet( null );
-        }
-
-        /// <summary>
-        /// Starts the validation process.
-        /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
-        /// <returns>
-        ///   <c>True</c> if the validation process succeeded; otherwise <c>false</c>.
-        /// </returns>
-        public virtual bool ValidateRuleSet(string ruleSet )
+        public virtual bool Validate()
         {
             if( IsValidationSuspended )
             {
@@ -207,7 +182,7 @@ namespace Radical.Windows.Presentation.Services.Validation
             }
 
             var isValidBeforeValidation = IsValid;
-            var results = OnValidate( ruleSet );
+            var results = OnValidate();
 
             ClearErrors();
             AddValidationErrors( results.ToArray() );
@@ -225,23 +200,21 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <summary>
         /// Called in order to execute the concrete validation process.
         /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
         /// <returns>
         /// A list of <seealso cref="ValidationError"/>.
         /// </returns>
-        protected abstract IEnumerable<ValidationError> OnValidate(string ruleSet );
+        protected abstract IEnumerable<ValidationError> OnValidate();
 
         /// <summary>
         /// Called in order to execute the concrete validation process on the given property.
         /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>
         /// A list of <seealso cref="ValidationError" />.
         /// </returns>
-        protected virtual IEnumerable<ValidationError> OnValidateProperty(string ruleSet, string propertyName )
+        protected virtual IEnumerable<ValidationError> OnValidateProperty( string propertyName )
         {
-            if( !IsValidationSuspended && !ValidateRuleSet( ruleSet ) )
+            if( !IsValidationSuspended && !Validate() )
             {
                 /*
                  * The default implementation of property validation is

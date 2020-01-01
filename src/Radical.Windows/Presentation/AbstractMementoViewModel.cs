@@ -243,7 +243,7 @@ namespace Radical.Windows.Presentation
                    .OrderBy( dp => dp )
                    .ToArray();
 
-                error = ValidationService.Validate( propertyName );
+                error = ValidationService.ValidateProperty(propertyName);
 
                 var afterDetectedProblems = ValidationService.ValidationErrors
                     .Where( ve => ve.PropertyName == propertyName )
@@ -331,7 +331,7 @@ namespace Radical.Windows.Presentation
 
             var wasValid = IsValid;
 
-            ValidationService.ValidateRuleSet( ruleSet );
+            ValidationService.Validate();
             OnValidated();
 
             if( behavior == ValidationBehavior.TriggerValidationErrorsOnFailure && !ValidationService.IsValid )

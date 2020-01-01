@@ -245,7 +245,7 @@ namespace Radical.Windows.Presentation
                     .OrderBy( dp => dp )
                     .ToArray();
 
-                error = ValidationService.Validate( propertyName );
+                error = ValidationService.ValidateProperty( propertyName );
 
                 var afterDetectedProblems = ValidationService.ValidationErrors
                     .Where( ve => ve.PropertyName == propertyName )
@@ -299,7 +299,7 @@ namespace Radical.Windows.Presentation
         /// <returns><c>True</c> if this instance is valid; otherwise <c>false</c>.</returns>
         public bool Validate()
         {
-            return Validate( null, ValidationBehavior.Default );
+            return Validate(ValidationBehavior.Default);
         }
 
         /// <summary>
@@ -309,20 +309,7 @@ namespace Radical.Windows.Presentation
         /// <returns>
         ///   <c>True</c> if this instance is valid; otherwise <c>false</c>.
         /// </returns>
-        public bool Validate( ValidationBehavior behavior )
-        {
-            return Validate( null, behavior );
-        }
-
-        /// <summary>
-        /// Validates this instance.
-        /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
-        /// <param name="behavior">The behavior.</param>
-        /// <returns>
-        ///   <c>True</c> if this instance is valid; otherwise <c>false</c>.
-        /// </returns>
-        public virtual bool Validate(string ruleSet, ValidationBehavior behavior )
+        public virtual bool Validate(ValidationBehavior behavior)
         {
             if( ValidationService.IsValidationSuspended )
             {
@@ -331,7 +318,7 @@ namespace Radical.Windows.Presentation
 
             var wasValid = IsValid;
 
-            ValidationService.ValidateRuleSet( ruleSet );
+            ValidationService.Validate();
             OnValidated();
 
             if( behavior == ValidationBehavior.TriggerValidationErrorsOnFailure && !ValidationService.IsValid )
