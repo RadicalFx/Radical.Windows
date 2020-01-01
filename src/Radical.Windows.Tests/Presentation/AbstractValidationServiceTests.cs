@@ -32,12 +32,14 @@ namespace Test.Radical.Windows.Presentation
         public void AbstractValidationService_validate_property_using_entity_with_non_valid_property_should_report_expected_errors()
         {
             var propName = "TestProperty";
+            var expectedError = "--fake--";
 
-            var expected = new[] { new ValidationError( propName, propName, new[] { "--fake--" } ) };
+            var expected = new[] { new ValidationError( propName, propName, new[] { expectedError } ) };
             var sut = new TestValidationService( expected );
 
-            sut.Validate( propName );
+            var error = sut.Validate( propName );
 
+            Assert.AreEqual(expectedError, error);
             Assert.AreEqual( sut.ValidationErrors.Count(), expected.Length );
             Assert.AreEqual( sut.ValidationErrors.ElementAt( 0 ).PropertyName, expected[ 0 ].PropertyName);
         }

@@ -25,29 +25,6 @@ namespace Radical.Windows.Presentation.Services.Validation
             MergeValidationErrors = false;
         }
 
-        //readonly HashSet<String> validationCalledOnce = new HashSet<String>();
-
-        ///// <summary>
-        ///// Called in order to understand if the validation for the 
-        ///// supplied property has already been called at least one time.
-        ///// </summary>
-        ///// <param name="propertyName">Name of the property.</param>
-        ///// <returns><c>True</c> if the supplied property has been validated at least once; otherwise <c>false</c>.</returns>
-        //protected virtual Boolean ValidationCalledOnceFor( String propertyName )
-        //{
-        //    return this.validationCalledOnce.Contains( propertyName );
-        //}
-
-        ///// <summary>
-        ///// Registers that the validation process has been called 
-        ///// at least once for the supplied property.
-        ///// </summary>
-        ///// <param name="propertyName">Name of the property.</param>
-        //protected virtual void RegisterValidationCalledOnceFor( String propertyName )
-        //{
-        //    this.validationCalledOnce.Add( propertyName );
-        //}
-
         /// <summary>
         /// Validates the specified property.
         /// </summary>
@@ -70,19 +47,6 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// </returns>
         public string ValidateRuleSet(string ruleSet, string propertyName )
         {
-            //if( !this.ValidationCalledOnceFor( propertyName ) )
-            //{
-            //    /*
-            //     * Se non abbiamo mai validato la proprietà significa che siamo 
-            //     * allo startup della Window e il motore di validazione di WPF 
-            //     * viene triggherato per ogni "set" di ogni binding. Dato che non
-            //     * ci interessa visualizzare la Window come non valida sin da 
-            //     * subito evitiamo la validazione al primo controllo.
-            //     */
-            //    this.RegisterValidationCalledOnceFor( propertyName );
-            //    return null;
-            //}
-
             if( IsValidationSuspended )
             {
                 return null;
@@ -92,14 +56,14 @@ namespace Radical.Windows.Presentation.Services.Validation
 
             var results = OnValidateProperty( ruleSet, propertyName );
 
-            var toBeRemoved = _validationErrors
-                .Where( e => e.PropertyName == propertyName )
+            var removedErrors = _validationErrors
+                .Where( e => e.PropertyName != propertyName )
                 .ToArray()
                 .ForEach( e => _validationErrors.Remove( e ) );
 
             AddValidationErrors( results.ToArray() );
 
-            var shouldTriggerStatusChanged = toBeRemoved.Any() || results.Any();
+            var shouldTriggerStatusChanged = removedErrors.Any() || results.Any();
             IsValid = ValidationErrors.None();
 
             if( IsValid != isValidBeforeValidation || shouldTriggerStatusChanged )
@@ -139,7 +103,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         public event EventHandler StatusChanged;
 
         /// <summary>
-        /// Occurs when this service is resetted.
+        /// Occurs when this service is reset.
         /// </summary>
         public event EventHandler ValidationReset;
 
@@ -221,7 +185,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// Starts the validation process.
         /// </summary>
         /// <returns>
-        ///   <c>True</c> if the validation process succedeed; otherwise <c>false</c>.
+        ///   <c>True</c> if the validation process succeeded; otherwise <c>false</c>.
         /// </returns>
         public bool Validate()
         {
@@ -233,7 +197,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// </summary>
         /// <param name="ruleSet">The rule set.</param>
         /// <returns>
-        ///   <c>True</c> if the validation process succedeed; otherwise <c>false</c>.
+        ///   <c>True</c> if the validation process succeeded; otherwise <c>false</c>.
         /// </returns>
         public virtual bool ValidateRuleSet(string ruleSet )
         {
@@ -243,12 +207,12 @@ namespace Radical.Windows.Presentation.Services.Validation
             }
 
             var isValidBeforeValidation = IsValid;
-            var result = OnValidate( ruleSet );
+            var results = OnValidate( ruleSet );
 
             ClearErrors();
-            AddValidationErrors( result.ToArray() );
+            AddValidationErrors( results.ToArray() );
 
-            IsValid = result.None();
+            IsValid = results.None();
 
             if( IsValid != isValidBeforeValidation || !IsValid )
             {
@@ -280,14 +244,13 @@ namespace Radical.Windows.Presentation.Services.Validation
             if( !IsValidationSuspended && !ValidateRuleSet( ruleSet ) )
             {
                 /*
-                 * Se la validazione fallisce dobbiamo capire se è fallita
-                 * per colpa della proprietà che ci è stato chiesto di validare.
-                 * Cerchiamo quindi nella lista degli errori uno che abbia come Key
-                 * il nome della proprietà
+                 * The default implementation of property validation is
+                 * very basic and relies on running a full validation and
+                 * then on looking for errors related to the validated
+                 * property. 
                  */
-                return ValidationErrors;
-                    //.Where( err => err.PropertyName == propertyName )
-                    //.ToArray();
+                return ValidationErrors
+                    .Where( err => err.PropertyName == propertyName );
             }
 
             return new ValidationError[ 0 ];
