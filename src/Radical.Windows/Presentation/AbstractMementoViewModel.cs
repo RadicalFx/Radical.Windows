@@ -533,7 +533,7 @@ namespace Radical.Windows.Presentation
         public virtual void ResetValidation()
         {
             this.IsResettingValidation = true;
-            this.ValidationService.Reset( ValidationResetBehavior.ErrorsOnly );
+            this.ValidationService.Reset();
             this.IsResettingValidation = false;
         }
 

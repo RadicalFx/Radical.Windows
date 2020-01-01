@@ -247,27 +247,8 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// </summary>
         public void Reset() 
         {
-            Reset( ValidationResetBehavior.All );
-        }
-
-        /// <summary>
-        /// Clears the validation state resetting to its default valid value.
-        /// </summary>
-        /// <param name="resetBehavior">The reset behavior.</param>
-        public virtual void Reset( ValidationResetBehavior resetBehavior )
-        {
-            if( ( resetBehavior & ValidationResetBehavior.ErrorsOnly ) == ValidationResetBehavior.ErrorsOnly )
-            {
-                _validationErrors.Clear();
-            }
-
+            _validationErrors.Clear();
             IsValid = true;
-
-            //if( ( resetBehavior & ValidationResetBehavior.ValidationTracker ) == ValidationResetBehavior.ValidationTracker )
-            //{
-            //    this.validationCalledOnce.Clear();
-            //}
-
             OnValidationReset( EventArgs.Empty );
         }
 
