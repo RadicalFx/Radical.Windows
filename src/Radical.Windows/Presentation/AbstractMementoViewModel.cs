@@ -6,6 +6,7 @@ using Radical.Validation;
 using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.Services.Validation;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -99,41 +100,41 @@ namespace Radical.Windows.Presentation
                 if( _validationService == null )
                 {
                     _validationService = GetValidationService();
-                    _validationService.StatusChanged += ( s, e ) =>
-                    {
-                        ValidationErrors.Clear();
-                        foreach( var error in _validationService.ValidationErrors )
-                        {
-                            ValidationErrors.Add( error );
-                        }
+                    //_validationService.StatusChanged += ( s, e ) =>
+                    //{
+                    //    ValidationErrors.Clear();
+                    //    foreach( var error in _validationService.ValidationErrors )
+                    //    {
+                    //        ValidationErrors.Add( error );
+                    //    }
 
-                        this.OnErrorsChanged( null );
-                        this.OnPropertyChanged( () => this.HasErrors );
-                    };
+                    //    this.OnErrorsChanged( null );
+                    //    this.OnPropertyChanged( () => this.HasErrors );
+                    //};
 
-                    _validationService.ValidationReset += ( s, e ) =>
-                    {
-                        var shouldSetStatus = !IsResettingValidation;
-                        if( shouldSetStatus )
-                        {
-                            IsResettingValidation = true;
-                        }
+                    //_validationService.ValidationReset += ( s, e ) =>
+                    //{
+                    //    var shouldSetStatus = !IsResettingValidation;
+                    //    if( shouldSetStatus )
+                    //    {
+                    //        IsResettingValidation = true;
+                    //    }
 
-                        ValidationErrors.Clear();
-                        GetType()
-                            .GetProperties()
-                            .Where( p => !SkipPropertyValidation( p.Name ) )
-                            .Select( p => p.Name )
-                            .ForEach( p => OnPropertyChanged( p ) );
+                    //    ValidationErrors.Clear();
+                    //    GetType()
+                    //        .GetProperties()
+                    //        .Where( p => !SkipPropertyValidation( p.Name ) )
+                    //        .Select( p => p.Name )
+                    //        .ForEach( p => OnPropertyChanged( p ) );
 
-                        this.OnErrorsChanged( null );
-                        this.OnPropertyChanged( () => this.HasErrors );
+                    //    this.OnErrorsChanged( null );
+                    //    this.OnPropertyChanged( () => this.HasErrors );
 
-                        if( shouldSetStatus )
-                        {
-                            IsResettingValidation = false;
-                        }
-                    };
+                    //    if( shouldSetStatus )
+                    //    {
+                    //        IsResettingValidation = false;
+                    //    }
+                    //};
                 }
 
                 return _validationService;
@@ -226,8 +227,6 @@ namespace Radical.Windows.Presentation
         /// </returns>
         protected virtual string ValidateProperty(string propertyName, ValidationBehavior behavior )
         {
-            string error = null;
-
             if( ValidationService.IsValidationSuspended )
             {
                 return error;
@@ -237,7 +236,7 @@ namespace Radical.Windows.Presentation
             {
                 var wasValid = IsValid;
                 
-                var beforeDetectedProblems = ValidationService.ValidationErrors
+                var beforeDetectedProblems = ValidationErrors
                    .Where( ve => ve.PropertyName == propertyName )
                    .SelectMany( ve => ve.DetectedProblems )
                    .OrderBy( dp => dp )

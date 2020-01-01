@@ -147,7 +147,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <param name="entity">The entity.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns></returns>
-        public override string GetPropertyDisplayName(object entity, string propertyName)
+        string GetPropertyDisplayName(object entity, string propertyName)
         {
             var pi = entity.GetType().GetProperty(propertyName);
             if (pi != null && pi.IsAttributeDefined<DataAnnotations.DisplayAttribute>())
@@ -156,7 +156,7 @@ namespace Radical.Windows.Presentation.Services.Validation
                 return a.GetName();
             }
 
-            return base.GetPropertyDisplayName(entity, propertyName);
+            return null;
         }
 
         public DataAnnotationValidationService<TEntity> AddRule(Expression<Func<TEntity, object>> property, Func<ValidationContext<TEntity>, ValidationResult> rule)

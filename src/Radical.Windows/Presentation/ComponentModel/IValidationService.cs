@@ -10,52 +10,46 @@ namespace Radical.Windows.Presentation.ComponentModel
     /// </summary>
     public interface IValidationService
     {
-        /// <summary>
-        /// Gets a value indicating whether the validation process
-        /// returns a valid response or not.
-        /// </summary>
-        /// <value><c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.</value>
-        bool IsValid { get; }
+        ///// <summary>
+        ///// Gets a value indicating whether the validation process
+        ///// returns a valid response or not.
+        ///// </summary>
+        ///// <value><c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.</value>
+        //bool IsValid { get; }
 
-        /// <summary>
-        /// Occurs when validation status changes.
-        /// </summary>
-        event EventHandler StatusChanged;
+        ///// <summary>
+        ///// Occurs when validation status changes.
+        ///// </summary>
+        //event EventHandler StatusChanged;
 
-        /// <summary>
-        /// Occurs when this service is reset.
-        /// </summary>
-        event EventHandler ValidationReset;
+        ///// <summary>
+        ///// Occurs when this service is reset.
+        ///// </summary>
+        //event EventHandler ValidationReset;
 
-        /// <summary>
-        /// Gets the invalid properties.
-        /// </summary>
-        /// <returns>A list of property names that identifies the invalid properties.</returns>
-        IEnumerable<string> GetInvalidProperties();
+        ///// <summary>
+        ///// Gets the invalid properties.
+        ///// </summary>
+        ///// <returns>A list of property names that identifies the invalid properties.</returns>
+        //IEnumerable<string> GetInvalidProperties();
 
         /// <summary>
         /// Starts the validation process.
         /// </summary>
         /// <returns><c>True</c> if the validation process succeeded; otherwise <c>false</c>.</returns>
-        bool Validate();
+        (bool isValid, IEnumerable<ValidationError> errors) Validate();
 
         /// <summary>
         /// Validates the specified property.
         /// </summary>
         /// <param name="propertyName">The name of the property.</param>
         /// <returns>The validation error message if any; otherwise a null or empty string.</returns>
-        string ValidateProperty(string propertyName);
+        (bool isValid, IEnumerable<ValidationError> errors) ValidateProperty(string propertyName);
 
-        /// <summary>
-        /// Gets the validation errors.
-        /// </summary>
-        /// <value>All the validation errors.</value>
-        IEnumerable<ValidationError> ValidationErrors { get; }
-
-        /// <summary>
-        /// Clears the validation state resetting to it its default valid value.
-        /// </summary>
-        void Reset();
+        ///// <summary>
+        ///// Clears the validation state resetting to it its default valid value.
+        ///// </summary>
+        //void Reset();
 
         /// <summary>
         /// Gets a value indicating whether the validation process is suspended.
@@ -76,22 +70,22 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// </summary>
         void ResumeValidation();
 
-        /// <summary>
-        /// Gets the display name of the property.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity">The entity.</param>
-        /// <param name="property">The property.</param>
-        /// <returns></returns>
-        string GetPropertyDisplayName<T>( T entity, Expression<Func<T, object>> property );
+        ///// <summary>
+        ///// Gets the display name of the property.
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="entity">The entity.</param>
+        ///// <param name="property">The property.</param>
+        ///// <returns></returns>
+        //string GetPropertyDisplayName<T>( T entity, Expression<Func<T, object>> property );
 
-        /// <summary>
-        /// Gets the display name of the property.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns></returns>
-        string GetPropertyDisplayName(object entity, string propertyName );
+        ///// <summary>
+        ///// Gets the display name of the property.
+        ///// </summary>
+        ///// <param name="entity">The entity.</param>
+        ///// <param name="propertyName">Name of the property.</param>
+        ///// <returns></returns>
+        //string GetPropertyDisplayName(object entity, string propertyName );
 
         /// <summary>
         /// Gets or sets if the service should merge validation errors related to the same property.

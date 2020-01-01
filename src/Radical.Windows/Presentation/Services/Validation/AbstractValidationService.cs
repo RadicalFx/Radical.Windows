@@ -15,51 +15,51 @@ namespace Radical.Windows.Presentation.Services.Validation
     public abstract class AbstractValidationService : IValidationService
     {
         readonly List<ValidationError> _validationErrors = new List<ValidationError>();
-        
-        /// <summary>
-        /// Gets a value indicating whether the validation process
-        /// returns a valid response or not.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsValid { get; private set; } = true;
 
-        /// <summary>
-        /// Occurs when this service is reset.
-        /// </summary>
-        public event EventHandler ValidationReset;
+        ///// <summary>
+        ///// Gets a value indicating whether the validation process
+        ///// returns a valid response or not.
+        ///// </summary>
+        ///// <value>
+        ///// 	<c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.
+        ///// </value>
+        //public bool IsValid { get; private set; } = true;
 
-        /// <summary>
-        /// Raises the <see cref="E:ValidationReset"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected virtual void OnValidationReset(EventArgs e)
-        {
-            var h = ValidationReset;
-            if (h != null)
-            {
-                h(this, e);
-            }
-        }
+        ///// <summary>
+        ///// Occurs when this service is reset.
+        ///// </summary>
+        //public event EventHandler ValidationReset;
 
-        /// <summary>
-        /// Occurs when validation status changes.
-        /// </summary>
-        public event EventHandler StatusChanged;
+        ///// <summary>
+        ///// Raises the <see cref="E:ValidationReset"/> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        //protected virtual void OnValidationReset(EventArgs e)
+        //{
+        //    var h = ValidationReset;
+        //    if (h != null)
+        //    {
+        //        h(this, e);
+        //    }
+        //}
 
-        /// <summary>
-        /// Raises the <see cref="E:StatusChanged"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected virtual void OnStatusChanged(EventArgs e)
-        {
-            var h = StatusChanged;
-            if (h != null)
-            {
-                h(this, e);
-            }
-        }
+        ///// <summary>
+        ///// Occurs when validation status changes.
+        ///// </summary>
+        //public event EventHandler StatusChanged;
+
+        ///// <summary>
+        ///// Raises the <see cref="E:StatusChanged"/> event.
+        ///// </summary>
+        ///// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        //protected virtual void OnStatusChanged(EventArgs e)
+        //{
+        //    var h = StatusChanged;
+        //    if (h != null)
+        //    {
+        //        h(this, e);
+        //    }
+        //}
 
         /// <summary>
         /// Validates the specified property.
@@ -68,43 +68,44 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <returns>
         /// The validation error message if any; otherwise a null or empty string.
         /// </returns>
-        public string ValidateProperty(string propertyName)
+        public (bool isValid, IEnumerable<ValidationError> errors) ValidateProperty(string propertyName)
         {
-            if( IsValidationSuspended )
+            if (IsValidationSuspended)
             {
-                return null;
+                return (true, new ValidationError[0]);
             }
 
-            var isValidBeforeValidation = IsValid;
+            //var isValidBeforeValidation = IsValid;
 
             var results = OnValidateProperty(propertyName);
+            return (results.Any(), results);
 
-            var removedErrors = _validationErrors
-                .Where( e => e.PropertyName != propertyName )
-                .ToArray()
-                .ForEach( e => _validationErrors.Remove( e ) );
+            //var removedErrors = _validationErrors
+            //    .Where( e => e.PropertyName != propertyName )
+            //    .ToArray()
+            //    .ForEach( e => _validationErrors.Remove( e ) );
 
-            AddValidationErrors( results.ToArray() );
+            //AddValidationErrors( results.ToArray() );
 
-            var shouldTriggerStatusChanged = removedErrors.Any() || results.Any();
-            IsValid = ValidationErrors.None();
+            //var shouldTriggerStatusChanged = removedErrors.Any() || results.Any();
+            ////IsValid = ValidationErrors.None();
 
-            if( IsValid != isValidBeforeValidation || shouldTriggerStatusChanged )
-            {
-                OnStatusChanged( EventArgs.Empty );
-            }
+            //if( IsValid != isValidBeforeValidation || shouldTriggerStatusChanged )
+            //{
+            //    OnStatusChanged( EventArgs.Empty );
+            //}
 
-            if( results.Any() )
-            {
-                var error = results.Select( err => err.ToString() )
-                    .First();
+            //if( results.Any() )
+            //{
+            //    var error = results.Select( err => err.ToString() )
+            //        .First();
 
-                return error;
-            }
-            else
-            {
-                return null;
-            }
+            //    return error;
+            //}
+            //else
+            //{
+            //    return null;
+            //}
         }
 
         /// <summary>
@@ -116,81 +117,81 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// </returns>
         protected virtual IEnumerable<ValidationError> OnValidateProperty(string propertyName)
         {
-            if (!IsValidationSuspended && !Validate())
+            if (IsValidationSuspended) 
             {
-                /*
-                 * The default implementation of property validation is
-                 * very basic and relies on running a full validation and
-                 * then on looking for errors related to the validated
-                 * property. 
-                 */
-                return ValidationErrors
-                    .Where(err => err.PropertyName == propertyName);
+                return new ValidationError[0];
             }
 
-            return new ValidationError[0];
+            /*
+             * The default implementation of property validation is
+             * very basic and relies on running a full validation and
+             * then on looking for errors related to the validated
+             * property. 
+             */
+            var (isValid, errors) = Validate();
+            return errors.Where(err => err.PropertyName == propertyName);
         }
 
-        /// <summary>
-        /// Gets the invalid properties.
-        /// </summary>
-        /// <returns>
-        /// A list of property names that identifies the invalid properties.
-        /// </returns>
-        public virtual IEnumerable<string> GetInvalidProperties()
-        {
-            return ValidationErrors.Select(ve => ve.PropertyName)
-                .Distinct()
-                .AsReadOnly();
-        }
+        ///// <summary>
+        ///// Gets the invalid properties.
+        ///// </summary>
+        ///// <returns>
+        ///// A list of property names that identifies the invalid properties.
+        ///// </returns>
+        //public virtual IEnumerable<string> GetInvalidProperties()
+        //{
+        //    return ValidationErrors.Select(ve => ve.PropertyName)
+        //        .Distinct()
+        //        .AsReadOnly();
+        //}
 
-        /// <summary>
-        /// Gets the validation errors.
-        /// </summary>
-        /// <value>
-        /// All the validation errors.
-        /// </value>
-        public IEnumerable<ValidationError> ValidationErrors
-        {
-            get { return _validationErrors; }
-        }
+        ///// <summary>
+        ///// Gets the validation errors.
+        ///// </summary>
+        ///// <value>
+        ///// All the validation errors.
+        ///// </value>
+        //public IEnumerable<ValidationError> ValidationErrors
+        //{
+        //    get { return _validationErrors; }
+        //}
 
-        /// <summary>
-        /// Adds the validation errors.
-        /// </summary>
-        /// <param name="errors">The errors.</param>
-        protected void AddValidationErrors( params ValidationError[] errors )
-        {
-            Ensure.That( errors ).Named( () => errors ).IsNotNull();
+        ///// <summary>
+        ///// Adds the validation errors.
+        ///// </summary>
+        ///// <param name="errors">The errors.</param>
+        //protected void AddValidationErrors( params ValidationError[] errors )
+        //{
+        //    Ensure.That( errors ).Named( () => errors ).IsNotNull();
 
-            if( MergeValidationErrors )
-            {
-                foreach( var error in errors )
-                {
-                    var actual = _validationErrors.SingleOrDefault( ve => ve.PropertyName == error.PropertyName);
-                    if( actual != null )
-                    {
-                        actual.AddProblems( error.DetectedProblems.ToArray() );
-                    }
-                    else
-                    {
-                        _validationErrors.Add( error );
-                    }
-                }
-            }
-            else
-            {
-                _validationErrors.AddRange( errors );
-            }
-        }
+        //    if( MergeValidationErrors )
+        //    {
+        //        foreach( var error in errors )
+        //        {
+        //            var actual = _validationErrors.SingleOrDefault( ve => ve.PropertyName == error.PropertyName);
+        //            if( actual != null )
+        //            {
+        //                actual.AddProblems( error.DetectedProblems.ToArray() );
+        //            }
+        //            else
+        //            {
+        //                _validationErrors.Add( error );
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        _validationErrors.AddRange( errors );
+        //    }
+        //}
 
-        /// <summary>
-        /// Clears all the current validation errors.
-        /// </summary>
-        protected void ClearErrors()
-        {
-            _validationErrors.Clear();
-        }
+        ///// <summary>
+        ///// Clears all the current validation errors.
+        ///// </summary>
+        //protected void ClearErrors()
+        //{
+        //    _validationErrors.Clear();
+        //}
 
         /// <summary>
         /// Starts the validation process.
@@ -198,27 +199,46 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <returns>
         ///   <c>True</c> if the validation process succeeded; otherwise <c>false</c>.
         /// </returns>
-        public virtual bool Validate()
+        public virtual (bool isValid, IEnumerable<ValidationError> errors) Validate()
         {
-            if( IsValidationSuspended )
+            if (IsValidationSuspended)
             {
-                return IsValid;
+                return (true, new ValidationError[0]);
             }
 
-            var isValidBeforeValidation = IsValid;
-            var results = OnValidate();
-
-            ClearErrors();
-            AddValidationErrors( results.ToArray() );
-
-            IsValid = results.None();
-
-            if( IsValid != isValidBeforeValidation || !IsValid )
+            //var wasValidBeforeValidation = IsValid;
+            var errors = OnValidate();
+            if (!MergeValidationErrors)
             {
-                OnStatusChanged( EventArgs.Empty );
+                return (errors.Any(), errors);
             }
 
-            return IsValid;
+            Dictionary<string, ValidationError> merged = new Dictionary<string, ValidationError>();
+            foreach (var error in errors)
+            {
+                if (merged.TryGetValue(error.PropertyName, out ValidationError current))
+                {
+                    current.AddProblems(error.DetectedProblems);
+                }
+                else 
+                {
+                    merged.Add(error.PropertyName, error);
+                }
+            }
+
+            return (merged.Values.Any(), merged.Values);
+
+            //ClearErrors();
+            //AddValidationErrors( errors.ToArray() );
+
+            //IsValid = errors.None();
+
+            //if( IsValid != wasValidBeforeValidation || !IsValid )
+            //{
+            //    OnStatusChanged( EventArgs.Empty );
+            //}
+
+            //return IsValid;
         }
 
         /// <summary>
@@ -229,15 +249,15 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// </returns>
         protected abstract IEnumerable<ValidationError> OnValidate();
 
-        /// <summary>
-        /// Clears the validation state resetting to its default valid value.
-        /// </summary>
-        public void Reset() 
-        {
-            _validationErrors.Clear();
-            IsValid = true;
-            OnValidationReset( EventArgs.Empty );
-        }
+        ///// <summary>
+        ///// Clears the validation state resetting to its default valid value.
+        ///// </summary>
+        //public void Reset() 
+        //{
+        //    _validationErrors.Clear();
+        //    IsValid = true;
+        //    OnValidationReset( EventArgs.Empty );
+        //}
 
         class ValidationSuspender : IDisposable
         {
@@ -248,7 +268,7 @@ namespace Radical.Windows.Presentation.Services.Validation
 
             readonly Action onDisposed;
 
-            public ValidationSuspender( Action onDisposed )
+            public ValidationSuspender(Action onDisposed)
             {
                 this.onDisposed = onDisposed;
             }
@@ -270,10 +290,10 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <returns>A disposable instance to automatically resume validation on dispose.</returns>
         public IDisposable SuspendValidation()
         {
-            if( !IsValidationSuspended )
+            if (!IsValidationSuspended)
             {
                 IsValidationSuspended = true;
-                suspender = new ValidationSuspender( () => ResumeValidation() );
+                suspender = new ValidationSuspender(() => ResumeValidation());
             }
 
             return suspender;
@@ -284,7 +304,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// </summary>
         public void ResumeValidation()
         {
-            if( IsValidationSuspended )
+            if (IsValidationSuspended)
             {
                 IsValidationSuspended = false;
                 suspender = null;
@@ -292,65 +312,66 @@ namespace Radical.Windows.Presentation.Services.Validation
         }
 
 
-        /// <summary>
-        /// Gets the display name of the property.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity">The entity.</param>
-        /// <param name="property">The property.</param>
-        /// <returns></returns>
-        public string GetPropertyDisplayName<T>( T entity, System.Linq.Expressions.Expression<Func<T, object>> property )
-        {
-            var propertyname = property.GetMemberName();
-            return GetPropertyDisplayName( entity, propertyname );
-        }
+        ///// <summary>
+        ///// Gets the display name of the property.
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="entity">The entity.</param>
+        ///// <param name="property">The property.</param>
+        ///// <returns></returns>
+        //public string GetPropertyDisplayName<T>( T entity, System.Linq.Expressions.Expression<Func<T, object>> property )
+        //{
+        //    var propertyname = property.GetMemberName();
+        //    return GetPropertyDisplayName( entity, propertyname );
+        //}
 
-        /// <summary>
-        /// Gets the display name of the property.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns></returns>
-        public virtual string GetPropertyDisplayName( object entity, string propertyName )
-        {
-            var pi = entity.GetType().GetProperty(propertyName);
-            if (pi != null && pi.IsAttributeDefined<DisplayNameAttribute>())
-            {
-                return pi.GetAttribute<DisplayNameAttribute>().DisplayName;
-            }
-            return null;
-        }
+        ///// <summary>
+        ///// Gets the display name of the property.
+        ///// </summary>
+        ///// <param name="entity">The entity.</param>
+        ///// <param name="propertyName">Name of the property.</param>
+        ///// <returns></returns>
+        //public virtual string GetPropertyDisplayName( object entity, string propertyName )
+        //{
+        //    var pi = entity.GetType().GetProperty(propertyName);
+        //    if (pi != null && pi.IsAttributeDefined<DisplayNameAttribute>())
+        //    {
+        //        return pi.GetAttribute<DisplayNameAttribute>().DisplayName;
+        //    }
+        //    return null;
+        //}
 
-        bool _mergeValidationErrors;
+        public bool MergeValidationErrors { get; set; }
+        //bool _mergeValidationErrors;
 
-        /// <summary>
-        /// Gets or sets if the service should merge validation errors related to the same property.
-        /// </summary>
-        /// <value>
-        /// <c>True</c> if the service should merge validation errors related to the same property; otherwise <c>False</c>.
-        /// </value>
-        /// <exception cref="System.NotImplementedException">
-        /// </exception>
-        public bool MergeValidationErrors
-        {
-            get { return _mergeValidationErrors; }
-            set
-            {
-                if (value != MergeValidationErrors)
-                {
-                    _mergeValidationErrors = value;
+        ///// <summary>
+        ///// Gets or sets if the service should merge validation errors related to the same property.
+        ///// </summary>
+        ///// <value>
+        ///// <c>True</c> if the service should merge validation errors related to the same property; otherwise <c>False</c>.
+        ///// </value>
+        ///// <exception cref="System.NotImplementedException">
+        ///// </exception>
+        //public bool MergeValidationErrors
+        //{
+        //    get { return _mergeValidationErrors; }
+        //    set
+        //    {
+        //        if (value != MergeValidationErrors)
+        //        {
+        //            _mergeValidationErrors = value;
 
-                    if (ValidationErrors.Any())
-                    {
-                        //reset the errors if any so the have them grouped
-                        var actual = ValidationErrors.ToArray();
-                        _validationErrors.Clear();
-                        AddValidationErrors(actual);
+        //            if (ValidationErrors.Any())
+        //            {
+        //                //reset the errors if any so the have them grouped
+        //                var actual = ValidationErrors.ToArray();
+        //                _validationErrors.Clear();
+        //                AddValidationErrors(actual);
 
-                        OnValidationReset(EventArgs.Empty);
-                    }
-                }
-            }
-        }
+        //                OnValidationReset(EventArgs.Empty);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
