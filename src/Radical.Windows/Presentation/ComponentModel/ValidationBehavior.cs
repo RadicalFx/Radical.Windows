@@ -5,15 +5,15 @@ namespace Radical.Windows.Presentation.ComponentModel
     /// Determines the behavior of the validation process.
     /// </summary>
     public enum ValidationBehavior
-	{
-		/// <summary>
-		/// The default behavior.
-		/// </summary>
-		Default,
+    {
+        /// <summary>
+        /// Automatically trigger controls error view if the validation fails.
+        /// </summary>
+        TriggerValidationErrorsOnFailure,
 
-		/// <summary>
-		/// Automatically trigger controls error view if the validation fails.
-		/// </summary>
-		TriggerValidationErrorsOnFailure
-	}
+        /// <summary>
+        /// Validation is run without triggering errors on controls in case of validation failure.
+        /// </summary>
+        RunSilentValidation
+    }
 }

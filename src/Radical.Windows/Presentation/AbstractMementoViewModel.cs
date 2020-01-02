@@ -103,6 +103,8 @@ namespace Radical.Windows.Presentation
             }
         }
 
+        protected ValidationBehavior DefaultValidationBehavior { get; set; } = ValidationBehavior.TriggerValidationErrorsOnFailure;
+
         /// <summary>
         /// Gets the validation service, this method is called once the first time
         /// the validation service is accessed, inheritors should override this method
@@ -135,7 +137,7 @@ namespace Radical.Windows.Presentation
 
         protected (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName)
         {
-            return ValidateProperty(propertyName, ValidationBehavior.Default);
+            return ValidateProperty(propertyName, DefaultValidationBehavior);
         }
 
         /// <summary>
@@ -148,22 +150,23 @@ namespace Radical.Windows.Presentation
         /// </returns>
         protected virtual (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName, ValidationBehavior behavior)
         {
+            (bool IsValid, IEnumerable<ValidationError> Errors) validationResult = (true, new ValidationError[0]);
             if (ValidationService.IsValidationSuspended)
             {
-                return (true, new ValidationError[0]);
+                return validationResult;
             }
 
             using (validationState.BeginPropertyValidation(propertyName))
             {
                 var wasValid = IsValid;
 
-                var (isValid, errors) = ValidationService.ValidateProperty(propertyName);
-                IsValid = isValid;
+                validationResult = ValidationService.ValidateProperty(propertyName);
+                IsValid = validationResult.IsValid;
 
-                var validationStatusChanged = ValidationErrors.IsValidationStatusChanged(errors, propertyName);
+                var validationStatusChanged = ValidationErrors.IsValidationStatusChanged(validationResult.Errors, propertyName);
                 if (validationStatusChanged)
                 {
-                    ValidationErrors.SyncValidationErrorsFrom(errors, propertyName);
+                    ValidationErrors.SyncValidationErrorsFrom(validationResult.Errors, propertyName);
                 }
 
                 if (validationStatusChanged && behavior == ValidationBehavior.TriggerValidationErrorsOnFailure)
@@ -177,11 +180,11 @@ namespace Radical.Windows.Presentation
                     OnPropertyChanged(nameof(IsValid));
                     OnPropertyChanged(nameof(HasErrors));
                 }
-
-                OnValidated();
-
-                return (isValid, errors);
             }
+
+            OnValidated();
+
+            return validationResult;
         }
 
         /// <summary>
@@ -206,7 +209,7 @@ namespace Radical.Windows.Presentation
         /// <returns><c>True</c> if this instance is valid; otherwise <c>false</c>.</returns>
         public (bool IsValid, IEnumerable<ValidationError> Errors) Validate()
         {
-            return Validate(ValidationBehavior.Default);
+            return Validate(DefaultValidationBehavior);
         }
 
         /// <summary>
@@ -433,6 +436,8 @@ namespace Radical.Windows.Presentation
             this.IsResettingValidation = true;
             ValidationErrors.Clear();
             IsValid = true;
+            OnPropertyChanged(nameof(IsValid));
+            OnErrorsChanged(null);
             this.IsResettingValidation = false;
         }
 

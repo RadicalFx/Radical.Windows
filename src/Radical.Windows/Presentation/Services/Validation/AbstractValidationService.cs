@@ -210,7 +210,7 @@ namespace Radical.Windows.Presentation.Services.Validation
             var errors = OnValidate();
             if (!MergeValidationErrors)
             {
-                return (errors.Any(), errors);
+                return (errors.None(), errors);
             }
 
             Dictionary<string, ValidationError> merged = new Dictionary<string, ValidationError>();
