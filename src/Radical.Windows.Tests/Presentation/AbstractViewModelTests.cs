@@ -676,6 +676,52 @@ namespace Test.Radical.Windows.Presentation
 
         [TestMethod]
         [TestCategory("AbstractViewModel"), TestCategory("Validation"), TestCategory("Issue#176")]
+        public void AbstractViewModel_with_custom_validation_validating_multiple_times_should_report_custom_validation_errors_only_once()
+        {
+            var sut = new SampleTestViewModelWithValidationCallback()
+            {
+                NotNullNotEmpty = "something, so this doesn't fail."
+            };
+            var svc = DataAnnotationValidationService.CreateFor(sut);
+
+            sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
+            sut.Test_OnValidate = ctx =>
+            {
+                ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
+            };
+
+            sut.Validate();
+            sut.Validate();
+            sut.Validate();
+
+            Assert.AreEqual(1, sut.ValidationErrors.Count);
+        }
+
+        [TestMethod]
+        [TestCategory("AbstractViewModel"), TestCategory("Validation"), TestCategory("Issue#176")]
+        public void AbstractViewModel_with_custom_validation_changing_properties_multiple_times_should_report_custom_validation_errors_only_once()
+        {
+            var sut = new SampleTestViewModelWithValidationCallback() 
+            {
+                NotNullNotEmpty = "something, so this doesn't fail."
+            };
+            var svc = DataAnnotationValidationService.CreateFor(sut);
+
+            sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
+            sut.Test_OnValidate = ctx =>
+            {
+                ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
+            };
+
+            sut.NotNullNotEmpty = "";
+            sut.NotNullNotEmpty = "foo";
+            sut.NotNullNotEmpty = "bar";
+
+            Assert.AreEqual(1, sut.ValidationErrors.Count);
+        }
+
+        [TestMethod]
+        [TestCategory("AbstractViewModel"), TestCategory("Validation"), TestCategory("Issue#176")]
         [Ignore]
         public void AbstractViewModel_it_should_be_possible_to_change_a_validatable_property_at_custom_validation_time()
         {
