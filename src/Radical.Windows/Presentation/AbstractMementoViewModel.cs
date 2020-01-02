@@ -29,27 +29,29 @@ namespace Radical.Windows.Presentation
         /// <value>
         /// The view.
         /// </value>
-        [Bindable( false )]
+        [Bindable(false)]
         [SkipPropertyValidation]
         System.Windows.DependencyObject IViewModel.View { get; set; }
+
+        readonly PropertyValidationState validationState = new PropertyValidationState();
 
         /// <summary>
         /// Raises the <see cref="E:PropertyChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-        protected override void OnPropertyChanged( PropertyChangedEventArgs e )
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if( IsValidationEnabled
+            if (IsValidationEnabled
                 && RunValidationOnPropertyChanged
                 && !IsResettingValidation
                 && !IsTriggeringValidation
-                && !SkipPropertyValidation( e.PropertyName )
-                && !validationState.IsValidatingProperty( e.PropertyName ) )
+                && !SkipPropertyValidation(e.PropertyName)
+                && !validationState.IsValidatingProperty(e.PropertyName))
             {
-                ValidateProperty( e.PropertyName );
+                ValidateProperty(e.PropertyName);
             }
 
-            base.OnPropertyChanged( e );
+            base.OnPropertyChanged(e);
         }
 
         /// <summary>
@@ -57,20 +59,15 @@ namespace Radical.Windows.Presentation
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns></returns>
-        protected virtual bool SkipPropertyValidation(string propertyName )
+        protected virtual bool SkipPropertyValidation(string propertyName)
         {
-            var pi = GetType().GetProperty( propertyName );
-            if( pi == null )
+            var pi = GetType().GetProperty(propertyName);
+            if (pi == null)
             {
                 return true;
             }
 
-            if( pi != null )
-            {
-                return pi.IsAttributeDefined<SkipPropertyValidationAttribute>();
-            }
-
-            return false;
+            return pi.IsAttributeDefined<SkipPropertyValidationAttribute>();
         }
 
         /// <summary>
@@ -97,44 +94,9 @@ namespace Radical.Windows.Presentation
         {
             get
             {
-                if( _validationService == null )
+                if (_validationService == null)
                 {
                     _validationService = GetValidationService();
-                    //_validationService.StatusChanged += ( s, e ) =>
-                    //{
-                    //    ValidationErrors.Clear();
-                    //    foreach( var error in _validationService.ValidationErrors )
-                    //    {
-                    //        ValidationErrors.Add( error );
-                    //    }
-
-                    //    this.OnErrorsChanged( null );
-                    //    this.OnPropertyChanged( () => this.HasErrors );
-                    //};
-
-                    //_validationService.ValidationReset += ( s, e ) =>
-                    //{
-                    //    var shouldSetStatus = !IsResettingValidation;
-                    //    if( shouldSetStatus )
-                    //    {
-                    //        IsResettingValidation = true;
-                    //    }
-
-                    //    ValidationErrors.Clear();
-                    //    GetType()
-                    //        .GetProperties()
-                    //        .Where( p => !SkipPropertyValidation( p.Name ) )
-                    //        .Select( p => p.Name )
-                    //        .ForEach( p => OnPropertyChanged( p ) );
-
-                    //    this.OnErrorsChanged( null );
-                    //    this.OnPropertyChanged( () => this.HasErrors );
-
-                    //    if( shouldSetStatus )
-                    //    {
-                    //        IsResettingValidation = false;
-                    //    }
-                    //};
                 }
 
                 return _validationService;
@@ -156,66 +118,25 @@ namespace Radical.Windows.Presentation
         /// Initializes a new instance of the <see cref="AbstractMementoViewModel"/> class.
         /// </summary>
         protected AbstractMementoViewModel()
-            : base( ChangeTrackingRegistration.AsTransient )
+            : base(ChangeTrackingRegistration.AsTransient)
         {
-            ValidationErrors = new ObservableCollection<ValidationError>();
-            RunValidationOnPropertyChanged = true;
+
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractMementoViewModel" /> class.
         /// </summary>
         /// <param name="registration">The registration.</param>
-        protected AbstractMementoViewModel( ChangeTrackingRegistration registration )
-            : base( registration )
+        protected AbstractMementoViewModel(ChangeTrackingRegistration registration)
+            : base(registration)
         {
-            ValidationErrors = new ObservableCollection<ValidationError>();
-            RunValidationOnPropertyChanged = true;
+
         }
 
-        ///// <summary>
-        ///// Gets the error.
-        ///// </summary>
-        ///// <value>The error.</value>
-        ///// <remarks>Used only in order to satisfy IDataErrorInfo interface implementation, the default implementation always returns null.</remarks>
-        //[Bindable( false )]
-        //[SkipPropertyValidation]
-        //public virtual string Error
-        //{
-        //    get { return null; }
-        //}
-
-        ///// <summary>
-        ///// Gets the error message, if any, for the property with the given name.
-        ///// </summary>
-        //[Bindable( false )]
-        //[SkipPropertyValidation]
-        //public virtual string this[string propertyName ]
-        //{
-        //    get
-        //    {
-        //        var error = ValidationErrors
-        //            .Where( e => e.Key == propertyName )
-        //            .Select( err => err.ToString() )
-        //            .FirstOrDefault();
-
-        //        return error;
-        //    }
-        //}
-
-        /// <summary>
-        /// Validates the given property.
-        /// </summary>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>
-        /// The first validation error, if any; Otherwise <c>null</c>.
-        /// </returns>
-        protected string ValidateProperty(string propertyName )
+        protected (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName)
         {
-            return ValidateProperty( propertyName, ValidationBehavior.Default );
+            return ValidateProperty(propertyName, ValidationBehavior.Default);
         }
-
-        PropertyValidationState validationState = new PropertyValidationState();
 
         /// <summary>
         /// Validates the given property.
@@ -225,80 +146,67 @@ namespace Radical.Windows.Presentation
         /// <returns>
         /// The first validation error, if any; Otherwise <c>null</c>.
         /// </returns>
-        protected virtual string ValidateProperty(string propertyName, ValidationBehavior behavior )
+        protected virtual (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName, ValidationBehavior behavior)
         {
-            if( ValidationService.IsValidationSuspended )
+            if (ValidationService.IsValidationSuspended)
             {
-                return error;
+                return (true, new ValidationError[0]);
             }
 
-            using( validationState.BeginPropertyValidation( propertyName ) )
+            using (validationState.BeginPropertyValidation(propertyName))
             {
                 var wasValid = IsValid;
-                
-                var beforeDetectedProblems = ValidationErrors
-                   .Where( ve => ve.PropertyName == propertyName )
-                   .SelectMany( ve => ve.DetectedProblems )
-                   .OrderBy( dp => dp )
-                   .ToArray();
 
-                error = ValidationService.ValidateProperty(propertyName);
+                var (isValid, errors) = ValidationService.ValidateProperty(propertyName);
+                IsValid = isValid;
 
-                var afterDetectedProblems = ValidationService.ValidationErrors
-                    .Where( ve => ve.PropertyName == propertyName )
-                    .SelectMany( ve => ve.DetectedProblems )
-                    .OrderBy( dp => dp )
-                    .ToArray();
-
-                var validationStatusChanged = !beforeDetectedProblems.SequenceEqual( afterDetectedProblems );
-                if( validationStatusChanged && behavior == ValidationBehavior.TriggerValidationErrorsOnFailure )
+                var validationStatusChanged = ValidationErrors.IsValidationStatusChanged(errors, propertyName);
+                if (validationStatusChanged)
                 {
-                    OnPropertyChanged( propertyName );
-                    this.OnErrorsChanged( propertyName );
+                    ValidationErrors.SyncValidationErrorsFrom(errors, propertyName);
                 }
 
-                if( IsValid != wasValid )
+                if (validationStatusChanged && behavior == ValidationBehavior.TriggerValidationErrorsOnFailure)
                 {
-                    OnPropertyChanged( () => IsValid );
-                    OnPropertyChanged( () => this.HasErrors );
+                    OnPropertyChanged(propertyName);
+                    OnErrorsChanged(propertyName);
                 }
+
+                if (IsValid != wasValid)
+                {
+                    OnPropertyChanged(nameof(IsValid));
+                    OnPropertyChanged(nameof(HasErrors));
+                }
+
+                OnValidated();
+
+                return (isValid, errors);
             }
-
-            OnValidated();
-
-            return error;
         }
 
         /// <summary>
         /// Gets a value indicating whether this instance is valid.
         /// </summary>
         /// <value><c>true</c> if this instance is valid; otherwise, <c>false</c>.</value>
-        [Bindable( false )]
+        [Bindable(false)]
         [SkipPropertyValidation]
-        public virtual bool IsValid
-        {
-            get { return ValidationService.IsValid; }
-        }
+        public virtual bool IsValid { get; private set; } = true;
 
         /// <summary>
         /// Gets the validation errors if any.
         /// </summary>
         /// <value>The validation errors.</value>
-        [Bindable( false )]
+        [Bindable(false)]
         [SkipPropertyValidation]
-        public virtual ObservableCollection<ValidationError> ValidationErrors
-        {
-            get;
-            private set;
-        }
+        public virtual ObservableCollection<ValidationError> ValidationErrors { get; } = new ObservableCollection<ValidationError>();
 
         /// <summary>
         /// Validates this instance.
         /// </summary>
         /// <returns><c>True</c> if this instance is valid; otherwise <c>false</c>.</returns>
-        public bool Validate()
+        public (bool IsValid, IEnumerable<ValidationError> Errors) Validate()
         {
-            return Validate( null, ValidationBehavior.Default );
+            return Validate(ValidationBehavior.Default);
         }
 
         /// <summary>
@@ -308,43 +216,37 @@ namespace Radical.Windows.Presentation
         /// <returns>
         ///   <c>True</c> if this instance is valid; otherwise <c>false</c>.
         /// </returns>
-        public bool Validate( ValidationBehavior behavior )
+        public (bool IsValid, IEnumerable<ValidationError> Errors) Validate(ValidationBehavior behavior)
         {
-            return Validate( null, behavior );
-        }
-
-        /// <summary>
-        /// Validates this instance.
-        /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
-        /// <param name="behavior">The behavior.</param>
-        /// <returns>
-        ///   <c>True</c> if this instance is valid; otherwise <c>false</c>.
-        /// </returns>
-        public virtual bool Validate(string ruleSet, ValidationBehavior behavior )
-        {
-            if( ValidationService.IsValidationSuspended )
+            if (ValidationService.IsValidationSuspended)
             {
-                return ValidationService.IsValid;
+                return (true, new ValidationError[0]);
             }
 
             var wasValid = IsValid;
 
-            ValidationService.Validate();
-            OnValidated();
+            var (isValid, errors) = ValidationService.Validate();
+            IsValid = isValid;
 
-            if( behavior == ValidationBehavior.TriggerValidationErrorsOnFailure && !ValidationService.IsValid )
+            var isValidationStatusChanged = ValidationErrors.IsValidationStatusChanged(errors);
+            if (isValidationStatusChanged)
+            {
+                ValidationErrors.SyncValidationErrorsFrom(errors);
+            }
+
+            if (behavior == ValidationBehavior.TriggerValidationErrorsOnFailure && !IsValid)
             {
                 TriggerValidation();
             }
 
-            if( IsValid != wasValid )
+            if (IsValid != wasValid)
             {
-                OnPropertyChanged( () => IsValid );
-                OnPropertyChanged( () => this.HasErrors );
+                OnPropertyChanged(() => IsValid);
+                OnPropertyChanged(() => HasErrors);
             }
 
-            return ValidationService.IsValid;
+            OnValidated();
+            return (isValid, errors);
         }
 
         /// <summary>
@@ -357,10 +259,7 @@ namespace Radical.Windows.Presentation
         /// </summary>
         protected virtual void OnValidated()
         {
-            if( Validated != null )
-            {
-                Validated( this, EventArgs.Empty );
-            }
+            Validated?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -368,13 +267,13 @@ namespace Radical.Windows.Presentation
         /// </summary>
         public virtual void TriggerValidation()
         {
-            if( !IsTriggeringValidation )
+            if (!IsTriggeringValidation)
             {
                 IsTriggeringValidation = true;
 
-                foreach( var invalid in ValidationService.GetInvalidProperties() )
+                foreach (var invalid in ValidationErrors.Select(ve => ve.PropertyName).Distinct())
                 {
-                    OnPropertyChanged( invalid );
+                    OnPropertyChanged(invalid);
                 }
 
                 IsTriggeringValidation = false;
@@ -399,45 +298,45 @@ namespace Radical.Windows.Presentation
         /// </summary>
         /// <param name="newMemento">The new memento service.</param>
         /// <param name="oldMemento">The old memento service.</param>
-        protected override void OnMementoChanged( IChangeTrackingService newMemento, IChangeTrackingService oldMemento )
+        protected override void OnMementoChanged(IChangeTrackingService newMemento, IChangeTrackingService oldMemento)
         {
-            base.OnMementoChanged( newMemento, oldMemento );
+            base.OnMementoChanged(newMemento, oldMemento);
 
-            if( oldMemento != null && !oldMemento.IsDisposed )
+            if (oldMemento != null && !oldMemento.IsDisposed)
             {
-                oldMemento.AcceptingChanges -= new EventHandler<CancelEventArgs>( OnAcceptingChanges );
-                oldMemento.RejectingChanges -= new EventHandler<CancelEventArgs>( OnRejectingChanges );
+                oldMemento.AcceptingChanges -= new EventHandler<CancelEventArgs>(OnAcceptingChanges);
+                oldMemento.RejectingChanges -= new EventHandler<CancelEventArgs>(OnRejectingChanges);
 
-                oldMemento.ChangesAccepted -= new EventHandler( OnChangesAccepted );
-                oldMemento.ChangesRejected -= new EventHandler( OnChangesRejected );
+                oldMemento.ChangesAccepted -= new EventHandler(OnChangesAccepted);
+                oldMemento.ChangesRejected -= new EventHandler(OnChangesRejected);
             }
 
-            if( newMemento != null && !newMemento.IsDisposed )
+            if (newMemento != null && !newMemento.IsDisposed)
             {
-                newMemento.AcceptingChanges += new EventHandler<CancelEventArgs>( OnAcceptingChanges );
-                newMemento.RejectingChanges += new EventHandler<CancelEventArgs>( OnRejectingChanges );
+                newMemento.AcceptingChanges += new EventHandler<CancelEventArgs>(OnAcceptingChanges);
+                newMemento.RejectingChanges += new EventHandler<CancelEventArgs>(OnRejectingChanges);
 
-                newMemento.ChangesAccepted += new EventHandler( OnChangesAccepted );
-                newMemento.ChangesRejected += new EventHandler( OnChangesRejected );
+                newMemento.ChangesAccepted += new EventHandler(OnChangesAccepted);
+                newMemento.ChangesRejected += new EventHandler(OnChangesRejected);
             }
         }
 
-        void OnAcceptingChanges( object sender, CancelEventArgs e )
+        void OnAcceptingChanges(object sender, CancelEventArgs e)
         {
-            OnAcceptingChanges( e );
+            OnAcceptingChanges(e);
         }
 
-        void OnRejectingChanges( object sender, CancelEventArgs e )
+        void OnRejectingChanges(object sender, CancelEventArgs e)
         {
-            OnRejectingChanges( e );
+            OnRejectingChanges(e);
         }
 
-        void OnChangesAccepted( object sender, EventArgs e )
+        void OnChangesAccepted(object sender, EventArgs e)
         {
             OnChangesAccepted();
         }
 
-        void OnChangesRejected( object sender, EventArgs e )
+        void OnChangesRejected(object sender, EventArgs e)
         {
             OnChangesRejected();
         }
@@ -446,7 +345,7 @@ namespace Radical.Windows.Presentation
         /// Called when the changes are ready to be accepted.
         /// </summary>
         /// <param name="e">The <see cref="CancelEventArgs" /> instance containing the event data.</param>
-        protected virtual void OnAcceptingChanges( CancelEventArgs e )
+        protected virtual void OnAcceptingChanges(CancelEventArgs e)
         {
 
         }
@@ -455,7 +354,7 @@ namespace Radical.Windows.Presentation
         /// Called when the changes are ready to be rejected.
         /// </summary>
         /// <param name="e">The <see cref="CancelEventArgs" /> instance containing the event data.</param>
-        protected virtual void OnRejectingChanges( CancelEventArgs e )
+        protected virtual void OnRejectingChanges(CancelEventArgs e)
         {
 
         }
@@ -482,32 +381,32 @@ namespace Radical.Windows.Presentation
         /// <value>
         /// The focused element key.
         /// </value>
-        [MementoPropertyMetadata( TrackChanges = false )]
-        [Bindable( false )]
+        [MementoPropertyMetadata(TrackChanges = false)]
+        [Bindable(false)]
         [SkipPropertyValidation]
         public string FocusedElementKey
         {
-            get { return GetPropertyValue( () => FocusedElementKey ); }
-            set { SetPropertyValue( () => FocusedElementKey, value ); }
+            get { return GetPropertyValue(() => FocusedElementKey); }
+            set { SetPropertyValue(() => FocusedElementKey, value); }
         }
 
         /// <summary>
         /// Moves the focus to.
         /// </summary>
         /// <param name="property">The property.</param>
-        protected virtual void MoveFocusTo<T>( Expression<Func<T>> property )
+        protected virtual void MoveFocusTo<T>(Expression<Func<T>> property)
         {
             EnsureNotDisposed();
 
             var propertyName = property.GetMemberName();
-            MoveFocusTo( propertyName );
+            MoveFocusTo(propertyName);
         }
 
         /// <summary>
         /// Moves the focus to.
         /// </summary>
         /// <param name="focusedElementKey">The focused element key.</param>
-        protected virtual void MoveFocusTo(string focusedElementKey )
+        protected virtual void MoveFocusTo(string focusedElementKey)
         {
             EnsureNotDisposed();
 
@@ -518,7 +417,7 @@ namespace Radical.Windows.Presentation
         /// Determines if each time a property changes the validation process should be run. The default value is <c>true</c>.
         /// </summary>
         [SkipPropertyValidation]
-        protected bool RunValidationOnPropertyChanged { get; set; }
+        protected bool RunValidationOnPropertyChanged { get; set; } = true;
 
         /// <summary>
         /// <c>True</c> if the current ValidationService is resetting the validation status; Otherwise <c>false</c>.
@@ -532,7 +431,8 @@ namespace Radical.Windows.Presentation
         public virtual void ResetValidation()
         {
             this.IsResettingValidation = true;
-            this.ValidationService.Reset();
+            ValidationErrors.Clear();
+            IsValid = true;
             this.IsResettingValidation = false;
         }
 
@@ -545,9 +445,9 @@ namespace Radical.Windows.Presentation
         /// Raises the ErrorsChanged event.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
-        protected void OnErrorsChanged( String propertyName )
+        protected void OnErrorsChanged(String propertyName)
         {
-            ErrorsChanged?.Invoke( this, new DataErrorsChangedEventArgs( propertyName ) );
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -555,14 +455,14 @@ namespace Radical.Windows.Presentation
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns></returns>
-        public System.Collections.IEnumerable GetErrors( string propertyName )
+        public System.Collections.IEnumerable GetErrors(string propertyName)
         {
-            if( String.IsNullOrEmpty( propertyName ) )
+            if (String.IsNullOrEmpty(propertyName))
             {
                 return this.ValidationErrors.ToArray();
             }
 
-            var temp = this.ValidationErrors.Where( e => e.PropertyName == propertyName ).ToArray();
+            var temp = this.ValidationErrors.Where(e => e.PropertyName == propertyName).ToArray();
             return temp;
         }
 
@@ -572,7 +472,7 @@ namespace Radical.Windows.Presentation
         /// <value>
         /// <c>true</c> if this instance has errors; otherwise, <c>false</c>.
         /// </value>
-        [Bindable( false )]
+        [Bindable(false)]
         [SkipPropertyValidation]
         public bool HasErrors
         {

@@ -33,6 +33,8 @@ namespace Radical.Windows.Presentation
         [SkipPropertyValidation]
         System.Windows.DependencyObject IViewModel.View { get; set; }
 
+        readonly PropertyValidationState validationState = new PropertyValidationState();
+
         /// <summary>
         /// Raises the <see cref="E:PropertyChanged" /> event.
         /// </summary>
@@ -65,12 +67,7 @@ namespace Radical.Windows.Presentation
                 return true;
             }
 
-            if (pi != null)
-            {
-                return pi.IsAttributeDefined<SkipPropertyValidationAttribute>();
-            }
-
-            return false;
+            return pi.IsAttributeDefined<SkipPropertyValidationAttribute>();
         }
 
         /// <summary>
@@ -133,19 +130,10 @@ namespace Radical.Windows.Presentation
 
         }
 
-        /// <summary>
-        /// Validates the given property.
-        /// </summary>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>
-        /// The first validation error, if any; Otherwise <c>null</c>.
-        /// </returns>
-        protected (bool, IEnumerable<ValidationError> errors) ValidateProperty(string propertyName)
+        protected (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName)
         {
             return ValidateProperty(propertyName, ValidationBehavior.Default);
         }
-
-        PropertyValidationState validationState = new PropertyValidationState();
 
         /// <summary>
         /// Validates the given property.
@@ -155,7 +143,7 @@ namespace Radical.Windows.Presentation
         /// <returns>
         /// The first validation error, if any; Otherwise <c>null</c>.
         /// </returns>
-        protected virtual (bool, IEnumerable<ValidationError> errors) ValidateProperty(string propertyName, ValidationBehavior behavior)
+        protected virtual (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName, ValidationBehavior behavior)
         {
             if (ValidationService.IsValidationSuspended)
             {
@@ -166,35 +154,13 @@ namespace Radical.Windows.Presentation
             {
                 var wasValid = IsValid;
 
-                var beforeDetectedProblems = ValidationErrors
-                    .Where(ve => ve.PropertyName == propertyName)
-                    .SelectMany(ve => ve.DetectedProblems)
-                    .OrderBy(dp => dp)
-                    .ToArray();
-
                 var (isValid, errors) = ValidationService.ValidateProperty(propertyName);
                 IsValid = isValid;
 
-                var afterDetectedProblems = errors
-                    .SelectMany(ve => ve.DetectedProblems)
-                    .OrderBy(dp => dp)
-                    .ToArray();
-
-                var validationStatusChanged = !beforeDetectedProblems.SequenceEqual(afterDetectedProblems);
+                var validationStatusChanged = ValidationErrors.IsValidationStatusChanged(errors, propertyName);
                 if (validationStatusChanged)
                 {
-                    for (int i = ValidationErrors.Count - 1; i >= 0; i--)
-                    {
-                        if (ValidationErrors[i].PropertyName == propertyName)
-                        {
-                            ValidationErrors.RemoveAt(i);
-                        }
-                    }
-
-                    foreach (var error in errors)
-                    {
-                        ValidationErrors.Add(error);
-                    }
+                    ValidationErrors.SyncValidationErrorsFrom(errors, propertyName);
                 }
 
                 if (validationStatusChanged && behavior == ValidationBehavior.TriggerValidationErrorsOnFailure)
@@ -205,8 +171,8 @@ namespace Radical.Windows.Presentation
 
                 if (IsValid != wasValid)
                 {
-                    OnPropertyChanged(() => IsValid);
-                    OnPropertyChanged(() => HasErrors);
+                    OnPropertyChanged(nameof(IsValid));
+                    OnPropertyChanged(nameof(HasErrors));
                 }
 
                 OnValidated();
@@ -233,7 +199,7 @@ namespace Radical.Windows.Presentation
         /// Validates this instance.
         /// </summary>
         /// <returns><c>True</c> if this instance is valid; otherwise <c>false</c>.</returns>
-        public (bool, IEnumerable<ValidationError> errors) Validate()
+        public (bool IsValid, IEnumerable<ValidationError> Errors) Validate()
         {
             return Validate(ValidationBehavior.Default);
         }
@@ -245,7 +211,7 @@ namespace Radical.Windows.Presentation
         /// <returns>
         ///   <c>True</c> if this instance is valid; otherwise <c>false</c>.
         /// </returns>
-        public virtual (bool, IEnumerable<ValidationError> errors) Validate(ValidationBehavior behavior)
+        public virtual (bool IsValid, IEnumerable<ValidationError> Errors) Validate(ValidationBehavior behavior)
         {
             if (ValidationService.IsValidationSuspended)
             {
@@ -254,15 +220,15 @@ namespace Radical.Windows.Presentation
 
             var wasValid = IsValid;
 
-            //TODO: store before status
-
             var (isValid, errors) = ValidationService.Validate();
             IsValid = isValid;
 
-            //TODO: calculate after status, compare sequence with before. If changed clear/fill ValidationErrors and raise events
-
-            OnValidated();
-
+            var isValidationStatusChanged = ValidationErrors.IsValidationStatusChanged(errors);
+            if (isValidationStatusChanged) 
+            {
+                ValidationErrors.SyncValidationErrorsFrom(errors);
+            }
+            
             if (behavior == ValidationBehavior.TriggerValidationErrorsOnFailure && !IsValid)
             {
                 TriggerValidation();
@@ -274,6 +240,7 @@ namespace Radical.Windows.Presentation
                 OnPropertyChanged(() => HasErrors);
             }
 
+            OnValidated();
             return (isValid, errors);
         }
 
@@ -390,7 +357,7 @@ namespace Radical.Windows.Presentation
         /// Raises the ErrorsChanged event.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
-        protected void OnErrorsChanged(String propertyName)
+        protected void OnErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }

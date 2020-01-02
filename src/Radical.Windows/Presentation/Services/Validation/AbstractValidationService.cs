@@ -14,7 +14,7 @@ namespace Radical.Windows.Presentation.Services.Validation
     /// </summary>
     public abstract class AbstractValidationService : IValidationService
     {
-        readonly List<ValidationError> _validationErrors = new List<ValidationError>();
+        //readonly List<ValidationError> _validationErrors = new List<ValidationError>();
 
         ///// <summary>
         ///// Gets a value indicating whether the validation process
@@ -68,7 +68,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <returns>
         /// The validation error message if any; otherwise a null or empty string.
         /// </returns>
-        public (bool isValid, IEnumerable<ValidationError> errors) ValidateProperty(string propertyName)
+        public (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName)
         {
             if (IsValidationSuspended)
             {
@@ -78,7 +78,7 @@ namespace Radical.Windows.Presentation.Services.Validation
             //var isValidBeforeValidation = IsValid;
 
             var results = OnValidateProperty(propertyName);
-            return (results.Any(), results);
+            return (results.None(), results);
 
             //var removedErrors = _validationErrors
             //    .Where( e => e.PropertyName != propertyName )
@@ -199,7 +199,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <returns>
         ///   <c>True</c> if the validation process succeeded; otherwise <c>false</c>.
         /// </returns>
-        public virtual (bool isValid, IEnumerable<ValidationError> errors) Validate()
+        public (bool IsValid, IEnumerable<ValidationError> Errors) Validate()
         {
             if (IsValidationSuspended)
             {
@@ -226,7 +226,7 @@ namespace Radical.Windows.Presentation.Services.Validation
                 }
             }
 
-            return (merged.Values.Any(), merged.Values);
+            return (merged.Values.None(), merged.Values);
 
             //ClearErrors();
             //AddValidationErrors( errors.ToArray() );

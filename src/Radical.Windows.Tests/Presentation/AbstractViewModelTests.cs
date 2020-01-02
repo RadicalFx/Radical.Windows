@@ -51,12 +51,12 @@ namespace Test.Radical.Windows.Presentation
 
             public bool Test_IsValidationEnabled { get { return IsValidationEnabled; } }
 
-            public string Test_ValidateProperty(string propertyName )
+            public (bool IsValid, IEnumerable<ValidationError> Errors) Test_ValidateProperty(string propertyName )
             {
                 return Test_ValidateProperty( propertyName, ValidationBehavior.Default );
             }
 
-            public string Test_ValidateProperty(string propertyName, ValidationBehavior behavior )
+            public (bool IsValid, IEnumerable<ValidationError> Errors) Test_ValidateProperty(string propertyName, ValidationBehavior behavior )
             {
                 return ValidateProperty( propertyName, behavior );
             }
@@ -125,9 +125,9 @@ namespace Test.Radical.Windows.Presentation
         public void AbstractViewModel_with_no_validation_service_always_validates_to_true()
         {
             var sut = new SampleTestViewModel();
-            var isValid = sut.Validate();
+            var (IsValid, _) = sut.Validate();
 
-            Assert.IsTrue( isValid );
+            Assert.IsTrue( IsValid );
         }
 
         [TestMethod]
@@ -135,9 +135,9 @@ namespace Test.Radical.Windows.Presentation
         public void AbstractViewModel_with_no_validation_service_is_always_validat()
         {
             var sut = new SampleTestViewModel();
-            var isValid = sut.IsValid;
+            var (IsValid, _) = sut.Validate();
 
-            Assert.IsTrue( isValid );
+            Assert.IsTrue(IsValid);
         }
 
         [TestMethod]
@@ -458,9 +458,9 @@ namespace Test.Radical.Windows.Presentation
                 new DataAnnotationValidationService<SampleTestViewModel>( sut ),
                 forceIsValidationEnabledTo: true );
 
-            var isValid = sut.Validate();
+            var (IsValid, Errors) = sut.Validate();
 
-            Assert.IsFalse( isValid );
+            Assert.IsFalse(IsValid);
             Assert.IsTrue( raised );
         }
 
@@ -483,9 +483,9 @@ namespace Test.Radical.Windows.Presentation
                 new DataAnnotationValidationService<SampleTestViewModel>( sut ),
                 forceIsValidationEnabledTo: true );
 
-            var isValid = sut.Validate();
+            var (IsValid, Errors) = sut.Validate();
 
-            Assert.IsFalse( isValid );
+            Assert.IsFalse(IsValid);
             Assert.IsTrue( raised );
         }
 

@@ -37,14 +37,14 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// Starts the validation process.
         /// </summary>
         /// <returns><c>True</c> if the validation process succeeded; otherwise <c>false</c>.</returns>
-        (bool isValid, IEnumerable<ValidationError> errors) Validate();
+        (bool IsValid, IEnumerable<ValidationError> Errors) Validate();
 
         /// <summary>
         /// Validates the specified property.
         /// </summary>
         /// <param name="propertyName">The name of the property.</param>
         /// <returns>The validation error message if any; otherwise a null or empty string.</returns>
-        (bool isValid, IEnumerable<ValidationError> errors) ValidateProperty(string propertyName);
+        (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName);
 
         ///// <summary>
         ///// Clears the validation state resetting to it its default valid value.
