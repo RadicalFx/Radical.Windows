@@ -3583,7 +3583,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
                 "IsValid",
                 "Errors"})]
-        public virtual System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate() { }
+        public System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate() { }
         [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
                 "IsValid",
                 "Errors"})]
@@ -3623,5 +3623,17 @@ namespace Radical.Windows.Threading
         public void Dispatch<T>(T arg, System.Action<T> action) { }
         public void Dispatch<T1, T2>(T1 arg1, T2 arg2, System.Action<T1, T2> action) { }
         public void Invoke(System.Delegate d, params object[] args) { }
+    }
+}
+namespace XamlGeneratedNamespace
+{
+    public sealed class GeneratedInternalTypeHelper : System.Windows.Markup.InternalTypeHelper
+    {
+        public GeneratedInternalTypeHelper() { }
+        protected override void AddEventHandler(System.Reflection.EventInfo eventInfo, object target, System.Delegate handler) { }
+        protected override System.Delegate CreateDelegate(System.Type delegateType, object target, string handler) { }
+        protected override object CreateInstance(System.Type type, System.Globalization.CultureInfo culture) { }
+        protected override object GetPropertyValue(System.Reflection.PropertyInfo propertyInfo, object target, System.Globalization.CultureInfo culture) { }
+        protected override void SetPropertyValue(System.Reflection.PropertyInfo propertyInfo, object target, object value, System.Globalization.CultureInfo culture) { }
     }
 }
