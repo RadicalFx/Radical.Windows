@@ -19,10 +19,14 @@ namespace Radical.Tests.API
         public void Approve_API()
         {
             ApiGeneratorOptions options = null;
-            var type = Type.GetType("XamlGeneratedNamespace.GeneratedInternalTypeHelper");
+            var type = Type.GetType("XamlGeneratedNamespace.GeneratedInternalTypeHelper, Radical.Windows");
             if (type != null) 
             {
-                var typesToInclude = typeof(VisualTreeCrawler).Assembly.GetExportedTypes().Except(new Type[] { type }).ToArray();
+                var typesToInclude = typeof(VisualTreeCrawler).Assembly
+                    .GetExportedTypes()
+                    .Except(new Type[] { type })
+                    .ToArray();
+
                 options = new ApiGeneratorOptions()
                 {
                     IncludeTypes = typesToInclude
