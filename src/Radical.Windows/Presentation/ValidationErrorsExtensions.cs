@@ -6,9 +6,14 @@ using System.Linq;
 
 namespace Radical.Windows.Presentation
 {
-    static class ValidationErrorsExtensions
+    public static class ValidationErrorsExtensions
     {
-        public static bool IsValidationStatusChanged(this ObservableCollection<ValidationError> validationErrors, IEnumerable<ValidationError> errors, string propertyName)
+        public static IEnumerable<string> GetInvalidProperties(this ObservableCollection<ValidationError> validationErrors)
+        {
+            return validationErrors.Select(ve => ve.PropertyName).Distinct();
+        }
+
+        internal static bool IsValidationStatusChanged(this ObservableCollection<ValidationError> validationErrors, IEnumerable<ValidationError> errors, string propertyName)
         {
             var beforeDetectedProblems = validationErrors
                     .Where(ve => ve.PropertyName == propertyName)
@@ -24,7 +29,7 @@ namespace Radical.Windows.Presentation
             return !beforeDetectedProblems.SequenceEqual(afterDetectedProblems);
         }
 
-        public static bool IsValidationStatusChanged(this ObservableCollection<ValidationError> validationErrors, IEnumerable<ValidationError> errors)
+        internal static bool IsValidationStatusChanged(this ObservableCollection<ValidationError> validationErrors, IEnumerable<ValidationError> errors)
         {
             var errorsArray = errors.ToArray();
             if (errorsArray.Length != validationErrors.Count) 
@@ -45,7 +50,7 @@ namespace Radical.Windows.Presentation
             return !beforeDetectedProblems.SequenceEqual(afterDetectedProblems);
         }
 
-        public static void SyncValidationErrorsFrom(this ObservableCollection<ValidationError> validationErrors, IEnumerable<ValidationError> errors, string propertyName) 
+        internal static void SyncValidationErrorsFrom(this ObservableCollection<ValidationError> validationErrors, IEnumerable<ValidationError> errors, string propertyName) 
         {
             for (int i = validationErrors.Count - 1; i >= 0; i--)
             {
@@ -61,7 +66,7 @@ namespace Radical.Windows.Presentation
             }
         }
 
-        public static void SyncValidationErrorsFrom(this ObservableCollection<ValidationError> validationErrors, IEnumerable<ValidationError> errors)
+        internal static void SyncValidationErrorsFrom(this ObservableCollection<ValidationError> validationErrors, IEnumerable<ValidationError> errors)
         {
             validationErrors.Clear();
             foreach (var error in errors)

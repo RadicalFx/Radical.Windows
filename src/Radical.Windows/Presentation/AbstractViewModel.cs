@@ -132,6 +132,11 @@ namespace Radical.Windows.Presentation
 
         }
 
+        protected string GetPropertyDisplayName(string propertyName) 
+        {
+            return this.GetProperty(propertyName).GetDisplayName();
+        }
+
         protected (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName)
         {
             return ValidateProperty(propertyName, DefaultValidationBehavior);
@@ -269,7 +274,7 @@ namespace Radical.Windows.Presentation
             {
                 IsTriggeringValidation = true;
 
-                foreach (var invalid in ValidationErrors.Select(ve => ve.PropertyName).Distinct())
+                foreach (var invalid in ValidationErrors.GetInvalidProperties())
                 {
                     OnPropertyChanged(invalid);
                 }

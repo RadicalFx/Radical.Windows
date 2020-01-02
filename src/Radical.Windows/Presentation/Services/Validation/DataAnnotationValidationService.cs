@@ -90,7 +90,7 @@ namespace Radical.Windows.Presentation.Services.Validation
                   var memberName = r.MemberNames.Single();
                   return new ValidationError(
                       memberName,
-                      GetPropertyDisplayName(entity, memberName),
+                      entity.GetProperty(memberName).GetDisplayName(),
                       new[] { r.ErrorMessage });
               }));
             }
@@ -133,30 +133,12 @@ namespace Radical.Windows.Presentation.Services.Validation
                     var memberName = r.MemberNames.Single();
                     return new ValidationError(
                         memberName,
-                        GetPropertyDisplayName(entity, memberName),
+                        entity.GetProperty(memberName).GetDisplayName(),
                         new[] { r.ErrorMessage });
                 }));
             }
 
             return errors;
-        }
-
-        /// <summary>
-        /// Gets the display name of the property.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns></returns>
-        string GetPropertyDisplayName(object entity, string propertyName)
-        {
-            var pi = entity.GetType().GetProperty(propertyName);
-            if (pi != null && pi.IsAttributeDefined<DataAnnotations.DisplayAttribute>())
-            {
-                var a = pi.GetAttribute<DataAnnotations.DisplayAttribute>();
-                return a.GetName();
-            }
-
-            return null;
         }
 
         public DataAnnotationValidationService<TEntity> AddRule(Expression<Func<TEntity, object>> property, Func<ValidationContext<TEntity>, ValidationResult> rule)
