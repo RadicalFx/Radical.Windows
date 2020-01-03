@@ -29,4 +29,7 @@ before_build:
 build_script:
   - '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.com" .\src\Radical.Windows.sln /Build Release'
 
+test_script:
+  - dotnet test .\src\Radical.Windows.sln --no-build
+
 deploy: off

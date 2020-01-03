@@ -3,6 +3,8 @@ using ApprovalTests.Reporters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PublicApiGenerator;
 using Radical.Windows;
+using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Radical.Tests.API
@@ -16,7 +18,22 @@ namespace Radical.Tests.API
         [UseReporter(typeof(DiffReporter))]
         public void Approve_API()
         {
-            var publicApi = ApiGenerator.GeneratePublicApi(typeof(VisualTreeCrawler).Assembly, options: null);
+            ApiGeneratorOptions options = null;
+            var type = Type.GetType("XamlGeneratedNamespace.GeneratedInternalTypeHelper, Radical.Windows");
+            if (type != null) 
+            {
+                var typesToInclude = typeof(VisualTreeCrawler).Assembly
+                    .GetExportedTypes()
+                    .Except(new Type[] { type })
+                    .ToArray();
+
+                options = new ApiGeneratorOptions()
+                {
+                    IncludeTypes = typesToInclude
+                };
+            }
+
+            var publicApi = ApiGenerator.GeneratePublicApi(typeof(VisualTreeCrawler).Assembly, options: options);
 
             Approvals.Verify(publicApi);
         }

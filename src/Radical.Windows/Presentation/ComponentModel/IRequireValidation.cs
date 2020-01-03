@@ -1,5 +1,6 @@
 ﻿using Radical.Validation;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -27,7 +28,7 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// Validates this instance.
         /// </summary>
         /// <returns><c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
-        bool Validate();
+        (bool IsValid, IEnumerable<ValidationError> Errors) Validate();
 
         /// <summary>
         /// Validates this instance.
@@ -36,17 +37,7 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
         /// </returns>
-        bool Validate(ValidationBehavior behavior);
-
-        /// <summary>
-        /// Validates this instance.
-        /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
-        /// <param name="behavior">The behavior.</param>
-        /// <returns>
-        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
-        /// </returns>
-        bool Validate(string ruleSet, ValidationBehavior behavior);
+        (bool IsValid, IEnumerable<ValidationError> Errors) Validate(ValidationBehavior behavior);
 
         /// <summary>
         /// Occurs when the validation process is completed.
