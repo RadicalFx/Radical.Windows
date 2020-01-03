@@ -687,7 +687,10 @@ namespace Test.Radical.Windows.Presentation
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
             sut.Test_OnValidate = ctx =>
             {
-                ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
+                if (ctx.PropertyName == "AProperty" || ctx.PropertyName == null)
+                {
+                    ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
+                }
             };
 
             sut.Validate();
@@ -710,14 +713,17 @@ namespace Test.Radical.Windows.Presentation
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
             sut.Test_OnValidate = ctx =>
             {
-                ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
+                if (ctx.PropertyName == "AProperty" || ctx.PropertyName == null)
+                {
+                    ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
+                }
             };
 
             sut.NotNullNotEmpty = "";
             sut.NotNullNotEmpty = "foo";
             sut.NotNullNotEmpty = "bar";
 
-            Assert.AreEqual(1, sut.ValidationErrors.Count);
+            Assert.AreEqual(0, sut.ValidationErrors.Count);
         }
 
         [TestMethod]

@@ -165,6 +165,29 @@ namespace Radical.Windows.Presentation
                 validationResult = ValidationService.ValidateProperty(propertyName);
                 IsValid = validationResult.IsValid;
 
+                /*
+                 * when the ViewModel is IRequireValidationCallback<T> custom validation 
+                 * (OnValidate(ValidationContext<T> context)) is always invoked as the Validator<T>
+                 * has no way to know if custom validation is about the validated property. This
+                 * means that the returned errors might contain errors related to additional
+                 * properties other then the required one.
+                 * 
+                 * IsValidationStatusChanged does not take that into account as it compare only
+                 * the detected errors for the required property.
+                 * 
+                 * Worse is that SyncValidationErrorsFrom will duplicate any custom vadiation error
+                 * as the sync filters and operate only on the required property.
+                 * 
+                 * One option is to change the ValidationContext to filter out errors not related to
+                 * the validated property. Even if it means that the only option to add custom 
+                 * (complex) errors is when a full validation is performed.
+                 * 
+                 * Another option is to entirely drop the IRequireValidationCallback<T> type as the exact
+                 * same behavior can be obtained using a rule. It's true that the Validator type was
+                 * designed as a generic validator not with WPF in mind.
+                 * 
+                 * The same applies to AbstractMementoViewModel.
+                 */
                 var validationStatusChanged = ValidationErrors.IsValidationStatusChanged(validationResult.Errors, propertyName);
                 if (validationStatusChanged)
                 {
