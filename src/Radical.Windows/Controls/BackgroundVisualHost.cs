@@ -6,81 +6,10 @@ using System.Windows.Threading;
 
 namespace Radical.Windows.Controls
 {
-    //public delegate Visual CreateContentFunction();
-
     public class BackgroundVisualHost : FrameworkElement
     {
         private ThreadedVisualHelper _threadedHelper = null;
         private HostVisual _hostVisual = null;
-
-        //#region IsContentShowingProperty
-        ///// <summary>
-        ///// Identifies the IsContentShowing dependency property.
-        ///// </summary>
-        //public static readonly DependencyProperty IsContentShowingProperty = DependencyProperty.Register(
-        //	"IsContentShowing",
-        //	typeof(bool),
-        //	typeof(BackgroundVisualHost),
-        //	new FrameworkPropertyMetadata(false, OnIsContentShowingChanged));
-
-        ///// <summary>
-        ///// Gets or sets if the content is being displayed.
-        ///// </summary>
-        //public bool IsContentShowing
-        //{
-        //	get { return (bool)GetValue(IsContentShowingProperty); }
-        //	set { SetValue(IsContentShowingProperty, value); }
-        //}
-
-        //static void OnIsContentShowingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //	BackgroundVisualHost bvh = (BackgroundVisualHost)d;
-
-        //	if (bvh.CreateContent != null)
-        //	{
-        //		if ((bool)e.NewValue)
-        //		{
-        //			bvh.CreateContentHelper();
-        //		}
-        //		else
-        //		{
-        //			bvh.HideContentHelper();
-        //		}
-        //	}
-        //}
-        //#endregion
-
-        //#region CreateContent Property
-        ///// <summary>
-        ///// Identifies the CreateContent dependency property.
-        ///// </summary>
-        //public static readonly DependencyProperty CreateContentProperty = DependencyProperty.Register(
-        //	"CreateContent",
-        //	typeof(CreateContentFunction),
-        //	typeof(BackgroundVisualHost),
-        //	new FrameworkPropertyMetadata(OnCreateContentChanged));
-
-        ///// <summary>
-        ///// Gets or sets the function used to create the visual to display in a background thread.
-        ///// </summary>
-        //public CreateContentFunction CreateContent
-        //{
-        //	get { return (CreateContentFunction)GetValue(CreateContentProperty); }
-        //	set { SetValue(CreateContentProperty, value); }
-        //}
-
-        //static void OnCreateContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //	BackgroundVisualHost bvh = (BackgroundVisualHost)d;
-
-        //	if (bvh.IsContentShowing)
-        //	{
-        //		bvh.HideContentHelper();
-        //		if (e.NewValue != null)
-        //			bvh.CreateContentHelper();
-        //	}
-        //} 
-        //#endregion
 
         readonly Func<Visual> createContent;
 
