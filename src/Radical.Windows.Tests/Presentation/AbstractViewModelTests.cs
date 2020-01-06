@@ -100,16 +100,6 @@ namespace Test.Radical.Windows.Presentation
             }
         }
 
-        //class ImplementsIDataErrorInfo : TestViewModel, IDataErrorInfo
-        //{
-
-        //}
-
-        //class ImplementsICanBeValidated : TestViewModel, ICanBeValidated
-        //{
-
-        //}
-
         class ImplementsINotifyDataErrorInfo : TestViewModel, INotifyDataErrorInfo
         {
 
@@ -164,34 +154,6 @@ namespace Test.Radical.Windows.Presentation
             Assert.IsTrue(errors.Count == 1);
         }
 
-        //[TestMethod]
-        //[TestCategory( "AbstractViewModel" ), TestCategory( "Validation" )]
-        //public void AbstractViewModel_as_IDataErrorInfo_with_validation_service_invalid_property_not_validated_is_valid()
-        //{
-        //    var sut = new SampleTestViewModel();
-        //    sut.ValidateUsing(
-        //        new DataAnnotationValidationService<SampleTestViewModel>( sut ) );
-
-        //    var error = sut[ "NotNullNotEmpty" ];
-
-        //    Assert.IsNull( error );
-        //}
-
-        //[TestMethod]
-        //[TestCategory( "AbstractViewModel" ), TestCategory( "Validation" )]
-        //public void AbstractViewModel_as_IDataErrorInfo_with_validation_service_invalid_property_not_validated_is_valid_even_if_called_multiple_times()
-        //{
-        //    var sut = new SampleTestViewModel();
-        //    sut.ValidateUsing(
-        //        new DataAnnotationValidationService<SampleTestViewModel>( sut ) );
-
-        //    var error = sut[ "NotNullNotEmpty" ];
-        //    error = sut[ "NotNullNotEmpty" ];
-        //    error = sut[ "NotNullNotEmpty" ];
-
-        //    Assert.IsNull( error );
-        //}
-
         [TestMethod]
         [TestCategory("AbstractViewModel"), TestCategory("Validation")]
         public void AbstractViewModel_as_INotifyDataErrorInfo_with_validation_service_invalid_property_not_validated_is_valid()
@@ -228,22 +190,6 @@ namespace Test.Radical.Windows.Presentation
             Assert.IsTrue(sut.Test_IsValidationEnabled);
         }
 
-        //[TestMethod]
-        //[TestCategory( "AbstractViewModel" ), TestCategory( "Validation" )]
-        //public void AbstractViewModel_IDataErrorInfo_IsValidationEnabled_should_be_true()
-        //{
-        //    var sut = new ImplementsIDataErrorInfo();
-        //    Assert.IsTrue( sut.Test_IsValidationEnabled );
-        //}
-
-        //[TestMethod]
-        //[TestCategory( "AbstractViewModel" ), TestCategory( "Validation" )]
-        //public void AbstractViewModel_ICanBeValidated_IsValidationEnabled_should_be_true()
-        //{
-        //    var sut = new ImplementsICanBeValidated();
-        //    Assert.IsTrue( sut.Test_IsValidationEnabled );
-        //}
-
         [TestMethod]
         [TestCategory("AbstractViewModel"), TestCategory("Validation")]
         public void AbstractViewModel_IRequireValidation_IsValidationEnabled_should_be_true()
@@ -271,26 +217,6 @@ namespace Test.Radical.Windows.Presentation
             Assert.IsNotNull(errors);
             Assert.AreEqual(0, errors.Count());
         }
-
-        //[TestMethod]
-        //[TestCategory( "AbstractViewModel" ), TestCategory( "Validation" )]
-        //public void AbstractViewModel_PropertyChanged_is_raised_Error_indexer_should_contain_expected_errors()
-        //{
-        //    string errors = null;
-
-        //    var sut = new SampleTestViewModel();
-        //    sut.PropertyChanged += ( s, e ) =>
-        //    {
-        //        errors = sut[ "NotNullNotEmpty" ];
-        //    };
-
-        //    sut.ValidateUsing(
-        //        new DataAnnotationValidationService<SampleTestViewModel>( sut ),
-        //        forceIsValidationEnabledTo: true );
-        //    sut.NotNullNotEmpty = "";
-
-        //    Assert.IsFalse(string.IsNullOrWhiteSpace( errors ) );
-        //}
 
         [TestMethod]
         [TestCategory("AbstractViewModel"), TestCategory("Validation")]
