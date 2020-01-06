@@ -659,7 +659,6 @@ namespace Test.Radical.Windows.Presentation
         public void AbstractViewModel_When_Validate_and_Validation_is_suspended_Validated_event_should_not_be_raised()
         {
             bool raised = false;
-            var propName = "NotNullNotEmpty";
 
             var sut = new SampleTestViewModel();
             var svc = new DataAnnotationValidationService<SampleTestViewModel>(sut);
