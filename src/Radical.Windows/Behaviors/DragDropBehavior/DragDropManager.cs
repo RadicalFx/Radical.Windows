@@ -131,11 +131,7 @@ namespace Radical.Windows.Behaviors
                  * TreeView control is never fired, maybe is handled by
                  * someone else in the processing pipeline.
                  */
-                //( ( UIElement )d ).MouseLeftButtonDown += ( s, args ) =>
-                //{
-                //    var _startPoint = args.GetPosition( null );
-                //    DragDropManager.SetStartPoint( d, _startPoint );
-                //};
+                //((UIElement)d).MouseLeftButtonDown += (s, args) =>{ ... };
 
                 ((UIElement)d).MouseMove += (s, args) =>
             {
