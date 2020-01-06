@@ -121,10 +121,10 @@ namespace Radical.Windows.Behaviors
                 DragDropManager.SetIsDragSourceAttached(d, true);
 
                 ((UIElement)d).PreviewMouseLeftButtonDown += (s, args) =>
-            {
-                var _startPoint = args.GetPosition(null);
-                DragDropManager.SetStartPoint(d, _startPoint);
-            };
+                {
+                    var _startPoint = args.GetPosition(null);
+                    DragDropManager.SetStartPoint(d, _startPoint);
+                };
 
                 /*
                  * We cannot use "MouseLeftButtonDown" because on the
@@ -150,7 +150,6 @@ namespace Radical.Windows.Behaviors
             };
             }
         }
-
         static void StartDrag(DependencyObject d, MouseEventArgs e)
         {
             var sourceItem = DragDropManager.FindDragContainer((DependencyObject)e.OriginalSource);
