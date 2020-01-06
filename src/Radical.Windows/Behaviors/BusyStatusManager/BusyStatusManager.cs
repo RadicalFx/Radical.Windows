@@ -56,27 +56,6 @@
 
         #endregion
 
-        //#region Attached Property: BusyStyle
-
-        //public static readonly DependencyProperty BusyStyleProperty = DependencyProperty.RegisterAttached(
-        //                              "BusyStyle",
-        //                              typeof( Style ),
-        //                              typeof( BusyStatusManager ),
-        //                              new FrameworkPropertyMetadata( null ) );
-
-
-        //public static Style GetBusyStyle( DependencyObject owner )
-        //{
-        //    return ( Style )owner.GetValue( BusyStyleProperty );
-        //}
-
-        //public static void SetBusyStyle( DependencyObject owner, Style value )
-        //{
-        //    owner.SetValue( BusyStyleProperty, value );
-        //}
-
-        //#endregion
-
         public static readonly DependencyProperty ContentProperty = DependencyProperty.RegisterAttached(
                                       "Content",
                                       typeof(object),
