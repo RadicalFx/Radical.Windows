@@ -1,9 +1,9 @@
-﻿namespace Radical.Windows.Behaviors
-{
-    using Radical.Windows.Controls;
-    using System.Windows;
-    using System.Windows.Controls;
+﻿using Radical.Windows.Controls;
+using System.Windows;
+using System.Windows.Controls;
 
+namespace Radical.Windows.Behaviors
+{
     sealed class CueBannerAdorner : OverlayAdorner
     {
         private readonly ContentPresenter userContent;
