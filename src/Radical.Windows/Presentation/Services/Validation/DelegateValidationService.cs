@@ -30,7 +30,6 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <summary>
         /// Called in order to execute the concrete validation process.
         /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
         /// <returns>
         /// A list of <seealso cref="ValidationError"/>.
         /// </returns>

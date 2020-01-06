@@ -6,10 +6,10 @@ namespace Radical.Windows.Presentation
     /// Interaction logic for SplashScreenView.xaml
     /// </summary>
     internal partial class SplashScreenView : Window
-	{
-		public SplashScreenView()
-		{
-			InitializeComponent();
-		}
-	}
+    {
+        public SplashScreenView()
+        {
+            InitializeComponent();
+        }
+    }
 }

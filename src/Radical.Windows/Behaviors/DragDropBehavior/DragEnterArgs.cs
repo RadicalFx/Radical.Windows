@@ -3,6 +3,9 @@ using System.Windows;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// The DragEnter event arguments.
+    /// </summary>
     public class DragEnterArgs : DragDropOperationArgs
     {
         /// <summary>

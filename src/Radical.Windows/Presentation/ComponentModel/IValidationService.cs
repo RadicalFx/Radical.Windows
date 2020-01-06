@@ -55,7 +55,7 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// Gets a value indicating whether the validation process is suspended.
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if the validation process is suspended; otherwise, <c>false</c>.
+        ///     <c>true</c> if the validation process is suspended; otherwise, <c>false</c>.
         /// </value>
         bool IsValidationSuspended { get; }
 

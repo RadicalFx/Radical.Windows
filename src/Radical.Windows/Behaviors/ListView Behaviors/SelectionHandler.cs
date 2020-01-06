@@ -23,13 +23,13 @@ namespace Radical.Windows.Behaviors
             sceh = (s, e) =>
             {
                 /*
-				 * La ListView ci notifica che la selezione
-				 * è cambiata.
-				 * 
-				 * Per prima cosa ci sganciamo temporaneamente
-				 * dalla gestione delle notifiche in modo da non
-				 * innescare un meccanismo ricorsivo infinito
-				 */
+                 * La ListView ci notifica che la selezione
+                 * è cambiata.
+                 * 
+                 * Per prima cosa ci sganciamo temporaneamente
+                 * dalla gestione delle notifiche in modo da non
+                 * innescare un meccanismo ricorsivo infinito
+                 */
                 Unwire();
 
                 var bag = GetSelectedItemsBag();

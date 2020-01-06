@@ -172,7 +172,6 @@ namespace Radical.Windows.Behaviors
             if (ac == null)
             {
                 ac = new AutoComplete(ctrl);
-                //ac.SetControl( ctrl );
                 ctrl.SetValue(AutoCompleteInstancePropertyKey, ac);
             }
 

@@ -19,7 +19,7 @@ namespace Radical.Windows
         /// <typeparam name="T">The type of the parent object.</typeparam>
         /// <param name="obj">The obj to determine the parent type for.</param>
         /// <returns>
-        /// 	<c>true</c> if the given dependency object is child of an object of the specified type T; otherwise, <c>false</c>.
+        ///     <c>true</c> if the given dependency object is child of an object of the specified type T; otherwise, <c>false</c>.
         /// </returns>
         public static bool IsChildOfType<T>(DependencyObject obj) where T : DependencyObject
         {

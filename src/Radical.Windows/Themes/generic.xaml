@@ -1,8 +1,8 @@
 <ResourceDictionary x:Class="Radical.Windows.Controls.Themes.generic"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:controls="clr-namespace:Radical.Windows.Controls"
-	xmlns:t="clr-namespace:Radical.Windows.Controls.Themes">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Radical.Windows.Controls"
+    xmlns:t="clr-namespace:Radical.Windows.Controls.Themes">
 
     <t:GripAlignmentConverter x:Key="GripAlignmentConverter"/>
     <t:GripCursorConverter x:Key="GripCursorConverter"/>

@@ -1,12 +1,12 @@
-﻿namespace Radical.Windows.Behaviors
-{
-    using System;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Documents;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 
+namespace Radical.Windows.Behaviors
+{
     public static class BusyStatusManager
     {
         internal static ContentPresenter WrapUserContent(object userContent)
@@ -55,27 +55,6 @@
         }
 
         #endregion
-
-        //#region Attached Property: BusyStyle
-
-        //public static readonly DependencyProperty BusyStyleProperty = DependencyProperty.RegisterAttached(
-        //							  "BusyStyle",
-        //							  typeof( Style ),
-        //							  typeof( BusyStatusManager ),
-        //							  new FrameworkPropertyMetadata( null ) );
-
-
-        //public static Style GetBusyStyle( DependencyObject owner )
-        //{
-        //	return ( Style )owner.GetValue( BusyStyleProperty );
-        //}
-
-        //public static void SetBusyStyle( DependencyObject owner, Style value )
-        //{
-        //	owner.SetValue( BusyStyleProperty, value );
-        //}
-
-        //#endregion
 
         public static readonly DependencyProperty ContentProperty = DependencyProperty.RegisterAttached(
                                       "Content",

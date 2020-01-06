@@ -108,21 +108,21 @@ namespace Radical.Windows.Presentation.Services
                     }
                 }
 
-				//behaviors must be attached regardless of the presence of the view model
-				//the AttachViewBehaviors is considered to be idempotent.
-				conventions.AttachViewBehaviors( view );
+                //behaviors must be attached regardless of the presence of the view model
+                //the AttachViewBehaviors is considered to be idempotent.
+                conventions.AttachViewBehaviors( view );
             }
 
             return view;
         }
 
-		///// <summary>
-		///// Releases the given view
-		///// </summary>
-		///// <param name="view">The view to release.</param>
-		//public void Release( DependencyObject view )
-		//{
-		//	throw new NotImplementedException();
-		//}
-	}
+        ///// <summary>
+        ///// Releases the given view
+        ///// </summary>
+        ///// <param name="view">The view to release.</param>
+        //public void Release( DependencyObject view )
+        //{
+        //    throw new NotImplementedException();
+        //}
+    }
 }

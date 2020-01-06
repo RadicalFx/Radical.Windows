@@ -6,6 +6,9 @@ using System.Windows.Media;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// The DragDropManager class exposing all the drag 'n' drop related attached properties.
+    /// </summary>
     public static class DragDropManager
     {
         #region Attached Property: IsDragSourceAttached
@@ -121,21 +124,17 @@ namespace Radical.Windows.Behaviors
                 DragDropManager.SetIsDragSourceAttached(d, true);
 
                 ((UIElement)d).PreviewMouseLeftButtonDown += (s, args) =>
-            {
-                var _startPoint = args.GetPosition(null);
-                DragDropManager.SetStartPoint(d, _startPoint);
-            };
+                {
+                    var _startPoint = args.GetPosition(null);
+                    DragDropManager.SetStartPoint(d, _startPoint);
+                };
 
                 /*
                  * We cannot use "MouseLeftButtonDown" because on the
                  * TreeView control is never fired, maybe is handled by
                  * someone else in the processing pipeline.
                  */
-                //( ( UIElement )d ).MouseLeftButtonDown += ( s, args ) =>
-                //{
-                //    var _startPoint = args.GetPosition( null );
-                //    DragDropManager.SetStartPoint( d, _startPoint );
-                //};
+                //((UIElement)d).MouseLeftButtonDown += (s, args) =>{ ... };
 
                 ((UIElement)d).MouseMove += (s, args) =>
             {
@@ -154,7 +153,6 @@ namespace Radical.Windows.Behaviors
             };
             }
         }
-
         static void StartDrag(DependencyObject d, MouseEventArgs e)
         {
             var sourceItem = DragDropManager.FindDragContainer((DependencyObject)e.OriginalSource);

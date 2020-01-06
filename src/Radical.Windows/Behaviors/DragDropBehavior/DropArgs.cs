@@ -2,6 +2,9 @@
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// The Drop event arguments.
+    /// </summary>
     public class DropArgs : DragDropOperationArgs
     {
         /// <summary>

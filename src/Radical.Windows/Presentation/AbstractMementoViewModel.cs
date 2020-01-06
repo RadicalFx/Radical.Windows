@@ -292,7 +292,7 @@ namespace Radical.Windows.Presentation
         /// Gets or sets a value indicating whether this instance is triggering validation.
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if this instance is triggering validation; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is triggering validation; otherwise, <c>false</c>.
         /// </value>
         [SkipPropertyValidation]
         protected virtual bool IsTriggeringValidation

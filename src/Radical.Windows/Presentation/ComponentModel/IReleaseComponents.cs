@@ -6,13 +6,13 @@ namespace Radical.Windows.Presentation.ComponentModel
     /// Manage the release process of a component.
     /// </summary>
     public interface IReleaseComponents
-	{
-		/// <summary>
-		/// Releases the given component.
-		/// </summary>
-		/// <param name="component">The component to release.</param>
-		void Release(object component );
-	}
+    {
+        /// <summary>
+        /// Releases the given component.
+        /// </summary>
+        /// <param name="component">The component to release.</param>
+        void Release(object component );
+    }
 
 
     /// <summary>

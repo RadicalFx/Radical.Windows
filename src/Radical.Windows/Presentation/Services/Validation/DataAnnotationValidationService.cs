@@ -1,5 +1,4 @@
 ﻿using Radical.Linq;
-using Radical.Reflection;
 using Radical.Validation;
 using System;
 using System.Collections.Generic;
@@ -65,7 +64,6 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <summary>
         /// Called in order to execute the concrete validation process.
         /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
         /// <returns>
         /// A list of <seealso cref="ValidationError" />.
         /// </returns>
@@ -101,7 +99,6 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// <summary>
         /// Called in order to execute the concrete validation process on the given property.
         /// </summary>
-        /// <param name="ruleSet">The rule set.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>
         /// A list of <seealso cref="ValidationError" />.
@@ -141,6 +138,12 @@ namespace Radical.Windows.Presentation.Services.Validation
             return errors;
         }
 
+        /// <summary>
+        /// Add a custom validation rule.
+        /// </summary>
+        /// <param name="property">The property to validate</param>
+        /// <param name="rule">The rule to evaluate to validate the specified property.</param>
+        /// <returns>This validation service instance for fluent usage.</returns>
         public DataAnnotationValidationService<TEntity> AddRule(Expression<Func<TEntity, object>> property, Func<ValidationContext<TEntity>, ValidationResult> rule)
         {
             customValidator.AddRule(property, rule);

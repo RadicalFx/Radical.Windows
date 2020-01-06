@@ -47,19 +47,19 @@ namespace Radical.Windows.Markup
         public override object ProvideValue(IServiceProvider provider)
         {
             /*
-			 * We basically have a problem here, since we cannot
-			 * create the "runtime" delagate command until the target
-			 * object is loaded if we return the base provided value,
-			 * that is a "Binding" object the binding is runtime evaluated
-			 * and null is returned because obviously the Path does not exists
-			 * on the source object.
-			 * 
-			 * So if the base CommandBinding returns itself it means the we are
-			 * currently using a Shared Dependency Property so we need to delay the 
-			 * resolution; otherwise we return a fake empty command just to let the 
-			 * Wpf binding engine to belive everything is working fine and wait for
-			 * the target to be loaded.
-			 */
+             * We basically have a problem here, since we cannot
+             * create the "runtime" delagate command until the target
+             * object is loaded if we return the base provided value,
+             * that is a "Binding" object the binding is runtime evaluated
+             * and null is returned because obviously the Path does not exists
+             * on the source object.
+             * 
+             * So if the base CommandBinding returns itself it means the we are
+             * currently using a Shared Dependency Property so we need to delay the 
+             * resolution; otherwise we return a fake empty command just to let the 
+             * Wpf binding engine to belive everything is working fine and wait for
+             * the target to be loaded.
+             */
             //var value = base.ProvideValue( provider );
             //if( Object.Equals( value, this ) )
             //{
