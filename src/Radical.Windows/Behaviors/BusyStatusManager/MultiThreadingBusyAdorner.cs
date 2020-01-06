@@ -61,9 +61,6 @@ namespace Radical.Windows.Behaviors
         internal void Teardown()
         {
             _busyHost.Teardown();
-
-            //this.ms.Dispose();
-            //this.ms = null;
         }
     }
 }
