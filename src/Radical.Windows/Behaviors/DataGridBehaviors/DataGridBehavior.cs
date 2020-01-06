@@ -37,7 +37,7 @@ namespace Radical.Windows.Behaviors
             if (lastColumn != null)
                 lastColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 
-            // Autofit all other columns
+            // Auto-fit all other columns
             foreach (var column in dataGrid.Columns)
             {
                 if (column == lastColumn) break;
