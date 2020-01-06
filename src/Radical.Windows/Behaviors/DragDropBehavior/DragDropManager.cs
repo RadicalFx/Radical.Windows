@@ -7,7 +7,7 @@ using System.Windows.Media;
 namespace Radical.Windows.Behaviors
 {
     /// <summary>
-    /// The DragDropManager class exposing all the drag & drop related attached properties.
+    /// The DragDropManager class exposing all the drag 'n' drop related attached properties.
     /// </summary>
     public static class DragDropManager
     {
