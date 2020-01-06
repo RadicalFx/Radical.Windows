@@ -73,9 +73,6 @@ namespace Radical.Windows.Behaviors
 
             control.IsVisibleChanged += onVisibleChanged;
 
-            //control.Unloaded += onUnloaded;
-            //control.TextChanged += onTextChanged;
-
             HandleShowRequest(control);
         };
 
@@ -169,8 +166,6 @@ namespace Radical.Windows.Behaviors
             var isDesignMode = DesignTimeHelper.GetIsInDesignMode();
             if (!isDesignMode)
             {
-                //Ensure.That( sender.GetType() ).Is<TextBoxBase>();
-
                 var control = (UIElement)sender;
                 control.AddHandler(FrameworkElement.LoadedEvent, onLoaded, true);
             }
