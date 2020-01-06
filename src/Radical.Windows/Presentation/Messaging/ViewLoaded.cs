@@ -7,14 +7,14 @@ namespace Radical.Windows.Presentation.Messaging
     /// </summary>
     public class ViewLoaded
     {
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ViewLoaded" /> class.
-		/// </summary>
-		/// <param name="view">The view.</param>
-		public ViewLoaded(DependencyObject view)
-		{
-			View = view;
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewLoaded" /> class.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        public ViewLoaded(DependencyObject view)
+        {
+            View = view;
+        }
 
         /// <summary>
         /// Gets the view.

@@ -260,7 +260,7 @@ namespace Radical.Windows.Markup
         /// </summary>
         /// <param name="provider">The provider.</param>
         /// <returns>
-        /// 	<c>true</c> if is using a shared dependency property; otherwise, <c>false</c>.
+        ///     <c>true</c> if is using a shared dependency property; otherwise, <c>false</c>.
         /// </returns>
         protected bool IsUsingSharedDependencyProperty(IServiceProvider provider)
         {

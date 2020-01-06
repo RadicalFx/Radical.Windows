@@ -7,6 +7,6 @@ namespace Radical.Windows.Presentation.ComponentModel
     /// </summary>
     [AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = false )]
     public class NotifyActivatedAttribute : Attribute
-	{
-	}
+    {
+    }
 }

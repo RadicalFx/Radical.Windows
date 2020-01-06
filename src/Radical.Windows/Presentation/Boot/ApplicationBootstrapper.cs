@@ -588,7 +588,7 @@ namespace Radical.Windows.Presentation.Boot
         /// Gets a value indicating whether the operating system session is ending.
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if the operating system session is ending; otherwise, <c>false</c>.
+        ///     <c>true</c> if the operating system session is ending; otherwise, <c>false</c>.
         /// </value>
         protected bool IsSessionEnding
         {
@@ -622,7 +622,7 @@ namespace Radical.Windows.Presentation.Boot
         /// Gets a value indicating whether this application is shutting down.
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if this application is shutting down; otherwise, <c>false</c>.
+        ///     <c>true</c> if this application is shutting down; otherwise, <c>false</c>.
         /// </value>
         protected bool IsShuttingDown
         {

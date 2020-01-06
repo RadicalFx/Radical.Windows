@@ -5,10 +5,10 @@ namespace Radical.Windows.Presentation.ComponentModel
     /// Defines that a ViewModel expects lifecycle notifications from the view.
     /// </summary>
     public interface IExpectViewClosedCallback
-	{
-		/// <summary>
-		/// Called when the view is closed.
-		/// </summary>
-		void OnViewClosed();
-	}
+    {
+        /// <summary>
+        /// Called when the view is closed.
+        /// </summary>
+        void OnViewClosed();
+    }
 }

@@ -118,16 +118,16 @@ namespace Radical.Windows.Behaviors
             var control = (UIElement)s;
 
             /*
-			 * TODO: capire perchè...
-			 * 
-			 * control.Loaded -= onLoaded;
-			 * 
-			 * Non dobbiamo sganciarci dall'evento, un elemento Wpf viene
-			 * unloaded anche quando viene rimosso da un VisualTree se ci 
-			 * sganciamo da Loaded non sapremo mai che la textBox è tornata
-			 * in un visual tree e quindi, ad esempio in un tabControl, ci
-			 * perdiamo tutte le funzionalità.
-			 */
+             * TODO: capire perchè...
+             * 
+             * control.Loaded -= onLoaded;
+             * 
+             * Non dobbiamo sganciarci dall'evento, un elemento Wpf viene
+             * unloaded anche quando viene rimosso da un VisualTree se ci 
+             * sganciamo da Loaded non sapremo mai che la textBox è tornata
+             * in un visual tree e quindi, ad esempio in un tabControl, ci
+             * perdiamo tutte le funzionalità.
+             */
             //control.Unloaded -= onUnloaded;
             //control.TextChanged -= onTextChanged;
             control.RemoveHandler(FrameworkElement.UnloadedEvent, onUnloaded);

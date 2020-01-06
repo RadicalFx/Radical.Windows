@@ -184,16 +184,16 @@ namespace Radical.Windows.Presentation.Regions
              * Qualcuno ci chiede di registrare un nuovo region manager, quello
              * che dobbiamo fare è avere la possibilità di deregistrare quel region 
              * manager, quindi:
-             *	- facciamo il walking del visual tree alla ricerca di qualcosa di "chiudibile"
-             *		* o IClosableView
-             *		* o Window
-             *	- se troviamo uno dei 2;
-             *	- aggiungiamo questa Window/IClosableView alla lista di quelle aperte;
-             *	- ci agganciamo all'evento Closed;
-             *	- quando la IClosableView/Window è stata chiusa dobbiamo scorrere il VisualTree
-             *	  dall'alto verso il basso e cercare controlli che siano View, se ne troviamo
-             *	  vediamo se per quella View abbiamo registrato dei region manager in caso
-             *	  affermativo de-registriamo.
+             *    - facciamo il walking del visual tree alla ricerca di qualcosa di "chiudibile"
+             *        * o IClosableView
+             *        * o Window
+             *    - se troviamo uno dei 2;
+             *    - aggiungiamo questa Window/IClosableView alla lista di quelle aperte;
+             *    - ci agganciamo all'evento Closed;
+             *    - quando la IClosableView/Window è stata chiusa dobbiamo scorrere il VisualTree
+             *      dall'alto verso il basso e cercare controlli che siano View, se ne troviamo
+             *      vediamo se per quella View abbiamo registrato dei region manager in caso
+             *      affermativo de-registriamo.
              */
             Action<DependencyObject> closedCallback = d =>
             {

@@ -59,20 +59,20 @@
         //#region Attached Property: BusyStyle
 
         //public static readonly DependencyProperty BusyStyleProperty = DependencyProperty.RegisterAttached(
-        //							  "BusyStyle",
-        //							  typeof( Style ),
-        //							  typeof( BusyStatusManager ),
-        //							  new FrameworkPropertyMetadata( null ) );
+        //                              "BusyStyle",
+        //                              typeof( Style ),
+        //                              typeof( BusyStatusManager ),
+        //                              new FrameworkPropertyMetadata( null ) );
 
 
         //public static Style GetBusyStyle( DependencyObject owner )
         //{
-        //	return ( Style )owner.GetValue( BusyStyleProperty );
+        //    return ( Style )owner.GetValue( BusyStyleProperty );
         //}
 
         //public static void SetBusyStyle( DependencyObject owner, Style value )
         //{
-        //	owner.SetValue( BusyStyleProperty, value );
+        //    owner.SetValue( BusyStyleProperty, value );
         //}
 
         //#endregion

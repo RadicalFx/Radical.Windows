@@ -21,7 +21,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         ///// returns a valid response or not.
         ///// </summary>
         ///// <value>
-        ///// 	<c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.
+        /////     <c>true</c> if the validation process has successfully passed the validation process.; otherwise, <c>false</c>.
         ///// </value>
         //public bool IsValid { get; private set; } = true;
 
@@ -278,7 +278,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         /// Gets a value indicating whether the validation process is suspended.
         /// </summary>
         /// <value>
-        /// 	<c>true</c> if the validation process is suspended; otherwise, <c>false</c>.
+        ///     <c>true</c> if the validation process is suspended; otherwise, <c>false</c>.
         /// </value>
         public bool IsValidationSuspended { get; private set; }
 

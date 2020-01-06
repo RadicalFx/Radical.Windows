@@ -3,10 +3,10 @@
 namespace RadicalSplashScreen.Presentation
 {
     class SplashScreenViewModel : AbstractViewModel
-	{
-		public SplashScreenViewModel()
-		{
+    {
+        public SplashScreenViewModel()
+        {
 
-		}
-	}
+        }
+    }
 }

@@ -6,7 +6,7 @@ namespace Radical.Windows.Presentation.ComponentModel
     /// Applied to a ViewModel issues automatically a ViewModelShown message.
     /// </summary>
     [AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = false )]
-	public class NotifyShownAttribute : Attribute
-	{
-	}
+    public class NotifyShownAttribute : Attribute
+    {
+    }
 }
