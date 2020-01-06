@@ -6,6 +6,9 @@ using System.Windows.Media;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// The DragDropManager class exposing all the drag & drop related attached properties.
+    /// </summary>
     public static class DragDropManager
     {
         #region Attached Property: IsDragSourceAttached
