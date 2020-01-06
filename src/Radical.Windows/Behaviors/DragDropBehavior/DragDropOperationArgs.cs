@@ -4,6 +4,9 @@ using System.Windows;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// The base abstract class used by Drag & Drop event arguments.
+    /// </summary>
     public abstract class DragDropOperationArgs : EventArgs
     {
         /// <summary>
