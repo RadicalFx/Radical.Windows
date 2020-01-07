@@ -7,19 +7,14 @@ namespace Radical.Windows.CommandBuilders
 {
     public class CommandData
     {
-        public string MethodName;
-
-        public object DataContext;
-        public LateBoundVoidMethod FastDelegate;
-
-        public BooleanFact BooleanFact;
-
-        public bool HasParameter;
-        public Type ParameterType;
-
-        public KeyBindingAttribute[] KeyBindings;
-        public CommandDescriptionAttribute Description;
-
-        public IMonitor Monitor;
+        public string MethodName { get; set; }
+        public object DataContext { get; set; }
+        public LateBoundVoidMethod FastDelegate { get; set; }
+        public BooleanFact BooleanFact { get; set; }
+        public bool HasParameter { get; set; }
+        public Type ParameterType { get; set; }
+        public KeyBindingAttribute[] KeyBindings { get; set; }
+        public CommandDescriptionAttribute Description { get; set; }
+        public IMonitor Monitor { get; set; }
     }
 }
