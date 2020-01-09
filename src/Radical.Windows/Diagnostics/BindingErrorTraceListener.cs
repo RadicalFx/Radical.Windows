@@ -57,7 +57,7 @@ namespace Radical.Diagnostics
             _listener = null;
         }
 
-        private StringBuilder _messageBuilder = new StringBuilder();
+        private readonly StringBuilder _messageBuilder = new StringBuilder();
 
         /// <summary>
         /// Prevents a default instance of the <see cref="BindingErrorTraceListener"/> class from being created.

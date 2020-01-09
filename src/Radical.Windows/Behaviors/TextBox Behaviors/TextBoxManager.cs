@@ -9,10 +9,10 @@ namespace Radical.Windows.Behaviors
 {
     public static class TextBoxManager
     {
-        static KeyEventHandler onPreviewKeyDown;
-        static RoutedEventHandler onGotFocus;
-        static RoutedEventHandler onLoaded;
-        static RoutedEventHandler onUnloaded;
+        static readonly KeyEventHandler onPreviewKeyDown;
+        static readonly RoutedEventHandler onGotFocus;
+        static readonly RoutedEventHandler onLoaded;
+        static readonly RoutedEventHandler onUnloaded;
 
         static TextBoxManager()
         {

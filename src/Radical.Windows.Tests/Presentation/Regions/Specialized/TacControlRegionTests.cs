@@ -46,7 +46,7 @@ namespace Test.Radical.Windows.Presentation.Regions.Specialized
 
         class HardCodedServiceProvider : IServiceProvider
         {
-            IProvideValueTarget ipvt = new IPVT()
+            readonly IProvideValueTarget ipvt = new IPVT()
             {
                 TargetObject = new TabControl()
             };

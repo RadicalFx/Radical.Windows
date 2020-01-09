@@ -43,7 +43,7 @@ namespace Radical.Windows.Presentation.Boot
         Mutex mutex;
         string key;
         SingletonApplicationScope singleton = SingletonApplicationScope.NotSupported;
-        AssemblyScanner assemblyScanner = new AssemblyScanner();
+        readonly AssemblyScanner assemblyScanner = new AssemblyScanner();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationBootstrapper"/> class.

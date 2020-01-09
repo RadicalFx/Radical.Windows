@@ -55,7 +55,7 @@ namespace Radical.Windows.Behaviors
 
         #endregion
 
-        RoutedEventHandler handler = null;
+        readonly RoutedEventHandler handler = null;
 
         public Handle()
         {

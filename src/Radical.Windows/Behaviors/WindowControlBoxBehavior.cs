@@ -30,7 +30,7 @@ namespace Radical.Windows.Behaviors
             set;
         }
 
-        EventHandler h;
+        readonly EventHandler h;
 
         public bool ShowIcon { get; set; }
 

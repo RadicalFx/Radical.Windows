@@ -14,7 +14,7 @@ namespace Radical.Windows.Presentation
         /// </summary>
         public class Waiter
         {
-            DispatcherTimer timer;
+            readonly DispatcherTimer timer;
 
             internal Waiter( TimeSpan delay )
             {

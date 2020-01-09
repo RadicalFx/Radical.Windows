@@ -6,9 +6,9 @@ namespace Radical.Windows
 {
     public sealed class RandomSolidColorBrush
     {
-        Random random;
-        PropertyInfo[] _props;
-        int _MaxProps;
+        readonly Random random;
+        readonly PropertyInfo[] _props;
+        readonly int _MaxProps;
 
         public RandomSolidColorBrush()
         {
