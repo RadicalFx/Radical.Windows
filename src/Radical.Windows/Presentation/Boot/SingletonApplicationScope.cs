@@ -1,7 +1,7 @@
 ﻿namespace Radical.Windows.Presentation.Boot
 {
     /// <summary>
-    /// Determins the scope of a singleton application.
+    /// Determines the scope of a singleton application.
     /// </summary>
     public enum SingletonApplicationScope
     {
