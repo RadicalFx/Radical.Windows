@@ -163,7 +163,7 @@ namespace Radical.Windows.Behaviors
 
         static void SetPasswordOnPasswordBox(PasswordBox box, string newPassword)
         {
-            if (!Password.GetIsUpdating(box))
+            if (!GetIsUpdating(box))
             {
                 box.PasswordChanged -= onPasswordChanged;
                 box.Password = newPassword;
@@ -199,9 +199,9 @@ namespace Radical.Windows.Behaviors
             {
                 PasswordBox box = (PasswordBox)s;
 
-                Password.SetIsUpdating(box, true);
-                Password.SetText(box, box.Password);
-                Password.SetIsUpdating(box, false);
+                SetIsUpdating(box, true);
+                SetText(box, box.Password);
+                SetIsUpdating(box, false);
             };
 
             onPreviewKeyDown = (s, e) =>
@@ -215,7 +215,7 @@ namespace Radical.Windows.Behaviors
                     var gestures = cmd.GetGestures();
                     var senderGestures = gestures.Where(gesture => gesture.Matches(d, e));
 
-                    if (((gestures.None() && e.Key == System.Windows.Input.Key.Enter) || senderGestures.Any()) && cmd.CanExecute(prm))
+                    if (((gestures.None() && e.Key == Key.Enter) || senderGestures.Any()) && cmd.CanExecute(prm))
                     {
                         var k = e.Key;
                         var m = ModifierKeys.None;

@@ -8,11 +8,11 @@ namespace Radical.Windows
         {
             var mt = typeof(LoadedWeakEventManager);
 
-            var manager = (LoadedWeakEventManager)WeakEventManager.GetCurrentManager(mt);
+            var manager = (LoadedWeakEventManager)GetCurrentManager(mt);
             if (manager == null)
             {
                 manager = new LoadedWeakEventManager();
-                WeakEventManager.SetCurrentManager(mt, manager);
+                SetCurrentManager(mt, manager);
             }
 
             return manager;
@@ -20,15 +20,15 @@ namespace Radical.Windows
 
         public static void AddListener(FrameworkElement source, IWeakEventListener listener)
         {
-            LoadedWeakEventManager
-                .GetCurrentManager()
+
+            GetCurrentManager()
                 .ProtectedAddListener(source, listener);
         }
 
         public static void RemoveListener(FrameworkElement source, IWeakEventListener listener)
         {
-            LoadedWeakEventManager
-                .GetCurrentManager()
+
+            GetCurrentManager()
                 .ProtectedRemoveListener(source, listener);
         }
 
@@ -39,7 +39,7 @@ namespace Radical.Windows
 
         void OnLoaded(object sender, RoutedEventArgs args)
         {
-            base.DeliverEvent(sender, args);
+            DeliverEvent(sender, args);
         }
 
         /// <summary>

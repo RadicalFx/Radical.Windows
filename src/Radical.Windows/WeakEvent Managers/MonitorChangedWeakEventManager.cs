@@ -13,11 +13,11 @@ namespace Radical.Windows
         {
             var mt = typeof(MonitorChangedWeakEventManager);
 
-            var manager = (MonitorChangedWeakEventManager)WeakEventManager.GetCurrentManager(mt);
+            var manager = (MonitorChangedWeakEventManager)GetCurrentManager(mt);
             if (manager == null)
             {
                 manager = new MonitorChangedWeakEventManager();
-                WeakEventManager.SetCurrentManager(mt, manager);
+                SetCurrentManager(mt, manager);
             }
 
             return manager;
@@ -30,8 +30,8 @@ namespace Radical.Windows
         /// <param name="listener">The listener.</param>
         public static void AddListener(IMonitor source, IWeakEventListener listener)
         {
-            MonitorChangedWeakEventManager
-                .GetCurrentManager()
+
+            GetCurrentManager()
                 .ProtectedAddListener(source, listener);
         }
 
@@ -42,8 +42,8 @@ namespace Radical.Windows
         /// <param name="listener">The listener.</param>
         public static void RemoveListener(IMonitor source, IWeakEventListener listener)
         {
-            MonitorChangedWeakEventManager
-                .GetCurrentManager()
+
+            GetCurrentManager()
                 .ProtectedRemoveListener(source, listener);
         }
 
@@ -62,7 +62,7 @@ namespace Radical.Windows
         /// <param name="args">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void OnChanged(object sender, EventArgs args)
         {
-            base.DeliverEvent(sender, args);
+            DeliverEvent(sender, args);
         }
 
         /// <summary>

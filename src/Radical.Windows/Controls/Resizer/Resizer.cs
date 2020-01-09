@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Controls
 {
-    [TemplatePart(Name = Resizer._gripName, Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = _gripName, Type = typeof(FrameworkElement))]
     public class Resizer : ContentControl
     {
         private FrameworkElement _frameworkElement;

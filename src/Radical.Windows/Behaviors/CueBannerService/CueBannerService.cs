@@ -200,7 +200,7 @@ namespace Radical.Windows.Behaviors
         static bool ShouldShowCueBanner(TextBoxBase c)
         {
             var value = c.GetValue(TextBox.TextProperty) as string;
-            var isVisible = Convert.ToBoolean(c.GetValue(TextBox.IsVisibleProperty));
+            var isVisible = Convert.ToBoolean(c.GetValue(UIElement.IsVisibleProperty));
 
             return isVisible && string.IsNullOrEmpty(value);
         }

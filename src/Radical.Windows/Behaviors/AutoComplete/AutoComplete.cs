@@ -156,7 +156,7 @@ namespace Radical.Windows.Behaviors
 
         private static AutoComplete EnsureInstance(Control ctrl)
         {
-            var ac = (AutoComplete)ctrl.GetValue(AutoComplete.AutoCompleteInstance);
+            var ac = (AutoComplete)ctrl.GetValue(AutoCompleteInstance);
             if (ac == null)
             {
                 ac = new AutoComplete(ctrl);

@@ -27,10 +27,10 @@ namespace Radical.Windows.Behaviors
             lv.SizeChanged += onSizeChanged;
             lv.Unloaded += onUnloaded;
 
-            var autoSortColumns = ListViewManager.GetSortCommand(lv);
+            var autoSortColumns = GetSortCommand(lv);
             if (autoSortColumns != null)
             {
-                lv.AddHandler(GridViewColumnHeader.ClickEvent, onColumnHeaderClick);
+                lv.AddHandler(ButtonBase.ClickEvent, onColumnHeaderClick);
             }
 
             AdjustColumns(lv);
@@ -85,7 +85,7 @@ namespace Radical.Windows.Behaviors
                 if (itemSelectCommand != null && itemSelectCommand.CanExecute(dataContext))
                 {
                     var gestures = itemSelectCommand.GetGestures();
-                    if (((gestures.None() && e.Key == System.Windows.Input.Key.Enter) || gestures.Where(gesture => gesture.Matches(s, e)).Any()))
+                    if (((gestures.None() && e.Key == Key.Enter) || gestures.Where(gesture => gesture.Matches(s, e)).Any()))
                     {
                         itemSelectCommand.Execute(dataContext);
                         e.Handled = true;
@@ -96,7 +96,7 @@ namespace Radical.Windows.Behaviors
                 if (itemRemoveCommand != null && itemRemoveCommand.CanExecute(dataContext))
                 {
                     var gestures = itemRemoveCommand.GetGestures();
-                    if (((gestures.None() && e.Key == System.Windows.Input.Key.Delete) || gestures.Where(gesture => gesture.Matches(s, e)).Any()))
+                    if (((gestures.None() && e.Key == Key.Delete) || gestures.Where(gesture => gesture.Matches(s, e)).Any()))
                     {
                         itemRemoveCommand.Execute(dataContext);
                         e.Handled = true;
@@ -121,10 +121,10 @@ namespace Radical.Windows.Behaviors
             lv.SizeChanged -= onSizeChanged;
             //lv.GotFocus -= onListViewGotFocus;
 
-            var autoSortColumns = ListViewManager.GetSortCommand(lv);
+            var autoSortColumns = GetSortCommand(lv);
             if (autoSortColumns != null)
             {
-                lv.RemoveHandler(GridViewColumnHeader.ClickEvent, onColumnHeaderClick);
+                lv.RemoveHandler(ButtonBase.ClickEvent, onColumnHeaderClick);
             }
 
             //Vedi CueBannerService per i dettagli
@@ -140,7 +140,7 @@ namespace Radical.Windows.Behaviors
                 var column = clickedHeader.Column;
 
                 var commandParam = GridViewColumnManager.GetSortProperty(column);
-                var command = ListViewManager.GetSortCommand(listView);
+                var command = GetSortCommand(listView);
 
                 if (!string.IsNullOrEmpty(commandParam) && command != null && command.CanExecute(commandParam))
                 {
@@ -342,17 +342,17 @@ namespace Radical.Windows.Behaviors
                    .IsNotNull()
                    .GetValue();
 
-                if (!ListViewManager.GetIsLoadEventAttached(listView))
+                if (!GetIsLoadEventAttached(listView))
                 {
                     listView.Loaded += onLoaded;
-                    ListViewManager.SetIsLoadEventAttached(listView, true);
+                    SetIsLoadEventAttached(listView, true);
                 }
             }
         }
 
         static void AdjustColumns(ListView listView)
         {
-            if (ListViewManager.GetAutoSizeColumns(listView))
+            if (GetAutoSizeColumns(listView))
             {
                 var gv = Ensure.That(listView.View as GridView)
                     .WithMessage("This behavior can be attached only to ListView(s) whose view is a GridView.")
@@ -435,10 +435,10 @@ namespace Radical.Windows.Behaviors
                     .IsNotNull()
                     .GetValue();
 
-                if (!ListViewManager.GetIsLoadEventAttached(listView))
+                if (!GetIsLoadEventAttached(listView))
                 {
                     listView.Loaded += onLoaded;
-                    ListViewManager.SetIsLoadEventAttached(listView, true);
+                    SetIsLoadEventAttached(listView, true);
                 }
             }
         }
