@@ -25,26 +25,7 @@ namespace Radical.Windows.Behaviors
 {
     public sealed partial class AutoComplete
     {
-        public static readonly DependencyProperty UserTextProperty;
-        public static readonly DependencyProperty SourceProperty;
-        public static readonly DependencyProperty FilterPathProperty;
-        public static readonly DependencyProperty ChoosenItemProperty;
-
-        private static readonly DependencyPropertyKey AutoCompleteInstancePropertyKey;
-        private static readonly DependencyProperty AutoCompleteInstance;
-        private static readonly DependencyProperty ItemTemplateProperty;
-
-        static AutoComplete()
-        {
-            AutoCompleteInstancePropertyKey = DependencyProperty.RegisterAttachedReadOnly(
-                "AutoCompleteInstance",
-                typeof(AutoComplete),
-                typeof(AutoComplete),
-                new FrameworkPropertyMetadata(null));
-
-            AutoCompleteInstance = AutoCompleteInstancePropertyKey.DependencyProperty;
-
-            UserTextProperty = DependencyProperty.RegisterAttached("UserText",
+        public static readonly DependencyProperty UserTextProperty = DependencyProperty.RegisterAttached("UserText",
                 typeof(object),
                 typeof(AutoComplete),
                 new FrameworkPropertyMetadata(null, OnUserTextPropertyChanged)
@@ -52,29 +33,36 @@ namespace Radical.Windows.Behaviors
                     BindsTwoWayByDefault = true
                 });
 
-            SourceProperty = DependencyProperty.RegisterAttached("Source",
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.RegisterAttached("Source",
                 typeof(object),
                 typeof(AutoComplete),
                 new FrameworkPropertyMetadata(null, OnSourcePropertyChanged));
 
-            FilterPathProperty = DependencyProperty.RegisterAttached("FilterPath",
+        public static readonly DependencyProperty FilterPathProperty = DependencyProperty.RegisterAttached("FilterPath",
                 typeof(AutoCompleteFilterPathCollection),
                 typeof(AutoComplete),
                 new FrameworkPropertyMetadata(null));
 
-            ItemTemplateProperty = DependencyProperty.RegisterAttached("ItemTemplate",
-               typeof(DataTemplate),
-               typeof(AutoComplete),
-               new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnItemTemplatePropertyChanged)));
-
-            ChoosenItemProperty = DependencyProperty.RegisterAttached("ChoosenItem",
+        public static readonly DependencyProperty ChoosenItemProperty = DependencyProperty.RegisterAttached("ChoosenItem",
                 typeof(object),
                 typeof(AutoComplete),
                 new FrameworkPropertyMetadata(null)
                 {
                     BindsTwoWayByDefault = true
                 });
-        }
+
+        private static readonly DependencyPropertyKey AutoCompleteInstancePropertyKey = DependencyProperty.RegisterAttachedReadOnly(
+                "AutoCompleteInstance",
+                typeof(AutoComplete),
+                typeof(AutoComplete),
+                new FrameworkPropertyMetadata(null));
+
+        private static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.RegisterAttached("ItemTemplate",
+               typeof(DataTemplate),
+               typeof(AutoComplete),
+               new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnItemTemplatePropertyChanged)));
+
+        private static readonly DependencyProperty AutoCompleteInstance = AutoCompleteInstancePropertyKey.DependencyProperty;
 
         #region Attached Property: ImplicitItemsFilter
 
