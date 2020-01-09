@@ -153,7 +153,6 @@ namespace Radical.Windows.Behaviors
                         element.IsEnabled = false;
                         if (enableMultiThreadingHost)
                         {
-                            //var style = GetBusyStyle( element );
                             var ba = new MultiThreadingBusyAdorner(element, content);
 
                             layer.Add(ba);
