@@ -5,7 +5,7 @@ using Wpf = System.Windows.Threading;
 namespace Radical.Windows.Threading
 {
     /// <summary>
-    /// Wraps the Wpf multi-threading synchronization 
+    /// Wraps the WPF multi-threading synchronization 
     /// Dispatcher (System.Windows.Threading).
     /// </summary>
     public sealed class WpfDispatcher : IDispatcher
@@ -15,7 +15,7 @@ namespace Radical.Windows.Threading
         /// <summary>
         /// Initializes a new instance of the <see cref="WpfDispatcher"/> class.
         /// </summary>
-        /// <param name="dispatcher">The wrapped Wpf dispatcher.</param>
+        /// <param name="dispatcher">The wrapped WPF dispatcher.</param>
         public WpfDispatcher(Wpf.Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
