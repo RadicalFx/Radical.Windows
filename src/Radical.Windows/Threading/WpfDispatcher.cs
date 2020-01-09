@@ -89,7 +89,7 @@ namespace Radical.Windows.Threading
             }
             else
             {
-                return (TResult)dispatcher.Invoke(func);
+                return dispatcher.Invoke(func);
             }
         }
 
