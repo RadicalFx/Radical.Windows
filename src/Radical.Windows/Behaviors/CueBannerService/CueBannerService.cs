@@ -42,7 +42,7 @@ namespace Radical.Windows.Behaviors
 
         public static object GetPasswordCueBanner(PasswordBox owner)
         {
-            return (object)owner.GetValue(PasswordCueBannerProperty);
+            return owner.GetValue(PasswordCueBannerProperty);
         }
 
         public static void SetPasswordCueBanner(PasswordBox owner, object value)
