@@ -52,15 +52,10 @@ namespace Radical.Windows.Behaviors
 
         #endregion
 
-        static readonly DependencyPropertyChangedEventHandler onVisibleChanged = null;
-
-        static CueBannerService()
+        static readonly DependencyPropertyChangedEventHandler onVisibleChanged = (s, e) =>
         {
-            onVisibleChanged = (s, e) =>
-            {
-                HandleShowRequest((UIElement)s);
-            };
-        }
+            HandleShowRequest((UIElement)s);
+        };
 
         static readonly RoutedEventHandler onLoaded = (s, e) =>
         {
