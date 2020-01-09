@@ -172,11 +172,6 @@ namespace Radical.Windows.Behaviors
             }
         }
 
-        static void HandleContentChanged(FrameworkElement element)
-        {
-            throw new NotSupportedException("BusyStatusManager: Content property cannot be changed at runtime.");
-        }
-
         static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!DesignTimeHelper.GetIsInDesignMode())
@@ -193,7 +188,7 @@ namespace Radical.Windows.Behaviors
                 }
                 else if (control.IsLoaded && e.Property == ContentProperty)
                 {
-                    HandleContentChanged(control);
+                    throw new NotSupportedException("BusyStatusManager: Content property cannot be changed at runtime.");
                 }
             }
         }
