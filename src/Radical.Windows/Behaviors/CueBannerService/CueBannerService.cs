@@ -87,9 +87,8 @@ namespace Radical.Windows.Behaviors
                     RemoveCueBanner(tbb);
                 }
             }
-            else if (control is PasswordBox)
+            else if (control is PasswordBox pb)
             {
-                var pb = (PasswordBox)control;
                 if (pb.Visibility == Visibility.Visible)
                 {
                     if (ShouldShowCueBanner(pb))
