@@ -73,9 +73,8 @@ namespace Radical.Windows.Behaviors
 
         static void HandleShowRequest(UIElement control)
         {
-            if (control is TextBoxBase)
+            if (control is TextBoxBase tbb)
             {
-                var tbb = (TextBoxBase)control;
                 if (tbb.Visibility == Visibility.Visible)
                 {
                     if (ShouldShowCueBanner(tbb))
