@@ -18,6 +18,7 @@ namespace Radical.Windows.Presentation
                     {
                         if( _source == null )
                         {
+                            //TODO: refactor to a different way of managing settings
                             var name =  ConfigurationManager
                                 .AppSettings[ "radical/windows/presentation/diagnostics/defaultTraceSourceName" ]
                                 .Return( s => s, "Radical.Windows.Presentation" );
