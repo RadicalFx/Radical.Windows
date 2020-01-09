@@ -372,12 +372,10 @@ namespace Radical.Windows.Presentation.Services
                  * mainly for backward compatibility, can be applied also on the ViewModel and the
                  * _View_Loaded message is still broadcasted.
                  */
-                //var dataContext = this.GetViewDataContext( view );
-                //var hasAttributeOnViewModel = dataContext != null && dataContext.GetType().IsAttributeDefined<NotifyLoadedAttribute>();
                 var hasAttributeOnView = view.GetType().IsAttributeDefined<NotifyLoadedAttribute>();
                 var hasRegions = RegionService.CurrentService.HoldsRegionManager(view);
 
-                return /* hasAttributeOnViewModel || */ hasAttributeOnView || hasRegions;
+                return hasAttributeOnView || hasRegions;
             };
 
             ShouldNotifyViewLoaded = view =>
@@ -385,25 +383,6 @@ namespace Radical.Windows.Presentation.Services
                 return DefaultShouldNotifyViewLoaded(view);
             };
         }
-
-        //Boolean TryFindWindowOrIClosableView( DependencyObject fe, out DependencyObject windowOrIClosableView )
-        //{
-        //    if( fe is IClosableView || fe is Window )
-        //    {
-        //        windowOrIClosableView = fe;
-        //        return true;
-        //    }
-        //    else if( fe != null /* && fe.Parent != null */ )
-        //    {
-        //        var parent = VisualTreeHelper.GetParent( fe );
-        //        return TryFindWindowOrIClosableView( parent, out windowOrIClosableView );
-        //    }
-        //    else
-        //    {
-        //        windowOrIClosableView = null;
-        //        return false;
-        //    }
-        //}
 
         /// <summary>
         /// Gets or sets the view model type resolver that can resolve the view model type given the view type.
