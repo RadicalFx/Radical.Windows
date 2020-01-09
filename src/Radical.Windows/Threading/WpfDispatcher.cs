@@ -97,7 +97,7 @@ namespace Radical.Windows.Threading
         /// Safely invokes the specified delegate.
         /// </summary>
         /// <param name="d">The delegate to invoke.</param>
-        /// <param name="args">The delegate arguments, or null if no arguments shuold passed to the delegate.</param>
+        /// <param name="args">The delegate arguments, or null if no arguments should passed to the delegate.</param>
         public void Invoke(Delegate d, params object[] args)
         {
             dispatcher.Invoke(d, args);
