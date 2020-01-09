@@ -16,15 +16,14 @@ namespace Radical.Windows.Behaviors
         {
             onColumnHeaderClick = (s, e) =>
             {
-                var clickedHeader = e.OriginalSource as GridViewColumnHeader;
-                if (clickedHeader != null && clickedHeader.Role != GridViewColumnHeaderRole.Padding)
+                if (e.OriginalSource is GridViewColumnHeader clickedHeader && clickedHeader.Role != GridViewColumnHeaderRole.Padding)
                 {
                     var column = clickedHeader.Column;
                     string commandParam = null;
 
-                    if (column.DisplayMemberBinding is Binding)
+                    if (column.DisplayMemberBinding is Binding binding)
                     {
-                        commandParam = ((Binding)column.DisplayMemberBinding).Path.Path;
+                        commandParam = binding.Path.Path;
                     }
                     else
                     {
@@ -41,7 +40,7 @@ namespace Radical.Windows.Behaviors
             onLoaded = (s, e) =>
             {
                 AssociatedObject.AddHandler(
-                    GridViewColumnHeader.ClickEvent,
+                    System.Windows.Controls.Primitives.ButtonBase.ClickEvent,
                     onColumnHeaderClick);
             };
         }
