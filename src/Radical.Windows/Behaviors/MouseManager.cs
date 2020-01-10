@@ -8,10 +8,10 @@ namespace Radical.Windows.Behaviors
     public class MouseManager
     {
 
-        static MouseButtonEventHandler onMouseLeftButtonDown;
-        static MouseButtonEventHandler onMouseRightButtonDown;
-        static MouseButtonEventHandler onMouseDoubleClick;
-        static ContextMenuEventHandler onContextMenuOpening;
+        static readonly MouseButtonEventHandler onMouseLeftButtonDown;
+        static readonly MouseButtonEventHandler onMouseRightButtonDown;
+        static readonly MouseButtonEventHandler onMouseDoubleClick;
+        static readonly ContextMenuEventHandler onContextMenuOpening;
 
         static MouseManager()
         {

@@ -11,7 +11,7 @@ namespace Test.Radical.Windows.Presentation
     {
         class TestValidationService : AbstractValidationService
         {
-            ValidationError[] errorsToReturnUnderTest;
+            readonly ValidationError[] errorsToReturnUnderTest;
 
             public TestValidationService( ValidationError[] errorsToReturnUnderTest )
             {

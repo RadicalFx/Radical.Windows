@@ -14,7 +14,7 @@ namespace Radical.Windows.Behaviors
         INotifyAttachedOjectLoaded, IWeakEventListener
         where T : FrameworkElement
     {
-        RoutedEventHandler loaded;
+        readonly RoutedEventHandler loaded;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RadicalBehavior&lt;T&gt;"/> class.

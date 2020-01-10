@@ -13,10 +13,9 @@ namespace Radical.Windows.Behaviors
     {
         ListView owner;
         IList selectedItems;
-
-        NotifyCollectionChangedEventHandler ncceh;
-        ListChangedEventHandler lceh;
-        SelectionChangedEventHandler sceh;
+        readonly NotifyCollectionChangedEventHandler ncceh;
+        readonly ListChangedEventHandler lceh;
+        readonly SelectionChangedEventHandler sceh;
 
         public SelectionHandler()
         {

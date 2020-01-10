@@ -15,10 +15,10 @@ namespace Radical.Windows.Controls
         private double _originalWidth;
         private double _originalHeight;
 
-        private static RoutedCommand _startResizeCommand;
-        private static RoutedCommand _updateSizeCommand;
-        private static RoutedCommand _endResizeCommand;
-        private static RoutedCommand _autoSizeCommand;
+        private static readonly RoutedCommand _startResizeCommand;
+        private static readonly RoutedCommand _updateSizeCommand;
+        private static readonly RoutedCommand _endResizeCommand;
+        private static readonly RoutedCommand _autoSizeCommand;
 
         /// <summary>
         /// Identifies the <see cref="IsGripEnabled"/> dependency property.

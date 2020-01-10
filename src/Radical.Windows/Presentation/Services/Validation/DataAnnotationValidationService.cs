@@ -32,8 +32,8 @@ namespace Radical.Windows.Presentation.Services.Validation
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     public class DataAnnotationValidationService<TEntity> : AbstractValidationService
     {
-        TEntity entity;
-        Validator<TEntity> customValidator = new Validator<TEntity>();
+        readonly TEntity entity;
+        readonly Validator<TEntity> customValidator = new Validator<TEntity>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataAnnotationValidationService{TEntity}" /> class.

@@ -36,7 +36,7 @@ namespace Radical.Windows.Behaviors
             get { return AssociatedObject; }
         }
 
-        KeyEventHandler onPreviewKeyDown;
+        readonly KeyEventHandler onPreviewKeyDown;
 
         public TextBoxCommandBehavior()
         {

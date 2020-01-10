@@ -7,7 +7,7 @@ namespace Radical.Windows.Presentation.Services
 {
     class RegionInjectionHandler : IRegionInjectionHandler
     {
-        Dictionary<string, List<Type>> viewsInterestedInRegions = new Dictionary<string, List<Type>>();
+        readonly Dictionary<string, List<Type>> viewsInterestedInRegions = new Dictionary<string, List<Type>>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegionInjectionHandler"/> class.

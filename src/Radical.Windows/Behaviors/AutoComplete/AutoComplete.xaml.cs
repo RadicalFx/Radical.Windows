@@ -42,13 +42,13 @@ namespace Radical.Windows.Behaviors
             bool Match(string userText);
         }
 
-        private ControlUnderAutoComplete controlUnderAutocomplete;
-        private CollectionViewSource viewSource;
+        private readonly ControlUnderAutoComplete controlUnderAutocomplete;
+        private readonly CollectionViewSource viewSource;
 
         private bool iteratingListItems;
         private bool deletingText;
         private string rememberedText;
-        private Popup autoCompletePopup;
+        private readonly Popup autoCompletePopup;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutoComplete"/> class.
@@ -88,7 +88,7 @@ namespace Radical.Windows.Behaviors
             get { return viewSource; }
         }
 
-        private ListBox _listBox;
+        private readonly ListBox _listBox;
         private ListBox ListBox
         {
             get { return _listBox; }
@@ -99,7 +99,7 @@ namespace Radical.Windows.Behaviors
             if (AutoComplete.GetImplicitItemsFilter(controlUnderAutocomplete.Control) == ImplicitItemsFilter.Enabled)
             {
                 AutoCompleteFilterPathCollection filterPaths = GetAutoCompleteFilterProperty();
-                if (e.Item is AutoComplete.IHaveAnOpinionOnFilteriho)
+                if (e.Item is AutoComplete.IHaveAnOpinionOnFilter iho)
                 {
                     e.Accepted = iho.Match(controlUnderAutocomplete.Text);
                 }

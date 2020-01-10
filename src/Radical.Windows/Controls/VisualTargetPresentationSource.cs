@@ -5,7 +5,7 @@ namespace Radical.Windows.Controls
 {
     public class VisualTargetPresentationSource : PresentationSource
     {
-        private VisualTarget _visualTarget;
+        private readonly VisualTarget _visualTarget;
         private bool _isDisposed = false;
 
         public VisualTargetPresentationSource(HostVisual hostVisual)

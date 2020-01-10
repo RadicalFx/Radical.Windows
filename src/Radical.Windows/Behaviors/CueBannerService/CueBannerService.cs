@@ -52,7 +52,7 @@ namespace Radical.Windows.Behaviors
 
         #endregion
 
-        static DependencyPropertyChangedEventHandler onVisibleChanged = null;
+        static readonly DependencyPropertyChangedEventHandler onVisibleChanged = null;
 
         static CueBannerService()
         {

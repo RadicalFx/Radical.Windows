@@ -21,12 +21,11 @@ namespace Radical.Windows.Presentation.Behaviors
 
         readonly IMessageBroker broker;
         readonly IConventionsHandler conventions;
-
-        RoutedEventHandler loaded = null;
-        EventHandler activated = null;
-        EventHandler rendered = null;
-        EventHandler closed = null;
-        CancelEventHandler closing = null;
+        readonly RoutedEventHandler loaded = null;
+        readonly EventHandler activated = null;
+        readonly EventHandler rendered = null;
+        readonly EventHandler closed = null;
+        readonly CancelEventHandler closing = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowLifecycleNotificationsBehavior"/> class.

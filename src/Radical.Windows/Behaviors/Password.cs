@@ -171,10 +171,10 @@ namespace Radical.Windows.Behaviors
             }
         }
 
-        static RoutedEventHandler onLoaded;
-        static RoutedEventHandler onUnloaded;
-        static RoutedEventHandler onPasswordChanged;
-        static KeyEventHandler onPreviewKeyDown;
+        static readonly RoutedEventHandler onLoaded;
+        static readonly RoutedEventHandler onUnloaded;
+        static readonly RoutedEventHandler onPasswordChanged;
+        static readonly KeyEventHandler onPreviewKeyDown;
 
         static Password()
         {
