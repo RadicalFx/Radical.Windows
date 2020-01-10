@@ -39,8 +39,8 @@ namespace Radical.Windows.Input
         /// <summary>
         /// An emtpy command, usefull as a placeholder.
         /// </summary>
-        public static readonly IDelegateCommand Empty = DelegateCommand
-            .Create()
+        public static readonly IDelegateCommand Empty =
+            Create()
             .OnCanExecute(o => false);
 
         /// <summary>

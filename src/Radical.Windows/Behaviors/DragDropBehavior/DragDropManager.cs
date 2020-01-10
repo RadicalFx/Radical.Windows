@@ -118,31 +118,32 @@ namespace Radical.Windows.Behaviors
 
         private static void OnDataObjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var attached = DragDropManager.GetIsDragSourceAttached(d);
+            var attached = GetIsDragSourceAttached(d);
             if (!attached)
             {
-                DragDropManager.SetIsDragSourceAttached(d, true);
+                SetIsDragSourceAttached(d, true);
 
                 ((UIElement)d).PreviewMouseLeftButtonDown += (s, args) =>
                 {
                     var _startPoint = args.GetPosition(null);
-                    DragDropManager.SetStartPoint(d, _startPoint);
+                    SetStartPoint(d, _startPoint);
                 };
 
                 /*
                  * We cannot use "MouseLeftButtonDown" because on the
                  * TreeView control is never fired, maybe is handled by
                  * someone else in the processing pipeline.
+                 * 
+                 * ((UIElement)d).MouseLeftButtonDown += (s, args) =>{ ... };
                  */
-                //((UIElement)d).MouseLeftButtonDown += (s, args) =>{ ... };
 
                 ((UIElement)d).MouseMove += (s, args) =>
             {
-                var isDragging = DragDropManager.GetIsDragging(d);
+                var isDragging = GetIsDragging(d);
                 if (args.LeftButton == MouseButtonState.Pressed && !isDragging)
                 {
                     var position = args.GetPosition(null);
-                    var _startPoint = DragDropManager.GetStartPoint(d);
+                    var _startPoint = GetStartPoint(d);
 
                     if (Math.Abs(position.X - _startPoint.X) > SystemParameters.MinimumHorizontalDragDistance ||
                         Math.Abs(position.Y - _startPoint.Y) > SystemParameters.MinimumVerticalDragDistance)
@@ -155,12 +156,12 @@ namespace Radical.Windows.Behaviors
         }
         static void StartDrag(DependencyObject d, MouseEventArgs e)
         {
-            var sourceItem = DragDropManager.FindDragContainer((DependencyObject)e.OriginalSource);
+            var sourceItem = FindDragContainer((DependencyObject)e.OriginalSource);
 
-            DragDropManager.SetIsDragging(d, true);
+            SetIsDragging(d, true);
 
-            var obj = DragDropManager.GetDataObject(sourceItem);
-            var objType = DragDropManager.GetDataObjectType(sourceItem);
+            var obj = GetDataObject(sourceItem);
+            var objType = GetDataObjectType(sourceItem);
 
             DataObject data;
             if (string.IsNullOrEmpty(objType))
@@ -174,7 +175,7 @@ namespace Radical.Windows.Behaviors
 
             DragDrop.DoDragDrop(d, data, DragDropEffects.Move);
 
-            DragDropManager.SetIsDragging(d, false);
+            SetIsDragging(d, false);
         }
 
         #region Attached Property: IsDragging
@@ -302,9 +303,9 @@ namespace Radical.Windows.Behaviors
         static DependencyObject FindDragContainer(DependencyObject originalSource)
         {
             var element = originalSource.FindParent<DependencyObject>(t =>
-           {
-               return DragDropManager.GetDataObject(t) != null;
-           });
+            {
+                return GetDataObject(t) != null;
+            });
 
             return element;
         }
@@ -323,19 +324,19 @@ namespace Radical.Windows.Behaviors
         static DependencyObject FindDropTargetContainer(DependencyObject originalSource)
         {
             var element = originalSource.FindParent<DependencyObject>(t =>
-           {
-               return DragDropManager.GetDropTarget(t) != null;
-           });
+            {
+                return GetDropTarget(t) != null;
+            });
 
             return element;
         }
 
         static object FindDropTarget(DependencyObject originalSource)
         {
-            var element = DragDropManager.FindDropTargetContainer(originalSource);
+            var element = FindDropTargetContainer(originalSource);
             if (element != null)
             {
-                return DragDropManager.GetDropTarget(element);
+                return GetDropTarget(element);
             }
 
             return null;
@@ -355,19 +356,19 @@ namespace Radical.Windows.Behaviors
         static DependencyObject FindDropCommandHolder(DependencyObject originalSource)
         {
             var element = originalSource.FindParent<DependencyObject>(t =>
-           {
-               return DragDropManager.GetOnDropCommand(t) != null;
-           });
+            {
+                return GetOnDropCommand(t) != null;
+            });
 
             return element;
         }
 
         static ICommand FindDropCommand(DependencyObject originalSource)
         {
-            var element = DragDropManager.FindDropCommandHolder(originalSource);
+            var element = FindDropCommandHolder(originalSource);
             if (element != null)
             {
-                return DragDropManager.GetOnDropCommand(element);
+                return GetOnDropCommand(element);
             }
 
             return null;
@@ -376,19 +377,19 @@ namespace Radical.Windows.Behaviors
         static DependencyObject FindDragEnterCommandHolder(DependencyObject originalSource)
         {
             var element = originalSource.FindParent<DependencyObject>(t =>
-           {
-               return DragDropManager.GetOnDragEnterCommand(t) != null;
-           });
+            {
+                return GetOnDragEnterCommand(t) != null;
+            });
 
             return element;
         }
 
         static ICommand FindDragEnterCommand(DependencyObject originalSource)
         {
-            var element = DragDropManager.FindDragEnterCommandHolder(originalSource);
+            var element = FindDragEnterCommandHolder(originalSource);
             if (element != null)
             {
-                return DragDropManager.GetOnDragEnterCommand(element);
+                return GetOnDragEnterCommand(element);
             }
 
             return null;
@@ -397,19 +398,19 @@ namespace Radical.Windows.Behaviors
         static DependencyObject FindDragLeaveCommandHolder(DependencyObject originalSource)
         {
             var element = originalSource.FindParent<DependencyObject>(t =>
-           {
-               return DragDropManager.GetOnDragLeaveCommand(t) != null;
-           });
+            {
+                return GetOnDragLeaveCommand(t) != null;
+            });
 
             return element;
         }
 
         static ICommand FindDragLeaveCommand(DependencyObject originalSource)
         {
-            var element = DragDropManager.FindDragLeaveCommandHolder(originalSource);
+            var element = FindDragLeaveCommandHolder(originalSource);
             if (element != null)
             {
-                return DragDropManager.GetOnDragLeaveCommand(element);
+                return GetOnDragLeaveCommand(element);
             }
 
             return null;
@@ -417,30 +418,30 @@ namespace Radical.Windows.Behaviors
 
         private static void OnOnDropCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var attached = DragDropManager.GetIsDropTargetAttached(d);
+            var attached = GetIsDropTargetAttached(d);
             if (!attached)
             {
-                DragDropManager.SetIsDropTargetAttached(d, true);
+                SetIsDropTargetAttached(d, true);
 
                 var ui = (UIElement)d;
 
                 ui.AllowDrop = true;
                 if (ui is Control ctrl)
                 {
-                    var bkg = ctrl.GetValue(ItemsControl.BackgroundProperty);
+                    var bkg = ctrl.GetValue(Control.BackgroundProperty);
                     if (bkg == null)
                     {
-                        ctrl.SetValue(ItemsControl.BackgroundProperty, Brushes.Transparent);
+                        ctrl.SetValue(Control.BackgroundProperty, Brushes.Transparent);
                     }
                 }
 
                 ui.DragEnter += (s, args) =>
                 {
                     var os = (DependencyObject)args.OriginalSource;
-                    var command = DragDropManager.FindDragEnterCommand(os);
+                    var command = FindDragEnterCommand(os);
                     if (command != null)
                     {
-                        var dropTarget = DragDropManager.FindDropTarget(os);
+                        var dropTarget = FindDropTarget(os);
                         var cmdArgs = new DragEnterArgs(
                             args.Data,
                             args.KeyStates,
@@ -457,10 +458,10 @@ namespace Radical.Windows.Behaviors
                 ui.DragLeave += (s, args) =>
                 {
                     var os = (DependencyObject)args.OriginalSource;
-                    var command = DragDropManager.FindDragLeaveCommand(os);
+                    var command = FindDragLeaveCommand(os);
                     if (command != null)
                     {
-                        var dropTarget = DragDropManager.FindDropTarget(os);
+                        var dropTarget = FindDropTarget(os);
                         var cmdArgs = new DragLeaveArgs(
                             args.Data,
                             args.KeyStates,
@@ -478,10 +479,10 @@ namespace Radical.Windows.Behaviors
                 {
                     var os = (DependencyObject)args.OriginalSource;
 
-                    var command = DragDropManager.FindDropCommand(os);
+                    var command = FindDropCommand(os);
                     if (command != null)
                     {
-                        var dropTarget = DragDropManager.FindDropTarget(os);
+                        var dropTarget = FindDropTarget(os);
 
                         Point position = new Point(0, 0);
                         if (os is IInputElement)
@@ -514,10 +515,10 @@ namespace Radical.Windows.Behaviors
                 {
                     var os = (DependencyObject)args.OriginalSource;
 
-                    var command = DragDropManager.FindDropCommand(os);
+                    var command = FindDropCommand(os);
                     if (command != null)
                     {
-                        var dropTarget = DragDropManager.FindDropTarget(os);
+                        var dropTarget = FindDropTarget(os);
 
                         Point position = new Point(0, 0);
                         if (os is IInputElement)

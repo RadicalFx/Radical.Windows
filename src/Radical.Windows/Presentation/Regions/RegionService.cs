@@ -68,7 +68,7 @@ namespace Radical.Windows.Presentation.Regions
             {
                 var region = ( IRegion )args.NewValue;
 
-                var service = RegionService.CurrentService;
+                var service = CurrentService;
                 IRegionManager manager = null;
 
                 if ( service.HoldsRegionManager( region.HostingView ) )
