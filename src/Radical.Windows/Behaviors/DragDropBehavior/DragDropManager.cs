@@ -302,9 +302,9 @@ namespace Radical.Windows.Behaviors
         static DependencyObject FindDragContainer(DependencyObject originalSource)
         {
             var element = originalSource.FindParent<DependencyObject>(t =>
-           {
-               return GetDataObject(t) != null;
-           });
+            {
+                return GetDataObject(t) != null;
+            });
 
             return element;
         }
@@ -323,9 +323,9 @@ namespace Radical.Windows.Behaviors
         static DependencyObject FindDropTargetContainer(DependencyObject originalSource)
         {
             var element = originalSource.FindParent<DependencyObject>(t =>
-           {
-               return GetDropTarget(t) != null;
-           });
+            {
+                return GetDropTarget(t) != null;
+            });
 
             return element;
         }
@@ -355,9 +355,9 @@ namespace Radical.Windows.Behaviors
         static DependencyObject FindDropCommandHolder(DependencyObject originalSource)
         {
             var element = originalSource.FindParent<DependencyObject>(t =>
-           {
-               return GetOnDropCommand(t) != null;
-           });
+            {
+                return GetOnDropCommand(t) != null;
+            });
 
             return element;
         }
@@ -376,9 +376,9 @@ namespace Radical.Windows.Behaviors
         static DependencyObject FindDragEnterCommandHolder(DependencyObject originalSource)
         {
             var element = originalSource.FindParent<DependencyObject>(t =>
-           {
-               return GetOnDragEnterCommand(t) != null;
-           });
+            {
+                return GetOnDragEnterCommand(t) != null;
+            });
 
             return element;
         }
@@ -397,9 +397,9 @@ namespace Radical.Windows.Behaviors
         static DependencyObject FindDragLeaveCommandHolder(DependencyObject originalSource)
         {
             var element = originalSource.FindParent<DependencyObject>(t =>
-           {
-               return GetOnDragLeaveCommand(t) != null;
-           });
+            {
+                return GetOnDragLeaveCommand(t) != null;
+            });
 
             return element;
         }
