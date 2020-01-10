@@ -34,7 +34,7 @@ namespace Radical.Windows
             }
 
             var parent = VisualTreeHelper.GetParent(obj);
-            return VisualTreeCrawler.IsChildOfType<T>(parent);
+            return IsChildOfType<T>(parent);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Radical.Windows
             }
             else
             {
-                return VisualTreeCrawler.FindParent<T>(parent, matchCondition);
+                return FindParent(parent, matchCondition);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Radical.Windows
                 }
                 else if (child != null)
                 {
-                    child = VisualTreeCrawler.FindChild(child, filter);
+                    child = FindChild(child, filter);
                     if (child != null && (child.GetType() == typeof(T)) && filter((T)child))
                     {
                         break;
@@ -168,7 +168,7 @@ namespace Radical.Windows
                 }
                 else if (child != null)
                 {
-                    child = VisualTreeCrawler.FindChild(child, filter);
+                    child = FindChild(child, filter);
                     if (child != null && (child.GetType() == typeof(T)) && filter((T)child))
                     {
                         childs.Add(child as T);

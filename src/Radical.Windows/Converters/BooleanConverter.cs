@@ -28,11 +28,11 @@ namespace Radical.Windows.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (Object.Equals(value, TrueValue))
+            if (object.Equals(value, TrueValue))
             {
                 return true;
             }
-            else if (Object.Equals(value, FalseValue))
+            else if (object.Equals(value, FalseValue))
             {
                 return false;
             }

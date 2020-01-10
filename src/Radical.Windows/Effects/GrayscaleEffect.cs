@@ -19,7 +19,7 @@ namespace Radical.Windows.Effects
             UpdateShaderValue(DesaturationFactorProperty);
         }
 
-        public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty("Input",
+        public static readonly DependencyProperty InputProperty = RegisterPixelShaderSamplerProperty("Input",
             typeof(GrayscaleEffect), 0);
 
         public Brush Input

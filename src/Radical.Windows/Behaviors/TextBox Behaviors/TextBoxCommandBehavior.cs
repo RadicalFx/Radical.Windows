@@ -52,7 +52,7 @@ namespace Radical.Windows.Behaviors
                     var gestures = cmd.GetGestures();
                     var senderGestures = gestures.Where(gesture => gesture.Matches(d, e));
 
-                    if (((gestures.None() && e.Key == System.Windows.Input.Key.Enter) || senderGestures.Any()))
+                    if (((gestures.None() && e.Key == Key.Enter) || senderGestures.Any()))
                     {
                         var k = e.Key;
                         var m = ModifierKeys.None;

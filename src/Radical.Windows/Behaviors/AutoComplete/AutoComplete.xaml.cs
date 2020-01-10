@@ -62,7 +62,7 @@ namespace Radical.Windows.Behaviors
             viewSource = controlUnderAutocomplete.GetViewSource((Style)this[controlUnderAutocomplete.StyleKey]);
             viewSource.Filter += OnCollectionViewSourceFilter;
 
-            controlUnderAutocomplete.Control.SetValue(Control.StyleProperty, this[controlUnderAutocomplete.StyleKey]);
+            controlUnderAutocomplete.Control.SetValue(FrameworkElement.StyleProperty, this[controlUnderAutocomplete.StyleKey]);
             controlUnderAutocomplete.Control.ApplyTemplate();
 
             autoCompletePopup = (Popup)controlUnderAutocomplete.Control.Template.FindName("autoCompletePopup", controlUnderAutocomplete.Control);
@@ -74,10 +74,10 @@ namespace Radical.Windows.Behaviors
                 Source = controlUnderAutocomplete.Control
             };
 
-            ListBox.SetBinding(ListBox.MinWidthProperty, b);
+            ListBox.SetBinding(FrameworkElement.MinWidthProperty, b);
             ListBox.PreviewMouseDown += OnListBoxPreviewMouseDown;
 
-            controlUnderAutocomplete.Control.AddHandler(TextBox.TextChangedEvent, new TextChangedEventHandler(OnTextBoxTextChanged));
+            controlUnderAutocomplete.Control.AddHandler(TextBoxBase.TextChangedEvent, new TextChangedEventHandler(OnTextBoxTextChanged));
             controlUnderAutocomplete.Control.LostFocus += OnTextBoxLostFocus;
             controlUnderAutocomplete.Control.PreviewKeyUp += OnTextBoxPreviewKeyUp;
             controlUnderAutocomplete.Control.PreviewKeyDown += OnTextBoxPreviewKeyDown;
@@ -96,7 +96,7 @@ namespace Radical.Windows.Behaviors
 
         private void OnCollectionViewSourceFilter(object sender, FilterEventArgs e)
         {
-            if (AutoComplete.GetImplicitItemsFilter(controlUnderAutocomplete.Control) == ImplicitItemsFilter.Enabled)
+            if (GetImplicitItemsFilter(controlUnderAutocomplete.Control) == ImplicitItemsFilter.Enabled)
             {
                 AutoCompleteFilterPathCollection filterPaths = GetAutoCompleteFilterProperty();
                 if (e.Item is AutoComplete.IHaveAnOpinionOnFilter iho)
@@ -192,7 +192,7 @@ namespace Radical.Windows.Behaviors
 
         private void OnTextBoxPreviewKeyDown(object sender, KeyEventArgs e)
         {
-            deletingText = e.Key == ik.Key.Delete || e.Key == ik.Key.Back;
+            deletingText = e.Key == Key.Delete || e.Key == Key.Back;
 
             //if( e.Key == ik.Key.Tab )
             //{
@@ -202,7 +202,7 @@ namespace Radical.Windows.Behaviors
 
         private void OnTextBoxPreviewKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == ik.Key.Up || e.Key == ik.Key.Down)
+            if (e.Key == Key.Up || e.Key == Key.Down)
             {
                 if (rememberedText == null)
                 {
@@ -212,7 +212,7 @@ namespace Radical.Windows.Behaviors
                 iteratingListItems = true;
                 var view = viewSource.View;
 
-                if (e.Key == ik.Key.Up)
+                if (e.Key == Key.Up)
                 {
                     if (view.CurrentItem == null)
                         view.MoveCurrentToLast();
@@ -240,10 +240,10 @@ namespace Radical.Windows.Behaviors
             {
                 iteratingListItems = false;
                 rememberedText = null;
-                if (autoCompletePopup.IsOpen && (e.Key == ik.Key.Escape || e.Key == ik.Key.Enter))
+                if (autoCompletePopup.IsOpen && (e.Key == Key.Escape || e.Key == Key.Enter))
                 {
                     autoCompletePopup.IsOpen = false;
-                    if (e.Key == ik.Key.Enter)
+                    if (e.Key == Key.Enter)
                     {
                         controlUnderAutocomplete.SelectAll();
                         OnItemChoosen();

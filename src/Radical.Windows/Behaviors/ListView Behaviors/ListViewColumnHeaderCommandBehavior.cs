@@ -40,7 +40,7 @@ namespace Radical.Windows.Behaviors
             onLoaded = (s, e) =>
             {
                 AssociatedObject.AddHandler(
-                    GridViewColumnHeader.ClickEvent,
+                    System.Windows.Controls.Primitives.ButtonBase.ClickEvent,
                     onColumnHeaderClick);
             };
         }
@@ -74,7 +74,7 @@ namespace Radical.Windows.Behaviors
 
             AssociatedObject.Loaded -= onLoaded;
             AssociatedObject.RemoveHandler(
-                    GridViewColumnHeader.ClickEvent,
+                    System.Windows.Controls.Primitives.ButtonBase.ClickEvent,
                     onColumnHeaderClick);
         }
 

@@ -72,8 +72,8 @@ namespace Radical.Windows.Behaviors
 
                 Text = AssociatedObject.Password;
 
-                var text = BindingOperations.GetBindingExpression(this, PasswordBoxBehavior.TextProperty);
-                var tag = BindingOperations.GetBindingExpression(AssociatedObject, PasswordBox.TagProperty);
+                var text = BindingOperations.GetBindingExpression(this, TextProperty);
+                var tag = BindingOperations.GetBindingExpression(AssociatedObject, FrameworkElement.TagProperty);
                 if (text.HasError)
                 {
                     System.Windows.Controls.Validation.MarkInvalid(tag, text.ValidationError);
@@ -98,7 +98,7 @@ namespace Radical.Windows.Behaviors
                     var gestures = cmd.GetGestures();
                     var senderGestures = gestures.Where(gesture => gesture.Matches(d, e));
 
-                    if (((gestures.None() && e.Key == System.Windows.Input.Key.Enter) || senderGestures.Any()) && cmd.CanExecute(prm))
+                    if (((gestures.None() && e.Key == Key.Enter) || senderGestures.Any()) && cmd.CanExecute(prm))
                     {
                         var k = e.Key;
                         var m = ModifierKeys.None;
@@ -138,7 +138,7 @@ namespace Radical.Windows.Behaviors
             AssociatedObject.PasswordChanged += onPasswordChanged;
             AssociatedObject.PreviewKeyDown += onPreviewKeyDown;
 
-            BindingOperations.SetBinding(AssociatedObject, PasswordBox.TagProperty, new Binding()
+            BindingOperations.SetBinding(AssociatedObject, FrameworkElement.TagProperty, new Binding()
             {
                 Source = this,
                 Path = new PropertyPath(TextProperty.Name),
