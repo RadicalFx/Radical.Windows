@@ -84,8 +84,7 @@ namespace Radical.Windows
         /// <param name="source">The source to stop listening on.</param>
         protected override void StopListening(object source)
         {
-            var trigger = source as IMonitor;
-            if (trigger != null)
+            if (source is IMonitor trigger)
             {
                 trigger.Changed -= OnChanged;
             }
