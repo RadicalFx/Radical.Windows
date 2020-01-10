@@ -14,7 +14,7 @@ namespace Radical.Windows.Presentation.Boot
             Include
         }
 
-        static string[] assemblySearchPatternsToUse =
+        static readonly string[] assemblySearchPatternsToUse =
         {
             "*.dll",
             "*.exe"
@@ -27,19 +27,19 @@ namespace Radical.Windows.Presentation.Boot
 
         public SearchOption DirectorySearchOptions { get; set; } = SearchOption.TopDirectoryOnly;
 
-        List<Func<string, FilterResults>> assemblyFilters = new List<Func<string, FilterResults>>();
+        readonly List<Func<string, FilterResults>> assemblyFilters = new List<Func<string, FilterResults>>();
 
         internal IEnumerable<Assembly> Scan()
         {
             var assemblies = new List<Assembly>();
 
-            Func<string, bool> fullPathsFilter = fullPath =>
+            bool fullPathsFilter(string fullPath)
             {
                 return assemblyFilters.All(filter =>
                 {
                     return filter(fullPath) == FilterResults.Include;
                 });
-            };
+            }
 
             foreach (var patternToUse in assemblySearchPatternsToUse)
             {

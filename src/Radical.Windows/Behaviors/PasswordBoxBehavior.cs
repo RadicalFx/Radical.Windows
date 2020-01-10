@@ -58,8 +58,8 @@ namespace Radical.Windows.Behaviors
             get { return AssociatedObject; }
         }
 
-        KeyEventHandler onPreviewKeyDown;
-        RoutedEventHandler onPasswordChanged;
+        readonly KeyEventHandler onPreviewKeyDown;
+        readonly RoutedEventHandler onPasswordChanged;
 
         //true if going from password box to view model
         private bool isPushing;
@@ -106,8 +106,7 @@ namespace Radical.Windows.Behaviors
                         if (senderGestures.Any())
                         {
                             var gesture = senderGestures.First();
-                            var keygesture = gesture as KeyGesture;
-                            if (keygesture != null)
+                            if (gesture is KeyGesture keygesture)
                             {
                                 k = keygesture.Key;
                                 m = keygesture.Modifiers;

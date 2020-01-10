@@ -7,7 +7,7 @@ namespace Radical.Windows.Converters
 {
     public abstract class AbstractSingletonConverter : MarkupExtension, IValueConverter
     {
-        static Dictionary<Type, WeakReference> singletons = new Dictionary<Type, WeakReference>();
+        static readonly Dictionary<Type, WeakReference> singletons = new Dictionary<Type, WeakReference>();
 
         /// <summary>
         /// When implemented in a derived class, returns an object that is set as the value of the target property for this markup extension.

@@ -13,8 +13,7 @@ namespace Radical.Windows.Presentation.Behaviors
     {
         readonly IMessageBroker broker;
         readonly IConventionsHandler conventions;
-
-        RoutedEventHandler loaded = null;
+        readonly RoutedEventHandler loaded = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrameworkElementLifecycleNotificationsBehavior"/> class.
@@ -43,8 +42,7 @@ namespace Radical.Windows.Presentation.Behaviors
                         this.broker.Broadcast( this, new ViewLoaded( view ) );
                     }
 
-                    var temp = dc as IExpectViewLoadedCallback;
-                    if ( temp != null )
+                    if (dc is IExpectViewLoadedCallback temp)
                     {
                         temp.OnViewLoaded();
                     }

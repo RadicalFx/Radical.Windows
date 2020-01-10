@@ -195,13 +195,13 @@ namespace Radical.Windows.Presentation.Regions
              *      vediamo se per quella View abbiamo registrato dei region manager in caso
              *      affermativo de-registriamo.
              */
-            Action<DependencyObject> closedCallback = d =>
+            void closedCallback(DependencyObject d)
             {
-                if ( conventions.ShouldUnregisterRegionManagerOfView( d ) )
+                if (conventions.ShouldUnregisterRegionManagerOfView(d))
                 {
-                    UnregisterRegionManagers( d, UnregisterBehavior.WholeLogicalTreeChain );
+                    UnregisterRegionManagers(d, UnregisterBehavior.WholeLogicalTreeChain);
                 }
-            };
+            }
 
             var closableHost = conventions.TryHookClosedEventOfHostOf( owner, closedCallback );
             if ( closableHost != null )

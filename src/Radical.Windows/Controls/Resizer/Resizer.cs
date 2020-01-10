@@ -15,10 +15,10 @@ namespace Radical.Windows.Controls
         private double _originalWidth;
         private double _originalHeight;
 
-        private static RoutedCommand _startResizeCommand;
-        private static RoutedCommand _updateSizeCommand;
-        private static RoutedCommand _endResizeCommand;
-        private static RoutedCommand _autoSizeCommand;
+        private static readonly RoutedCommand _startResizeCommand;
+        private static readonly RoutedCommand _updateSizeCommand;
+        private static readonly RoutedCommand _endResizeCommand;
+        private static readonly RoutedCommand _autoSizeCommand;
 
         /// <summary>
         /// Identifies the <see cref="IsGripEnabled"/> dependency property.
@@ -187,9 +187,8 @@ namespace Radical.Windows.Controls
         {
             Resizer resizer = sender as Resizer;
             Debug.Assert(resizer != null);
-            FrameworkElement grip = resizer.Template.FindName(_gripName, resizer) as FrameworkElement;
 
-            if (grip != null)
+            if (resizer.Template.FindName(_gripName, resizer) is FrameworkElement grip)
             {
                 grip.Visibility = resizer.IsGripVisible ? Visibility.Visible : Visibility.Hidden;
             }
@@ -269,9 +268,7 @@ namespace Radical.Windows.Controls
 
         private static void OnAutoSizeCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            Resizer resizer = sender as Resizer;
-
-            if (resizer != null && resizer.IsAutoSizeEnabled)
+            if (sender is Resizer resizer && resizer.IsAutoSizeEnabled)
             {
                 resizer.Width = double.NaN;
                 resizer.Height = double.NaN;

@@ -171,10 +171,10 @@ namespace Radical.Windows.Behaviors
             }
         }
 
-        static RoutedEventHandler onLoaded;
-        static RoutedEventHandler onUnloaded;
-        static RoutedEventHandler onPasswordChanged;
-        static KeyEventHandler onPreviewKeyDown;
+        static readonly RoutedEventHandler onLoaded;
+        static readonly RoutedEventHandler onUnloaded;
+        static readonly RoutedEventHandler onPasswordChanged;
+        static readonly KeyEventHandler onPreviewKeyDown;
 
         static Password()
         {
@@ -223,8 +223,7 @@ namespace Radical.Windows.Behaviors
                         if (senderGestures.Any())
                         {
                             var gesture = senderGestures.First();
-                            var keygesture = gesture as KeyGesture;
-                            if (keygesture != null)
+                            if (gesture is KeyGesture keygesture)
                             {
                                 k = keygesture.Key;
                                 m = keygesture.Modifiers;

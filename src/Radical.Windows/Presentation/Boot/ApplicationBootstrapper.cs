@@ -43,7 +43,7 @@ namespace Radical.Windows.Presentation.Boot
         Mutex mutex;
         string key;
         SingletonApplicationScope singleton = SingletonApplicationScope.NotSupported;
-        AssemblyScanner assemblyScanner = new AssemblyScanner();
+        readonly AssemblyScanner assemblyScanner = new AssemblyScanner();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationBootstrapper"/> class.
@@ -367,7 +367,7 @@ namespace Radical.Windows.Presentation.Boot
         {
             var resolver = serviceProvider.GetService<IViewResolver>();
 
-            Func<Window> showSplash = () =>
+            Window showSplash()
             {
                 var splashScreen = (Window)resolver.GetView(splashScreenConfiguration.SplashScreenViewType);
                 Application.Current.MainWindow = splashScreen;
@@ -404,9 +404,9 @@ namespace Radical.Windows.Presentation.Boot
                 splashScreen.Show();
 
                 return splashScreen;
-            };
+            }
 
-            Action showShell = () =>
+            void showShell()
             {
                 if (shellViewType != null)
                 {
@@ -415,7 +415,7 @@ namespace Radical.Windows.Presentation.Boot
 
                     mainView.Show();
                 }
-            };
+            }
 
             if (isSplashScreenEnabled)
             {

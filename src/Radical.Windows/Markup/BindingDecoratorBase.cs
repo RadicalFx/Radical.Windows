@@ -246,8 +246,7 @@ namespace Radical.Windows.Markup
             if (provider == null) return false;
 
             //create a binding and assign it to the target
-            var service = provider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-            if (service == null) return false;
+            if (!(provider.GetService(typeof(IProvideValueTarget)) is IProvideValueTarget service)) return false;
 
             //we need dependency objects / properties
             target = service.TargetObject as T;
@@ -264,8 +263,7 @@ namespace Radical.Windows.Markup
         /// </returns>
         protected bool IsUsingSharedDependencyProperty(IServiceProvider provider)
         {
-            var service = provider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-            if (service == null) return false;
+            if (!(provider.GetService(typeof(IProvideValueTarget)) is IProvideValueTarget service)) return false;
 
             return service.TargetObject != null && service.TargetObject.GetType().FullName == "System.Windows.SharedDp";
         }

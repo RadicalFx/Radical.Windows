@@ -11,20 +11,16 @@ namespace Radical.Windows.Markup
     {
         protected override void OnProvideValue(IServiceProvider provider, object value)
         {
-            DependencyObject fe;
-            DependencyProperty dp;
 
-            if (TryGetTargetItems(provider, out fe, out dp))
+            if (TryGetTargetItems(provider, out DependencyObject fe, out DependencyProperty dp))
             {
-                var inab = fe as INotifyAttachedOjectLoaded;
-                if (inab != null)
+                if (fe is INotifyAttachedOjectLoaded inab)
                 {
-                    EventHandler h = null;
-                    h = (s, e) =>
+                    void h(object s, EventArgs e)
                     {
                         inab.AttachedObjectLoaded -= h;
                         OnTargetLoaded(fe, dp);
-                    };
+                    }
 
                     inab.AttachedObjectLoaded += h;
                 }

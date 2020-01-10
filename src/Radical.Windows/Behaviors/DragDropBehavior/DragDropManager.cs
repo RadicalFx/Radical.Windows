@@ -162,7 +162,7 @@ namespace Radical.Windows.Behaviors
             var obj = DragDropManager.GetDataObject(sourceItem);
             var objType = DragDropManager.GetDataObjectType(sourceItem);
 
-            DataObject data = null;
+            DataObject data;
             if (string.IsNullOrEmpty(objType))
             {
                 data = new DataObject(obj.GetType(), obj);
@@ -172,7 +172,7 @@ namespace Radical.Windows.Behaviors
                 data = new DataObject(objType, obj);
             }
 
-            var de = DragDrop.DoDragDrop(d, data, DragDropEffects.Move);
+            DragDrop.DoDragDrop(d, data, DragDropEffects.Move);
 
             DragDropManager.SetIsDragging(d, false);
         }
@@ -425,8 +425,7 @@ namespace Radical.Windows.Behaviors
                 var ui = (UIElement)d;
 
                 ui.AllowDrop = true;
-                var ctrl = ui as Control;
-                if (ctrl != null)
+                if (ui is Control ctrl)
                 {
                     var bkg = ctrl.GetValue(ItemsControl.BackgroundProperty);
                     if (bkg == null)

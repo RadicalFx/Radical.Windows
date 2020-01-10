@@ -9,10 +9,10 @@ namespace Radical.Windows.Behaviors
 {
     public static class TextBoxManager
     {
-        static KeyEventHandler onPreviewKeyDown;
-        static RoutedEventHandler onGotFocus;
-        static RoutedEventHandler onLoaded;
-        static RoutedEventHandler onUnloaded;
+        static readonly KeyEventHandler onPreviewKeyDown;
+        static readonly RoutedEventHandler onGotFocus;
+        static readonly RoutedEventHandler onLoaded;
+        static readonly RoutedEventHandler onUnloaded;
 
         static TextBoxManager()
         {
@@ -36,8 +36,7 @@ namespace Radical.Windows.Behaviors
                         if (senderGestures.Any())
                         {
                             var gesture = senderGestures.First();
-                            var keygesture = gesture as KeyGesture;
-                            if (keygesture != null)
+                            if (gesture is KeyGesture keygesture)
                             {
                                 k = keygesture.Key;
                                 m = keygesture.Modifiers;
@@ -123,8 +122,7 @@ namespace Radical.Windows.Behaviors
         {
             if (!DesignTimeHelper.GetIsInDesignMode())
             {
-                var textBox = d as TextBox;
-                if (textBox != null)
+                if (d is TextBox textBox)
                 {
                     textBox.Loaded += onLoaded;
                 }

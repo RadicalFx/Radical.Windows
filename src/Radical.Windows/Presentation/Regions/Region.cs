@@ -92,71 +92,69 @@ namespace Radical.Windows.Presentation.Regions
         {
             if ( serviceProvider != null )
             {
-                var service = serviceProvider.GetService( typeof( IProvideValueTarget ) ) as IProvideValueTarget;
-                if ( service != null )
+                if (serviceProvider.GetService(typeof(IProvideValueTarget)) is IProvideValueTarget service)
                 {
-                    var element = service.TargetObject as T;
-                    if ( element == null )
+                    if (!(service.TargetObject is T element))
                     {
                         //TODO: migliorare l'exception
-                        var msg = string.Format( "The TargetObject of this {0} is null.", GetType().ToString( "SN" ) );
-                        throw new NotSupportedException( msg );
+                        var msg = string.Format("The TargetObject of this {0} is null.", GetType().ToString("SN"));
+                        throw new NotSupportedException(msg);
                     }
 
-                    if ( Element != element )
+                    if (Element != element)
                     {
                         Element = element;
                         OnElementChanged();
                     }
 
-                    if ( !DesignerProperties.GetIsInDesignMode( Element ) )
+                    if (!DesignerProperties.GetIsInDesignMode(Element))
                     {
-                        var view = FindHostingViewOf( Element );
+                        var view = FindHostingViewOf(Element);
 
-                        if ( view == null )
+                        if (view == null)
                         {
                             //TODO: migliorare l'exception
-                            var msg = string.Format( "Cannot find any hosting view for this {0}.",
-                                GetType().ToString( "SN" ) );
+                            var msg = string.Format("Cannot find any hosting view for this {0}.",
+                                GetType().ToString("SN"));
 
-                            throw new NotSupportedException( msg );
+                            throw new NotSupportedException(msg);
                         }
 
                         HostingView = view;
 
-                        if ( CommandLine.GetCurrent().Contains( "hr" ) )
+                        if (CommandLine.GetCurrent().Contains("hr"))
                         {
-                            Logger.Warning( "Regions highlighting is turned on." );
+                            Logger.Warning("Regions highlighting is turned on.");
 
-                            Element.Loaded += ( s, e ) =>
+                            Element.Loaded += (s, e) =>
                             {
-                                var obj = ( UIElement )s;
-                                var layer = AdornerLayer.GetAdornerLayer( obj );
-                                Debug.WriteLineIf( layer == null, "Region: cannot find any AdornerLayer on the given element." );
-                                if ( layer != null )
+                                var obj = (UIElement)s;
+                                var layer = AdornerLayer.GetAdornerLayer(obj);
+                                Debug.WriteLineIf(layer == null, "Region: cannot find any AdornerLayer on the given element.");
+                                if (layer != null)
                                 {
-                                    var adorner = new RegionHilightAdorner( obj, this, Brushes.Red );
-                                    layer.Add( adorner );
+                                    var adorner = new RegionHilightAdorner(obj, this, Brushes.Red);
+                                    layer.Add(adorner);
                                 }
                             };
 
-                            Element.Unloaded += ( s, e ) =>
+                            Element.Unloaded += (s, e) =>
                             {
-                                var obj = ( UIElement )s;
-                                var layer = AdornerLayer.GetAdornerLayer( obj );
-                                Debug.WriteLineIf( layer == null, "Region: cannot find any AdornerLayer on the given element." );
+                                var obj = (UIElement)s;
+                                var layer = AdornerLayer.GetAdornerLayer(obj);
+                                Debug.WriteLineIf(layer == null, "Region: cannot find any AdornerLayer on the given element.");
 
-                                if ( layer != null )
+                                if (layer != null)
                                 {
-                                    var adorners = layer.GetAdorners( obj );
-                                    Debug.WriteLineIf( adorners == null, "Region: cannot find any Adorner on the given element." );
+                                    var adorners = layer.GetAdorners(obj);
+                                    Debug.WriteLineIf(adorners == null, "Region: cannot find any Adorner on the given element.");
 
-                                    if ( adorners != null )
+                                    if (adorners != null)
                                     {
-                                        var la = adorners.Where( a => a is RegionHilightAdorner ).SingleOrDefault();
-                                        if ( la != null )
+                                        var la = adorners.Where(a => a is RegionHilightAdorner).SingleOrDefault();
+                                        if (la != null)
                                         {
-                                            layer.Remove( la );
+                                            layer.Remove(la);
                                         }
                                     }
                                 }

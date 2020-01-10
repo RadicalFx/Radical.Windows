@@ -14,8 +14,7 @@ namespace Radical.Windows.Behaviors
             IsHitTestVisible = false;
             userContent = new ContentPresenter();
 
-            var cueBannerText = content as string;
-            if (cueBannerText != null)
+            if (content is string cueBannerText)
             {
                 userContent.Content = new TextBlock()
                 {

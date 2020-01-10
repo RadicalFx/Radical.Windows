@@ -21,8 +21,7 @@ namespace Radical.Windows.Behaviors
 
         private static void OnLastColumnFillChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var dataGrid = d as DataGrid;
-            if (dataGrid == null) return;
+            if (!(d is DataGrid dataGrid)) return;
 
             dataGrid.Loaded -= OnDataGridLoaded;
             dataGrid.Loaded += OnDataGridLoaded;
@@ -30,8 +29,7 @@ namespace Radical.Windows.Behaviors
 
         private static void OnDataGridLoaded(object sender, RoutedEventArgs e)
         {
-            var dataGrid = sender as DataGrid;
-            if (dataGrid == null) return;
+            if (!(sender is DataGrid dataGrid)) return;
 
             var lastColumn = dataGrid.Columns.LastOrDefault();
             if (lastColumn != null)

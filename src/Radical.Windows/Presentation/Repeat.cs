@@ -14,7 +14,7 @@ namespace Radical.Windows.Presentation
         /// </summary>
         public class Repeater
         {
-            DispatcherTimer timer;
+            readonly DispatcherTimer timer;
 
             internal Repeater( TimeSpan delay )
             {

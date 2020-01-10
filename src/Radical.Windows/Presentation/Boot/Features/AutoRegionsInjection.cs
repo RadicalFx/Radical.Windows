@@ -8,7 +8,7 @@ namespace Radical.Windows.Presentation.Boot.Features
 {
     class AutoRegionsInjection : IFeature
     {
-        Dictionary<string, List<Type>> buffer = new Dictionary<string, List<Type>>();
+        readonly Dictionary<string, List<Type>> buffer = new Dictionary<string, List<Type>>();
 
         public void Setup(IServiceProvider serviceProvider, ApplicationSettings applicationSettings)
         {

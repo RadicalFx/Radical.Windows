@@ -55,13 +55,12 @@ namespace Radical.Windows.Presentation.Regions
                 h( this, new ActiveContentChangedEventArgs( ActiveContent, PreviousActiveContent ) );
             }
 
-            var vm = TryGetViewModel( ActiveContent ) as IExpectViewActivatedCallback;
-            if( vm != null )
+            if (TryGetViewModel(ActiveContent) is IExpectViewActivatedCallback vm)
             {
                 vm.OnViewActivated();
             }
 
-            if( ActiveContent != PreviousActiveContent )
+            if ( ActiveContent != PreviousActiveContent )
             {
                 PreviousActiveContent = ActiveContent;
             }

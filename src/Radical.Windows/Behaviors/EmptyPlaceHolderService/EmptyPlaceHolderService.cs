@@ -34,18 +34,17 @@ namespace Radical.Windows.Behaviors
 
         #endregion
 
-        static RoutedEventHandler onLoaded;
-        static RoutedEventHandler onUnloaded;
-        static ItemsChangedEventHandler onItemsChanged;
-        static IDictionary<ItemContainerGenerator, ItemsControl> managedItemsControls = new Dictionary<ItemContainerGenerator, ItemsControl>();
+        static readonly RoutedEventHandler onLoaded;
+        static readonly RoutedEventHandler onUnloaded;
+        static readonly ItemsChangedEventHandler onItemsChanged;
+        static readonly IDictionary<ItemContainerGenerator, ItemsControl> managedItemsControls = new Dictionary<ItemContainerGenerator, ItemsControl>();
 
         static EmptyPlaceHolderService()
         {
             onItemsChanged = (s, e) =>
             {
                 var key = (ItemContainerGenerator)s;
-                ItemsControl control;
-                if (managedItemsControls.TryGetValue(key, out control))
+                if (managedItemsControls.TryGetValue(key, out ItemsControl control))
                 {
                     if (control.Items.Any())
                     {

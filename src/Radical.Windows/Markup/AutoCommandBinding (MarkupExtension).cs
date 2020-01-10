@@ -82,8 +82,7 @@ namespace Radical.Windows.Markup
         {
             base.OnDataContextChanged(obj, targetProperty, newValue, oldValue);
 
-            var actualCommand = obj.GetValue(targetProperty) as DelegateCommand;
-            if (actualCommand != null)
+            if (obj.GetValue(targetProperty) is DelegateCommand actualCommand)
             {
                 var actualCommandData = actualCommand.GetData<CommandData>();
                 var actualMonitor = actualCommandData != null ? actualCommandData.Monitor : null;
@@ -110,10 +109,9 @@ namespace Radical.Windows.Markup
         {
             var builder = GetCommandBuilder();
 
-            CommandData commandData;
             var dataContext = Source ?? builder.GetDataContext(target);
 
-            if (builder.CanCreateCommand(Path, target) && builder.TryGenerateCommandData(Path, dataContext, out commandData))
+            if (builder.CanCreateCommand(Path, target) && builder.TryGenerateCommandData(Path, dataContext, out CommandData commandData))
             {
                 var command = builder.CreateCommand(commandData);
                 target.SetValue(targetProperty, command);

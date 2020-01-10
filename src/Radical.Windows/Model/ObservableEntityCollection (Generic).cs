@@ -136,8 +136,7 @@ namespace Radical.Windows.Model
             EnsureNotDisposed();
             if (!IsInitializing)
             {
-                var handler = Events[propertyChangedEventKey] as PropertyChangedEventHandler;
-                if (handler != null)
+                if (Events[propertyChangedEventKey] is PropertyChangedEventHandler handler)
                 {
                     handler(this, e);
                 }
@@ -267,8 +266,7 @@ namespace Radical.Windows.Model
         /// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
         protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            var handler = Events[notifyCollectionChangedEventKey] as NotifyCollectionChangedEventHandler;
-            if (handler != null)
+            if (Events[notifyCollectionChangedEventKey] is NotifyCollectionChangedEventHandler handler)
             {
                 handler(this, e);
             }

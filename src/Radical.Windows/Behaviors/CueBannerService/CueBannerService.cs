@@ -52,7 +52,7 @@ namespace Radical.Windows.Behaviors
 
         #endregion
 
-        static DependencyPropertyChangedEventHandler onVisibleChanged = null;
+        static readonly DependencyPropertyChangedEventHandler onVisibleChanged = null;
 
         static CueBannerService()
         {
@@ -78,9 +78,8 @@ namespace Radical.Windows.Behaviors
 
         static void HandleShowRequest(UIElement control)
         {
-            if (control is TextBoxBase)
+            if (control is TextBoxBase tbb)
             {
-                var tbb = (TextBoxBase)control;
                 if (tbb.Visibility == Visibility.Visible)
                 {
                     if (ShouldShowCueBanner(tbb))
@@ -93,9 +92,8 @@ namespace Radical.Windows.Behaviors
                     RemoveCueBanner(tbb);
                 }
             }
-            else if (control is PasswordBox)
+            else if (control is PasswordBox pb)
             {
-                var pb = (PasswordBox)control;
                 if (pb.Visibility == Visibility.Visible)
                 {
                     if (ShouldShowCueBanner(pb))

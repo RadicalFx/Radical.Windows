@@ -8,10 +8,10 @@ namespace Radical.Windows.Behaviors
     public class MouseManager
     {
 
-        static MouseButtonEventHandler onMouseLeftButtonDown;
-        static MouseButtonEventHandler onMouseRightButtonDown;
-        static MouseButtonEventHandler onMouseDoubleClick;
-        static ContextMenuEventHandler onContextMenuOpening;
+        static readonly MouseButtonEventHandler onMouseLeftButtonDown;
+        static readonly MouseButtonEventHandler onMouseRightButtonDown;
+        static readonly MouseButtonEventHandler onMouseDoubleClick;
+        static readonly ContextMenuEventHandler onContextMenuOpening;
 
         static MouseManager()
         {
@@ -61,8 +61,7 @@ namespace Radical.Windows.Behaviors
 
         static void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var ctrl = sender as Control;
-            if (ctrl != null)
+            if (sender is Control ctrl)
             {
                 ctrl.MouseLeftButtonDown += onMouseLeftButtonDown;
                 ctrl.MouseRightButtonDown += onMouseRightButtonDown;
@@ -77,11 +76,9 @@ namespace Radical.Windows.Behaviors
 
             if (!isLoadedAttached && !DesignTimeHelper.GetIsInDesignMode())
             {
-                var fe = owner as FrameworkElement;
-                if (fe != null)
+                if (owner is FrameworkElement fe)
                     fe.Loaded += OnLoaded;
-                var fce = owner as FrameworkContentElement;
-                if (fce != null)
+                if (owner is FrameworkContentElement fce)
                     fce.Loaded += OnLoaded;
                 SetOnLoadedAttached(owner, true);
             }
