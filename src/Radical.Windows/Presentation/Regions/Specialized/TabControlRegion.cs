@@ -31,8 +31,7 @@ namespace Radical.Windows.Presentation.Regions
         /// <param name="view">The view.</param>
         protected override void OnAdd( DependencyObject view )
         {
-            var tabItem = view as TabItem;
-            if (tabItem == null)
+            if (!(view is TabItem tabItem))
             {
                 tabItem = new TabItem();
                 tabItem.Content = view;
@@ -97,8 +96,7 @@ namespace Radical.Windows.Presentation.Regions
             {
                 if( Element.SelectedIndex == -1 ) return null;
                 var selectedItem = Element.Items[ Element.SelectedIndex ];
-                var tabItem = selectedItem as TabItem;
-                if( tabItem != null )
+                if (selectedItem is TabItem tabItem)
                 {
                     return tabItem.Content as DependencyObject;
                 }

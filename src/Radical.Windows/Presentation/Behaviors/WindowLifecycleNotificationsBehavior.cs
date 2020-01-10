@@ -72,14 +72,13 @@ namespace Radical.Windows.Presentation.Behaviors
                         logger.Debug( "Message broadcasted." );
                     }
 
-                    var temp = dc as IExpectViewLoadedCallback;
-                    if ( temp != null )
+                    if (dc is IExpectViewLoadedCallback temp)
                     {
-                        logger.Debug( "DataContext is IExpectViewLoadedCallback." );
+                        logger.Debug("DataContext is IExpectViewLoadedCallback.");
 
                         temp.OnViewLoaded();
 
-                        logger.Debug( "DataContext.OnViewLoaded() invoked." );
+                        logger.Debug("DataContext.OnViewLoaded() invoked.");
                     }
                 };
 
@@ -95,14 +94,13 @@ namespace Radical.Windows.Presentation.Behaviors
                         this.broker.Broadcast( this, new ViewModelActivated( dc ) );
                     }
 
-                    var temp = dc as IExpectViewActivatedCallback;
-                    if( temp != null )
+                    if (dc is IExpectViewActivatedCallback temp)
                     {
-                        logger.Debug( "DataContext is IExpectViewActivatedCallback." );
+                        logger.Debug("DataContext is IExpectViewActivatedCallback.");
 
                         temp.OnViewActivated();
 
-                        logger.Debug( "DataContext.OnViewActivated() invoked." );
+                        logger.Debug("DataContext.OnViewActivated() invoked.");
                     }
                 };
 
@@ -120,14 +118,13 @@ namespace Radical.Windows.Presentation.Behaviors
                         this.broker.Broadcast( this, new ViewModelShown( dc ) );
                     }
 
-                    var temp = dc as IExpectViewShownCallback;
-                    if( temp != null )
+                    if (dc is IExpectViewShownCallback temp)
                     {
-                        logger.Debug( "DataContext is IExpectViewShownCallback." );
+                        logger.Debug("DataContext is IExpectViewShownCallback.");
 
                         temp.OnViewShown();
 
-                        logger.Debug( "DataContext.OnViewShown() invoked." );
+                        logger.Debug("DataContext.OnViewShown() invoked.");
                     }
                 };
 
@@ -146,17 +143,16 @@ namespace Radical.Windows.Presentation.Behaviors
                         this.broker.Broadcast( this, new ViewModelClosed(  dc ) );
                     }
 
-                    var temp = dc as IExpectViewClosedCallback;
-                    if( temp != null )
+                    if (dc is IExpectViewClosedCallback temp)
                     {
-                        logger.Debug( "DataContext is IExpectViewClosedCallback." );
+                        logger.Debug("DataContext is IExpectViewClosedCallback.");
 
                         temp.OnViewClosed();
 
-                        logger.Debug( "DataContext.OnViewClosed() invoked." );
+                        logger.Debug("DataContext.OnViewClosed() invoked.");
                     }
 
-                    if(this.conventions.ShouldReleaseView(view))
+                    if (this.conventions.ShouldReleaseView(view))
                     {
                         this.conventions.ViewReleaseHandler(view, ViewReleaseBehavior.Default);
                     }
@@ -172,14 +168,13 @@ namespace Radical.Windows.Presentation.Behaviors
                     var view = AssociatedObject;
                     var dc = this.conventions.GetViewDataContext( view, this.conventions.DefaultViewDataContextSearchBehavior );
 
-                    var temp = dc as IExpectViewClosingCallback;
-                    if( temp != null )
+                    if (dc is IExpectViewClosingCallback temp)
                     {
-                        logger.Debug( "DataContext is IExpectViewClosingCallback." );
+                        logger.Debug("DataContext is IExpectViewClosingCallback.");
 
-                        temp.OnViewClosing( e );
+                        temp.OnViewClosing(e);
 
-                        logger.Debug( "DataContext.OnViewClosing() invoked." );
+                        logger.Debug("DataContext.OnViewClosing() invoked.");
                     }
                 };
 

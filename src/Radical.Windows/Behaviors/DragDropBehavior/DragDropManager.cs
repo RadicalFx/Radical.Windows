@@ -425,8 +425,7 @@ namespace Radical.Windows.Behaviors
                 var ui = (UIElement)d;
 
                 ui.AllowDrop = true;
-                var ctrl = ui as Control;
-                if (ctrl != null)
+                if (ui is Control ctrl)
                 {
                     var bkg = ctrl.GetValue(ItemsControl.BackgroundProperty);
                     if (bkg == null)

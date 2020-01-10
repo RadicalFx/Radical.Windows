@@ -43,8 +43,7 @@ namespace Radical.Windows.Presentation.Behaviors
                         this.broker.Broadcast( this, new ViewLoaded( view ) );
                     }
 
-                    var temp = dc as IExpectViewLoadedCallback;
-                    if ( temp != null )
+                    if (dc is IExpectViewLoadedCallback temp)
                     {
                         temp.OnViewLoaded();
                     }

@@ -21,8 +21,7 @@ namespace Radical.Windows.Markup
 
             if (TryGetTargetItems(provider, out fe, out dp))
             {
-                var inab = fe as INotifyAttachedOjectLoaded;
-                if (inab != null)
+                if (fe is INotifyAttachedOjectLoaded inab)
                 {
                     EventHandler h = null;
                     h = (s, e) =>

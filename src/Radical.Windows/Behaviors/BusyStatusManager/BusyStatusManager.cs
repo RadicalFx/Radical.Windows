@@ -12,8 +12,7 @@ namespace Radical.Windows.Behaviors
         internal static ContentPresenter WrapUserContent(object userContent)
         {
             ContentPresenter userContentPresenter;
-            var text = userContent as string;
-            if (text != null)
+            if (userContent is string text)
             {
                 userContentPresenter = new ContentPresenter()
                 {

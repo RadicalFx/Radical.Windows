@@ -160,8 +160,7 @@
                 if (type == null)
                 {
                     // resolve using type name
-                    IXamlTypeResolver typeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
-                    if (typeResolver == null)
+                    if (!(serviceProvider.GetService(typeof(IXamlTypeResolver)) is IXamlTypeResolver typeResolver))
                     {
                         throw new InvalidOperationException("Cannot retrieve IXamlTypeResolver.");
                     }

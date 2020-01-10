@@ -55,8 +55,7 @@ namespace Radical.Windows.Behaviors
 
         private static void OnHorizontalOffsetChanged(DependencyObject owner, DependencyPropertyChangedEventArgs e)
         {
-            var viewer = owner as ScrollViewer;
-            if (viewer != null)
+            if (owner is ScrollViewer viewer)
             {
                 if (!GetIsSetup(viewer))
                 {
@@ -92,8 +91,7 @@ namespace Radical.Windows.Behaviors
 
         private static void OnVerticalOffsetChanged(DependencyObject owner, DependencyPropertyChangedEventArgs e)
         {
-            var viewer = owner as ScrollViewer;
-            if (viewer != null)
+            if (owner is ScrollViewer viewer)
             {
                 if (!GetIsSetup(viewer))
                 {

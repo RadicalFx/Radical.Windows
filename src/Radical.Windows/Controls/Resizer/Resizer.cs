@@ -187,9 +187,8 @@ namespace Radical.Windows.Controls
         {
             Resizer resizer = sender as Resizer;
             Debug.Assert(resizer != null);
-            FrameworkElement grip = resizer.Template.FindName(_gripName, resizer) as FrameworkElement;
 
-            if (grip != null)
+            if (resizer.Template.FindName(_gripName, resizer) is FrameworkElement grip)
             {
                 grip.Visibility = resizer.IsGripVisible ? Visibility.Visible : Visibility.Hidden;
             }
@@ -269,9 +268,7 @@ namespace Radical.Windows.Controls
 
         private static void OnAutoSizeCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            Resizer resizer = sender as Resizer;
-
-            if (resizer != null && resizer.IsAutoSizeEnabled)
+            if (sender is Resizer resizer && resizer.IsAutoSizeEnabled)
             {
                 resizer.Width = double.NaN;
                 resizer.Height = double.NaN;

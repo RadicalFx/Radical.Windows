@@ -71,8 +71,7 @@ namespace Radical.Windows
         /// <param name="source">The source to begin listening on.</param>
         protected override void StartListening(object source)
         {
-            var trigger = source as IMonitor;
-            if (trigger != null)
+            if (source is IMonitor trigger)
             {
                 trigger.Changed += OnChanged;
             }

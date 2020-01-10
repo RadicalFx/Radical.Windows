@@ -133,8 +133,7 @@ namespace Radical.Windows.Behaviors
 
         static readonly RoutedEventHandler onColumnHeaderClick = (s, e) =>
         {
-            var clickedHeader = e.OriginalSource as GridViewColumnHeader;
-            if (clickedHeader != null && clickedHeader.Role != GridViewColumnHeaderRole.Padding)
+            if (e.OriginalSource is GridViewColumnHeader clickedHeader && clickedHeader.Role != GridViewColumnHeaderRole.Padding)
             {
                 var listView = VisualTreeCrawler.FindParent<ListView>(clickedHeader);
                 var column = clickedHeader.Column;
@@ -292,8 +291,7 @@ namespace Radical.Windows.Behaviors
                 if (e.OldValue != null)
                 {
                     //Probabilmente c'è un handler da sganciare
-                    var handler = d.GetValue(selectionHandlerProperty) as SelectionHandler;
-                    if (handler != null)
+                    if (d.GetValue(selectionHandlerProperty) is SelectionHandler handler)
                     {
                         handler.StopSync();
                         d.ClearValue(selectionHandlerProperty);

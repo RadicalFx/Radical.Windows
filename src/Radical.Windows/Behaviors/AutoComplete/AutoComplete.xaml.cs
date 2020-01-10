@@ -98,9 +98,8 @@ namespace Radical.Windows.Behaviors
         {
             if (AutoComplete.GetImplicitItemsFilter(controlUnderAutocomplete.Control) == ImplicitItemsFilter.Enabled)
             {
-                var iho = e.Item as AutoComplete.IHaveAnOpinionOnFilter;
                 AutoCompleteFilterPathCollection filterPaths = GetAutoCompleteFilterProperty();
-                if (iho != null)
+                if (e.Item is AutoComplete.IHaveAnOpinionOnFilteriho)
                 {
                     e.Accepted = iho.Match(controlUnderAutocomplete.Text);
                 }
@@ -286,8 +285,7 @@ namespace Radical.Windows.Behaviors
 
         string GetTextForTextBox(object selectedItem)
         {
-            var icrm = selectedItem as ICanRepresentMyself;
-            var value = icrm != null ? icrm.AsString() : selectedItem.ToString();
+            var value = selectedItem is ICanRepresentMyself icrm ? icrm.AsString() : selectedItem.ToString();
 
             return value;
         }

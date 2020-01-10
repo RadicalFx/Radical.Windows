@@ -22,9 +22,8 @@ namespace Radical.Windows.Input
                     gestures = cmd.InputBindings.OfType<InputBinding>().Select(ib => ib.Gesture);
                 }
             }
-            else if (source is RoutedCommand)
+            else if (source is RoutedCommand cmd)
             {
-                var cmd = (RoutedCommand)source;
                 if (cmd.InputGestures != null && cmd.InputGestures.Count > 0)
                 {
                     gestures = cmd.InputGestures.OfType<InputGesture>();

@@ -48,8 +48,7 @@ namespace Radical.Windows
         /// <param name="source">The source to begin listening on.</param>
         protected override void StartListening(object source)
         {
-            var trigger = source as FrameworkElement;
-            if (trigger != null)
+            if (source is FrameworkElement trigger)
             {
                 trigger.Loaded += OnLoaded;
             }
@@ -61,8 +60,7 @@ namespace Radical.Windows
         /// <param name="source">The source to stop listening on.</param>
         protected override void StopListening(object source)
         {
-            var trigger = source as FrameworkElement;
-            if (trigger != null)
+            if (source is FrameworkElement trigger)
             {
                 trigger.Loaded -= OnLoaded;
             }

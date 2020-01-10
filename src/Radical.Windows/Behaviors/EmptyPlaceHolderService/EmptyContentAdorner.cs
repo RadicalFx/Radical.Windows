@@ -14,8 +14,7 @@ namespace Radical.Windows.Behaviors
             IsHitTestVisible = false;
             userContent = new ContentPresenter();
 
-            var emptyText = content as string;
-            if (emptyText != null)
+            if (content is string emptyText)
             {
                 userContent.Content = new TextBlock()
                 {

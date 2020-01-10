@@ -205,8 +205,7 @@ namespace Radical.Windows.Behaviors
 
         IList GetSelectedItemsBag()
         {
-            var ev = selectedItems as IEntityView;
-            if (ev != null)
+            if (selectedItems is IEntityView ev)
             {
                 return ev.DataSource;
             }
@@ -215,8 +214,7 @@ namespace Radical.Windows.Behaviors
 
         object GetRealItem(object source)
         {
-            var eiv = source as IEntityItemView;
-            if (eiv != null)
+            if (source is IEntityItemView eiv)
             {
                 return eiv.EntityItem;
             }
