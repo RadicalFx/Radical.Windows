@@ -102,14 +102,14 @@ namespace Radical.Windows.Presentation.Services
                 DefaultViewReleaseHandler(view, behavior);
             };
 
-            Func<DependencyObject, bool> isSingletonView = view =>
+            bool isSingletonView(DependencyObject view)
             {
                 var implementation = view.GetType();
                 var contracts = this.bootstrapConventions.SelectViewContracts(implementation);
                 var isShell = this.bootstrapConventions.IsShellView(contracts, implementation);
 
                 return isShell;
-            };
+            }
 
             DefaultShouldUnsubscribeViewModelOnRelease = view => !isSingletonView(view);
 
@@ -250,8 +250,7 @@ namespace Radical.Windows.Presentation.Services
                 var window = FindWindowOf(view);
                 if(window != null)
                 {
-                    EventHandler closed = null;
-                    closed = (s, e) =>
+                    void closed(object s, EventArgs e)
                     {
                         try
                         {
@@ -261,7 +260,7 @@ namespace Radical.Windows.Presentation.Services
                         {
                             window.Closed -= closed;
                         }
-                    };
+                    }
 
                     window.Closed += closed;
                 }

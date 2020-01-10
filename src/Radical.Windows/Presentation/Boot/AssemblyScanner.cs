@@ -33,13 +33,13 @@ namespace Radical.Windows.Presentation.Boot
         {
             var assemblies = new List<Assembly>();
 
-            Func<string, bool> fullPathsFilter = fullPath =>
+            bool fullPathsFilter(string fullPath)
             {
                 return assemblyFilters.All(filter =>
                 {
                     return filter(fullPath) == FilterResults.Include;
                 });
-            };
+            }
 
             foreach (var patternToUse in assemblySearchPatternsToUse)
             {

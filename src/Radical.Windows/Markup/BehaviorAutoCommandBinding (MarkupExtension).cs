@@ -18,12 +18,11 @@ namespace Radical.Windows.Markup
             {
                 if (fe is INotifyAttachedOjectLoaded inab)
                 {
-                    EventHandler h = null;
-                    h = (s, e) =>
+                    void h(object s, EventArgs e)
                     {
                         inab.AttachedObjectLoaded -= h;
                         OnTargetLoaded(fe, dp);
-                    };
+                    }
 
                     inab.AttachedObjectLoaded += h;
                 }
