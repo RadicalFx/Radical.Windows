@@ -175,9 +175,9 @@ namespace Test.Radical.Windows.Presentation
             sut.ValidateUsing(
                 new DataAnnotationValidationService<SampleTestViewModel>(sut));
 
+            sut.GetErrors("NotNullNotEmpty").OfType<object>();
+            sut.GetErrors("NotNullNotEmpty").OfType<object>();
             var errors = sut.GetErrors("NotNullNotEmpty").OfType<object>();
-            errors = sut.GetErrors("NotNullNotEmpty").OfType<object>();
-            errors = sut.GetErrors("NotNullNotEmpty").OfType<object>();
 
             Assert.AreEqual(0, errors.Count());
         }
