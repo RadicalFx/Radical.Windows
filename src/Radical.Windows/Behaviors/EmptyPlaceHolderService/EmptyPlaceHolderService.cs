@@ -44,8 +44,7 @@ namespace Radical.Windows.Behaviors
             onItemsChanged = (s, e) =>
             {
                 var key = (ItemContainerGenerator)s;
-                ItemsControl control;
-                if (managedItemsControls.TryGetValue(key, out control))
+                if (managedItemsControls.TryGetValue(key, out ItemsControl control))
                 {
                     if (control.Items.Any())
                     {

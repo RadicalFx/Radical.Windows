@@ -44,8 +44,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("DoSomething"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("DoSomething"), new TestDataContext(), out CommandData cd);
 
             Assert.IsTrue(succeeded);
             Assert.IsTrue(cd.FastDelegate != null);
@@ -57,8 +56,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("DoSomethingCommand"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("DoSomethingCommand"), new TestDataContext(), out CommandData cd);
 
             Assert.IsTrue(succeeded);
             Assert.IsTrue(cd.FastDelegate != null);
@@ -72,8 +70,7 @@ namespace Radical.Windows.Tests
             var dc = new TestDataContext();
             var methodToInvoke = "DoSomething";
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath(methodToInvoke), dc, out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath(methodToInvoke), dc, out CommandData cd);
 
             cd.FastDelegate(dc, null);
 
@@ -88,8 +85,7 @@ namespace Radical.Windows.Tests
             var dc = new TestDataContext();
             var methodToInvoke = "DoSomethingCommand";
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath(methodToInvoke), dc, out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath(methodToInvoke), dc, out CommandData cd);
 
             cd.FastDelegate(dc, null);
 
@@ -102,8 +98,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("MyProperty.DoSomethingElse"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("MyProperty.DoSomethingElse"), new TestDataContext(), out CommandData cd);
 
             Assert.IsTrue(succeeded);
             Assert.IsTrue(cd.FastDelegate != null);
@@ -115,8 +110,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("MyProperty.DoSomethingElseCommand"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("MyProperty.DoSomethingElseCommand"), new TestDataContext(), out CommandData cd);
 
             Assert.IsTrue(succeeded);
             Assert.IsTrue(cd.FastDelegate != null);
@@ -128,8 +122,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("ThisIsInvalid"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("ThisIsInvalid"), new TestDataContext(), out CommandData cd);
 
             Assert.IsFalse(succeeded);
             Assert.IsNull(cd);
@@ -141,8 +134,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("MyProperty.ThisIsInvalid"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("MyProperty.ThisIsInvalid"), new TestDataContext(), out CommandData cd);
 
             Assert.IsFalse(succeeded);
             Assert.IsNull(cd);
@@ -154,8 +146,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("Invalid.ThisIsInvalid"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("Invalid.ThisIsInvalid"), new TestDataContext(), out CommandData cd);
 
             Assert.IsFalse(succeeded);
             Assert.IsNull(cd);
@@ -167,8 +158,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("EndsWithCommand"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("EndsWithCommand"), new TestDataContext(), out CommandData cd);
 
             Assert.IsTrue(succeeded);
             Assert.IsTrue(cd.FastDelegate != null);
@@ -180,8 +170,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("MyProperty.OtherThatEndsWithCommand"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("MyProperty.OtherThatEndsWithCommand"), new TestDataContext(), out CommandData cd);
 
             Assert.IsTrue(succeeded);
             Assert.IsTrue(cd.FastDelegate != null);
@@ -193,8 +182,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("EndsWithcommand"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("EndsWithcommand"), new TestDataContext(), out CommandData cd);
 
             Assert.IsTrue(succeeded);
             Assert.IsTrue(cd.FastDelegate != null);
@@ -206,8 +194,7 @@ namespace Radical.Windows.Tests
         {
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("MyProperty.OtherThatEndsWithcommand"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("MyProperty.OtherThatEndsWithcommand"), new TestDataContext(), out CommandData cd);
 
             Assert.IsTrue(succeeded);
             Assert.IsTrue(cd.FastDelegate != null);
@@ -220,8 +207,7 @@ namespace Radical.Windows.Tests
             //this is for backward compatibility
             var sut = new DelegateCommandBuilder();
 
-            CommandData cd;
-            var succeeded = sut.TryGenerateCommandData(new PropertyPath("WithoutCommandSuffixCommand"), new TestDataContext(), out cd);
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("WithoutCommandSuffixCommand"), new TestDataContext(), out CommandData cd);
 
             Assert.IsTrue(succeeded);
             Assert.IsTrue(cd.FastDelegate != null);

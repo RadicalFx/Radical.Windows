@@ -82,10 +82,9 @@ namespace Radical.Windows.Presentation.Regions
         /// </returns>
         public bool TryGetRegion<TRegion>( string regionName, out TRegion region ) where TRegion : IRegion
         {
-            IRegion rg;
-            if( TryGetRegion( regionName, out rg ) && rg is TRegion )
+            if (TryGetRegion(regionName, out IRegion rg) && rg is TRegion)
             {
-                region = ( TRegion )rg;
+                region = (TRegion)rg;
                 return true;
             }
 

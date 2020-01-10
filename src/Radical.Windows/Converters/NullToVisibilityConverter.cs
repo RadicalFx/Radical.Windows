@@ -22,8 +22,7 @@ namespace Radical.Windows.Converters
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            bool inverted;
-            if (!bool.TryParse(parameter.As<string>(), out inverted))
+            if (!bool.TryParse(parameter.As<string>(), out bool inverted))
             {
                 inverted = false;
             }

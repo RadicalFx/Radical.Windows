@@ -179,8 +179,7 @@
                             bool validArgumentCount = false;
                             if (genericsMarkerIndex < typeName.Length)
                             {
-                                int typeArgumentCount;
-                                if (int.TryParse(typeName.Substring(genericsMarkerIndex + 1), out typeArgumentCount))
+                                if (int.TryParse(typeName.Substring(genericsMarkerIndex + 1), out int typeArgumentCount))
                                 {
                                     validArgumentCount = true;
                                 }

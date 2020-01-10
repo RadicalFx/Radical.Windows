@@ -109,10 +109,9 @@ namespace Radical.Windows.Markup
         {
             var builder = GetCommandBuilder();
 
-            CommandData commandData;
             var dataContext = Source ?? builder.GetDataContext(target);
 
-            if (builder.CanCreateCommand(Path, target) && builder.TryGenerateCommandData(Path, dataContext, out commandData))
+            if (builder.CanCreateCommand(Path, target) && builder.TryGenerateCommandData(Path, dataContext, out CommandData commandData))
             {
                 var command = builder.CreateCommand(commandData);
                 target.SetValue(targetProperty, command);

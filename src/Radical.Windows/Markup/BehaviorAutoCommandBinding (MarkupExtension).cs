@@ -11,10 +11,8 @@ namespace Radical.Windows.Markup
     {
         protected override void OnProvideValue(IServiceProvider provider, object value)
         {
-            DependencyObject fe;
-            DependencyProperty dp;
 
-            if (TryGetTargetItems(provider, out fe, out dp))
+            if (TryGetTargetItems(provider, out DependencyObject fe, out DependencyProperty dp))
             {
                 if (fe is INotifyAttachedOjectLoaded inab)
                 {
