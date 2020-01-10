@@ -6,6 +6,7 @@ using Radical.Windows.Presentation.ComponentModel;
 using Radical.Windows.Presentation.ComponentModel.Regions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -109,12 +110,11 @@ namespace Radical.Windows.Presentation.Boot
 
             DefaultAssemblyFileScanPatterns = entryAssembly =>
             {
-                var name = entryAssembly.GetName().Name;
-
-                var dllPattern = string.Format("{0}*.dll", name);
-                var radical = "Radical.*.dll";
-
-                return new[] { dllPattern, radical };
+                return new[] 
+                {
+                    $"{entryAssembly.GetName().Name}*.dll", 
+                    "Radical.*.dll" 
+                };
             };
             AssemblyFileScanPatterns = entryAssembly => DefaultAssemblyFileScanPatterns(entryAssembly);
 
