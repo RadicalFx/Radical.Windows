@@ -37,6 +37,8 @@ namespace Radical.Windows.Presentation.Boot
         private Action<IServiceProvider> bootCompletedHandler;
         private Action<ApplicationShutdownArgs> shutdownHandler;
         private Action<IServiceProvider> bootHandler;
+        bool isSessionEnding;
+        bool isShuttingDown;
         ShutdownMode? shutdownMode = null;
         Mutex mutex;
         string key;
@@ -81,7 +83,7 @@ namespace Radical.Windows.Presentation.Boot
 
             Application.Current.SessionEnding += (s, e) =>
             {
-                IsSessionEnding = true;
+                isSessionEnding = true;
             };
 
             Application.Current.DispatcherUnhandledException += (s, e) =>
@@ -98,9 +100,9 @@ namespace Radical.Windows.Presentation.Boot
 
             Application.Current.Exit += (s, e) =>
             {
-                if (!IsShuttingDown)
+                if (!isShuttingDown)
                 {
-                    var reason = IsSessionEnding ? ApplicationShutdownReason.SessionEnding : ApplicationShutdownReason.ApplicationRequest;
+                    var reason = isSessionEnding ? ApplicationShutdownReason.SessionEnding : ApplicationShutdownReason.ApplicationRequest;
                     OnShutdownCore(reason);
                 }
             };
@@ -226,7 +228,7 @@ namespace Radical.Windows.Presentation.Boot
 
             OnBoot(serviceProvider);
 
-            if (!IsShuttingDown)
+            if (!isShuttingDown)
             {
                 OnBootCompleted(serviceProvider);
 
@@ -272,11 +274,7 @@ namespace Radical.Windows.Presentation.Boot
             return this;
         }
 
-        /// <summary>
-        /// Handles the singleton application scope.
-        /// </summary>
-        /// <param name="args">The SingletonApplicationStartupArgs instance.</param>
-        protected virtual void HandleSingletonApplicationStartup(SingletonApplicationStartupArgs args)
+        void HandleSingletonApplicationStartup(SingletonApplicationStartupArgs args)
         {
             if (args.Scope != SingletonApplicationScope.NotSupported)
             {
@@ -313,11 +311,7 @@ namespace Radical.Windows.Presentation.Boot
             return this;
         }
 
-        /// <summary>
-        /// Called in order to execute the boot process.
-        /// </summary>
-        /// <param name="serviceProvider">The service provider.</param>
-        protected virtual void OnBoot(IServiceProvider serviceProvider)
+        void OnBoot(IServiceProvider serviceProvider)
         {
             var broker = serviceProvider.GetService<IMessageBroker>();
             broker.Subscribe<ApplicationShutdownRequest>(this, InvocationModel.Safe, (s, m) =>
@@ -356,12 +350,8 @@ namespace Radical.Windows.Presentation.Boot
         {
             OnShutdownCore(ApplicationShutdownReason.UserRequest);
         }
-
-        /// <summary>
-        /// Called when the boot process has been completed.
-        /// </summary>
-        /// <param name="serviceProvider">The service provider.</param>
-        protected virtual void OnBootCompleted(IServiceProvider serviceProvider)
+        
+        void OnBootCompleted(IServiceProvider serviceProvider)
         {
             var resolver = serviceProvider.GetService<IViewResolver>();
 
@@ -474,7 +464,7 @@ namespace Radical.Windows.Presentation.Boot
                     }
                 }
 
-                IsShuttingDown = true;
+                isShuttingDown = true;
 
                 if (isBootCompleted)
                 {
@@ -498,7 +488,6 @@ namespace Radical.Windows.Presentation.Boot
                     IsBootCompleted = isBootCompleted
                 };
 
-                OnShutdown(args);
                 shutdownHandler?.Invoke(args);
 
                 if (isBootCompleted)
@@ -525,14 +514,6 @@ namespace Radical.Windows.Presentation.Boot
                     RegionService.Conventions = null;
                 }
             }
-        }
-
-        /// <summary>
-        /// Called when the application shutdowns.
-        /// </summary>
-        protected virtual void OnShutdown(ApplicationShutdownArgs e)
-        {
-
         }
 
         /// <summary>
@@ -582,25 +563,9 @@ namespace Radical.Windows.Presentation.Boot
             return this;
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the operating system session is ending.
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if the operating system session is ending; otherwise, <c>false</c>.
-        /// </value>
-        protected bool IsSessionEnding
-        {
-            get;
-            private set;
-        }
-
         private Action<Exception> unhandledExceptionHandler;
 
-        /// <summary>
-        /// Called when a not handled exception occurs.
-        /// </summary>
-        /// <param name="exception">The exception.</param>
-        protected virtual void OnUnhandledException(Exception exception)
+        void OnUnhandledException(Exception exception)
         {
             unhandledExceptionHandler?.Invoke(exception);
         }
@@ -614,18 +579,6 @@ namespace Radical.Windows.Presentation.Boot
         {
             this.unhandledExceptionHandler = unhandledExceptionHandler;
             return this;
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this application is shutting down.
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if this application is shutting down; otherwise, <c>false</c>.
-        /// </value>
-        protected bool IsShuttingDown
-        {
-            get;
-            private set;
         }
 
         /// <summary>
