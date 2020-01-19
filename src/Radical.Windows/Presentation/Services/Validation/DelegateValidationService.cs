@@ -12,6 +12,7 @@ namespace Radical.Windows.Presentation.Services.Validation
     /// validation process with an external validation system, e.g. the one supplied by the Validation 
     /// Application Block of the Enterprise Library.
     /// </remarks>
+    [Obsolete("DelegateValidationService will be removed in v3", false)]
     public sealed class DelegateValidationService : AbstractValidationService
     {
         readonly Func<IEnumerable<ValidationError>> validationCallback;
