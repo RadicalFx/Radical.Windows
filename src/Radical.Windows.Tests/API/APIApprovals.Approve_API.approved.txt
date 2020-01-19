@@ -3609,6 +3609,7 @@ namespace Radical.Windows.Presentation.Services.Validation
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidateProperty(string propertyName) { }
     }
+    [System.Obsolete("DelegateValidationService will be removed in v3", false)]
     public sealed class DelegateValidationService : Radical.Windows.Presentation.Services.Validation.AbstractValidationService
     {
         public DelegateValidationService(System.Func<System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> validationCallback) { }
