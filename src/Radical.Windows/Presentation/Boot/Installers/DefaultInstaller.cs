@@ -21,16 +21,6 @@ namespace Radical.Windows.Presentation.Boot.Installers
             services.AddSingleton<IFeature, Cultures>();
             services.AddSingleton<IFeature, CurrentPrincipal>();
 
-            services.AddSingleton(container => 
-            {
-                //TODO: figure out best way to do settings
-                //var name = ConfigurationManager
-                //            .AppSettings["radical/windows/presentation/diagnostics/applicationTraceSourceName"]
-                //            .Return(s => s, "default");
-
-                return new TraceSource("default");
-            });
-
             services.AddSingleton(container => Application.Current);
             services.AddSingleton(container => Application.Current.Dispatcher);
 
