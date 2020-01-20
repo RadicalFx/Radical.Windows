@@ -1,4 +1,5 @@
-﻿[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v3.0", FrameworkDisplayName="")]
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Radical.Windows.Tests")]
+[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v3.0", FrameworkDisplayName="")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows", "Radical.Windows")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/behaviors", "Radical.Windows.Behaviors")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/controls", "Radical.Windows.Controls")]
@@ -3096,6 +3097,8 @@ namespace Radical.Windows.Presentation.ComponentModel
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, System.Windows.Window> DefaultFindWindowOf { get; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<object, string> DefaultGenerateViewModelStaticResourceKey { get; }
+        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewDataContextSearchBehavior, object> DefaultGetViewDataContext { get; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<object, System.Windows.DependencyObject> DefaultGetViewOfViewModel { get; }
@@ -3135,6 +3138,8 @@ namespace Radical.Windows.Presentation.ComponentModel
         System.Func<object, System.Windows.Window> FindHostingWindowOf { get; set; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, System.Windows.Window> FindWindowOf { get; set; }
+        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<object, string> GenerateViewModelStaticResourceKey { get; set; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewDataContextSearchBehavior, object> GetViewDataContext { get; set; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]

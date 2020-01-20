@@ -17,7 +17,7 @@ namespace Radical.Windows.Presentation.Services
     /// <summary>
     /// Handles Presentation conventions.
     /// </summary>
-    class ConventionsHanlder : IConventionsHandler
+    class ConventionsHandler : IConventionsHandler
     {
         readonly IMessageBroker broker;
         readonly IReleaseComponents releaser;
@@ -25,12 +25,12 @@ namespace Radical.Windows.Presentation.Services
         readonly BootstrapConventions bootstrapConventions;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConventionsHanlder"/> class.
+        /// Initializes a new instance of the <see cref="ConventionsHandler"/> class.
         /// </summary>
         /// <param name="broker">The broker.</param>
         /// <param name="releaser">The releaser.</param>
         /// <param name="bootstrapConventions">The Bootstrap Conventions</param>
-        public ConventionsHanlder(IMessageBroker broker, IReleaseComponents releaser, BootstrapConventions bootstrapConventions)
+        public ConventionsHandler(IMessageBroker broker, IReleaseComponents releaser, BootstrapConventions bootstrapConventions)
         {
             this.broker = broker;
             this.releaser = releaser;
@@ -226,7 +226,7 @@ namespace Radical.Windows.Presentation.Services
 
             DefaultExposeViewModelAsStaticResource = (view, dc) =>
             {
-                var key = dc.GetType().Name;
+                var key = GenerateViewModelStaticResourceKey(dc);
                 if(view is FrameworkElement)
                 {
                     ((FrameworkElement)view).Resources.Add(key, dc);
@@ -243,6 +243,15 @@ namespace Radical.Windows.Presentation.Services
                 DefaultExposeViewModelAsStaticResource(view, dc);
             };
 
+            DefaultGenerateViewModelStaticResourceKey = (dc) =>
+            {
+                return dc.GetType().Name;
+            };
+
+            GenerateViewModelStaticResourceKey = (dc) =>
+            {
+                return DefaultGenerateViewModelStaticResourceKey(dc);
+            };
 
             DefaultTryHookClosedEventOfHostOf = (view, closedCallback) =>
             {
@@ -515,6 +524,12 @@ namespace Radical.Windows.Presentation.Services
 
         [IgnorePropertyInjectionAttribue]
         public Action<DependencyObject, object> ExposeViewModelAsStaticResource { get; set; }
+
+        [IgnorePropertyInjectionAttribue]
+        public Func<object, string> DefaultGenerateViewModelStaticResourceKey { get; private set; }
+
+        [IgnorePropertyInjectionAttribue]
+        public Func<object, string> GenerateViewModelStaticResourceKey { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the logic that sets the view data context.
