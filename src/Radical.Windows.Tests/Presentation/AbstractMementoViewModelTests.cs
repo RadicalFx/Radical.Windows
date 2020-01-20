@@ -19,11 +19,10 @@ namespace Test.Radical.Windows.Presentation
     {
         abstract class TestMementoViewModel : AbstractMementoViewModel
         {
-            IValidationService _validationService;
             bool? _forceIsValidationEnabledTo;
             internal void ValidateUsing(IValidationService validationService, bool? forceIsValidationEnabledTo = null)
             {
-                _validationService = validationService;
+                ValidationService = validationService;
                 _forceIsValidationEnabledTo = forceIsValidationEnabledTo;
             }
 
@@ -38,16 +37,6 @@ namespace Test.Radical.Windows.Presentation
 
                     return base.IsValidationEnabled;
                 }
-            }
-
-            protected override IValidationService GetValidationService()
-            {
-                if (_validationService != null)
-                {
-                    return _validationService;
-                }
-
-                return base.GetValidationService();
             }
 
             public bool Test_IsValidationEnabled { get { return IsValidationEnabled; } }

@@ -2739,12 +2739,11 @@ namespace Radical.Windows.Presentation
         [System.ComponentModel.Bindable(false)]
         public virtual System.Collections.ObjectModel.ObservableCollection<Radical.Validation.ValidationError> ValidationErrors { get; }
         [Radical.Model.SkipPropertyValidation]
-        protected Radical.Windows.Presentation.ComponentModel.IValidationService ValidationService { get; }
+        protected Radical.Windows.Presentation.ComponentModel.IValidationService ValidationService { get; set; }
         public event System.EventHandler<System.ComponentModel.DataErrorsChangedEventArgs> ErrorsChanged;
         public event System.EventHandler Validated;
         public System.Collections.IEnumerable GetErrors(string propertyName) { }
         protected string GetPropertyDisplayName(string propertyName) { }
-        protected virtual Radical.Windows.Presentation.ComponentModel.IValidationService GetValidationService() { }
         protected virtual void MoveFocusTo(string focusedElementKey) { }
         protected virtual void MoveFocusTo<T>(System.Linq.Expressions.Expression<System.Func<T>> property) { }
         protected virtual void OnAcceptingChanges(System.ComponentModel.CancelEventArgs e) { }
@@ -2801,12 +2800,11 @@ namespace Radical.Windows.Presentation
         [System.ComponentModel.Bindable(false)]
         public virtual System.Collections.ObjectModel.ObservableCollection<Radical.Validation.ValidationError> ValidationErrors { get; }
         [Radical.Model.SkipPropertyValidation]
-        protected Radical.Windows.Presentation.ComponentModel.IValidationService ValidationService { get; }
+        protected Radical.Windows.Presentation.ComponentModel.IValidationService ValidationService { get; set; }
         public event System.EventHandler<System.ComponentModel.DataErrorsChangedEventArgs> ErrorsChanged;
         public event System.EventHandler Validated;
         public System.Collections.IEnumerable GetErrors(string propertyName) { }
         protected string GetPropertyDisplayName(string propertyName) { }
-        protected virtual Radical.Windows.Presentation.ComponentModel.IValidationService GetValidationService() { }
         protected virtual void MoveFocusTo(string focusedElementKey) { }
         protected virtual void MoveFocusTo<T>(System.Linq.Expressions.Expression<System.Func<T>> property) { }
         protected void OnErrorsChanged(string propertyName) { }

@@ -86,35 +86,12 @@ namespace Radical.Windows.Presentation
         IValidationService _validationService;
 
         /// <summary>
-        /// Gets the validation service.
+        /// The validation service to use to validate this view model.
         /// </summary>
-        /// <value>The validation service.</value>
         [SkipPropertyValidation]
-        protected IValidationService ValidationService
-        {
-            get
-            {
-                if (_validationService == null)
-                {
-                    _validationService = GetValidationService();
-                }
-
-                return _validationService;
-            }
-        }
+        protected internal IValidationService ValidationService { get; set; } = NullValidationService.Instance;
 
         protected ValidationBehavior DefaultValidationBehavior { get; set; } = ValidationBehavior.TriggerValidationErrorsOnFailure;
-
-        /// <summary>
-        /// Gets the validation service, this method is called once the first time
-        /// the validation service is accessed, inheritors should override this method
-        /// in order to provide a <see cref="IValidationService"/> implementation.
-        /// </summary>
-        /// <returns>The validation service to use to validate this view model.</returns>
-        protected virtual IValidationService GetValidationService()
-        {
-            return NullValidationService.Instance;
-        }
 
         /// <summary>
         /// Signals the object that initialization is starting.
