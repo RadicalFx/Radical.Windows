@@ -226,7 +226,7 @@ namespace Radical.Windows.Presentation.Services
 
             DefaultExposeViewModelAsStaticResource = (view, dc) =>
             {
-                var key = dc.GetType().Name;
+                var key = GenerateViewModelStaticResourceKey(dc);
                 if(view is FrameworkElement)
                 {
                     ((FrameworkElement)view).Resources.Add(key, dc);
@@ -243,6 +243,15 @@ namespace Radical.Windows.Presentation.Services
                 DefaultExposeViewModelAsStaticResource(view, dc);
             };
 
+            DefaultGenerateViewModelStaticResourceKey = (dc) =>
+            {
+                return dc.GetType().Name;
+            };
+
+            GenerateViewModelStaticResourceKey = (dc) =>
+            {
+                return DefaultGenerateViewModelStaticResourceKey(dc);
+            };
 
             DefaultTryHookClosedEventOfHostOf = (view, closedCallback) =>
             {
@@ -515,6 +524,12 @@ namespace Radical.Windows.Presentation.Services
 
         [IgnorePropertyInjectionAttribue]
         public Action<DependencyObject, object> ExposeViewModelAsStaticResource { get; set; }
+
+        [IgnorePropertyInjectionAttribue]
+        public Func<object, string> DefaultGenerateViewModelStaticResourceKey { get; private set; }
+
+        [IgnorePropertyInjectionAttribue]
+        public Func<object, string> GenerateViewModelStaticResourceKey { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the logic that sets the view data context.

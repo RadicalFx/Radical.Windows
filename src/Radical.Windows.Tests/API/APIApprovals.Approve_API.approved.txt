@@ -3103,6 +3103,8 @@ namespace Radical.Windows.Presentation.ComponentModel
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, System.Windows.Window> DefaultFindWindowOf { get; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<object, string> DefaultGenerateViewModelStaticResourceKey { get; }
+        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewDataContextSearchBehavior, object> DefaultGetViewDataContext { get; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<object, System.Windows.DependencyObject> DefaultGetViewOfViewModel { get; }
@@ -3142,6 +3144,8 @@ namespace Radical.Windows.Presentation.ComponentModel
         System.Func<object, System.Windows.Window> FindHostingWindowOf { get; set; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, System.Windows.Window> FindWindowOf { get; set; }
+        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<object, string> GenerateViewModelStaticResourceKey { get; set; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewDataContextSearchBehavior, object> GetViewDataContext { get; set; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]

@@ -252,6 +252,24 @@ namespace Radical.Windows.Presentation.ComponentModel
         Action<DependencyObject, object> ExposeViewModelAsStaticResource { get; set; }
 
         /// <summary>
+        /// Default: Gets or sets the logic used to generate the resource key needed to register a ViewModel as a resource.
+        /// </summary>
+        /// <value>
+        /// A func used to generate the resource key.
+        /// </value>
+        [IgnorePropertyInjectionAttribue]
+        Func<object, string> DefaultGenerateViewModelStaticResourceKey { get; }
+
+        /// <summary>
+        /// Gets or sets the logic used to generate the resource key needed to register a ViewModel as a resource.
+        /// </summary>
+        /// <value>
+        /// A func used to generate the resource key.
+        /// </value>
+        [IgnorePropertyInjectionAttribue]
+        Func<object, string> GenerateViewModelStaticResourceKey { get; set; }
+
+        /// <summary>
         /// Default: Gets or sets the logic that sets the view data context.
         /// </summary>
         /// <value>
