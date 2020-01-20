@@ -2890,23 +2890,16 @@ namespace Radical.Windows.Presentation.Boot
     public class ApplicationBootstrapper
     {
         public ApplicationBootstrapper() { }
-        protected bool IsSessionEnding { get; }
-        protected bool IsShuttingDown { get; }
         public void Boot() { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper DisableAutoBoot() { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper EnableSplashScreen(Radical.Windows.Presentation.Boot.SplashScreenConfiguration config = null) { }
-        protected virtual void HandleSingletonApplicationStartup(Radical.Windows.Presentation.Boot.SingletonApplicationStartupArgs args) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBeforeInstall(System.Action<Radical.Windows.Presentation.Boot.BootstrapConventions, Radical.Windows.Presentation.Boot.AssemblyScanner> onBeforeInstall) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBoot(System.Action<System.IServiceProvider> bootHandler) { }
-        protected virtual void OnBoot(System.IServiceProvider serviceProvider) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBootCompleted(System.Action<System.IServiceProvider> bootCompletedHandler) { }
-        protected virtual void OnBootCompleted(System.IServiceProvider serviceProvider) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnServiceProviderCreated(System.Action<System.IServiceProvider> onServiceProviderCreated) { }
-        protected virtual void OnShutdown(Radical.Windows.Presentation.Boot.ApplicationShutdownArgs e) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnShutdown(System.Action<Radical.Windows.Presentation.Boot.ApplicationShutdownArgs> shutdownHandler) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnSingletonApplicationStartup(System.Action<Radical.Windows.Presentation.Boot.SingletonApplicationStartupArgs> onSingletonApplicationStartup) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnUnhandledException(System.Action<System.Exception> unhandledExceptionHandler) { }
-        protected virtual void OnUnhandledException(System.Exception exception) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OverrideShutdownMode(System.Windows.ShutdownMode mode) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper RegisterAsSingleton(string key) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper RegisterAsSingleton(string key, Radical.Windows.Presentation.Boot.SingletonApplicationScope scope) { }
