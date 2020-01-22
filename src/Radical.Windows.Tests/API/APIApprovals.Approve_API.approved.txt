@@ -2892,6 +2892,9 @@ namespace Radical.Windows.Presentation.Boot
         public void Boot() { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper DisableAutoBoot() { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper EnableSplashScreen(Radical.Windows.Presentation.Boot.SplashScreenConfiguration config = null) { }
+        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper ExposeAsResource<TService>() { }
+        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper ExposeAsResource<TService, TView>()
+            where TView : System.Windows.FrameworkElement { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBeforeInstall(System.Action<Radical.Windows.Presentation.Boot.BootstrapConventions, Radical.Windows.Presentation.Boot.AssemblyScanner> onBeforeInstall) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBoot(System.Action<System.IServiceProvider> bootHandler) { }
         public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBootCompleted(System.Action<System.IServiceProvider> bootCompletedHandler) { }
@@ -3095,6 +3098,8 @@ namespace Radical.Windows.Presentation.ComponentModel
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, System.Windows.Window> DefaultFindWindowOf { get; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Type, object> DefaultGenerateServiceStaticResourceKey { get; }
+        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<object, string> DefaultGenerateViewModelStaticResourceKey { get; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewDataContextSearchBehavior, object> DefaultGetViewDataContext { get; }
@@ -3136,6 +3141,8 @@ namespace Radical.Windows.Presentation.ComponentModel
         System.Func<object, System.Windows.Window> FindHostingWindowOf { get; set; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, System.Windows.Window> FindWindowOf { get; set; }
+        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Type, object> GenerateServiceStaticResourceKey { get; set; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<object, string> GenerateViewModelStaticResourceKey { get; set; }
         [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
