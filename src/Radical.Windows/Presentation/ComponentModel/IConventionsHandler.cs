@@ -410,6 +410,25 @@ namespace Radical.Windows.Presentation.ComponentModel
         /// </value>
         [IgnorePropertyInjectionAttribue]
         ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior { get; set; }
+
+        /// <summary>
+        /// Gets or sets the generate service static resource key convention.
+        /// </summary>
+        /// <value>
+        /// The generate service static resource key convention.
+        /// </value>
+        [IgnorePropertyInjectionAttribue]
+        Func<Type, object> GenerateServiceStaticResourceKey { get; set; }
+
+        /// <summary>
+        /// Default: Gets the default generate service static resource key convention.
+        /// </summary>
+        /// <value>
+        /// The default generate service static resource key.
+        /// </value>
+        [IgnorePropertyInjectionAttribue]
+        Func<Type, object> DefaultGenerateServiceStaticResourceKey { get; }
+
     }
 
 
