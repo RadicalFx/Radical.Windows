@@ -8,13 +8,11 @@ namespace Radical.Windows.Messaging.Handlers
     {
         readonly IRegionInjectionHandler autoMappingHandler;
         readonly IViewResolver viewProvider;
-        readonly IConventionsHandler conventions;
         readonly IRegionService regionService;
 
-        public ViewLoadedHandler(IViewResolver viewProvider, IConventionsHandler conventions, IRegionService regionService, IRegionInjectionHandler autoMappingHandler)
+        public ViewLoadedHandler(IViewResolver viewProvider, IRegionService regionService, IRegionInjectionHandler autoMappingHandler)
         {
             this.viewProvider = viewProvider;
-            this.conventions = conventions;
             this.regionService = regionService;
             this.autoMappingHandler = autoMappingHandler;
         }
