@@ -7,7 +7,6 @@
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/effects", "Radical.Windows.Effects")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/input", "Radical.Windows.Input")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/markup", "Radical.Windows.Markup")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/presentation/behaviors", "Radical.Windows.Presentation.Behaviors")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/presentation/regions", "Radical.Windows.Presentation.Regions")]
 namespace Radical.ComponentModel
 {
@@ -1947,6 +1946,12 @@ namespace Radical.Windows.Behaviors
         public static bool GetLastColumnFill(System.Windows.Controls.DataGrid element) { }
         public static void SetLastColumnFill(System.Windows.Controls.DataGrid element, bool value) { }
     }
+    public class DependencyObjectCloseHandlerBehavior : Microsoft.Xaml.Behaviors.Behavior<System.Windows.DependencyObject>
+    {
+        public DependencyObjectCloseHandlerBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.ComponentModel.IConventionsHandler conventions) { }
+        protected override void OnAttached() { }
+        protected override void OnDetaching() { }
+    }
     public static class DesignTimeHelper
     {
         public static bool GetIsInDesignMode() { }
@@ -2022,6 +2027,21 @@ namespace Radical.Windows.Behaviors
         public static readonly System.Windows.DependencyProperty ContentProperty;
         public static object GetContent(System.Windows.Controls.ItemsControl owner) { }
         public static void SetContent(System.Windows.Controls.ItemsControl owner, object value) { }
+    }
+    public class Focus : Radical.Windows.Behaviors.RadicalBehavior<System.Windows.FrameworkElement>
+    {
+        public static readonly System.Windows.DependencyProperty ControlledByProperty;
+        public Focus() { }
+        public string ControlledBy { get; set; }
+        public string UsingKey { get; set; }
+        protected override void OnAttached() { }
+        protected override void OnDetaching() { }
+    }
+    public class FrameworkElementLifecycleNotificationsBehavior : Radical.Windows.Behaviors.RadicalBehavior<System.Windows.FrameworkElement>
+    {
+        public FrameworkElementLifecycleNotificationsBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.ComponentModel.IConventionsHandler conventions) { }
+        protected override void OnAttached() { }
+        protected override void OnDetaching() { }
     }
     public static class GridViewColumnManager
     {
@@ -2226,6 +2246,12 @@ namespace Radical.Windows.Behaviors
         public bool AllowMaximize { get; set; }
         public bool AllowMinimize { get; set; }
         public bool ShowIcon { get; set; }
+        protected override void OnAttached() { }
+        protected override void OnDetaching() { }
+    }
+    public class WindowLifecycleNotificationsBehavior : Radical.Windows.Behaviors.RadicalBehavior<System.Windows.Window>
+    {
+        public WindowLifecycleNotificationsBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.ComponentModel.IConventionsHandler conventions) { }
         protected override void OnAttached() { }
         protected override void OnDetaching() { }
     }
@@ -3153,36 +3179,6 @@ namespace Radical.Windows.Presentation
         {
             public void AndThen(System.Action action) { }
         }
-    }
-}
-namespace Radical.Windows.Presentation.Behaviors
-{
-    public class DependencyObjectCloseHandlerBehavior : Microsoft.Xaml.Behaviors.Behavior<System.Windows.DependencyObject>
-    {
-        public DependencyObjectCloseHandlerBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.ComponentModel.IConventionsHandler conventions) { }
-        protected override void OnAttached() { }
-        protected override void OnDetaching() { }
-    }
-    public class Focus : Radical.Windows.Behaviors.RadicalBehavior<System.Windows.FrameworkElement>
-    {
-        public static readonly System.Windows.DependencyProperty ControlledByProperty;
-        public Focus() { }
-        public string ControlledBy { get; set; }
-        public string UsingKey { get; set; }
-        protected override void OnAttached() { }
-        protected override void OnDetaching() { }
-    }
-    public class FrameworkElementLifecycleNotificationsBehavior : Radical.Windows.Behaviors.RadicalBehavior<System.Windows.FrameworkElement>
-    {
-        public FrameworkElementLifecycleNotificationsBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.ComponentModel.IConventionsHandler conventions) { }
-        protected override void OnAttached() { }
-        protected override void OnDetaching() { }
-    }
-    public class WindowLifecycleNotificationsBehavior : Radical.Windows.Behaviors.RadicalBehavior<System.Windows.Window>
-    {
-        public WindowLifecycleNotificationsBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.ComponentModel.IConventionsHandler conventions) { }
-        protected override void OnAttached() { }
-        protected override void OnDetaching() { }
     }
 }
 namespace Radical.Windows.Presentation.Boot

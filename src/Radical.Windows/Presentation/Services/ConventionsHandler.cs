@@ -3,7 +3,7 @@ using Radical.ComponentModel.Messaging;
 using Radical.Conversions;
 using Radical.Linq;
 using Radical.Reflection;
-using Radical.Windows.Presentation.Behaviors;
+using Radical.Windows.Behaviors;
 using Radical.Windows.Presentation.Boot;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation.Regions;

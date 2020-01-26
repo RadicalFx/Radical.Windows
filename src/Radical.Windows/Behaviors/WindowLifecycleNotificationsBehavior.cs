@@ -10,7 +10,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Behaviors
+namespace Radical.Windows.Behaviors
 {
     /// <summary>
     /// Wires the window lifecycle to a view model that requires lifecycle notifications.

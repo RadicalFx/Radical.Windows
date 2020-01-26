@@ -4,7 +4,7 @@ using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Behaviors
+namespace Radical.Windows.Behaviors
 {
     /// <summary>
     /// Special behavior to handle view close requests.
