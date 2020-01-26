@@ -1,4 +1,4 @@
-﻿using Radical.Windows.Presentation.ComponentModel;
+﻿using Radical.Windows.ComponentModel;
 
 namespace Radical.Windows.Presentation.Boot
 {

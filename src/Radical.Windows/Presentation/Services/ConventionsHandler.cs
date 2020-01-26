@@ -5,7 +5,7 @@ using Radical.Linq;
 using Radical.Reflection;
 using Radical.Windows.Presentation.Behaviors;
 using Radical.Windows.Presentation.Boot;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation.Regions;
 using System;
 using System.Linq;

@@ -8,7 +8,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using Radical.Helpers;
 using Radical.Reflection;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using Radical.Conversions;
 using Radical.Diagnostics;
 

@@ -1,7 +1,7 @@
 ﻿using Radical.Linq;
 using Radical.Reflection;
 using Radical.Validation;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

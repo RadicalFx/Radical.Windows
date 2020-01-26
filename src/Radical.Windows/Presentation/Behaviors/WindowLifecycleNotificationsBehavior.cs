@@ -3,7 +3,7 @@ using Radical.Diagnostics;
 using Radical.Reflection;
 using Radical.Validation;
 using Radical.Windows.Behaviors;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
 using System;
 using System.ComponentModel;

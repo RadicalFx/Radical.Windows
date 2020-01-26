@@ -1,4 +1,4 @@
-﻿using Radical.Windows.Presentation.ComponentModel;
+﻿using Radical.Windows.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;

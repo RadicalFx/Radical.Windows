@@ -4,7 +4,7 @@ using Radical.Diagnostics;
 using Radical.Helpers;
 using Radical.Validation;
 using Radical.Reflection;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
 using Radical.Windows.Presentation.Regions;
 using System;

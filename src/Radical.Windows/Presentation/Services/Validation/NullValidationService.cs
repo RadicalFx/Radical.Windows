@@ -1,5 +1,5 @@
 ﻿using Radical.Validation;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using System.Collections.Generic;
 
 namespace Radical.Windows.Presentation.Services.Validation

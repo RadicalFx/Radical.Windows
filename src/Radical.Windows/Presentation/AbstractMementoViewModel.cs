@@ -3,7 +3,7 @@ using Radical.Linq;
 using Radical.Model;
 using Radical.Reflection;
 using Radical.Validation;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation.Services.Validation;
 using System;
 using System.Collections.Generic;

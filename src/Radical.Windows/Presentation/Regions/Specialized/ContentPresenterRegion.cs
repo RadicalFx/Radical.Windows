@@ -1,5 +1,5 @@
 ﻿using Radical.Conversions;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;

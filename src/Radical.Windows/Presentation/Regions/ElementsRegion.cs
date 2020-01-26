@@ -1,6 +1,6 @@
 ﻿using Radical.Conversions;
 using Radical.Validation;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;

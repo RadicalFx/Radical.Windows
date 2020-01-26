@@ -2291,6 +2291,310 @@ namespace Radical.Windows.CommandBuilders
         public virtual bool TryGenerateCommandData(System.Windows.PropertyPath path, object dataContext, out Radical.Windows.CommandBuilders.CommandData data) { }
     }
 }
+namespace Radical.Windows.ComponentModel
+{
+    public class ActiveContentChangedEventArgs : System.EventArgs
+    {
+        public ActiveContentChangedEventArgs(System.Windows.DependencyObject activeContent, System.Windows.DependencyObject previousActiveContent) { }
+        public System.Windows.DependencyObject ActiveContent { get; }
+        public bool HasActiveContent { get; }
+        public System.Windows.DependencyObject PreviousActiveContent { get; }
+    }
+    public interface IContentRegion : Radical.Windows.ComponentModel.IRegion
+    {
+        System.Windows.DependencyObject Content { get; set; }
+    }
+    public interface IConventionsHandler
+    {
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject> AttachViewBehaviors { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject, object> AttachViewToViewModel { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject> DefaultAttachViewBehaviors { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject, object> DefaultAttachViewToViewModel { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject> DefaultDetachViewBehaviors { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject, object> DefaultExposeViewModelAsStaticResource { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<object, System.Windows.Window> DefaultFindHostingWindowOf { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, System.Windows.Window> DefaultFindWindowOf { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Type, object> DefaultGenerateServiceStaticResourceKey { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<object, string> DefaultGenerateViewModelStaticResourceKey { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, Radical.Windows.ComponentModel.ViewDataContextSearchBehavior, object> DefaultGetViewDataContext { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<object, System.Windows.DependencyObject> DefaultGetViewOfViewModel { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.FrameworkElement, bool> DefaultIsHostingView { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Type, System.Type> DefaultResolveViewModelType { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Type, System.Type> DefaultResolveViewType { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject, object> DefaultSetViewDataContext { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, object, bool> DefaultShouldExposeViewModelAsStaticResource { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, bool> DefaultShouldNotifyViewLoaded { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, object, bool> DefaultShouldNotifyViewModelLoaded { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, bool> DefaultShouldReleaseView { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, bool> DefaultShouldUnregisterRegionManagerOfView { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, bool> DefaultShouldUnsubscribeViewModelOnRelease { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, System.Action<System.Windows.DependencyObject>, System.Windows.DependencyObject> DefaultTryHookClosedEventOfHostOf { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        Radical.Windows.ComponentModel.ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, Radical.Windows.ComponentModel.ViewDataContextSearchBehavior, bool> DefaultViewHasDataContext { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject, Radical.Windows.ComponentModel.ViewReleaseBehavior> DefaultViewReleaseHandler { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject> DetachViewBehaviors { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject, object> ExposeViewModelAsStaticResource { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<object, System.Windows.Window> FindHostingWindowOf { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, System.Windows.Window> FindWindowOf { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Type, object> GenerateServiceStaticResourceKey { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<object, string> GenerateViewModelStaticResourceKey { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, Radical.Windows.ComponentModel.ViewDataContextSearchBehavior, object> GetViewDataContext { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<object, System.Windows.DependencyObject> GetViewOfViewModel { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.FrameworkElement, bool> IsHostingView { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Type, System.Type> ResolveViewModelType { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Type, System.Type> ResolveViewType { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject, object> SetViewDataContext { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, object, bool> ShouldExposeViewModelAsStaticResource { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, bool> ShouldNotifyViewLoaded { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, object, bool> ShouldNotifyViewModelLoaded { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, bool> ShouldReleaseView { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, bool> ShouldUnregisterRegionManagerOfView { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, bool> ShouldUnsubscribeViewModelOnRelease { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, System.Action<System.Windows.DependencyObject>, System.Windows.DependencyObject> TryHookClosedEventOfHostOf { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Func<System.Windows.DependencyObject, Radical.Windows.ComponentModel.ViewDataContextSearchBehavior, bool> ViewHasDataContext { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Windows.DependencyObject, Radical.Windows.ComponentModel.ViewReleaseBehavior> ViewReleaseHandler { get; set; }
+    }
+    public interface IElementsRegion : Radical.Windows.ComponentModel.IRegion
+    {
+        void Add(System.Windows.DependencyObject view);
+        System.Collections.Generic.IEnumerable<TView> GetElements<TView>()
+            where TView : System.Windows.DependencyObject;
+        void Remove(System.Windows.DependencyObject view);
+    }
+    public interface IExpectViewActivatedCallback
+    {
+        void OnViewActivated();
+    }
+    public interface IExpectViewClosedCallback
+    {
+        void OnViewClosed();
+    }
+    public interface IExpectViewClosingCallback
+    {
+        void OnViewClosing(System.ComponentModel.CancelEventArgs e);
+    }
+    public interface IExpectViewLoadedCallback
+    {
+        void OnViewLoaded();
+    }
+    public interface IExpectViewShownCallback
+    {
+        void OnViewShown();
+    }
+    public interface IRegion
+    {
+        int AsyncLoadDelay { get; set; }
+        System.Windows.DependencyObject HostingView { get; }
+        string Name { get; }
+        void Shutdown();
+    }
+    public interface IRegionInjectionHandler
+    {
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        System.Action<System.Func<System.Windows.DependencyObject>, Radical.Windows.ComponentModel.IRegion> Inject { get; set; }
+        System.Collections.Generic.IEnumerable<System.Type> GetViewsInterestedIn(string regionName);
+        void RegisterViewAsInterestedIn(string regionName, System.Type viewType);
+        void RegisterViewsAsInterestedIn(string regionName, System.Collections.Generic.IEnumerable<System.Type> views);
+    }
+    public interface IRegionManager
+    {
+        Radical.Windows.ComponentModel.IRegion this[string name] { get; }
+        System.Collections.Generic.IEnumerable<Radical.Windows.ComponentModel.IRegion> GetAllRegisteredRegions();
+        Radical.Windows.ComponentModel.IRegion GetRegion(string name);
+        TRegion GetRegion<TRegion>(string name)
+            where TRegion : Radical.Windows.ComponentModel.IRegion;
+        void RegisterRegion(Radical.Windows.ComponentModel.IRegion region);
+        void Shutdown();
+        bool TryGetRegion(string regionName, out Radical.Windows.ComponentModel.IRegion region);
+        bool TryGetRegion<TRegion>(string regionName, out TRegion region)
+            where TRegion : Radical.Windows.ComponentModel.IRegion;
+    }
+    public interface IRegionManagerFactory
+    {
+        Radical.Windows.ComponentModel.IRegionManager Create();
+    }
+    public interface IRegionService
+    {
+        Radical.Windows.ComponentModel.IRegionManager FindRegionManager(System.Func<System.Windows.DependencyObject, Radical.Windows.ComponentModel.IRegionManager, bool> filter);
+        Radical.Windows.ComponentModel.IRegionManager GetKnownRegionManager<TView>()
+            where TView : System.Windows.DependencyObject;
+        Radical.Windows.ComponentModel.IRegionManager GetRegionManager(System.Windows.DependencyObject owner);
+        bool HoldsRegionManager(System.Windows.DependencyObject owner);
+        Radical.Windows.ComponentModel.IRegionManager RegisterRegionManager(System.Windows.DependencyObject owner);
+        void UnregisterRegionManager(System.Windows.DependencyObject owner);
+        void UnregisterRegionManager(System.Windows.DependencyObject owner, Radical.Windows.ComponentModel.UnregisterBehavior behavior);
+    }
+    public interface IReleaseComponents
+    {
+        void Release(object component);
+    }
+    public interface IRequireValidation : System.ComponentModel.INotifyDataErrorInfo
+    {
+        bool IsValid { get; }
+        System.Collections.ObjectModel.ObservableCollection<Radical.Validation.ValidationError> ValidationErrors { get; }
+        event System.EventHandler Validated;
+        void ResetValidation();
+        void TriggerValidation();
+        [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
+                "IsValid",
+                "Errors"})]
+        System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate();
+        [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
+                "IsValid",
+                "Errors"})]
+        System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate(Radical.Windows.ComponentModel.ValidationBehavior behavior);
+    }
+    public interface ISwitchingElementsRegion : Radical.Windows.ComponentModel.IElementsRegion, Radical.Windows.ComponentModel.IRegion
+    {
+        System.Windows.DependencyObject ActiveContent { get; }
+        System.Windows.DependencyObject PreviousActiveContent { get; }
+        event System.EventHandler<Radical.Windows.ComponentModel.ActiveContentChangedEventArgs> ActiveContentChanged;
+        void Activate(System.Windows.DependencyObject content);
+    }
+    public interface IValidationService
+    {
+        bool IsValidationSuspended { get; }
+        bool MergeValidationErrors { get; set; }
+        void ResumeValidation();
+        System.IDisposable SuspendValidation();
+        [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
+                "IsValid",
+                "Errors"})]
+        System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate();
+        [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
+                "IsValid",
+                "Errors"})]
+        System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> ValidateProperty(string propertyName);
+    }
+    public interface IViewModel : System.ComponentModel.INotifyPropertyChanged
+    {
+        System.Windows.DependencyObject View { get; set; }
+    }
+    public interface IViewResolver
+    {
+        System.Windows.DependencyObject GetView(System.Type viewType);
+        System.Windows.DependencyObject GetView(System.Type viewType, System.Action<object> viewModelInterceptor);
+        T GetView<T>()
+            where T : System.Windows.DependencyObject;
+        T GetView<T>(System.Action<object> viewModelInterceptor)
+            where T : System.Windows.DependencyObject;
+        TView GetView<TView, TViewModel>(System.Action<TViewModel> viewModelInterceptor)
+            where TView : System.Windows.DependencyObject
+        ;
+    }
+    [System.AttributeUsage(System.AttributeTargets.Property | System.AttributeTargets.All)]
+    public class IgnorePropertyInjectionAttribue : System.Attribute
+    {
+        public IgnorePropertyInjectionAttribue() { }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All)]
+    public class InjectViewInRegionAttribute : System.Attribute
+    {
+        public InjectViewInRegionAttribute() { }
+        public string Named { get; set; }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All, AllowMultiple=false, Inherited=false)]
+    public class NotifyActivatedAttribute : System.Attribute
+    {
+        public NotifyActivatedAttribute() { }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All, AllowMultiple=false, Inherited=false)]
+    public class NotifyClosedAttribute : System.Attribute
+    {
+        public NotifyClosedAttribute() { }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All, AllowMultiple=false, Inherited=false)]
+    public class NotifyLoadedAttribute : System.Attribute
+    {
+        public NotifyLoadedAttribute() { }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All, AllowMultiple=false, Inherited=false)]
+    public class NotifyShownAttribute : System.Attribute
+    {
+        public NotifyShownAttribute() { }
+    }
+    public sealed class SupportComponentDisposeAttribute : System.Attribute
+    {
+        public SupportComponentDisposeAttribute() { }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface | System.AttributeTargets.All)]
+    public class ToolkitComponentAttribute : System.Attribute
+    {
+        public ToolkitComponentAttribute() { }
+    }
+    public enum UnregisterBehavior
+    {
+        Default = 0,
+        WholeLogicalTreeChain = 1,
+    }
+    public enum ValidationBehavior
+    {
+        TriggerValidationErrorsOnFailure = 0,
+        RunSilentValidation = 1,
+    }
+    public enum ViewDataContextSearchBehavior
+    {
+        LocalOnly = 0,
+        Legacy = 1,
+    }
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All)]
+    public class ViewManualReleaseAttribute : System.Attribute
+    {
+        public ViewManualReleaseAttribute() { }
+    }
+    public enum ViewReleaseBehavior
+    {
+        Default = 0,
+        Force = 1,
+    }
+}
 namespace Radical.Windows.Controls.Automation.Peers
 {
     public class ResizerAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.ITransformProvider
@@ -2712,11 +3016,11 @@ namespace Radical.Windows.Model
 }
 namespace Radical.Windows.Presentation
 {
-    public abstract class AbstractMementoViewModel : Radical.Model.MementoEntity, Radical.Windows.Presentation.ComponentModel.IViewModel, System.ComponentModel.INotifyPropertyChanged
+    public abstract class AbstractMementoViewModel : Radical.Model.MementoEntity, Radical.Windows.ComponentModel.IViewModel, System.ComponentModel.INotifyPropertyChanged
     {
         protected AbstractMementoViewModel() { }
         protected AbstractMementoViewModel(Radical.ComponentModel.ChangeTracking.ChangeTrackingRegistration registration) { }
-        protected Radical.Windows.Presentation.ComponentModel.ValidationBehavior DefaultValidationBehavior { get; set; }
+        protected Radical.Windows.ComponentModel.ValidationBehavior DefaultValidationBehavior { get; set; }
         [Radical.Model.MementoPropertyMetadata(TrackChanges=false)]
         [Radical.Model.SkipPropertyValidation]
         [System.ComponentModel.Bindable(false)]
@@ -2739,7 +3043,7 @@ namespace Radical.Windows.Presentation
         [System.ComponentModel.Bindable(false)]
         public virtual System.Collections.ObjectModel.ObservableCollection<Radical.Validation.ValidationError> ValidationErrors { get; }
         [Radical.Model.SkipPropertyValidation]
-        protected Radical.Windows.Presentation.ComponentModel.IValidationService ValidationService { get; set; }
+        protected Radical.Windows.ComponentModel.IValidationService ValidationService { get; set; }
         public event System.EventHandler<System.ComponentModel.DataErrorsChangedEventArgs> ErrorsChanged;
         public event System.EventHandler Validated;
         public System.Collections.IEnumerable GetErrors(string propertyName) { }
@@ -2764,7 +3068,7 @@ namespace Radical.Windows.Presentation
         [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
                 "IsValid",
                 "Errors"})]
-        public System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate(Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior) { }
+        public System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate(Radical.Windows.ComponentModel.ValidationBehavior behavior) { }
         [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
                 "IsValid",
                 "Errors"})]
@@ -2772,12 +3076,12 @@ namespace Radical.Windows.Presentation
         [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
                 "IsValid",
                 "Errors"})]
-        protected virtual System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> ValidateProperty(string propertyName, Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior) { }
+        protected virtual System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> ValidateProperty(string propertyName, Radical.Windows.ComponentModel.ValidationBehavior behavior) { }
     }
-    public abstract class AbstractViewModel : Radical.Model.Entity, Radical.Windows.Presentation.ComponentModel.IViewModel, System.ComponentModel.INotifyPropertyChanged, System.ComponentModel.ISupportInitialize
+    public abstract class AbstractViewModel : Radical.Model.Entity, Radical.Windows.ComponentModel.IViewModel, System.ComponentModel.INotifyPropertyChanged, System.ComponentModel.ISupportInitialize
     {
         protected AbstractViewModel() { }
-        protected Radical.Windows.Presentation.ComponentModel.ValidationBehavior DefaultValidationBehavior { get; set; }
+        protected Radical.Windows.ComponentModel.ValidationBehavior DefaultValidationBehavior { get; set; }
         [Radical.Model.MementoPropertyMetadata(TrackChanges=false)]
         [Radical.Model.SkipPropertyValidation]
         [System.ComponentModel.Bindable(false)]
@@ -2800,7 +3104,7 @@ namespace Radical.Windows.Presentation
         [System.ComponentModel.Bindable(false)]
         public virtual System.Collections.ObjectModel.ObservableCollection<Radical.Validation.ValidationError> ValidationErrors { get; }
         [Radical.Model.SkipPropertyValidation]
-        protected Radical.Windows.Presentation.ComponentModel.IValidationService ValidationService { get; set; }
+        protected Radical.Windows.ComponentModel.IValidationService ValidationService { get; set; }
         public event System.EventHandler<System.ComponentModel.DataErrorsChangedEventArgs> ErrorsChanged;
         public event System.EventHandler Validated;
         public System.Collections.IEnumerable GetErrors(string propertyName) { }
@@ -2820,7 +3124,7 @@ namespace Radical.Windows.Presentation
         [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
                 "IsValid",
                 "Errors"})]
-        public virtual System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate(Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior) { }
+        public virtual System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate(Radical.Windows.ComponentModel.ValidationBehavior behavior) { }
         [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
                 "IsValid",
                 "Errors"})]
@@ -2828,7 +3132,7 @@ namespace Radical.Windows.Presentation
         [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
                 "IsValid",
                 "Errors"})]
-        protected virtual System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> ValidateProperty(string propertyName, Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior) { }
+        protected virtual System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> ValidateProperty(string propertyName, Radical.Windows.ComponentModel.ValidationBehavior behavior) { }
     }
     public class Repeat
     {
@@ -2858,7 +3162,7 @@ namespace Radical.Windows.Presentation.Behaviors
 {
     public class DependencyObjectCloseHandlerBehavior : Microsoft.Xaml.Behaviors.Behavior<System.Windows.DependencyObject>
     {
-        public DependencyObjectCloseHandlerBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.Presentation.ComponentModel.IConventionsHandler conventions) { }
+        public DependencyObjectCloseHandlerBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.ComponentModel.IConventionsHandler conventions) { }
         protected override void OnAttached() { }
         protected override void OnDetaching() { }
     }
@@ -2873,13 +3177,13 @@ namespace Radical.Windows.Presentation.Behaviors
     }
     public class FrameworkElementLifecycleNotificationsBehavior : Radical.Windows.Behaviors.RadicalBehavior<System.Windows.FrameworkElement>
     {
-        public FrameworkElementLifecycleNotificationsBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.Presentation.ComponentModel.IConventionsHandler conventions) { }
+        public FrameworkElementLifecycleNotificationsBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.ComponentModel.IConventionsHandler conventions) { }
         protected override void OnAttached() { }
         protected override void OnDetaching() { }
     }
     public class WindowLifecycleNotificationsBehavior : Radical.Windows.Behaviors.RadicalBehavior<System.Windows.Window>
     {
-        public WindowLifecycleNotificationsBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.Presentation.ComponentModel.IConventionsHandler conventions) { }
+        public WindowLifecycleNotificationsBehavior(Radical.ComponentModel.Messaging.IMessageBroker broker, Radical.Windows.ComponentModel.IConventionsHandler conventions) { }
         protected override void OnAttached() { }
         protected override void OnDetaching() { }
     }
@@ -2943,81 +3247,81 @@ namespace Radical.Windows.Presentation.Boot
     public class BootstrapConventions
     {
         public BootstrapConventions() { }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> AllowServiceOverride { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Reflection.Assembly, System.Collections.Generic.IEnumerable<string>> AssemblyFileScanPatterns { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> DefaultAllowServiceOverride { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Reflection.Assembly, System.Collections.Generic.IEnumerable<string>> DefaultAssemblyFileScanPatterns { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, string> DefaultGetInterestedRegionNameIfAny { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Reflection.PropertyInfo, bool> DefaultIgnorePropertyInjection { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Reflection.PropertyInfo, bool> DefaultIgnoreViewModelPropertyInjection { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Reflection.PropertyInfo, bool> DefaultIgnoreViewPropertyInjection { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Reflection.Assembly> DefaultIncludeAssemblyInContainerScan { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> DefaultIsConcreteType { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, bool> DefaultIsExcluded { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> DefaultIsMessageHandler { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> DefaultIsService { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> DefaultIsShellView { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> DefaultIsShellViewModel { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> DefaultIsView { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> DefaultIsViewModel { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectMessageHandlerContracts { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectServiceContracts { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectViewContracts { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectViewModelContracts { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, string> GetInterestedRegionNameIfAny { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Reflection.PropertyInfo, bool> IgnorePropertyInjection { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Reflection.PropertyInfo, bool> IgnoreViewModelPropertyInjection { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Reflection.PropertyInfo, bool> IgnoreViewPropertyInjection { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Reflection.Assembly> IncludeAssemblyInContainerScan { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> IsConcreteType { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, bool> IsExcluded { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> IsMessageHandler { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> IsService { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> IsShellView { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> IsShellViewModel { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> IsView { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Predicate<System.Type> IsViewModel { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectMessageHandlerContracts { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectServiceContracts { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectViewContracts { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectViewModelContracts { get; set; }
     }
     [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All)]
@@ -3029,12 +3333,12 @@ namespace Radical.Windows.Presentation.Boot
     {
         void Install(Radical.Windows.Presentation.Boot.BootstrapConventions conventions, Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Collections.Generic.IEnumerable<System.Type> assemblyScanningResults);
     }
-    [Radical.Windows.Presentation.ComponentModel.ToolkitComponent]
+    [Radical.Windows.ComponentModel.ToolkitComponent]
     public interface IExpectBootCallback
     {
         void OnBootCompleted();
     }
-    [Radical.Windows.Presentation.ComponentModel.ToolkitComponent]
+    [Radical.Windows.ComponentModel.ToolkitComponent]
     public interface IExpectShutdownCallback
     {
         void OnShutdown(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason);
@@ -3064,313 +3368,6 @@ namespace Radical.Windows.Presentation.Boot
         public double Width { get; set; }
         public System.Windows.WindowStartupLocation WindowStartupLocation { get; set; }
         public System.Windows.WindowStyle WindowStyle { get; set; }
-    }
-}
-namespace Radical.Windows.Presentation.ComponentModel
-{
-    public class ActiveContentChangedEventArgs : System.EventArgs
-    {
-        public ActiveContentChangedEventArgs(System.Windows.DependencyObject activeContent, System.Windows.DependencyObject previousActiveContent) { }
-        public System.Windows.DependencyObject ActiveContent { get; }
-        public bool HasActiveContent { get; }
-        public System.Windows.DependencyObject PreviousActiveContent { get; }
-    }
-    public interface IContentRegion : Radical.Windows.Presentation.ComponentModel.IRegion
-    {
-        System.Windows.DependencyObject Content { get; set; }
-    }
-    public interface IConventionsHandler
-    {
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject> AttachViewBehaviors { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject, object> AttachViewToViewModel { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject> DefaultAttachViewBehaviors { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject, object> DefaultAttachViewToViewModel { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject> DefaultDetachViewBehaviors { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject, object> DefaultExposeViewModelAsStaticResource { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<object, System.Windows.Window> DefaultFindHostingWindowOf { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, System.Windows.Window> DefaultFindWindowOf { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Type, object> DefaultGenerateServiceStaticResourceKey { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<object, string> DefaultGenerateViewModelStaticResourceKey { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewDataContextSearchBehavior, object> DefaultGetViewDataContext { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<object, System.Windows.DependencyObject> DefaultGetViewOfViewModel { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.FrameworkElement, bool> DefaultIsHostingView { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Type, System.Type> DefaultResolveViewModelType { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Type, System.Type> DefaultResolveViewType { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject, object> DefaultSetViewDataContext { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, object, bool> DefaultShouldExposeViewModelAsStaticResource { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, bool> DefaultShouldNotifyViewLoaded { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, object, bool> DefaultShouldNotifyViewModelLoaded { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, bool> DefaultShouldReleaseView { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, bool> DefaultShouldUnregisterRegionManagerOfView { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, bool> DefaultShouldUnsubscribeViewModelOnRelease { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, System.Action<System.Windows.DependencyObject>, System.Windows.DependencyObject> DefaultTryHookClosedEventOfHostOf { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        Radical.Windows.Presentation.ComponentModel.ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewDataContextSearchBehavior, bool> DefaultViewHasDataContext { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewReleaseBehavior> DefaultViewReleaseHandler { get; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject> DetachViewBehaviors { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject, object> ExposeViewModelAsStaticResource { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<object, System.Windows.Window> FindHostingWindowOf { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, System.Windows.Window> FindWindowOf { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Type, object> GenerateServiceStaticResourceKey { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<object, string> GenerateViewModelStaticResourceKey { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewDataContextSearchBehavior, object> GetViewDataContext { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<object, System.Windows.DependencyObject> GetViewOfViewModel { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.FrameworkElement, bool> IsHostingView { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Type, System.Type> ResolveViewModelType { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Type, System.Type> ResolveViewType { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject, object> SetViewDataContext { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, object, bool> ShouldExposeViewModelAsStaticResource { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, bool> ShouldNotifyViewLoaded { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, object, bool> ShouldNotifyViewModelLoaded { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, bool> ShouldReleaseView { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, bool> ShouldUnregisterRegionManagerOfView { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, bool> ShouldUnsubscribeViewModelOnRelease { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, System.Action<System.Windows.DependencyObject>, System.Windows.DependencyObject> TryHookClosedEventOfHostOf { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewDataContextSearchBehavior, bool> ViewHasDataContext { get; set; }
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.ViewReleaseBehavior> ViewReleaseHandler { get; set; }
-    }
-    public interface IElementsRegion : Radical.Windows.Presentation.ComponentModel.IRegion
-    {
-        void Add(System.Windows.DependencyObject view);
-        System.Collections.Generic.IEnumerable<TView> GetElements<TView>()
-            where TView : System.Windows.DependencyObject;
-        void Remove(System.Windows.DependencyObject view);
-    }
-    public interface IExpectViewActivatedCallback
-    {
-        void OnViewActivated();
-    }
-    public interface IExpectViewClosedCallback
-    {
-        void OnViewClosed();
-    }
-    public interface IExpectViewClosingCallback
-    {
-        void OnViewClosing(System.ComponentModel.CancelEventArgs e);
-    }
-    public interface IExpectViewLoadedCallback
-    {
-        void OnViewLoaded();
-    }
-    public interface IExpectViewShownCallback
-    {
-        void OnViewShown();
-    }
-    public interface IRegion
-    {
-        int AsyncLoadDelay { get; set; }
-        System.Windows.DependencyObject HostingView { get; }
-        string Name { get; }
-        void Shutdown();
-    }
-    public interface IRegionInjectionHandler
-    {
-        [Radical.Windows.Presentation.ComponentModel.IgnorePropertyInjectionAttribue]
-        System.Action<System.Func<System.Windows.DependencyObject>, Radical.Windows.Presentation.ComponentModel.IRegion> Inject { get; set; }
-        System.Collections.Generic.IEnumerable<System.Type> GetViewsInterestedIn(string regionName);
-        void RegisterViewAsInterestedIn(string regionName, System.Type viewType);
-        void RegisterViewsAsInterestedIn(string regionName, System.Collections.Generic.IEnumerable<System.Type> views);
-    }
-    public interface IRegionManager
-    {
-        Radical.Windows.Presentation.ComponentModel.IRegion this[string name] { get; }
-        System.Collections.Generic.IEnumerable<Radical.Windows.Presentation.ComponentModel.IRegion> GetAllRegisteredRegions();
-        Radical.Windows.Presentation.ComponentModel.IRegion GetRegion(string name);
-        TRegion GetRegion<TRegion>(string name)
-            where TRegion : Radical.Windows.Presentation.ComponentModel.IRegion;
-        void RegisterRegion(Radical.Windows.Presentation.ComponentModel.IRegion region);
-        void Shutdown();
-        bool TryGetRegion(string regionName, out Radical.Windows.Presentation.ComponentModel.IRegion region);
-        bool TryGetRegion<TRegion>(string regionName, out TRegion region)
-            where TRegion : Radical.Windows.Presentation.ComponentModel.IRegion;
-    }
-    public interface IRegionManagerFactory
-    {
-        Radical.Windows.Presentation.ComponentModel.IRegionManager Create();
-    }
-    public interface IRegionService
-    {
-        Radical.Windows.Presentation.ComponentModel.IRegionManager FindRegionManager(System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.IRegionManager, bool> filter);
-        Radical.Windows.Presentation.ComponentModel.IRegionManager GetKnownRegionManager<TView>()
-            where TView : System.Windows.DependencyObject;
-        Radical.Windows.Presentation.ComponentModel.IRegionManager GetRegionManager(System.Windows.DependencyObject owner);
-        bool HoldsRegionManager(System.Windows.DependencyObject owner);
-        Radical.Windows.Presentation.ComponentModel.IRegionManager RegisterRegionManager(System.Windows.DependencyObject owner);
-        void UnregisterRegionManager(System.Windows.DependencyObject owner);
-        void UnregisterRegionManager(System.Windows.DependencyObject owner, Radical.Windows.Presentation.ComponentModel.UnregisterBehavior behavior);
-    }
-    public interface IReleaseComponents
-    {
-        void Release(object component);
-    }
-    public interface IRequireValidation : System.ComponentModel.INotifyDataErrorInfo
-    {
-        bool IsValid { get; }
-        System.Collections.ObjectModel.ObservableCollection<Radical.Validation.ValidationError> ValidationErrors { get; }
-        event System.EventHandler Validated;
-        void ResetValidation();
-        void TriggerValidation();
-        [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
-                "IsValid",
-                "Errors"})]
-        System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate();
-        [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
-                "IsValid",
-                "Errors"})]
-        System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate(Radical.Windows.Presentation.ComponentModel.ValidationBehavior behavior);
-    }
-    public interface ISwitchingElementsRegion : Radical.Windows.Presentation.ComponentModel.IElementsRegion, Radical.Windows.Presentation.ComponentModel.IRegion
-    {
-        System.Windows.DependencyObject ActiveContent { get; }
-        System.Windows.DependencyObject PreviousActiveContent { get; }
-        event System.EventHandler<Radical.Windows.Presentation.ComponentModel.ActiveContentChangedEventArgs> ActiveContentChanged;
-        void Activate(System.Windows.DependencyObject content);
-    }
-    public interface IValidationService
-    {
-        bool IsValidationSuspended { get; }
-        bool MergeValidationErrors { get; set; }
-        void ResumeValidation();
-        System.IDisposable SuspendValidation();
-        [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
-                "IsValid",
-                "Errors"})]
-        System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> Validate();
-        [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
-                "IsValid",
-                "Errors"})]
-        System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> ValidateProperty(string propertyName);
-    }
-    public interface IViewModel : System.ComponentModel.INotifyPropertyChanged
-    {
-        System.Windows.DependencyObject View { get; set; }
-    }
-    public interface IViewResolver
-    {
-        System.Windows.DependencyObject GetView(System.Type viewType);
-        System.Windows.DependencyObject GetView(System.Type viewType, System.Action<object> viewModelInterceptor);
-        T GetView<T>()
-            where T : System.Windows.DependencyObject;
-        T GetView<T>(System.Action<object> viewModelInterceptor)
-            where T : System.Windows.DependencyObject;
-        TView GetView<TView, TViewModel>(System.Action<TViewModel> viewModelInterceptor)
-            where TView : System.Windows.DependencyObject
-        ;
-    }
-    [System.AttributeUsage(System.AttributeTargets.Property | System.AttributeTargets.All)]
-    public class IgnorePropertyInjectionAttribue : System.Attribute
-    {
-        public IgnorePropertyInjectionAttribue() { }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All, AllowMultiple=false, Inherited=false)]
-    public class NotifyActivatedAttribute : System.Attribute
-    {
-        public NotifyActivatedAttribute() { }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All, AllowMultiple=false, Inherited=false)]
-    public class NotifyClosedAttribute : System.Attribute
-    {
-        public NotifyClosedAttribute() { }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All, AllowMultiple=false, Inherited=false)]
-    public class NotifyLoadedAttribute : System.Attribute
-    {
-        public NotifyLoadedAttribute() { }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All, AllowMultiple=false, Inherited=false)]
-    public class NotifyShownAttribute : System.Attribute
-    {
-        public NotifyShownAttribute() { }
-    }
-    public sealed class SupportComponentDisposeAttribute : System.Attribute
-    {
-        public SupportComponentDisposeAttribute() { }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface | System.AttributeTargets.All)]
-    public class ToolkitComponentAttribute : System.Attribute
-    {
-        public ToolkitComponentAttribute() { }
-    }
-    public enum UnregisterBehavior
-    {
-        Default = 0,
-        WholeLogicalTreeChain = 1,
-    }
-    public enum ValidationBehavior
-    {
-        TriggerValidationErrorsOnFailure = 0,
-        RunSilentValidation = 1,
-    }
-    public enum ViewDataContextSearchBehavior
-    {
-        LocalOnly = 0,
-        Legacy = 1,
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All)]
-    public class ViewManualReleaseAttribute : System.Attribute
-    {
-        public ViewManualReleaseAttribute() { }
-    }
-    public enum ViewReleaseBehavior
-    {
-        Default = 0,
-        Force = 1,
-    }
-}
-namespace Radical.Windows.Presentation.ComponentModel.Regions
-{
-    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All)]
-    public class InjectViewInRegionAttribute : System.Attribute
-    {
-        public InjectViewInRegionAttribute() { }
-        public string Named { get; set; }
     }
 }
 namespace Radical.Windows.Presentation.Helpers
@@ -3454,7 +3451,7 @@ namespace Radical.Windows.Presentation.Regions
         protected override System.Windows.DependencyObject OnGetContent() { }
         protected override void OnSetContent(System.Windows.DependencyObject view, System.ComponentModel.CancelEventArgs args) { }
     }
-    public abstract class ContentRegion<T> : Radical.Windows.Presentation.Regions.Region<T>, Radical.Windows.Presentation.ComponentModel.IContentRegion, Radical.Windows.Presentation.ComponentModel.IRegion
+    public abstract class ContentRegion<T> : Radical.Windows.Presentation.Regions.Region<T>, Radical.Windows.ComponentModel.IContentRegion, Radical.Windows.ComponentModel.IRegion
         where T : System.Windows.FrameworkElement
     {
         protected ContentRegion() { }
@@ -3465,7 +3462,7 @@ namespace Radical.Windows.Presentation.Regions
         protected abstract void OnSetContent(System.Windows.DependencyObject view, System.ComponentModel.CancelEventArgs args);
         public override void Shutdown() { }
     }
-    public abstract class ElementsRegion<T> : Radical.Windows.Presentation.Regions.Region<T>, Radical.Windows.Presentation.ComponentModel.IElementsRegion, Radical.Windows.Presentation.ComponentModel.IRegion
+    public abstract class ElementsRegion<T> : Radical.Windows.Presentation.Regions.Region<T>, Radical.Windows.ComponentModel.IElementsRegion, Radical.Windows.ComponentModel.IRegion
         where T : System.Windows.FrameworkElement
     {
         protected ElementsRegion() { }
@@ -3490,8 +3487,8 @@ namespace Radical.Windows.Presentation.Regions
     }
     public static class RegionExtensions
     {
-        public static void AddContentAsync(this Radical.Windows.Presentation.ComponentModel.IElementsRegion region, System.Func<System.Windows.DependencyObject> viewFactory, int millisecondsDelay = 2000) { }
-        public static void SetContentAsync(this Radical.Windows.Presentation.ComponentModel.IContentRegion region, System.Func<System.Windows.DependencyObject> viewFactory, int millisecondsDelay = 2000) { }
+        public static void AddContentAsync(this Radical.Windows.ComponentModel.IElementsRegion region, System.Func<System.Windows.DependencyObject> viewFactory, int millisecondsDelay = 2000) { }
+        public static void SetContentAsync(this Radical.Windows.ComponentModel.IContentRegion region, System.Func<System.Windows.DependencyObject> viewFactory, int millisecondsDelay = 2000) { }
     }
     public static class RegionHeaderedElement
     {
@@ -3499,44 +3496,44 @@ namespace Radical.Windows.Presentation.Regions
         public static object GetHeader(System.Windows.DependencyObject element) { }
         public static void SetHeader(System.Windows.DependencyObject element, object value) { }
     }
-    public class RegionManager : Radical.Windows.Presentation.ComponentModel.IRegionManager
+    public class RegionManager : Radical.Windows.ComponentModel.IRegionManager
     {
         public RegionManager() { }
-        public Radical.Windows.Presentation.ComponentModel.IRegion this[string name] { get; }
-        public System.Collections.Generic.IEnumerable<Radical.Windows.Presentation.ComponentModel.IRegion> GetAllRegisteredRegions() { }
-        public Radical.Windows.Presentation.ComponentModel.IRegion GetRegion(string name) { }
+        public Radical.Windows.ComponentModel.IRegion this[string name] { get; }
+        public System.Collections.Generic.IEnumerable<Radical.Windows.ComponentModel.IRegion> GetAllRegisteredRegions() { }
+        public Radical.Windows.ComponentModel.IRegion GetRegion(string name) { }
         public TRegion GetRegion<TRegion>(string name)
-            where TRegion : Radical.Windows.Presentation.ComponentModel.IRegion { }
-        public void RegisterRegion(Radical.Windows.Presentation.ComponentModel.IRegion region) { }
+            where TRegion : Radical.Windows.ComponentModel.IRegion { }
+        public void RegisterRegion(Radical.Windows.ComponentModel.IRegion region) { }
         public void Shutdown() { }
-        public bool TryGetRegion(string name, out Radical.Windows.Presentation.ComponentModel.IRegion region) { }
+        public bool TryGetRegion(string name, out Radical.Windows.ComponentModel.IRegion region) { }
         public bool TryGetRegion<TRegion>(string regionName, out TRegion region)
-            where TRegion : Radical.Windows.Presentation.ComponentModel.IRegion { }
+            where TRegion : Radical.Windows.ComponentModel.IRegion { }
     }
-    public class RegionManagerFactory : Radical.Windows.Presentation.ComponentModel.IRegionManagerFactory
+    public class RegionManagerFactory : Radical.Windows.ComponentModel.IRegionManagerFactory
     {
         public RegionManagerFactory(System.IServiceProvider container) { }
-        public Radical.Windows.Presentation.ComponentModel.IRegionManager Create() { }
+        public Radical.Windows.ComponentModel.IRegionManager Create() { }
     }
-    public class RegionService : Radical.Windows.Presentation.ComponentModel.IRegionService
+    public class RegionService : Radical.Windows.ComponentModel.IRegionService
     {
         public static readonly System.Windows.DependencyProperty RegionProperty;
-        public RegionService(Radical.Windows.Presentation.ComponentModel.IRegionManagerFactory regionManagerFactory, Radical.Windows.Presentation.ComponentModel.IConventionsHandler conventions) { }
-        public static Radical.Windows.Presentation.ComponentModel.IConventionsHandler Conventions { get; set; }
-        public static Radical.Windows.Presentation.ComponentModel.IRegionService CurrentService { get; set; }
-        public Radical.Windows.Presentation.ComponentModel.IRegionManager FindRegionManager(System.Func<System.Windows.DependencyObject, Radical.Windows.Presentation.ComponentModel.IRegionManager, bool> filter) { }
-        public Radical.Windows.Presentation.ComponentModel.IRegionManager GetKnownRegionManager<TView>()
+        public RegionService(Radical.Windows.ComponentModel.IRegionManagerFactory regionManagerFactory, Radical.Windows.ComponentModel.IConventionsHandler conventions) { }
+        public static Radical.Windows.ComponentModel.IConventionsHandler Conventions { get; set; }
+        public static Radical.Windows.ComponentModel.IRegionService CurrentService { get; set; }
+        public Radical.Windows.ComponentModel.IRegionManager FindRegionManager(System.Func<System.Windows.DependencyObject, Radical.Windows.ComponentModel.IRegionManager, bool> filter) { }
+        public Radical.Windows.ComponentModel.IRegionManager GetKnownRegionManager<TView>()
             where TView : System.Windows.DependencyObject { }
-        public Radical.Windows.Presentation.ComponentModel.IRegionManager GetRegionManager(System.Windows.DependencyObject owner) { }
+        public Radical.Windows.ComponentModel.IRegionManager GetRegionManager(System.Windows.DependencyObject owner) { }
         public bool HoldsRegionManager(System.Windows.DependencyObject owner) { }
-        public Radical.Windows.Presentation.ComponentModel.IRegionManager RegisterRegionManager(System.Windows.DependencyObject owner) { }
+        public Radical.Windows.ComponentModel.IRegionManager RegisterRegionManager(System.Windows.DependencyObject owner) { }
         public void UnregisterRegionManager(System.Windows.DependencyObject owner) { }
-        public void UnregisterRegionManager(System.Windows.DependencyObject owner, Radical.Windows.Presentation.ComponentModel.UnregisterBehavior behavior) { }
-        public static Radical.Windows.Presentation.ComponentModel.IRegion GetRegion(System.Windows.FrameworkElement control) { }
-        public static void SetRegion(System.Windows.FrameworkElement control, Radical.Windows.Presentation.ComponentModel.IRegion value) { }
+        public void UnregisterRegionManager(System.Windows.DependencyObject owner, Radical.Windows.ComponentModel.UnregisterBehavior behavior) { }
+        public static Radical.Windows.ComponentModel.IRegion GetRegion(System.Windows.FrameworkElement control) { }
+        public static void SetRegion(System.Windows.FrameworkElement control, Radical.Windows.ComponentModel.IRegion value) { }
     }
-    [System.Windows.Markup.MarkupExtensionReturnType(typeof(Radical.Windows.Presentation.ComponentModel.IRegion))]
-    public abstract class Region<T> : System.Windows.Markup.MarkupExtension, Radical.Windows.Presentation.ComponentModel.IRegion
+    [System.Windows.Markup.MarkupExtensionReturnType(typeof(Radical.Windows.ComponentModel.IRegion))]
+    public abstract class Region<T> : System.Windows.Markup.MarkupExtension, Radical.Windows.ComponentModel.IRegion
         where T : System.Windows.FrameworkElement
     {
         protected readonly System.Diagnostics.TraceSource Logger;
@@ -3557,14 +3554,14 @@ namespace Radical.Windows.Presentation.Regions
         UserRequest = 0,
         InternalRequest = 1,
     }
-    public abstract class SwitchingElementsRegion<T> : Radical.Windows.Presentation.Regions.ElementsRegion<T>, Radical.Windows.Presentation.ComponentModel.IElementsRegion, Radical.Windows.Presentation.ComponentModel.IRegion, Radical.Windows.Presentation.ComponentModel.ISwitchingElementsRegion
+    public abstract class SwitchingElementsRegion<T> : Radical.Windows.Presentation.Regions.ElementsRegion<T>, Radical.Windows.ComponentModel.IElementsRegion, Radical.Windows.ComponentModel.IRegion, Radical.Windows.ComponentModel.ISwitchingElementsRegion
         where T : System.Windows.FrameworkElement
     {
         protected SwitchingElementsRegion() { }
         protected SwitchingElementsRegion(string name) { }
         public abstract System.Windows.DependencyObject ActiveContent { get; }
         public System.Windows.DependencyObject PreviousActiveContent { get; }
-        public event System.EventHandler<Radical.Windows.Presentation.ComponentModel.ActiveContentChangedEventArgs> ActiveContentChanged;
+        public event System.EventHandler<Radical.Windows.ComponentModel.ActiveContentChangedEventArgs> ActiveContentChanged;
         public abstract void Activate(System.Windows.DependencyObject content);
         protected virtual void OnActiveContentChanged() { }
         protected virtual object TryGetViewModel(System.Windows.DependencyObject view) { }
@@ -3582,7 +3579,7 @@ namespace Radical.Windows.Presentation.Regions
 }
 namespace Radical.Windows.Presentation.Services.Validation
 {
-    public abstract class AbstractValidationService : Radical.Windows.Presentation.ComponentModel.IValidationService
+    public abstract class AbstractValidationService : Radical.Windows.ComponentModel.IValidationService
     {
         protected AbstractValidationService() { }
         public bool IsValidationSuspended { get; }
@@ -3619,7 +3616,7 @@ namespace Radical.Windows.Presentation.Services.Validation
     }
     public sealed class NullValidationService : Radical.Windows.Presentation.Services.Validation.AbstractValidationService
     {
-        public static readonly Radical.Windows.Presentation.ComponentModel.IValidationService Instance;
+        public static readonly Radical.Windows.ComponentModel.IValidationService Instance;
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xaml.Behaviors;
 using Radical.ComponentModel.Messaging;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
 using System.Windows;
 

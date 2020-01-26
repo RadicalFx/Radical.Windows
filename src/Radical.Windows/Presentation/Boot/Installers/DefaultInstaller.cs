@@ -4,7 +4,7 @@ using Radical.ComponentModel.Messaging;
 using Radical.Linq;
 using Radical.Messaging;
 using Radical.Windows.Presentation.Boot.Features;
-using Radical.Windows.Presentation.ComponentModel;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Threading;
 using System;
 using System.Collections.Generic;
