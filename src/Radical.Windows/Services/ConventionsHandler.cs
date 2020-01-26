@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Services
+namespace Radical.Windows.Services
 {
     /// <summary>
     /// Handles Presentation conventions.

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Radical.Windows.Presentation.Services.Validation
+namespace Radical.Windows.Services.Validation
 {
     /// <summary>
     /// A validation service that delegates the validation process to a user defined handler.

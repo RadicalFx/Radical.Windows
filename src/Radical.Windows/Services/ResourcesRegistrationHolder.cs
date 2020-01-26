@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Radical.Windows.Presentation.Services
+namespace Radical.Windows.Services
 {
     class ResourcesRegistrationHolder
     {

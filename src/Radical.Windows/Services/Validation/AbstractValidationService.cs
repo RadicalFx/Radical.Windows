@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Radical.Windows.Presentation.Services.Validation
+namespace Radical.Windows.Services.Validation
 {
     /// <summary>
     /// Provides a base implementation of the <see cref="IValidationService"/> interface.

@@ -1,9 +1,10 @@
 ﻿using Radical.Windows.ComponentModel;
+using Radical.Windows.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Services
+namespace Radical.Windows.Services
 {
     class RegionInjectionHandler : IRegionInjectionHandler
     {

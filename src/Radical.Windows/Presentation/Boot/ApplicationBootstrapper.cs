@@ -8,7 +8,7 @@ using Radical.Validation;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
 using Radical.Windows.Presentation.Regions;
-using Radical.Windows.Presentation.Services;
+using Radical.Windows.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

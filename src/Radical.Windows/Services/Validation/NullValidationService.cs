@@ -2,7 +2,7 @@
 using Radical.Windows.ComponentModel;
 using System.Collections.Generic;
 
-namespace Radical.Windows.Presentation.Services.Validation
+namespace Radical.Windows.Services.Validation
 {
     /// <summary>
     /// A default fake implementation of the <see cref="IValidationService"/> interface.

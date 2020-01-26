@@ -1,12 +1,13 @@
 ﻿using Radical.Linq;
 using Radical.Validation;
+using Radical.Windows.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using DataAnnotations = System.ComponentModel.DataAnnotations;
 
-namespace Radical.Windows.Presentation.Services.Validation
+namespace Radical.Windows.Services.Validation
 {
     /// <summary>
     /// DataAnnotationValidationService factory.
