@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Threading;
 
-namespace Radical.Windows.Presentation
+namespace Radical.Windows
 {
     /// <summary>
     /// Allows to execute and action after a user defined amount of time.

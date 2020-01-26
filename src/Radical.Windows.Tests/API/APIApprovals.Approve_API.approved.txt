@@ -2862,6 +2862,16 @@ namespace Radical.Windows
         public static void AddListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
         public static void RemoveListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
     }
+    public class Repeat
+    {
+        public Repeat() { }
+        public static Radical.Windows.Repeat.Repeater Every(System.TimeSpan delay) { }
+        public class Repeater
+        {
+            public void Stop() { }
+            public void This(System.Action action) { }
+        }
+    }
     public static class VisualTreeCrawler
     {
         public static T FindChild<T>(this System.Windows.DependencyObject source)
@@ -2878,6 +2888,15 @@ namespace Radical.Windows
             where T : System.Windows.DependencyObject { }
         public static bool IsChildOfType<T>(System.Windows.DependencyObject obj)
             where T : System.Windows.DependencyObject { }
+    }
+    public class Wait
+    {
+        public Wait() { }
+        public static Radical.Windows.Wait.Waiter For(System.TimeSpan delay) { }
+        public class Waiter
+        {
+            public void AndThen(System.Action action) { }
+        }
     }
 }
 namespace Radical.Windows.Markup
@@ -3152,28 +3171,9 @@ namespace Radical.Windows.Presentation
                 "Errors"})]
         protected virtual System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> ValidateProperty(string propertyName, Radical.Windows.ComponentModel.ValidationBehavior behavior) { }
     }
-    public class Repeat
-    {
-        public Repeat() { }
-        public static Radical.Windows.Presentation.Repeat.Repeater Every(System.TimeSpan delay) { }
-        public class Repeater
-        {
-            public void Stop() { }
-            public void This(System.Action action) { }
-        }
-    }
     public static class ValidationErrorsExtensions
     {
         public static System.Collections.Generic.IEnumerable<string> GetInvalidProperties(this System.Collections.ObjectModel.ObservableCollection<Radical.Validation.ValidationError> validationErrors) { }
-    }
-    public class Wait
-    {
-        public Wait() { }
-        public static Radical.Windows.Presentation.Wait.Waiter For(System.TimeSpan delay) { }
-        public class Waiter
-        {
-            public void AndThen(System.Action action) { }
-        }
     }
 }
 namespace Radical.Windows.Presentation.Boot

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace Radical.Windows.Presentation
+namespace Radical.Windows
 {
     static class PropertyInfoExtensions
     {

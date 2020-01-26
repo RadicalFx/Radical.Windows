@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Radical.Windows.Presentation
+namespace Radical.Windows
 {
     static class ObjectExtensions
     {
