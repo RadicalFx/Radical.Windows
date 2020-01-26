@@ -1,4 +1,4 @@
-﻿namespace Radical.Windows.Bootstrap
+﻿namespace Radical.Windows
 {
     public class ApplicationBootstrapper<TMainView> : ApplicationBootstrapper where TMainView : System.Windows.Window
     {

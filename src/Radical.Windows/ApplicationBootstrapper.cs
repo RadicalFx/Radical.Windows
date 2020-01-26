@@ -5,6 +5,7 @@ using Radical.Helpers;
 using Radical.Linq;
 using Radical.Reflection;
 using Radical.Validation;
+using Radical.Windows.Bootstrap;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Messaging;
 using Radical.Windows.Regions;
@@ -18,7 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Radical.Windows.Bootstrap
+namespace Radical.Windows
 {
     /// <summary>
     /// The application bootstrapper. Provides a way to dramatically simplify the

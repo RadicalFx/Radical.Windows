@@ -1875,6 +1875,90 @@ namespace Radical.Windows.Analytics
         public CommandEvent() { }
     }
 }
+namespace Radical.Windows
+{
+    public class ApplicationBootstrapper
+    {
+        public ApplicationBootstrapper() { }
+        public void Boot() { }
+        public Radical.Windows.ApplicationBootstrapper DisableAutoBoot() { }
+        public Radical.Windows.ApplicationBootstrapper EnableSplashScreen(Radical.Windows.Bootstrap.SplashScreenConfiguration config = null) { }
+        public Radical.Windows.ApplicationBootstrapper ExposeAsResource<TService>() { }
+        public Radical.Windows.ApplicationBootstrapper ExposeAsResource<TService, TView>()
+            where TView : System.Windows.FrameworkElement { }
+        public Radical.Windows.ApplicationBootstrapper OnBeforeInstall(System.Action<Radical.Windows.Bootstrap.BootstrapConventions, Radical.Windows.Bootstrap.AssemblyScanner> onBeforeInstall) { }
+        public Radical.Windows.ApplicationBootstrapper OnBoot(System.Action<System.IServiceProvider> bootHandler) { }
+        public Radical.Windows.ApplicationBootstrapper OnBootCompleted(System.Action<System.IServiceProvider> bootCompletedHandler) { }
+        public Radical.Windows.ApplicationBootstrapper OnServiceProviderCreated(System.Action<System.IServiceProvider> onServiceProviderCreated) { }
+        public Radical.Windows.ApplicationBootstrapper OnShutdown(System.Action<Radical.Windows.Bootstrap.ApplicationShutdownArgs> shutdownHandler) { }
+        public Radical.Windows.ApplicationBootstrapper OnSingletonApplicationStartup(System.Action<Radical.Windows.Bootstrap.SingletonApplicationStartupArgs> onSingletonApplicationStartup) { }
+        public Radical.Windows.ApplicationBootstrapper OnUnhandledException(System.Action<System.Exception> unhandledExceptionHandler) { }
+        public Radical.Windows.ApplicationBootstrapper OverrideShutdownMode(System.Windows.ShutdownMode mode) { }
+        public Radical.Windows.ApplicationBootstrapper RegisterAsSingleton(string key) { }
+        public Radical.Windows.ApplicationBootstrapper RegisterAsSingleton(string key, Radical.Windows.Bootstrap.SingletonApplicationScope scope) { }
+        public void Shutdown() { }
+        public Radical.Windows.ApplicationBootstrapper UsingAsCurrentCulture(System.Func<System.Globalization.CultureInfo> currentCultureHandler) { }
+        public Radical.Windows.ApplicationBootstrapper UsingAsCurrentUICulture(System.Func<System.Globalization.CultureInfo> currentUICultureHandler) { }
+        public Radical.Windows.ApplicationBootstrapper UsingAsShell(System.Type shellViewType) { }
+        public Radical.Windows.ApplicationBootstrapper UsingAsShell<TShellType>()
+            where TShellType : System.Windows.Window { }
+    }
+    public class ApplicationBootstrapper<TMainView> : Radical.Windows.ApplicationBootstrapper
+        where TMainView : System.Windows.Window
+    {
+        public ApplicationBootstrapper() { }
+    }
+    public sealed class LoadedWeakEventManager : System.Windows.WeakEventManager
+    {
+        protected override void StartListening(object source) { }
+        protected override void StopListening(object source) { }
+        public static void AddListener(System.Windows.FrameworkElement source, System.Windows.IWeakEventListener listener) { }
+        public static void RemoveListener(System.Windows.FrameworkElement source, System.Windows.IWeakEventListener listener) { }
+    }
+    public sealed class MonitorChangedWeakEventManager : System.Windows.WeakEventManager
+    {
+        protected override void StartListening(object source) { }
+        protected override void StopListening(object source) { }
+        public static void AddListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
+        public static void RemoveListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
+    }
+    public class Repeat
+    {
+        public Repeat() { }
+        public static Radical.Windows.Repeat.Repeater Every(System.TimeSpan delay) { }
+        public class Repeater
+        {
+            public void Stop() { }
+            public void This(System.Action action) { }
+        }
+    }
+    public static class VisualTreeCrawler
+    {
+        public static T FindChild<T>(this System.Windows.DependencyObject source)
+            where T : System.Windows.DependencyObject { }
+        public static T FindChild<T>(this System.Windows.DependencyObject source, System.Predicate<T> filter)
+            where T : System.Windows.DependencyObject { }
+        public static System.Collections.Generic.IEnumerable<T> FindChildren<T>(this System.Windows.DependencyObject source)
+            where T : System.Windows.DependencyObject { }
+        public static System.Collections.Generic.IEnumerable<T> FindChildren<T>(this System.Windows.DependencyObject source, System.Predicate<T> filter)
+            where T : System.Windows.DependencyObject { }
+        public static T FindParent<T>(this System.Windows.DependencyObject obj)
+            where T : System.Windows.DependencyObject { }
+        public static T FindParent<T>(this System.Windows.DependencyObject obj, System.Predicate<T> matchCondition)
+            where T : System.Windows.DependencyObject { }
+        public static bool IsChildOfType<T>(System.Windows.DependencyObject obj)
+            where T : System.Windows.DependencyObject { }
+    }
+    public class Wait
+    {
+        public Wait() { }
+        public static Radical.Windows.Wait.Waiter For(System.TimeSpan delay) { }
+        public class Waiter
+        {
+            public void AndThen(System.Action action) { }
+        }
+    }
+}
 namespace Radical.Windows.Behaviors
 {
     public sealed class AutoComplete : System.Windows.ResourceDictionary, System.Windows.Markup.IComponentConnector
@@ -2258,37 +2342,6 @@ namespace Radical.Windows.Behaviors
 }
 namespace Radical.Windows.Bootstrap
 {
-    public class ApplicationBootstrapper
-    {
-        public ApplicationBootstrapper() { }
-        public void Boot() { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper DisableAutoBoot() { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper EnableSplashScreen(Radical.Windows.Bootstrap.SplashScreenConfiguration config = null) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper ExposeAsResource<TService>() { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper ExposeAsResource<TService, TView>()
-            where TView : System.Windows.FrameworkElement { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnBeforeInstall(System.Action<Radical.Windows.Bootstrap.BootstrapConventions, Radical.Windows.Bootstrap.AssemblyScanner> onBeforeInstall) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnBoot(System.Action<System.IServiceProvider> bootHandler) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnBootCompleted(System.Action<System.IServiceProvider> bootCompletedHandler) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnServiceProviderCreated(System.Action<System.IServiceProvider> onServiceProviderCreated) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnShutdown(System.Action<Radical.Windows.Bootstrap.ApplicationShutdownArgs> shutdownHandler) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnSingletonApplicationStartup(System.Action<Radical.Windows.Bootstrap.SingletonApplicationStartupArgs> onSingletonApplicationStartup) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnUnhandledException(System.Action<System.Exception> unhandledExceptionHandler) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper OverrideShutdownMode(System.Windows.ShutdownMode mode) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper RegisterAsSingleton(string key) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper RegisterAsSingleton(string key, Radical.Windows.Bootstrap.SingletonApplicationScope scope) { }
-        public void Shutdown() { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper UsingAsCurrentCulture(System.Func<System.Globalization.CultureInfo> currentCultureHandler) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper UsingAsCurrentUICulture(System.Func<System.Globalization.CultureInfo> currentUICultureHandler) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper UsingAsShell(System.Type shellViewType) { }
-        public Radical.Windows.Bootstrap.ApplicationBootstrapper UsingAsShell<TShellType>()
-            where TShellType : System.Windows.Window { }
-    }
-    public class ApplicationBootstrapper<TMainView> : Radical.Windows.Bootstrap.ApplicationBootstrapper
-        where TMainView : System.Windows.Window
-    {
-        public ApplicationBootstrapper() { }
-    }
     public class ApplicationShutdownArgs
     {
         public ApplicationShutdownArgs() { }
@@ -3026,59 +3079,6 @@ namespace Radical.Windows.Input
     {
         public static Radical.Windows.ComponentModel.IDelegateCommand Observe<TSource>(this Radical.Windows.ComponentModel.IDelegateCommand command, TSource source, params System.Linq.Expressions.Expression<>[] properties)
             where TSource : System.ComponentModel.INotifyPropertyChanged { }
-    }
-}
-namespace Radical.Windows
-{
-    public sealed class LoadedWeakEventManager : System.Windows.WeakEventManager
-    {
-        protected override void StartListening(object source) { }
-        protected override void StopListening(object source) { }
-        public static void AddListener(System.Windows.FrameworkElement source, System.Windows.IWeakEventListener listener) { }
-        public static void RemoveListener(System.Windows.FrameworkElement source, System.Windows.IWeakEventListener listener) { }
-    }
-    public sealed class MonitorChangedWeakEventManager : System.Windows.WeakEventManager
-    {
-        protected override void StartListening(object source) { }
-        protected override void StopListening(object source) { }
-        public static void AddListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
-        public static void RemoveListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
-    }
-    public class Repeat
-    {
-        public Repeat() { }
-        public static Radical.Windows.Repeat.Repeater Every(System.TimeSpan delay) { }
-        public class Repeater
-        {
-            public void Stop() { }
-            public void This(System.Action action) { }
-        }
-    }
-    public static class VisualTreeCrawler
-    {
-        public static T FindChild<T>(this System.Windows.DependencyObject source)
-            where T : System.Windows.DependencyObject { }
-        public static T FindChild<T>(this System.Windows.DependencyObject source, System.Predicate<T> filter)
-            where T : System.Windows.DependencyObject { }
-        public static System.Collections.Generic.IEnumerable<T> FindChildren<T>(this System.Windows.DependencyObject source)
-            where T : System.Windows.DependencyObject { }
-        public static System.Collections.Generic.IEnumerable<T> FindChildren<T>(this System.Windows.DependencyObject source, System.Predicate<T> filter)
-            where T : System.Windows.DependencyObject { }
-        public static T FindParent<T>(this System.Windows.DependencyObject obj)
-            where T : System.Windows.DependencyObject { }
-        public static T FindParent<T>(this System.Windows.DependencyObject obj, System.Predicate<T> matchCondition)
-            where T : System.Windows.DependencyObject { }
-        public static bool IsChildOfType<T>(System.Windows.DependencyObject obj)
-            where T : System.Windows.DependencyObject { }
-    }
-    public class Wait
-    {
-        public Wait() { }
-        public static Radical.Windows.Wait.Waiter For(System.TimeSpan delay) { }
-        public class Waiter
-        {
-            public void AndThen(System.Action action) { }
-        }
     }
 }
 namespace Radical.Windows.Markup
