@@ -1,15 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Radical.ComponentModel;
-using Radical.ComponentModel.Messaging;
-using Radical.Linq;
-using Radical.Messaging;
-using Radical.Windows.Presentation.Boot.Features;
 using Radical.Windows.ComponentModel;
+using Radical.Windows.Presentation.Boot.Features;
 using Radical.Windows.Threading;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 
 namespace Radical.Windows.Presentation.Boot.Installers

@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Radical.Conversions;
+using Radical.Diagnostics;
+using Radical.Helpers;
+using Radical.Reflection;
+using Radical.Windows.ComponentModel;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -6,11 +11,6 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Media;
-using Radical.Helpers;
-using Radical.Reflection;
-using Radical.Windows.ComponentModel;
-using Radical.Conversions;
-using Radical.Diagnostics;
 
 namespace Radical.Windows.Presentation.Regions
 {

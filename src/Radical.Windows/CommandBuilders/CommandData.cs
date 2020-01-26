@@ -1,6 +1,6 @@
 ﻿using Radical.ComponentModel;
-using Radical.Windows.ComponentModel;
 using Radical.Reflection;
+using Radical.Windows.ComponentModel;
 using System;
 
 namespace Radical.Windows.CommandBuilders

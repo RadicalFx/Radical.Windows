@@ -2,21 +2,21 @@
 using Radical.ComponentModel.Messaging;
 using Radical.Diagnostics;
 using Radical.Helpers;
-using Radical.Validation;
+using Radical.Linq;
 using Radical.Reflection;
+using Radical.Validation;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation.Messaging;
 using Radical.Windows.Presentation.Regions;
+using Radical.Windows.Presentation.Services;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Radical.Linq;
-using System.Collections.Generic;
-using Radical.Windows.Presentation.Services;
 
 namespace Radical.Windows.Presentation.Boot
 {

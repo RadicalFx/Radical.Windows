@@ -1,10 +1,10 @@
 ﻿using Radical.ComponentModel;
-using Radical.Windows.ComponentModel;
 using Radical.Diagnostics;
 using Radical.Linq;
 using Radical.Observers;
 using Radical.Reflection;
 using Radical.Windows.Behaviors;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Input;
 using System;
 using System.ComponentModel;

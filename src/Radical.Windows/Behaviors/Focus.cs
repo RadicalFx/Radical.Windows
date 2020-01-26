@@ -1,5 +1,4 @@
-﻿using Radical.Windows.Behaviors;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace Radical.Windows.Behaviors
