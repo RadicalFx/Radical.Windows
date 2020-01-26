@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Radical.Windows.Presentation.Boot
+namespace Radical.Windows.Bootstrap
 {
     public class AssemblyScanner
     {

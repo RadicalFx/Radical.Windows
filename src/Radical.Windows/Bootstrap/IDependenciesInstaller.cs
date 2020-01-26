@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Radical.Windows.Presentation.Boot
+namespace Radical.Windows.Bootstrap
 {
     public interface IDependenciesInstaller
     {

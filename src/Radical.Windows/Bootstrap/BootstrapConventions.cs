@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Radical.Windows.Presentation.Boot
+namespace Radical.Windows.Bootstrap
 {
     /// <summary>
     /// Application bootstrap conventions

@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Radical.Windows.Presentation.Boot.Installers
+namespace Radical.Windows.Bootstrap.Installers
 {
     static class ServiceCollectionExtensions
     {

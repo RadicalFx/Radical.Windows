@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Radical.Windows.Presentation.Boot
+namespace Radical.Windows.Bootstrap
 {
     /// <summary>
     /// Instructs the automatic registration process to ignore

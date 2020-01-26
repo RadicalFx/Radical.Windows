@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Radical.Linq;
-using Radical.Windows.Presentation.Boot.Features;
+using Radical.Windows.Bootstrap.Features;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Radical.Windows.Presentation.Boot.Installers
+namespace Radical.Windows.Bootstrap.Installers
 {
     class PresentationInstaller : IDependenciesInstaller
     {

@@ -18,7 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Boot
+namespace Radical.Windows.Bootstrap
 {
     /// <summary>
     /// The application bootstrapper. Provides a way to dramatically simplify the

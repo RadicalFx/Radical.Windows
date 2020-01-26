@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Radical.Windows.ComponentModel;
-using Radical.Windows.Presentation.Boot.Features;
+using Radical.Windows.Bootstrap.Features;
 using Radical.Windows.Regions;
 using System;
 using System.Collections.Generic;
 
-namespace Radical.Windows.Presentation.Boot.Installers
+namespace Radical.Windows.Bootstrap.Installers
 {
     class UICompositionInstaller : IDependenciesInstaller
     {

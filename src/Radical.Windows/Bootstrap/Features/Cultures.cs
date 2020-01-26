@@ -3,7 +3,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
 
-namespace Radical.Windows.Presentation.Boot.Features
+namespace Radical.Windows.Bootstrap.Features
 {
     class Cultures : IFeature
     {

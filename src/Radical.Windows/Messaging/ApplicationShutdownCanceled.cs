@@ -1,4 +1,4 @@
-﻿using Radical.Windows.Presentation.Boot;
+﻿using Radical.Windows.Bootstrap;
 
 namespace Radical.Windows.Messaging
 {

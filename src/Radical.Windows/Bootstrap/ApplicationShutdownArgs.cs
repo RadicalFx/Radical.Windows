@@ -1,4 +1,4 @@
-﻿namespace Radical.Windows.Presentation.Boot
+﻿namespace Radical.Windows.Bootstrap
 {
     /// <summary>
     /// The application shutdown arguments.

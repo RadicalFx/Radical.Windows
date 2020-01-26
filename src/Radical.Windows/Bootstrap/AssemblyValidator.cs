@@ -4,7 +4,7 @@ using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 
-namespace Radical.Windows.Presentation.Boot
+namespace Radical.Windows.Bootstrap
 {
     //courtesy of NServiceBus https://github.com/Particular/NServiceBus/blob/4954af83fad81cc80769c8ed161ee4a37812d443/src/NServiceBus.Core/Hosting/Helpers/AssemblyValidator.cs
     class AssemblyValidator

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Radical.Windows.Presentation.Boot
+namespace Radical.Windows.Bootstrap
 {
     class ApplicationSettings
     {

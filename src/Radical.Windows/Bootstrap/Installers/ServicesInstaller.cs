@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Radical.Windows.Presentation.Boot.Installers
+namespace Radical.Windows.Bootstrap.Installers
 {
     class ServicesInstaller : IDependenciesInstaller
     {

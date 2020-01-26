@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Radical.Windows.Presentation;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Boot
+namespace Radical.Windows.Bootstrap
 {
     /// <summary>
     /// The configuration of the SplashScreen.

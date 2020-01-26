@@ -2256,6 +2256,188 @@ namespace Radical.Windows.Behaviors
         protected override void OnDetaching() { }
     }
 }
+namespace Radical.Windows.Bootstrap
+{
+    public class ApplicationBootstrapper
+    {
+        public ApplicationBootstrapper() { }
+        public void Boot() { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper DisableAutoBoot() { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper EnableSplashScreen(Radical.Windows.Bootstrap.SplashScreenConfiguration config = null) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper ExposeAsResource<TService>() { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper ExposeAsResource<TService, TView>()
+            where TView : System.Windows.FrameworkElement { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnBeforeInstall(System.Action<Radical.Windows.Bootstrap.BootstrapConventions, Radical.Windows.Bootstrap.AssemblyScanner> onBeforeInstall) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnBoot(System.Action<System.IServiceProvider> bootHandler) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnBootCompleted(System.Action<System.IServiceProvider> bootCompletedHandler) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnServiceProviderCreated(System.Action<System.IServiceProvider> onServiceProviderCreated) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnShutdown(System.Action<Radical.Windows.Bootstrap.ApplicationShutdownArgs> shutdownHandler) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnSingletonApplicationStartup(System.Action<Radical.Windows.Bootstrap.SingletonApplicationStartupArgs> onSingletonApplicationStartup) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper OnUnhandledException(System.Action<System.Exception> unhandledExceptionHandler) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper OverrideShutdownMode(System.Windows.ShutdownMode mode) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper RegisterAsSingleton(string key) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper RegisterAsSingleton(string key, Radical.Windows.Bootstrap.SingletonApplicationScope scope) { }
+        public void Shutdown() { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper UsingAsCurrentCulture(System.Func<System.Globalization.CultureInfo> currentCultureHandler) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper UsingAsCurrentUICulture(System.Func<System.Globalization.CultureInfo> currentUICultureHandler) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper UsingAsShell(System.Type shellViewType) { }
+        public Radical.Windows.Bootstrap.ApplicationBootstrapper UsingAsShell<TShellType>()
+            where TShellType : System.Windows.Window { }
+    }
+    public class ApplicationBootstrapper<TMainView> : Radical.Windows.Bootstrap.ApplicationBootstrapper
+        where TMainView : System.Windows.Window
+    {
+        public ApplicationBootstrapper() { }
+    }
+    public class ApplicationShutdownArgs
+    {
+        public ApplicationShutdownArgs() { }
+        public bool IsBootCompleted { get; }
+        public Radical.Windows.Bootstrap.ApplicationShutdownReason Reason { get; }
+    }
+    public enum ApplicationShutdownReason
+    {
+        UserRequest = 0,
+        MultipleInstanceNotAllowed = 1,
+        SessionEnding = 2,
+        ApplicationRequest = 3,
+    }
+    public class AssemblyScanner
+    {
+        public System.IO.SearchOption DirectorySearchOptions { get; set; }
+        public void AddAssemblyFilter(System.Func<string, Radical.Windows.Bootstrap.AssemblyScanner.FilterResults> filter) { }
+        public enum FilterResults
+        {
+            Exclude = 0,
+            Include = 1,
+        }
+    }
+    public class BootstrapConventions
+    {
+        public BootstrapConventions() { }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> AllowServiceOverride { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Reflection.Assembly, System.Collections.Generic.IEnumerable<string>> AssemblyFileScanPatterns { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> DefaultAllowServiceOverride { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Reflection.Assembly, System.Collections.Generic.IEnumerable<string>> DefaultAssemblyFileScanPatterns { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, string> DefaultGetInterestedRegionNameIfAny { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Reflection.PropertyInfo, bool> DefaultIgnorePropertyInjection { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Reflection.PropertyInfo, bool> DefaultIgnoreViewModelPropertyInjection { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Reflection.PropertyInfo, bool> DefaultIgnoreViewPropertyInjection { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Reflection.Assembly> DefaultIncludeAssemblyInContainerScan { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> DefaultIsConcreteType { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, bool> DefaultIsExcluded { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> DefaultIsMessageHandler { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> DefaultIsService { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> DefaultIsShellView { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> DefaultIsShellViewModel { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> DefaultIsView { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> DefaultIsViewModel { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectMessageHandlerContracts { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectServiceContracts { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectViewContracts { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectViewModelContracts { get; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, string> GetInterestedRegionNameIfAny { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Reflection.PropertyInfo, bool> IgnorePropertyInjection { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Reflection.PropertyInfo, bool> IgnoreViewModelPropertyInjection { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Reflection.PropertyInfo, bool> IgnoreViewPropertyInjection { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Reflection.Assembly> IncludeAssemblyInContainerScan { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> IsConcreteType { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, bool> IsExcluded { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> IsMessageHandler { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> IsService { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> IsShellView { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> IsShellViewModel { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> IsView { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Predicate<System.Type> IsViewModel { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectMessageHandlerContracts { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectServiceContracts { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectViewContracts { get; set; }
+        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
+        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectViewModelContracts { get; set; }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All)]
+    public class DisableAutomaticRegistrationAttribute : System.Attribute
+    {
+        public DisableAutomaticRegistrationAttribute() { }
+    }
+    public interface IDependenciesInstaller
+    {
+        void Install(Radical.Windows.Bootstrap.BootstrapConventions conventions, Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Collections.Generic.IEnumerable<System.Type> assemblyScanningResults);
+    }
+    [Radical.Windows.ComponentModel.ToolkitComponent]
+    public interface IExpectBootCallback
+    {
+        void OnBootCompleted();
+    }
+    [Radical.Windows.ComponentModel.ToolkitComponent]
+    public interface IExpectShutdownCallback
+    {
+        void OnShutdown(Radical.Windows.Bootstrap.ApplicationShutdownReason reason);
+    }
+    public enum SingletonApplicationScope
+    {
+        NotSupported = 0,
+        Global = 1,
+        Local = 2,
+    }
+    public class SingletonApplicationStartupArgs
+    {
+        public SingletonApplicationStartupArgs(Radical.Windows.Bootstrap.SingletonApplicationScope scope) { }
+        public bool AllowStartup { get; set; }
+        public Radical.Windows.Bootstrap.SingletonApplicationScope Scope { get; }
+    }
+    public class SplashScreenConfiguration
+    {
+        public SplashScreenConfiguration() { }
+        public double Height { get; set; }
+        public double? MinHeight { get; set; }
+        public double? MinWidth { get; set; }
+        public int MinimumDelay { get; set; }
+        public System.Windows.SizeToContent SizeToContent { get; set; }
+        public System.Type SplashScreenViewType { get; set; }
+        public System.Action<System.IServiceProvider> StartupAsyncWork { get; set; }
+        public double Width { get; set; }
+        public System.Windows.WindowStartupLocation WindowStartupLocation { get; set; }
+        public System.Windows.WindowStyle WindowStyle { get; set; }
+    }
+}
 namespace Radical.Windows.CommandBuilders
 {
     public class BooleanFact
@@ -3036,13 +3218,13 @@ namespace Radical.Windows.Messaging
     }
     public class ApplicationShutdown
     {
-        public ApplicationShutdown(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason) { }
-        public Radical.Windows.Presentation.Boot.ApplicationShutdownReason Reason { get; }
+        public ApplicationShutdown(Radical.Windows.Bootstrap.ApplicationShutdownReason reason) { }
+        public Radical.Windows.Bootstrap.ApplicationShutdownReason Reason { get; }
     }
     public class ApplicationShutdownCanceled
     {
-        public ApplicationShutdownCanceled(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason) { }
-        public Radical.Windows.Presentation.Boot.ApplicationShutdownReason Reason { get; }
+        public ApplicationShutdownCanceled(Radical.Windows.Bootstrap.ApplicationShutdownReason reason) { }
+        public Radical.Windows.Bootstrap.ApplicationShutdownReason Reason { get; }
     }
     public class ApplicationShutdownRequest
     {
@@ -3050,9 +3232,9 @@ namespace Radical.Windows.Messaging
     }
     public class ApplicationShutdownRequested
     {
-        public ApplicationShutdownRequested(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason) { }
+        public ApplicationShutdownRequested(Radical.Windows.Bootstrap.ApplicationShutdownReason reason) { }
         public bool Cancel { get; set; }
-        public Radical.Windows.Presentation.Boot.ApplicationShutdownReason Reason { get; }
+        public Radical.Windows.Bootstrap.ApplicationShutdownReason Reason { get; }
     }
     public class CloseViewRequest
     {
@@ -3238,188 +3420,6 @@ namespace Radical.Windows.Presentation
     public static class ValidationErrorsExtensions
     {
         public static System.Collections.Generic.IEnumerable<string> GetInvalidProperties(this System.Collections.ObjectModel.ObservableCollection<Radical.Validation.ValidationError> validationErrors) { }
-    }
-}
-namespace Radical.Windows.Presentation.Boot
-{
-    public class ApplicationBootstrapper
-    {
-        public ApplicationBootstrapper() { }
-        public void Boot() { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper DisableAutoBoot() { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper EnableSplashScreen(Radical.Windows.Presentation.Boot.SplashScreenConfiguration config = null) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper ExposeAsResource<TService>() { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper ExposeAsResource<TService, TView>()
-            where TView : System.Windows.FrameworkElement { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBeforeInstall(System.Action<Radical.Windows.Presentation.Boot.BootstrapConventions, Radical.Windows.Presentation.Boot.AssemblyScanner> onBeforeInstall) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBoot(System.Action<System.IServiceProvider> bootHandler) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnBootCompleted(System.Action<System.IServiceProvider> bootCompletedHandler) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnServiceProviderCreated(System.Action<System.IServiceProvider> onServiceProviderCreated) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnShutdown(System.Action<Radical.Windows.Presentation.Boot.ApplicationShutdownArgs> shutdownHandler) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnSingletonApplicationStartup(System.Action<Radical.Windows.Presentation.Boot.SingletonApplicationStartupArgs> onSingletonApplicationStartup) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OnUnhandledException(System.Action<System.Exception> unhandledExceptionHandler) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper OverrideShutdownMode(System.Windows.ShutdownMode mode) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper RegisterAsSingleton(string key) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper RegisterAsSingleton(string key, Radical.Windows.Presentation.Boot.SingletonApplicationScope scope) { }
-        public void Shutdown() { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper UsingAsCurrentCulture(System.Func<System.Globalization.CultureInfo> currentCultureHandler) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper UsingAsCurrentUICulture(System.Func<System.Globalization.CultureInfo> currentUICultureHandler) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper UsingAsShell(System.Type shellViewType) { }
-        public Radical.Windows.Presentation.Boot.ApplicationBootstrapper UsingAsShell<TShellType>()
-            where TShellType : System.Windows.Window { }
-    }
-    public class ApplicationBootstrapper<TMainView> : Radical.Windows.Presentation.Boot.ApplicationBootstrapper
-        where TMainView : System.Windows.Window
-    {
-        public ApplicationBootstrapper() { }
-    }
-    public class ApplicationShutdownArgs
-    {
-        public ApplicationShutdownArgs() { }
-        public bool IsBootCompleted { get; }
-        public Radical.Windows.Presentation.Boot.ApplicationShutdownReason Reason { get; }
-    }
-    public enum ApplicationShutdownReason
-    {
-        UserRequest = 0,
-        MultipleInstanceNotAllowed = 1,
-        SessionEnding = 2,
-        ApplicationRequest = 3,
-    }
-    public class AssemblyScanner
-    {
-        public System.IO.SearchOption DirectorySearchOptions { get; set; }
-        public void AddAssemblyFilter(System.Func<string, Radical.Windows.Presentation.Boot.AssemblyScanner.FilterResults> filter) { }
-        public enum FilterResults
-        {
-            Exclude = 0,
-            Include = 1,
-        }
-    }
-    public class BootstrapConventions
-    {
-        public BootstrapConventions() { }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> AllowServiceOverride { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Reflection.Assembly, System.Collections.Generic.IEnumerable<string>> AssemblyFileScanPatterns { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> DefaultAllowServiceOverride { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Reflection.Assembly, System.Collections.Generic.IEnumerable<string>> DefaultAssemblyFileScanPatterns { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, string> DefaultGetInterestedRegionNameIfAny { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Reflection.PropertyInfo, bool> DefaultIgnorePropertyInjection { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Reflection.PropertyInfo, bool> DefaultIgnoreViewModelPropertyInjection { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Reflection.PropertyInfo, bool> DefaultIgnoreViewPropertyInjection { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Reflection.Assembly> DefaultIncludeAssemblyInContainerScan { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> DefaultIsConcreteType { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, bool> DefaultIsExcluded { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> DefaultIsMessageHandler { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> DefaultIsService { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> DefaultIsShellView { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> DefaultIsShellViewModel { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> DefaultIsView { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> DefaultIsViewModel { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectMessageHandlerContracts { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectServiceContracts { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectViewContracts { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> DefaultSelectViewModelContracts { get; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, string> GetInterestedRegionNameIfAny { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Reflection.PropertyInfo, bool> IgnorePropertyInjection { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Reflection.PropertyInfo, bool> IgnoreViewModelPropertyInjection { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Reflection.PropertyInfo, bool> IgnoreViewPropertyInjection { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Reflection.Assembly> IncludeAssemblyInContainerScan { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> IsConcreteType { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, bool> IsExcluded { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> IsMessageHandler { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> IsService { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> IsShellView { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Collections.Generic.IEnumerable<System.Type>, System.Type, bool> IsShellViewModel { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> IsView { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> IsViewModel { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectMessageHandlerContracts { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectServiceContracts { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectViewContracts { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Func<System.Type, System.Collections.Generic.IEnumerable<System.Type>> SelectViewModelContracts { get; set; }
-    }
-    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All)]
-    public class DisableAutomaticRegistrationAttribute : System.Attribute
-    {
-        public DisableAutomaticRegistrationAttribute() { }
-    }
-    public interface IDependenciesInstaller
-    {
-        void Install(Radical.Windows.Presentation.Boot.BootstrapConventions conventions, Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Collections.Generic.IEnumerable<System.Type> assemblyScanningResults);
-    }
-    [Radical.Windows.ComponentModel.ToolkitComponent]
-    public interface IExpectBootCallback
-    {
-        void OnBootCompleted();
-    }
-    [Radical.Windows.ComponentModel.ToolkitComponent]
-    public interface IExpectShutdownCallback
-    {
-        void OnShutdown(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason);
-    }
-    public enum SingletonApplicationScope
-    {
-        NotSupported = 0,
-        Global = 1,
-        Local = 2,
-    }
-    public class SingletonApplicationStartupArgs
-    {
-        public SingletonApplicationStartupArgs(Radical.Windows.Presentation.Boot.SingletonApplicationScope scope) { }
-        public bool AllowStartup { get; set; }
-        public Radical.Windows.Presentation.Boot.SingletonApplicationScope Scope { get; }
-    }
-    public class SplashScreenConfiguration
-    {
-        public SplashScreenConfiguration() { }
-        public double Height { get; set; }
-        public double? MinHeight { get; set; }
-        public double? MinWidth { get; set; }
-        public int MinimumDelay { get; set; }
-        public System.Windows.SizeToContent SizeToContent { get; set; }
-        public System.Type SplashScreenViewType { get; set; }
-        public System.Action<System.IServiceProvider> StartupAsyncWork { get; set; }
-        public double Width { get; set; }
-        public System.Windows.WindowStartupLocation WindowStartupLocation { get; set; }
-        public System.Windows.WindowStyle WindowStyle { get; set; }
     }
 }
 namespace Radical.Windows.Regions

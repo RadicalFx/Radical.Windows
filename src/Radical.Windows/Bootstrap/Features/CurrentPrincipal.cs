@@ -2,7 +2,7 @@
 using System.Security.Principal;
 using System.Threading;
 
-namespace Radical.Windows.Presentation.Boot.Features
+namespace Radical.Windows.Bootstrap.Features
 {
     class CurrentPrincipal : IFeature
     {

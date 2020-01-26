@@ -1,4 +1,4 @@
-﻿namespace Radical.Windows.Presentation.Boot
+﻿namespace Radical.Windows.Bootstrap
 {
     /// <summary>
     /// Arguments to handle the application startup when singleton mode is set up.

@@ -1,6 +1,6 @@
 ﻿using Radical.Windows.ComponentModel;
 
-namespace Radical.Windows.Presentation.Boot
+namespace Radical.Windows.Bootstrap
 {
     /// <summary>
     /// Allows a third party component to be notified when the

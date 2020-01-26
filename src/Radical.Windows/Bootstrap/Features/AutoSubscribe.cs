@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Radical.Windows.Presentation.Boot.Features
+namespace Radical.Windows.Bootstrap.Features
 {
     class AutoSubscribe : IFeature
     {

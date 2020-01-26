@@ -2,7 +2,7 @@
 using Radical.Windows.Regions;
 using System;
 
-namespace Radical.Windows.Presentation.Boot.Features
+namespace Radical.Windows.Bootstrap.Features
 {
     class UIComposition : IFeature
     {

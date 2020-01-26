@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Radical.ComponentModel;
 using Radical.Windows.ComponentModel;
-using Radical.Windows.Presentation.Boot.Features;
+using Radical.Windows.Bootstrap.Features;
 using Radical.Windows.Threading;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Boot.Installers
+namespace Radical.Windows.Bootstrap.Installers
 {
     class DefaultInstaller : IDependenciesInstaller
     {
