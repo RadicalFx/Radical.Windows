@@ -1,4 +1,4 @@
-﻿using Radical.ComponentModel.Windows.Input;
+﻿using Radical.Windows.ComponentModel;
 using Radical.Linq;
 using Radical.Observers;
 using Radical.Reflection;

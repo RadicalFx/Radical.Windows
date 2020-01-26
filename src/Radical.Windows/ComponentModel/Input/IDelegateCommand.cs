@@ -1,8 +1,9 @@
 ﻿using Radical.Analytics;
+using Radical.ComponentModel;
 using System;
 using System.Windows.Input;
 
-namespace Radical.ComponentModel.Windows.Input
+namespace Radical.Windows.ComponentModel
 {
     /// <summary>
     /// Defines an extended ICommand with support for bindings and triggers.

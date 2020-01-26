@@ -1,5 +1,5 @@
 ﻿using Radical.ComponentModel;
-using Radical.ComponentModel.Windows.Input;
+using Radical.Windows.ComponentModel;
 using Radical.Reflection;
 using System;
 

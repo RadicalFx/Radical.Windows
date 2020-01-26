@@ -13,37 +13,6 @@ namespace Radical.ComponentModel
 {
     public interface IEntityCollectionView<T> : Radical.ComponentModel.IEntityView, Radical.ComponentModel.IEntityView<T>, System.Collections.Generic.IEnumerable<Radical.ComponentModel.IEntityItemView<T>>, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList, System.Collections.Specialized.INotifyCollectionChanged, System.ComponentModel.IBindingList, System.ComponentModel.IBindingListView, System.ComponentModel.ICollectionView, System.ComponentModel.ICollectionViewFactory, System.ComponentModel.INotifyPropertyChanged, System.ComponentModel.ISupportInitialize, System.ComponentModel.ITypedList { }
 }
-namespace Radical.ComponentModel.Windows.Input
-{
-    [System.AttributeUsage(System.AttributeTargets.Method | System.AttributeTargets.All, AllowMultiple=false)]
-    public class CommandDescriptionAttribute : System.Attribute
-    {
-        public CommandDescriptionAttribute(string displayText) { }
-        public string DisplayText { get; }
-    }
-    public interface IDelegateCommand : System.Windows.Input.ICommand
-    {
-        string DisplayText { get; }
-        System.Windows.Input.InputBindingCollection InputBindings { get; }
-        Radical.ComponentModel.Windows.Input.IDelegateCommand AddGesture(System.Windows.Input.InputGesture gesture);
-        Radical.ComponentModel.Windows.Input.IDelegateCommand AddKeyGesture(System.Windows.Input.Key key);
-        Radical.ComponentModel.Windows.Input.IDelegateCommand AddKeyGesture(System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifiers);
-        Radical.ComponentModel.Windows.Input.IDelegateCommand AddMonitor(Radical.ComponentModel.IMonitor source);
-        Radical.ComponentModel.Windows.Input.IDelegateCommand AddMonitor(params Radical.ComponentModel.IMonitor[] triggers);
-        void EvaluateCanExecute();
-        Radical.ComponentModel.Windows.Input.IDelegateCommand OnCanExecute(System.Func<object, bool> canExecuteMethod);
-        Radical.ComponentModel.Windows.Input.IDelegateCommand OnExecute(System.Action<object> executeMethod);
-        Radical.ComponentModel.Windows.Input.IDelegateCommand RemoveMonitor(Radical.ComponentModel.IMonitor source);
-        Radical.ComponentModel.Windows.Input.IDelegateCommand WithTrackingPreview(System.Action<Radical.Analytics.AnalyticsEvent> onBeforeTracking);
-    }
-    [System.AttributeUsage(System.AttributeTargets.Method | System.AttributeTargets.All, AllowMultiple=true)]
-    public class KeyBindingAttribute : System.Attribute
-    {
-        public KeyBindingAttribute(System.Windows.Input.Key key) { }
-        public System.Windows.Input.Key Key { get; }
-        public System.Windows.Input.ModifierKeys Modifiers { get; set; }
-    }
-}
 namespace Radical.Diagnostics
 {
     public class BindingErrorTraceListener : System.Diagnostics.DefaultTraceListener
@@ -2274,10 +2243,10 @@ namespace Radical.Windows.CommandBuilders
         public CommandData() { }
         public Radical.Windows.CommandBuilders.BooleanFact BooleanFact { get; set; }
         public object DataContext { get; set; }
-        public Radical.ComponentModel.Windows.Input.CommandDescriptionAttribute Description { get; set; }
+        public Radical.Windows.ComponentModel.CommandDescriptionAttribute Description { get; set; }
         public Radical.Reflection.LateBoundVoidMethod FastDelegate { get; set; }
         public bool HasParameter { get; set; }
-        public Radical.ComponentModel.Windows.Input.KeyBindingAttribute[] KeyBindings { get; set; }
+        public Radical.Windows.ComponentModel.KeyBindingAttribute[] KeyBindings { get; set; }
         public string MethodName { get; set; }
         public Radical.ComponentModel.IMonitor Monitor { get; set; }
         public System.Type ParameterType { get; set; }
@@ -2286,7 +2255,7 @@ namespace Radical.Windows.CommandBuilders
     {
         public DelegateCommandBuilder() { }
         public virtual bool CanCreateCommand(System.Windows.PropertyPath path, System.Windows.DependencyObject target) { }
-        public virtual Radical.ComponentModel.Windows.Input.IDelegateCommand CreateCommand(Radical.Windows.CommandBuilders.CommandData commandData) { }
+        public virtual Radical.Windows.ComponentModel.IDelegateCommand CreateCommand(Radical.Windows.CommandBuilders.CommandData commandData) { }
         public virtual object GetDataContext(System.Windows.DependencyObject target) { }
         public virtual bool TryGenerateCommandData(System.Windows.PropertyPath path, object dataContext, out Radical.Windows.CommandBuilders.CommandData data) { }
     }
@@ -2299,6 +2268,12 @@ namespace Radical.Windows.ComponentModel
         public System.Windows.DependencyObject ActiveContent { get; }
         public bool HasActiveContent { get; }
         public System.Windows.DependencyObject PreviousActiveContent { get; }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Method | System.AttributeTargets.All, AllowMultiple=false)]
+    public class CommandDescriptionAttribute : System.Attribute
+    {
+        public CommandDescriptionAttribute(string displayText) { }
+        public string DisplayText { get; }
     }
     public interface IContentRegion : Radical.Windows.ComponentModel.IRegion
     {
@@ -2400,6 +2375,21 @@ namespace Radical.Windows.ComponentModel
         System.Func<System.Windows.DependencyObject, Radical.Windows.ComponentModel.ViewDataContextSearchBehavior, bool> ViewHasDataContext { get; set; }
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Action<System.Windows.DependencyObject, Radical.Windows.ComponentModel.ViewReleaseBehavior> ViewReleaseHandler { get; set; }
+    }
+    public interface IDelegateCommand : System.Windows.Input.ICommand
+    {
+        string DisplayText { get; }
+        System.Windows.Input.InputBindingCollection InputBindings { get; }
+        Radical.Windows.ComponentModel.IDelegateCommand AddGesture(System.Windows.Input.InputGesture gesture);
+        Radical.Windows.ComponentModel.IDelegateCommand AddKeyGesture(System.Windows.Input.Key key);
+        Radical.Windows.ComponentModel.IDelegateCommand AddKeyGesture(System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifiers);
+        Radical.Windows.ComponentModel.IDelegateCommand AddMonitor(Radical.ComponentModel.IMonitor source);
+        Radical.Windows.ComponentModel.IDelegateCommand AddMonitor(params Radical.ComponentModel.IMonitor[] triggers);
+        void EvaluateCanExecute();
+        Radical.Windows.ComponentModel.IDelegateCommand OnCanExecute(System.Func<object, bool> canExecuteMethod);
+        Radical.Windows.ComponentModel.IDelegateCommand OnExecute(System.Action<object> executeMethod);
+        Radical.Windows.ComponentModel.IDelegateCommand RemoveMonitor(Radical.ComponentModel.IMonitor source);
+        Radical.Windows.ComponentModel.IDelegateCommand WithTrackingPreview(System.Action<Radical.Analytics.AnalyticsEvent> onBeforeTracking);
     }
     public interface IElementsRegion : Radical.Windows.ComponentModel.IRegion
     {
@@ -2539,6 +2529,13 @@ namespace Radical.Windows.ComponentModel
     {
         public InjectViewInRegionAttribute() { }
         public string Named { get; set; }
+    }
+    [System.AttributeUsage(System.AttributeTargets.Method | System.AttributeTargets.All, AllowMultiple=true)]
+    public class KeyBindingAttribute : System.Attribute
+    {
+        public KeyBindingAttribute(System.Windows.Input.Key key) { }
+        public System.Windows.Input.Key Key { get; }
+        public System.Windows.Input.ModifierKeys Modifiers { get; set; }
     }
     [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All, AllowMultiple=false, Inherited=false)]
     public class NotifyActivatedAttribute : System.Attribute
@@ -2793,33 +2790,33 @@ namespace Radical.Windows.Input
     {
         public static System.Collections.Generic.IEnumerable<System.Windows.Input.InputGesture> GetGestures(this System.Windows.Input.ICommand source) { }
     }
-    public class DelegateCommand : Radical.ComponentModel.Windows.Input.IDelegateCommand, System.Windows.IWeakEventListener, System.Windows.Input.ICommand
+    public class DelegateCommand : Radical.Windows.ComponentModel.IDelegateCommand, System.Windows.IWeakEventListener, System.Windows.Input.ICommand
     {
-        public static readonly Radical.ComponentModel.Windows.Input.IDelegateCommand Empty;
+        public static readonly Radical.Windows.ComponentModel.IDelegateCommand Empty;
         public DelegateCommand(System.Action<object> executeMethod, System.Func<object, bool> canExecuteMethod, string displayText) { }
         public string DisplayText { get; }
         public System.Windows.Input.InputBindingCollection InputBindings { get; }
         public event System.EventHandler CanExecuteChanged;
-        public Radical.ComponentModel.Windows.Input.IDelegateCommand AddGesture(System.Windows.Input.InputGesture gesture) { }
-        public Radical.ComponentModel.Windows.Input.IDelegateCommand AddKeyGesture(System.Windows.Input.Key key) { }
-        public Radical.ComponentModel.Windows.Input.IDelegateCommand AddKeyGesture(System.Windows.Input.Key key, System.Windows.Input.ModifierKeys mk) { }
-        public Radical.ComponentModel.Windows.Input.IDelegateCommand AddMonitor(Radical.ComponentModel.IMonitor source) { }
-        public Radical.ComponentModel.Windows.Input.IDelegateCommand AddMonitor(params Radical.ComponentModel.IMonitor[] triggers) { }
+        public Radical.Windows.ComponentModel.IDelegateCommand AddGesture(System.Windows.Input.InputGesture gesture) { }
+        public Radical.Windows.ComponentModel.IDelegateCommand AddKeyGesture(System.Windows.Input.Key key) { }
+        public Radical.Windows.ComponentModel.IDelegateCommand AddKeyGesture(System.Windows.Input.Key key, System.Windows.Input.ModifierKeys mk) { }
+        public Radical.Windows.ComponentModel.IDelegateCommand AddMonitor(Radical.ComponentModel.IMonitor source) { }
+        public Radical.Windows.ComponentModel.IDelegateCommand AddMonitor(params Radical.ComponentModel.IMonitor[] triggers) { }
         public bool CanExecute(object parameter) { }
         public virtual void EvaluateCanExecute() { }
         public void Execute(object parameter) { }
-        public virtual Radical.ComponentModel.Windows.Input.IDelegateCommand OnCanExecute(System.Func<object, bool> canExecuteMethod) { }
+        public virtual Radical.Windows.ComponentModel.IDelegateCommand OnCanExecute(System.Func<object, bool> canExecuteMethod) { }
         protected virtual void OnCanExecuteChanged() { }
-        public virtual Radical.ComponentModel.Windows.Input.IDelegateCommand OnExecute(System.Action<object> executeMethod) { }
+        public virtual Radical.Windows.ComponentModel.IDelegateCommand OnExecute(System.Action<object> executeMethod) { }
         protected virtual void OnTriggerChanged(Radical.ComponentModel.IMonitor source) { }
-        public Radical.ComponentModel.Windows.Input.IDelegateCommand RemoveMonitor(Radical.ComponentModel.IMonitor source) { }
-        public Radical.ComponentModel.Windows.Input.IDelegateCommand WithTrackingPreview(System.Action<Radical.Analytics.AnalyticsEvent> onBeforeTracking) { }
-        public static Radical.ComponentModel.Windows.Input.IDelegateCommand Create() { }
-        public static Radical.ComponentModel.Windows.Input.IDelegateCommand Create(string displayText) { }
+        public Radical.Windows.ComponentModel.IDelegateCommand RemoveMonitor(Radical.ComponentModel.IMonitor source) { }
+        public Radical.Windows.ComponentModel.IDelegateCommand WithTrackingPreview(System.Action<Radical.Analytics.AnalyticsEvent> onBeforeTracking) { }
+        public static Radical.Windows.ComponentModel.IDelegateCommand Create() { }
+        public static Radical.Windows.ComponentModel.IDelegateCommand Create(string displayText) { }
     }
     public static class DelegateCommandExtensions
     {
-        public static Radical.ComponentModel.Windows.Input.IDelegateCommand Observe<TSource>(this Radical.ComponentModel.Windows.Input.IDelegateCommand command, TSource source, params System.Linq.Expressions.Expression<>[] properties)
+        public static Radical.Windows.ComponentModel.IDelegateCommand Observe<TSource>(this Radical.Windows.ComponentModel.IDelegateCommand command, TSource source, params System.Linq.Expressions.Expression<>[] properties)
             where TSource : System.ComponentModel.INotifyPropertyChanged { }
     }
 }
@@ -2868,7 +2865,7 @@ namespace Radical.Windows.Markup
     {
         public AutoCommandBinding() { }
         public AutoCommandBinding(string path) { }
-        protected override Radical.ComponentModel.Windows.Input.IDelegateCommand GetCommand(System.Windows.DependencyObject target, System.Windows.DependencyProperty targetProperty) { }
+        protected override Radical.Windows.ComponentModel.IDelegateCommand GetCommand(System.Windows.DependencyObject target, System.Windows.DependencyProperty targetProperty) { }
         protected virtual Radical.Windows.CommandBuilders.DelegateCommandBuilder GetCommandBuilder() { }
         protected override void OnDataContextChanged(System.Windows.DependencyObject obj, System.Windows.DependencyProperty targetProperty, object newValue, object oldValue) { }
         public override object ProvideValue(System.IServiceProvider provider) { }
@@ -2878,14 +2875,14 @@ namespace Radical.Windows.Markup
         public BehaviorAutoCommandBinding() { }
         protected override Radical.Windows.CommandBuilders.DelegateCommandBuilder GetCommandBuilder() { }
         protected override void OnProvideValue(System.IServiceProvider provider, object value) { }
-        protected override void SetInputBindings(System.Windows.DependencyObject target, System.Windows.Input.ICommandSource source, Radical.ComponentModel.Windows.Input.IDelegateCommand command) { }
+        protected override void SetInputBindings(System.Windows.DependencyObject target, System.Windows.Input.ICommandSource source, Radical.Windows.ComponentModel.IDelegateCommand command) { }
     }
     public class BehaviorCommandBinding : Radical.Windows.Markup.CommandBinding
     {
         public BehaviorCommandBinding() { }
-        protected override Radical.ComponentModel.Windows.Input.IDelegateCommand GetCommand(System.Windows.DependencyObject target, System.Windows.DependencyProperty targetProperty) { }
+        protected override Radical.Windows.ComponentModel.IDelegateCommand GetCommand(System.Windows.DependencyObject target, System.Windows.DependencyProperty targetProperty) { }
         protected override void OnProvideValue(System.IServiceProvider provider, object value) { }
-        protected override void SetInputBindings(System.Windows.DependencyObject target, System.Windows.Input.ICommandSource source, Radical.ComponentModel.Windows.Input.IDelegateCommand command) { }
+        protected override void SetInputBindings(System.Windows.DependencyObject target, System.Windows.Input.ICommandSource source, Radical.Windows.ComponentModel.IDelegateCommand command) { }
     }
     [System.Windows.Markup.MarkupExtensionReturnType(typeof(object))]
     public abstract class BindingDecoratorBase : System.Windows.Markup.MarkupExtension
@@ -2954,13 +2951,13 @@ namespace Radical.Windows.Markup
     {
         public CommandBinding() { }
         public CommandBinding(string path) { }
-        protected virtual Radical.ComponentModel.Windows.Input.IDelegateCommand GetCommand(System.Windows.DependencyObject target, System.Windows.DependencyProperty targetProperty) { }
+        protected virtual Radical.Windows.ComponentModel.IDelegateCommand GetCommand(System.Windows.DependencyObject target, System.Windows.DependencyProperty targetProperty) { }
         protected virtual System.Windows.FrameworkElement GetRootElement(System.Windows.FrameworkElement fe) { }
         protected virtual void OnDataContextChanged(System.Windows.DependencyObject obj, System.Windows.DependencyProperty targetProperty, object newValue, object oldValue) { }
         protected virtual void OnProvideValue(System.IServiceProvider provider, object value) { }
         protected virtual void OnTargetLoaded(System.Windows.DependencyObject target, System.Windows.DependencyProperty targetProperty) { }
         public override object ProvideValue(System.IServiceProvider provider) { }
-        protected virtual void SetInputBindings(System.Windows.DependencyObject target, System.Windows.Input.ICommandSource source, Radical.ComponentModel.Windows.Input.IDelegateCommand command) { }
+        protected virtual void SetInputBindings(System.Windows.DependencyObject target, System.Windows.Input.ICommandSource source, Radical.Windows.ComponentModel.IDelegateCommand command) { }
     }
     public class EditorBinding : Radical.Windows.Markup.BindingDecoratorBase
     {

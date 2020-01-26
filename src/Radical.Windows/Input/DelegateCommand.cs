@@ -1,6 +1,6 @@
 ﻿using Radical.Analytics;
 using Radical.ComponentModel;
-using Radical.ComponentModel.Windows.Input;
+using Radical.Windows.ComponentModel;
 using Radical.Validation;
 using Radical.Windows.Analytics;
 using System;
