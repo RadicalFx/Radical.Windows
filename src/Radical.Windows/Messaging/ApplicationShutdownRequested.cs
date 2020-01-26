@@ -1,4 +1,6 @@
-﻿namespace Radical.Windows.Presentation.Messaging
+﻿using Radical.Windows.Presentation.Boot;
+
+namespace Radical.Windows.Messaging
 {
     /// <summary>
     /// Notifies that a request to shutdown request has been issued.
@@ -9,7 +11,7 @@
         /// Initializes a new instance of the <see cref="ApplicationShutdownRequested"/> class.
         /// </summary>
         /// <param name="reason">The reason.</param>
-        public ApplicationShutdownRequested( Boot.ApplicationShutdownReason reason )
+        public ApplicationShutdownRequested( ApplicationShutdownReason reason )
         {
             Reason = reason;
         }
@@ -28,6 +30,6 @@
         /// <value>
         /// The shutdown reason.
         /// </value>
-        public Boot.ApplicationShutdownReason Reason { get; private set; }
+        public ApplicationShutdownReason Reason { get; private set; }
     }
 }

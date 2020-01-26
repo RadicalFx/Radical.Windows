@@ -3028,6 +3028,70 @@ namespace Radical.Windows.Markup
         public override object ProvideValue(System.IServiceProvider serviceProvider) { }
     }
 }
+namespace Radical.Windows.Messaging
+{
+    public class ApplicationBootCompleted
+    {
+        public ApplicationBootCompleted() { }
+    }
+    public class ApplicationShutdown
+    {
+        public ApplicationShutdown(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason) { }
+        public Radical.Windows.Presentation.Boot.ApplicationShutdownReason Reason { get; }
+    }
+    public class ApplicationShutdownCanceled
+    {
+        public ApplicationShutdownCanceled(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason) { }
+        public Radical.Windows.Presentation.Boot.ApplicationShutdownReason Reason { get; }
+    }
+    public class ApplicationShutdownRequest
+    {
+        public ApplicationShutdownRequest() { }
+    }
+    public class ApplicationShutdownRequested
+    {
+        public ApplicationShutdownRequested(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason) { }
+        public bool Cancel { get; set; }
+        public Radical.Windows.Presentation.Boot.ApplicationShutdownReason Reason { get; }
+    }
+    public class CloseViewRequest
+    {
+        public CloseViewRequest(object viewOwner) { }
+        public bool? DialogResult { get; set; }
+        public object ViewOwner { get; }
+    }
+    public class ViewLoaded
+    {
+        public ViewLoaded(System.Windows.DependencyObject view) { }
+        public System.Windows.DependencyObject View { get; }
+    }
+    public class ViewModelActivated
+    {
+        public ViewModelActivated(object viewModel) { }
+        public object ViewModel { get; }
+    }
+    public class ViewModelClosed
+    {
+        public ViewModelClosed(object viewModel) { }
+        public object ViewModel { get; }
+    }
+    public class ViewModelClosing
+    {
+        public ViewModelClosing(object viewModel) { }
+        public bool Cancel { get; set; }
+        public object ViewModel { get; }
+    }
+    public class ViewModelLoaded
+    {
+        public ViewModelLoaded(object viewModel) { }
+        public object ViewModel { get; }
+    }
+    public class ViewModelShown
+    {
+        public ViewModelShown(object viewModel) { }
+        public object ViewModel { get; }
+    }
+}
 namespace Radical.Windows.Model
 {
     public class ObservableEntityCollection<T> : Radical.Model.MementoEntityCollection<T>, System.Collections.Specialized.INotifyCollectionChanged, System.ComponentModel.INotifyPropertyChanged
@@ -3356,70 +3420,6 @@ namespace Radical.Windows.Presentation.Boot
         public double Width { get; set; }
         public System.Windows.WindowStartupLocation WindowStartupLocation { get; set; }
         public System.Windows.WindowStyle WindowStyle { get; set; }
-    }
-}
-namespace Radical.Windows.Presentation.Messaging
-{
-    public class ApplicationBootCompleted
-    {
-        public ApplicationBootCompleted() { }
-    }
-    public class ApplicationShutdown
-    {
-        public ApplicationShutdown(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason) { }
-        public Radical.Windows.Presentation.Boot.ApplicationShutdownReason Reason { get; }
-    }
-    public class ApplicationShutdownCanceled
-    {
-        public ApplicationShutdownCanceled(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason) { }
-        public Radical.Windows.Presentation.Boot.ApplicationShutdownReason Reason { get; }
-    }
-    public class ApplicationShutdownRequest
-    {
-        public ApplicationShutdownRequest() { }
-    }
-    public class ApplicationShutdownRequested
-    {
-        public ApplicationShutdownRequested(Radical.Windows.Presentation.Boot.ApplicationShutdownReason reason) { }
-        public bool Cancel { get; set; }
-        public Radical.Windows.Presentation.Boot.ApplicationShutdownReason Reason { get; }
-    }
-    public class CloseViewRequest
-    {
-        public CloseViewRequest(object viewOwner) { }
-        public bool? DialogResult { get; set; }
-        public object ViewOwner { get; }
-    }
-    public class ViewLoaded
-    {
-        public ViewLoaded(System.Windows.DependencyObject view) { }
-        public System.Windows.DependencyObject View { get; }
-    }
-    public class ViewModelActivated
-    {
-        public ViewModelActivated(object viewModel) { }
-        public object ViewModel { get; }
-    }
-    public class ViewModelClosed
-    {
-        public ViewModelClosed(object viewModel) { }
-        public object ViewModel { get; }
-    }
-    public class ViewModelClosing
-    {
-        public ViewModelClosing(object viewModel) { }
-        public bool Cancel { get; set; }
-        public object ViewModel { get; }
-    }
-    public class ViewModelLoaded
-    {
-        public ViewModelLoaded(object viewModel) { }
-        public object ViewModel { get; }
-    }
-    public class ViewModelShown
-    {
-        public ViewModelShown(object viewModel) { }
-        public object ViewModel { get; }
     }
 }
 namespace Radical.Windows.Presentation.Regions

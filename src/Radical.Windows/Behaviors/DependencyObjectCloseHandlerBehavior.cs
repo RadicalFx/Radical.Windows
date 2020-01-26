@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xaml.Behaviors;
 using Radical.ComponentModel.Messaging;
 using Radical.Windows.ComponentModel;
-using Radical.Windows.Presentation.Messaging;
+using Radical.Windows.Messaging;
 using System.Windows;
 
 namespace Radical.Windows.Behaviors

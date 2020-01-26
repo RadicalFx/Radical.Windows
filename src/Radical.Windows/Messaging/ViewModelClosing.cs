@@ -1,4 +1,4 @@
-﻿namespace Radical.Windows.Presentation.Messaging
+﻿namespace Radical.Windows.Messaging
 {
     /// <summary>
     /// Domain event that identifies that a view model is closing.

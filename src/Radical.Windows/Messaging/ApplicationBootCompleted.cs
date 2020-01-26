@@ -1,4 +1,4 @@
-﻿namespace Radical.Windows.Presentation.Messaging
+﻿namespace Radical.Windows.Messaging
 {
     /// <summary>
     /// Issue to notify that the application boot process has been completed.

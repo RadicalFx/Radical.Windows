@@ -1,15 +1,15 @@
-﻿namespace Radical.Windows.Presentation.Messaging
+﻿namespace Radical.Windows.Messaging
 {
     /// <summary>
-    /// Domain event that identifies that a view model has been shown.
+    /// Domain event that identifies that a view model has been activated.
     /// </summary>
-    public class ViewModelShown
+    public class ViewModelActivated
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ViewModelShown"/> class.
+        /// Initializes a new instance of the <see cref="ViewModelActivated"/> class.
         /// </summary>
         /// <param name="viewModel">The view model.</param>
-        public ViewModelShown( object viewModel )
+        public ViewModelActivated(object viewModel)
         {
             ViewModel = viewModel;
         }

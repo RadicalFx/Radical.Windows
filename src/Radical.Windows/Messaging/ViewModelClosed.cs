@@ -1,15 +1,16 @@
-﻿namespace Radical.Windows.Presentation.Messaging
+﻿namespace Radical.Windows.Messaging
 {
+#pragma warning disable 0618
     /// <summary>
-    /// Domain event that identifies that a view model has been loaded.
+    /// Domain event that identifies that a view model has been closed.
     /// </summary>
-    public class ViewModelLoaded
+    public class ViewModelClosed
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ViewModelLoaded"/> class.
+        /// Initializes a new instance of the <see cref="ViewModelClosed"/> class.
         /// </summary>
         /// <param name="viewModel">The view model.</param>
-        public ViewModelLoaded(object viewModel)
+        public ViewModelClosed(object viewModel )
         {
             ViewModel = viewModel;
         }
@@ -19,4 +20,6 @@
         /// </summary>
         public object ViewModel { get; private set; }
     }
+
+#pragma warning restore 0618
 }

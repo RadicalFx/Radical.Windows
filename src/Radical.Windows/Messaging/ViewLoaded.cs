@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Radical.Windows.Presentation.Messaging
+namespace Radical.Windows.Messaging
 {
     /// <summary>
     /// Domain event that identifies that a view has been loaded.

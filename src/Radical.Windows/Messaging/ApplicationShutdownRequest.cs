@@ -1,4 +1,4 @@
-﻿namespace Radical.Windows.Presentation.Messaging
+﻿namespace Radical.Windows.Messaging
 {
     /// <summary>
     /// Issue a request to shutdown the current application.

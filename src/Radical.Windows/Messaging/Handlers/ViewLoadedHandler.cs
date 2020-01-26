@@ -2,7 +2,7 @@
 using Radical.Messaging;
 using Radical.Windows.ComponentModel;
 
-namespace Radical.Windows.Presentation.Messaging.Handlers
+namespace Radical.Windows.Messaging.Handlers
 {
     class ViewLoadedHandler: AbstractMessageHandler<ViewLoaded>, INeedSafeSubscription
     {

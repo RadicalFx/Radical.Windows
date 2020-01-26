@@ -6,7 +6,7 @@ using Radical.Linq;
 using Radical.Reflection;
 using Radical.Validation;
 using Radical.Windows.ComponentModel;
-using Radical.Windows.Presentation.Messaging;
+using Radical.Windows.Messaging;
 using Radical.Windows.Presentation.Regions;
 using Radical.Windows.Services;
 using System;
