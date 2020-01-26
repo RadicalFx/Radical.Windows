@@ -2862,11 +2862,6 @@ namespace Radical.Windows
         public static void AddListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
         public static void RemoveListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
     }
-    public sealed class RandomSolidColorBrush
-    {
-        public RandomSolidColorBrush() { }
-        public System.Windows.Media.SolidColorBrush Next() { }
-    }
     public static class VisualTreeCrawler
     {
         public static T FindChild<T>(this System.Windows.DependencyObject source)
@@ -3361,14 +3356,6 @@ namespace Radical.Windows.Presentation.Boot
         public double Width { get; set; }
         public System.Windows.WindowStartupLocation WindowStartupLocation { get; set; }
         public System.Windows.WindowStyle WindowStyle { get; set; }
-    }
-}
-namespace Radical.Windows.Presentation.Helpers
-{
-    public class EnvironmentHelper
-    {
-        public EnvironmentHelper() { }
-        public static string GetCurrentDirectory() { }
     }
 }
 namespace Radical.Windows.Presentation.Messaging

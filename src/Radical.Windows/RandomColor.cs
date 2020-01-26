@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace Radical.Windows
 {
-    public sealed class RandomSolidColorBrush
+    sealed class RandomSolidColorBrush
     {
         readonly Random random;
         readonly PropertyInfo[] _props;

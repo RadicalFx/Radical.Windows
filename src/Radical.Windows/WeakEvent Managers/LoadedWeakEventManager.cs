@@ -20,14 +20,12 @@ namespace Radical.Windows
 
         public static void AddListener(FrameworkElement source, IWeakEventListener listener)
         {
-
             GetCurrentManager()
                 .ProtectedAddListener(source, listener);
         }
 
         public static void RemoveListener(FrameworkElement source, IWeakEventListener listener)
         {
-
             GetCurrentManager()
                 .ProtectedRemoveListener(source, listener);
         }
