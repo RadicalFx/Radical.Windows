@@ -7,7 +7,7 @@
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/effects", "Radical.Windows.Effects")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/input", "Radical.Windows.Input")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/markup", "Radical.Windows.Markup")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/presentation/regions", "Radical.Windows.Presentation.Regions")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/regions", "Radical.Windows.Regions")]
 namespace Radical.ComponentModel
 {
     public interface IEntityCollectionView<T> : Radical.ComponentModel.IEntityView, Radical.ComponentModel.IEntityView<T>, System.Collections.Generic.IEnumerable<Radical.ComponentModel.IEntityItemView<T>>, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList, System.Collections.Specialized.INotifyCollectionChanged, System.ComponentModel.IBindingList, System.ComponentModel.IBindingListView, System.ComponentModel.ICollectionView, System.ComponentModel.ICollectionViewFactory, System.ComponentModel.INotifyPropertyChanged, System.ComponentModel.ISupportInitialize, System.ComponentModel.ITypedList { }
