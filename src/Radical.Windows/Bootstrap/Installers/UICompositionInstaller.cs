@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Radical.Windows.ComponentModel;
 using Radical.Windows.Bootstrap.Features;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Regions;
 using System;
 using System.Collections.Generic;

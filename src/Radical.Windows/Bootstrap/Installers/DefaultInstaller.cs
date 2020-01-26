@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Radical.ComponentModel;
-using Radical.Windows.ComponentModel;
 using Radical.Windows.Bootstrap.Features;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Threading;
 using System;
 using System.Collections.Generic;

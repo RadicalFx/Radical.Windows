@@ -1,8 +1,8 @@
 ﻿using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Radical.ComponentModel.Messaging;
-using Radical.Windows.ComponentModel;
 using Radical.Windows.Bootstrap;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Services;
 
 namespace Radical.Windows.Tests.Conventions

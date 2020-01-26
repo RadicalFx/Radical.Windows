@@ -1,5 +1,4 @@
 ﻿using Radical.Windows.ComponentModel;
-using Radical.Windows.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Windows;
