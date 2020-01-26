@@ -3422,16 +3422,16 @@ namespace Radical.Windows.Presentation.Boot
         public System.Windows.WindowStyle WindowStyle { get; set; }
     }
 }
-namespace Radical.Windows.Presentation.Regions
+namespace Radical.Windows.Regions
 {
-    public sealed class ContentPresenterRegion : Radical.Windows.Presentation.Regions.ContentRegion<System.Windows.Controls.ContentPresenter>
+    public sealed class ContentPresenterRegion : Radical.Windows.Regions.ContentRegion<System.Windows.Controls.ContentPresenter>
     {
         public ContentPresenterRegion() { }
         public ContentPresenterRegion(string name) { }
         protected override System.Windows.DependencyObject OnGetContent() { }
         protected override void OnSetContent(System.Windows.DependencyObject view, System.ComponentModel.CancelEventArgs args) { }
     }
-    public abstract class ContentRegion<T> : Radical.Windows.Presentation.Regions.Region<T>, Radical.Windows.ComponentModel.IContentRegion, Radical.Windows.ComponentModel.IRegion
+    public abstract class ContentRegion<T> : Radical.Windows.Regions.Region<T>, Radical.Windows.ComponentModel.IContentRegion, Radical.Windows.ComponentModel.IRegion
         where T : System.Windows.FrameworkElement
     {
         protected ContentRegion() { }
@@ -3442,7 +3442,7 @@ namespace Radical.Windows.Presentation.Regions
         protected abstract void OnSetContent(System.Windows.DependencyObject view, System.ComponentModel.CancelEventArgs args);
         public override void Shutdown() { }
     }
-    public abstract class ElementsRegion<T> : Radical.Windows.Presentation.Regions.Region<T>, Radical.Windows.ComponentModel.IElementsRegion, Radical.Windows.ComponentModel.IRegion
+    public abstract class ElementsRegion<T> : Radical.Windows.Regions.Region<T>, Radical.Windows.ComponentModel.IElementsRegion, Radical.Windows.ComponentModel.IRegion
         where T : System.Windows.FrameworkElement
     {
         protected ElementsRegion() { }
@@ -3452,18 +3452,18 @@ namespace Radical.Windows.Presentation.Regions
             where TView : System.Windows.DependencyObject { }
         protected abstract void OnAdd(System.Windows.DependencyObject view);
         protected virtual void OnAdded(System.Windows.DependencyObject view) { }
-        protected abstract void OnRemove(System.Windows.DependencyObject view, Radical.Windows.Presentation.Regions.RemoveReason reason);
-        protected virtual void OnRemoved(System.Windows.DependencyObject view, Radical.Windows.Presentation.Regions.RemoveReason reason) { }
+        protected abstract void OnRemove(System.Windows.DependencyObject view, Radical.Windows.Regions.RemoveReason reason);
+        protected virtual void OnRemoved(System.Windows.DependencyObject view, Radical.Windows.Regions.RemoveReason reason) { }
         public void Remove(System.Windows.DependencyObject view) { }
-        protected void Remove(System.Windows.DependencyObject view, Radical.Windows.Presentation.Regions.RemoveReason reason) { }
+        protected void Remove(System.Windows.DependencyObject view, Radical.Windows.Regions.RemoveReason reason) { }
         public override void Shutdown() { }
     }
-    public sealed class PanelRegion : Radical.Windows.Presentation.Regions.ElementsRegion<System.Windows.Controls.Panel>
+    public sealed class PanelRegion : Radical.Windows.Regions.ElementsRegion<System.Windows.Controls.Panel>
     {
         public PanelRegion() { }
         public PanelRegion(string name) { }
         protected override void OnAdd(System.Windows.DependencyObject view) { }
-        protected override void OnRemove(System.Windows.DependencyObject view, Radical.Windows.Presentation.Regions.RemoveReason reason) { }
+        protected override void OnRemove(System.Windows.DependencyObject view, Radical.Windows.Regions.RemoveReason reason) { }
     }
     public static class RegionExtensions
     {
@@ -3534,7 +3534,7 @@ namespace Radical.Windows.Presentation.Regions
         UserRequest = 0,
         InternalRequest = 1,
     }
-    public abstract class SwitchingElementsRegion<T> : Radical.Windows.Presentation.Regions.ElementsRegion<T>, Radical.Windows.ComponentModel.IElementsRegion, Radical.Windows.ComponentModel.IRegion, Radical.Windows.ComponentModel.ISwitchingElementsRegion
+    public abstract class SwitchingElementsRegion<T> : Radical.Windows.Regions.ElementsRegion<T>, Radical.Windows.ComponentModel.IElementsRegion, Radical.Windows.ComponentModel.IRegion, Radical.Windows.ComponentModel.ISwitchingElementsRegion
         where T : System.Windows.FrameworkElement
     {
         protected SwitchingElementsRegion() { }
@@ -3546,14 +3546,14 @@ namespace Radical.Windows.Presentation.Regions
         protected virtual void OnActiveContentChanged() { }
         protected virtual object TryGetViewModel(System.Windows.DependencyObject view) { }
     }
-    public class TabControlRegion : Radical.Windows.Presentation.Regions.SwitchingElementsRegion<System.Windows.Controls.TabControl>
+    public class TabControlRegion : Radical.Windows.Regions.SwitchingElementsRegion<System.Windows.Controls.TabControl>
     {
         public TabControlRegion() { }
         public TabControlRegion(string name) { }
         public override System.Windows.DependencyObject ActiveContent { get; }
         public override void Activate(System.Windows.DependencyObject content) { }
         protected override void OnAdd(System.Windows.DependencyObject view) { }
-        protected override void OnRemove(System.Windows.DependencyObject view, Radical.Windows.Presentation.Regions.RemoveReason reason) { }
+        protected override void OnRemove(System.Windows.DependencyObject view, Radical.Windows.Regions.RemoveReason reason) { }
         protected virtual object TryGetHeader(System.Windows.DependencyObject view) { }
     }
 }

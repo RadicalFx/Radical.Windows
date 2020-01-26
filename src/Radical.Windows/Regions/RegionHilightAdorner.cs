@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Radical.Windows.Presentation.Regions
+namespace Radical.Windows.Regions
 {
     sealed class RegionHilightAdorner : Radical.Windows.Controls.OverlayAdorner
     {

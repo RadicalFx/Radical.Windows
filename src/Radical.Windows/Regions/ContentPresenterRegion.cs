@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Radical.Windows.Presentation.Regions
+namespace Radical.Windows.Regions
 {
     /// <summary>
     /// An content region hosted by a ContentPresenter.

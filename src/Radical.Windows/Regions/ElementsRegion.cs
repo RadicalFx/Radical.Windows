@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Regions
+namespace Radical.Windows.Regions
 {
     /// <summary>
     /// A base abstract implementation of the <see cref="IElementsRegion"/>.

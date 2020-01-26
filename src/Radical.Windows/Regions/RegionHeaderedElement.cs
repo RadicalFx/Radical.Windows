@@ -1,7 +1,7 @@
 using System;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Regions
+namespace Radical.Windows.Regions
 {
     /// <summary>
     /// A static class used to manage the attached properties for a region headered element.

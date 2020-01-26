@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Regions
+namespace Radical.Windows.Regions
 {
     /// <summary>
     /// A base abstract implementation for the <see cref="ISwitchingElementsRegion"/>.

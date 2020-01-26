@@ -2,7 +2,7 @@
 using Radical.Windows.ComponentModel;
 using System;
 
-namespace Radical.Windows.Presentation.Regions
+namespace Radical.Windows.Regions
 {
     /// <summary>
     /// Default region manager factory.

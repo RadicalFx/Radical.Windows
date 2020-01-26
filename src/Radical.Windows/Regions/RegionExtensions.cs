@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Regions
+namespace Radical.Windows.Regions
 {
     /// <summary>
     /// Region extensions.

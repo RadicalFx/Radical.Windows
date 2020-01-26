@@ -3,7 +3,7 @@ using Radical.Windows.ComponentModel;
 using System;
 using System.Collections.Generic;
 
-namespace Radical.Windows.Presentation.Regions
+namespace Radical.Windows.Regions
 {
     /// <summary>
     /// Default region manager.

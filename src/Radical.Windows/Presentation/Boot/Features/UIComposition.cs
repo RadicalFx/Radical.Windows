@@ -1,5 +1,5 @@
 ﻿using Radical.Windows.ComponentModel;
-using Radical.Windows.Presentation.Regions;
+using Radical.Windows.Regions;
 using System;
 
 namespace Radical.Windows.Presentation.Boot.Features

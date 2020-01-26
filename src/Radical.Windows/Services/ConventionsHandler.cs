@@ -6,7 +6,7 @@ using Radical.Reflection;
 using Radical.Windows.Behaviors;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation.Boot;
-using Radical.Windows.Presentation.Regions;
+using Radical.Windows.Regions;
 using System;
 using System.Linq;
 using System.Reflection;

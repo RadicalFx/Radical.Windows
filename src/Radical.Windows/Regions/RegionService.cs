@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 
-namespace Radical.Windows.Presentation.Regions
+namespace Radical.Windows.Regions
 {
     /// <summary>
     /// The region service is responsible for managing regions, shell regions and
