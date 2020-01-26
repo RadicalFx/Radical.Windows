@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using DataAnnotations = System.ComponentModel.DataAnnotations;
 
-namespace Radical.Windows.Services.Validation
+namespace Radical.Windows.Validation
 {
     /// <summary>
     /// DataAnnotationValidationService factory.

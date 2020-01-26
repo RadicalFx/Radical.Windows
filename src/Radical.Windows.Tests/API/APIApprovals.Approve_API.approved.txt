@@ -3557,7 +3557,20 @@ namespace Radical.Windows.Regions
         protected virtual object TryGetHeader(System.Windows.DependencyObject view) { }
     }
 }
-namespace Radical.Windows.Services.Validation
+namespace Radical.Windows.Threading
+{
+    public sealed class WpfDispatcher : Radical.ComponentModel.IDispatcher
+    {
+        public WpfDispatcher(System.Windows.Threading.Dispatcher dispatcher) { }
+        public bool IsSafe { get; }
+        public void Dispatch(System.Action action) { }
+        public TResult Dispatch<TResult>(System.Func<TResult> func) { }
+        public void Dispatch<T>(T arg, System.Action<T> action) { }
+        public void Dispatch<T1, T2>(T1 arg1, T2 arg2, System.Action<T1, T2> action) { }
+        public void Invoke(System.Delegate d, params object[] args) { }
+    }
+}
+namespace Radical.Windows.Validation
 {
     public abstract class AbstractValidationService : Radical.Windows.ComponentModel.IValidationService
     {
@@ -3579,37 +3592,24 @@ namespace Radical.Windows.Services.Validation
     }
     public static class DataAnnotationValidationService
     {
-        public static Radical.Windows.Services.Validation.DataAnnotationValidationService<TEntity> CreateFor<TEntity>(TEntity entity) { }
+        public static Radical.Windows.Validation.DataAnnotationValidationService<TEntity> CreateFor<TEntity>(TEntity entity) { }
     }
-    public class DataAnnotationValidationService<TEntity> : Radical.Windows.Services.Validation.AbstractValidationService
+    public class DataAnnotationValidationService<TEntity> : Radical.Windows.Validation.AbstractValidationService
     {
         public DataAnnotationValidationService(TEntity entity) { }
         public System.Func<string, object, object> PropertyValueGetter { get; set; }
-        public Radical.Windows.Services.Validation.DataAnnotationValidationService<TEntity> AddRule(System.Linq.Expressions.Expression<System.Func<TEntity, object>> property, System.Func<Radical.Validation.ValidationContext<TEntity>, Radical.Validation.ValidationResult> rule) { }
+        public Radical.Windows.Validation.DataAnnotationValidationService<TEntity> AddRule(System.Linq.Expressions.Expression<System.Func<TEntity, object>> property, System.Func<Radical.Validation.ValidationContext<TEntity>, Radical.Validation.ValidationResult> rule) { }
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidateProperty(string propertyName) { }
     }
-    public sealed class DelegateValidationService : Radical.Windows.Services.Validation.AbstractValidationService
+    public sealed class DelegateValidationService : Radical.Windows.Validation.AbstractValidationService
     {
         public DelegateValidationService(System.Func<System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> validationCallback) { }
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
     }
-    public sealed class NullValidationService : Radical.Windows.Services.Validation.AbstractValidationService
+    public sealed class NullValidationService : Radical.Windows.Validation.AbstractValidationService
     {
         public static readonly Radical.Windows.ComponentModel.IValidationService Instance;
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
-    }
-}
-namespace Radical.Windows.Threading
-{
-    public sealed class WpfDispatcher : Radical.ComponentModel.IDispatcher
-    {
-        public WpfDispatcher(System.Windows.Threading.Dispatcher dispatcher) { }
-        public bool IsSafe { get; }
-        public void Dispatch(System.Action action) { }
-        public TResult Dispatch<TResult>(System.Func<TResult> func) { }
-        public void Dispatch<T>(T arg, System.Action<T> action) { }
-        public void Dispatch<T1, T2>(T1 arg1, T2 arg2, System.Action<T1, T2> action) { }
-        public void Invoke(System.Delegate d, params object[] args) { }
     }
 }

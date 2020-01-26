@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Radical.Validation;
-using Radical.Windows.Services.Validation;
+using Radical.Windows.Validation;
 using System.Collections.Generic;
 using System.Linq;
 
