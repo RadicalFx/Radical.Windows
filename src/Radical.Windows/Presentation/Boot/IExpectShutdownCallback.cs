@@ -4,7 +4,7 @@ namespace Radical.Windows.Presentation.Boot
 {
     /// <summary>
     /// Allows a third party component to be notified when the
-    /// application lifecycle state changes.
+    /// application life-cycle state changes.
     /// </summary>
     [ToolkitComponentAttribute]
     public interface IExpectShutdownCallback

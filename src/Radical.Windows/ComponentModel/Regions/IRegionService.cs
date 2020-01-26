@@ -29,7 +29,7 @@ namespace Radical.Windows.ComponentModel
         /// Gets a known region manager. A known region manager is a region
         /// manager associated with a view type and not with a view instance.
         /// Tipically this region manager is a static region manager that exists
-        /// for all the application lifecycle. A good sample of a known region
+        /// for all the application life-cycle. A good sample of a known region
         /// manager is the Shell RegionManager that exists always.
         /// </summary>
         /// <typeparam name="TView">The type of the view.</typeparam>

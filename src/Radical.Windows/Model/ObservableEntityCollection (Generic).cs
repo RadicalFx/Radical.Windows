@@ -152,7 +152,7 @@ namespace Radical.Windows.Model
 
         ///// <summary>
         ///// Called in order to create a new view.
-        ///// Overrdie this memeber to customize the creation process.
+        ///// Override this member to customize the creation process.
         ///// </summary>
         ///// <returns>An instance of a view.</returns>
         //protected override IEntityView<T> OnCreateView()

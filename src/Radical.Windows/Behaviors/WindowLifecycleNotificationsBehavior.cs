@@ -12,7 +12,7 @@ using System.Windows;
 namespace Radical.Windows.Behaviors
 {
     /// <summary>
-    /// Wires the window lifecycle to a view model that requires lifecycle notifications.
+    /// Wires the window life-cycle to a view model that requires life-cycle notifications.
     /// </summary>
     public class WindowLifecycleNotificationsBehavior : RadicalBehavior<Window>
     {

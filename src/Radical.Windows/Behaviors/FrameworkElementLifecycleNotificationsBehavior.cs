@@ -6,7 +6,7 @@ using System.Windows;
 namespace Radical.Windows.Behaviors
 {
     /// <summary>
-    /// Wires the FrameworkElement lifecycle to a view model that requires lifecycle notifications.
+    /// Wires the FrameworkElement life-cycle to a view model that requires life-cycle notifications.
     /// </summary>
     public class FrameworkElementLifecycleNotificationsBehavior : RadicalBehavior<FrameworkElement>
     {
