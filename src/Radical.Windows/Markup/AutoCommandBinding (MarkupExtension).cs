@@ -1,6 +1,6 @@
-﻿using Radical.ComponentModel.Windows.Input;
-using Radical.Windows.Behaviors;
+﻿using Radical.Windows.Behaviors;
 using Radical.Windows.CommandBuilders;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Input;
 using System;
 using System.Diagnostics;

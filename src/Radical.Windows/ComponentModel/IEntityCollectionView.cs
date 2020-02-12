@@ -7,7 +7,6 @@
         IEntityView<T>,
         INotifyCollectionChanged,
         ICollectionView,
-        /* IEditableCollectionView, */
         ICollectionViewFactory
     {
 

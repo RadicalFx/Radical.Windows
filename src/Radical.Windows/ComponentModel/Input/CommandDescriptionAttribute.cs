@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Radical.ComponentModel.Windows.Input
+namespace Radical.Windows.ComponentModel
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class CommandDescriptionAttribute : Attribute

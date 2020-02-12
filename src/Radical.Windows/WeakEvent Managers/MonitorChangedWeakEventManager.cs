@@ -30,7 +30,6 @@ namespace Radical.Windows
         /// <param name="listener">The listener.</param>
         public static void AddListener(IMonitor source, IWeakEventListener listener)
         {
-
             GetCurrentManager()
                 .ProtectedAddListener(source, listener);
         }
@@ -42,7 +41,6 @@ namespace Radical.Windows
         /// <param name="listener">The listener.</param>
         public static void RemoveListener(IMonitor source, IWeakEventListener listener)
         {
-
             GetCurrentManager()
                 .ProtectedRemoveListener(source, listener);
         }

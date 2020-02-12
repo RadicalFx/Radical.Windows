@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Radical.ComponentModel.Validation;
 using Radical.Validation;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation;
-using Radical.Windows.Presentation.ComponentModel;
-using Radical.Windows.Presentation.Services.Validation;
+using Radical.Windows.Validation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

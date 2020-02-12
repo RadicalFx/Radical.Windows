@@ -1,5 +1,4 @@
 ﻿using Radical.Conversions;
-//using log4net;
 using Radical.Diagnostics;
 using Radical.Linq;
 using Radical.Validation;
@@ -17,8 +16,7 @@ namespace Radical.Windows.Behaviors
     public static class ListViewManager
     {
         static readonly TraceSource logger = new TraceSource(typeof(ListViewManager).FullName);
-        //static readonly ILog logger = LogManager.GetLogger( typeof( ListViewManager ) );
-
+        
         static readonly RoutedEventHandler onLoaded = (s, e) =>
         {
             var lv = (ListView)s;
@@ -35,26 +33,6 @@ namespace Radical.Windows.Behaviors
 
             AdjustColumns(lv);
         };
-
-        //static readonly RoutedEventHandler onListViewGotFocus = ( s, e ) =>
-        //{
-        //    //if( !( e.OriginalSource is ListViewItem ) && ListViewManagerHelper.IsInsideListViewItem( e.OriginalSource as DependencyObject ) )
-        //    //{
-        //    //    var lv = ( ListView )s;
-        //    //    var lvi = ListViewManagerHelper.FindListViewItem( e.OriginalSource as DependencyObject );
-
-        //    //    //var dataContext = ( e.OriginalSource is FrameworkElement )
-        //    //    //                    ? ( ( FrameworkElement )e.OriginalSource ).DataContext
-        //    //    //                    : null;
-
-        //    //    //var command = GetItemDoubleClickCommand( ( DependencyObject )s );
-
-        //    //    //if( command != null && command.CanExecute( dataContext ) )
-        //    //    //{
-        //    //    //    command.Execute( dataContext );
-        //    //    //}
-        //    //}
-        //};
 
         static readonly MouseButtonEventHandler onListViewDblClick = (s, e) =>
         {
@@ -440,45 +418,6 @@ namespace Radical.Windows.Behaviors
                 }
             }
         }
-
-        //#region Attached Property: AutoSelectItemOnChildFocus
-
-        //public static readonly DependencyProperty AutoSelectItemOnChildFocusProperty = DependencyProperty.RegisterAttached(
-        //                              "AutoSelectItemOnChildFocus",
-        //                              typeof( Boolean ),
-        //                              typeof( ListViewManager ),
-        //                              new FrameworkPropertyMetadata( false, OnAutoSelectItemOnChildFocusChanged ) );
-
-
-        //public static Boolean GetAutoSelectItemOnChildFocus( DependencyObject owner )
-        //{
-        //    return ( Boolean )owner.GetValue( AutoSelectItemOnChildFocusProperty );
-        //}
-
-        //public static void SetAutoSelectItemOnChildFocus( DependencyObject owner, Boolean value )
-        //{
-        //    owner.SetValue( AutoSelectItemOnChildFocusProperty, value );
-        //}
-
-        //#endregion
-
-        //private static void OnAutoSelectItemOnChildFocusChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
-        //{
-        //    if( !DesignTimeHelper.GetIsInDesignMode() )
-        //    {
-        //        var listView = Ensure.That( d as ListView )
-        //            .Named( "d" )
-        //            .WithMessage( "This behavior can be attached only to ListView(s)." )
-        //            .IsNotNull()
-        //            .GetValue();
-
-        //        if( !ListViewManager.GetIsLoadEventAttached( listView ) )
-        //        {
-        //            listView.Loaded += onLoaded;
-        //            ListViewManager.SetIsLoadEventAttached( listView, true );
-        //        }
-        //    }
-        //}
     }
 }
 

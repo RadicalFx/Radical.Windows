@@ -1,8 +1,8 @@
 ﻿using Radical.Analytics;
 using Radical.ComponentModel;
-using Radical.ComponentModel.Windows.Input;
 using Radical.Validation;
 using Radical.Windows.Analytics;
+using Radical.Windows.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Windows;

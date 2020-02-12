@@ -1,6 +1,6 @@
-﻿using Radical.ComponentModel.Windows.Input;
-using Radical.Observers;
+﻿using Radical.Observers;
 using Radical.Validation;
+using Radical.Windows.ComponentModel;
 using System;
 using System.ComponentModel;
 using System.Linq;

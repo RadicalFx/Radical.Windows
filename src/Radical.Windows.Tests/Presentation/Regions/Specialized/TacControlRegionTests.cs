@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation;
-using Radical.Windows.Presentation.ComponentModel;
-using Radical.Windows.Presentation.Regions;
+using Radical.Windows.Regions;
 using System;
 using System.Threading;
 using System.Windows;
