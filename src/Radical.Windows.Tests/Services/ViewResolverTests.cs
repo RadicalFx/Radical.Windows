@@ -7,6 +7,7 @@ using Radical.Windows.Services;
 using Radical.Windows.Tests.Services.Presentation;
 using System;
 using System.Threading;
+using System.Windows;
 
 namespace Radical.Windows.Tests.Services
 {
