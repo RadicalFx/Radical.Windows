@@ -9,7 +9,6 @@ using Radical.Windows.Bootstrap;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Messaging;
 using Radical.Windows.Regions;
-using Radical.Windows.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -202,6 +201,7 @@ namespace Radical.Windows
             var conventions = new BootstrapConventions();
             onBeforeInstall?.Invoke(conventions, assemblyScanner);
             services.AddSingleton(conventions);
+            services.AddSingleton(resourcesRegistrationHolder);
 
             var assemblies = assemblyScanner.Scan();
             var allTypes = assemblies
@@ -257,10 +257,7 @@ namespace Radical.Windows
 
         void ExposeRegisteredAppResources()
         {
-            var holder = (ResourcesRegistrationHolder)serviceProvider.GetService(typeof(ResourcesRegistrationHolder));
-            holder.Registrations = resources;
-
-            if (holder.Registrations.TryGetValue(Application.Current.GetType(), out HashSet<Type> services) && services.Any())
+            if (resourcesRegistrationHolder.Registrations.TryGetValue(Application.Current.GetType(), out HashSet<Type> services) && services.Any())
             {
                 var conventions = (IConventionsHandler)serviceProvider.GetService(typeof(IConventionsHandler));
                 foreach (var type in services)
@@ -272,7 +269,7 @@ namespace Radical.Windows
             }
         }
 
-        readonly IDictionary<Type, HashSet<Type>> resources = new Dictionary<Type, HashSet<Type>>();
+        readonly ResourcesRegistrationHolder resourcesRegistrationHolder = new ResourcesRegistrationHolder();
 
         /// <summary>
         /// Exposes the given service type as resource in the App resources.
@@ -303,10 +300,10 @@ namespace Radical.Windows
         /// <returns></returns>
         internal ApplicationBootstrapper ExposeAsResource(Type serviceType, Type resourceOwner)
         {
-            if (!resources.TryGetValue(resourceOwner, out HashSet<Type> types))
+            if (!resourcesRegistrationHolder.Registrations.TryGetValue(resourceOwner, out HashSet<Type> types))
             {
                 types = new HashSet<Type>();
-                resources.Add(resourceOwner, new HashSet<Type>());
+                resourcesRegistrationHolder.Registrations.Add(resourceOwner, new HashSet<Type>());
             }
 
             Ensure.That(types)

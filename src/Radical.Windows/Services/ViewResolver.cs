@@ -22,6 +22,7 @@ namespace Radical.Windows.Services
         /// </summary>
         /// <param name="container">The container.</param>
         /// <param name="conventions">The conventions.</param>
+        /// <param name="resourcesRegistrationHolder">A ResourcesRegistrationHolder instance.</param>
         public ViewResolver(IServiceProvider container, IConventionsHandler conventions, ResourcesRegistrationHolder resourcesRegistrationHolder)
         {
             Ensure.That(container).Named(nameof(container)).IsNotNull();
