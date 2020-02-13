@@ -9,9 +9,6 @@ namespace Radical.Windows.Tests
         [TestMethod]
         public void GrayscaleEffect_ctor_should_load_resource() 
         {
-            if (!UriParser.IsKnownScheme("pack"))
-                new System.Windows.Application();
-
             new Effects.GrayscaleEffect();
         }
     }

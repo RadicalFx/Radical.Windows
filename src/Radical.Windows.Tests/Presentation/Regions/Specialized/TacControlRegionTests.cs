@@ -82,31 +82,28 @@ namespace Test.Radical.Windows.Presentation.Regions.Specialized
         [TestCategory( "TabControlRegion" ), TestCategory( "Regions" ), TestCategory( "UI Composition" )]
         public void TabControlRegion_ActiveContentChanged_should_notify_VM_if_IExpectViewActivatedCallback()
         {
-            TestRunner.Execute(ApartmentState.STA, () => 
+            var sut = new TestTabControlRegion();
+            sut.ProvideValue(new HardCodedServiceProvider());
+
+            var vm1 = new TestViewModel();
+            var item1 = new UserControl()
             {
-                var sut = new TestTabControlRegion();
-                sut.ProvideValue(new HardCodedServiceProvider());
+                DataContext = vm1
+            };
+            sut.Add(item1);
 
-                var vm1 = new TestViewModel();
-                var item1 = new UserControl()
-                {
-                    DataContext = vm1
-                };
-                sut.Add(item1);
+            var vm2 = new TestViewModel();
+            var item2 = new UserControl()
+            {
+                DataContext = vm2
+            };
+            sut.Add(item2);
 
-                var vm2 = new TestViewModel();
-                var item2 = new UserControl()
-                {
-                    DataContext = vm2
-                };
-                sut.Add(item2);
+            sut.Activate(item2);
+            sut.Activate(item1);
 
-                sut.Activate(item2);
-                sut.Activate(item1);
-
-                Assert.IsTrue(vm1.Invoked);
-                Assert.IsTrue(vm2.Invoked);
-            });
+            Assert.IsTrue(vm1.Invoked);
+            Assert.IsTrue(vm2.Invoked);
         }
     }
 }
