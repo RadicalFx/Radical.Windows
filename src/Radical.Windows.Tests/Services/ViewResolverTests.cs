@@ -6,15 +6,13 @@ using Radical.Windows.ComponentModel;
 using Radical.Windows.Services;
 using Radical.Windows.Tests.Services.Presentation;
 using System;
-using System.Threading;
-using System.Windows;
 
 namespace Radical.Windows.Tests.Services
 {
     [TestClass()]
     public class ViewResolverTests
     {
-        [TestMethod()]
+        [SingleThreadedApartmentTestMethod()]
         public void ViewResolver_resolve_should_resolve_expected_view() 
         {
             var conventions = new ConventionsHandler(A.Fake<IMessageBroker>(), A.Fake<IReleaseComponents>(), new BootstrapConventions());

@@ -4,7 +4,6 @@ using Radical.Windows.Presentation;
 using Radical.Windows.Regions;
 using Radical.Windows.Tests;
 using System;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -78,8 +77,7 @@ namespace Test.Radical.Windows.Presentation.Regions.Specialized
             }
         }
 
-        [TestMethod]
-        [TestCategory( "TabControlRegion" ), TestCategory( "Regions" ), TestCategory( "UI Composition" )]
+        [SingleThreadedApartmentTestMethod, TestCategory( "TabControlRegion" ), TestCategory( "Regions" ), TestCategory( "UI Composition" )]
         public void TabControlRegion_ActiveContentChanged_should_notify_VM_if_IExpectViewActivatedCallback()
         {
             var sut = new TestTabControlRegion();

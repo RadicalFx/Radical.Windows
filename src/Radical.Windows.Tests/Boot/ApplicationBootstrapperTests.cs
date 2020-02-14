@@ -7,7 +7,7 @@ namespace Radical.Windows.Tests.Boot
     [TestClass]
     public class ApplicationBootstrapperTests
     {
-        [TestMethod]
+        [SharedApplicationTestMethod]
         public void ApplicationBoot_process_should_create_valid_container() 
         {
             IServiceProvider container = null;
