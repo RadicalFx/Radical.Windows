@@ -2485,7 +2485,7 @@ namespace Radical.Windows.Bootstrap
         public int MinimumDelay { get; set; }
         public System.Windows.SizeToContent SizeToContent { get; set; }
         public System.Type SplashScreenViewType { get; set; }
-        public System.Action<System.IServiceProvider> StartupAsyncWork { get; set; }
+        public System.Func<System.IServiceProvider, System.Threading.Tasks.Task> StartupAsyncWork { get; set; }
         public double Width { get; set; }
         public System.Windows.WindowStartupLocation WindowStartupLocation { get; set; }
         public System.Windows.WindowStyle WindowStyle { get; set; }

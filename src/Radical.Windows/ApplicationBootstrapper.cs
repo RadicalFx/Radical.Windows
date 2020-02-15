@@ -474,16 +474,20 @@ namespace Radical.Windows
             {
                 var splashScreen = showSplash();
 
-                void action()
+                async Task action()
                 {
                     var sw = Stopwatch.StartNew();
-                    splashScreenConfiguration.StartupAsyncWork(serviceProvider);
+                    
+                    await splashScreenConfiguration.StartupAsyncWork(serviceProvider)
+                        .ConfigureAwait(true);
+                    
                     sw.Stop();
                     var elapsed = (int)sw.ElapsedMilliseconds;
                     var remaining = splashScreenConfiguration.MinimumDelay - elapsed;
                     if (remaining > 0)
                     {
-                        Task.Delay(remaining);
+                        await Task.Delay(remaining)
+                            .ConfigureAwait(true);
                     }
                 }
 
