@@ -2,12 +2,11 @@
 using ApprovalTests.Reporters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PublicApiGenerator;
-using Radical.Windows;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Radical.Tests.API
+namespace Radical.Windows.Tests.API
 {
     [TestClass]
     public class APIApprovals

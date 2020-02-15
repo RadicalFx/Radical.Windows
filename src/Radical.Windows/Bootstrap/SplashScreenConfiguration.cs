@@ -44,7 +44,7 @@ namespace Radical.Windows.Bootstrap
         /// <summary>
         /// Defines the work that should be executed asynchronously while the splash screen is running.
         /// </summary>
-        public Action<IServiceProvider> StartupAsyncWork { get; set; }
+        public Func<IServiceProvider, Task> StartupAsyncWork { get; set; }
 
         /// <summary>
         /// Defines the Height of the splash screen window if the SizeToContent value is Manual or Width; otherwise is ignored.
