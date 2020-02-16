@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Hosting;
-using Radical.Windows.Tests.Boot.Presentation;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
