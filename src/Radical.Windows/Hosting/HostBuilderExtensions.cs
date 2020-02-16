@@ -4,6 +4,7 @@ using Radical.Windows;
 using Radical.Windows.Bootstrap;
 using Radical.Windows.Hosting;
 using System;
+using System.Windows;
 
 namespace Microsoft.Extensions.Hosting
 {
@@ -12,8 +13,24 @@ namespace Microsoft.Extensions.Hosting
         /// <summary>
         /// Add a RadicalApplication to the current host builder
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         public static IHostBuilder AddRadicalApplication(this IHostBuilder hostBuilder, Action<BootstrapConfiguration> configure)
+        {
+            return AddRadicalApplication(hostBuilder, null, configure);
+        }
+
+        /// <summary>
+        /// Add a RadicalApplication to the current host builder
+        /// </summary>
+        public static IHostBuilder AddRadicalApplication<TShellView>(this IHostBuilder hostBuilder, Action<BootstrapConfiguration> configure) where TShellView: Window
+        {
+            return AddRadicalApplication(hostBuilder, typeof(TShellView), configure);
+        }
+
+        /// <summary>
+        /// Add a RadicalApplication to the current host builder
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
+        public static IHostBuilder AddRadicalApplication(this IHostBuilder hostBuilder, Type shellType, Action<BootstrapConfiguration> configure)
         {
             if (hostBuilder.Properties.TryGetValue("RadicalApplicationAdded", out object val)) 
             {
@@ -21,6 +38,10 @@ namespace Microsoft.Extensions.Hosting
             }
 
             var configuration = new BootstrapConfiguration();
+            if (shellType != null) 
+            {
+                configuration.UseAsShell(shellType);
+            }
 
             Ensure.That(configure)
                 .Named(nameof(configure))
