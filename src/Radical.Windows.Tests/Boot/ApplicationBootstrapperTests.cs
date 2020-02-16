@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Autofac.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Radical.Windows.Bootstrap;
@@ -8,6 +9,7 @@ using Radical.Windows.Tests.Boot.Presentation;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Unity.Microsoft.DependencyInjection;
 
 namespace Radical.Windows.Tests.Boot
 {
@@ -40,8 +42,112 @@ namespace Radical.Windows.Tests.Boot
 
             await host.StartAsync();
 
+            var viewResolver = host.Services.GetService<IViewResolver>();
+
+            Assert.IsNotNull(viewResolver);
+
+            using (host)
+            {
+                await host?.StopAsync();
+            }
+        }
+
+        [SharedApplicationTestMethod]
+        public async Task Application_using_host_builder_can_resolve_configured_services()
+        {
+            var host = new HostBuilder()
+                .ConfigureServices(serviceCollection => 
+                {
+                    serviceCollection.AddSingleton<SampleDependency>();
+                })
+                .AddRadicalApplication(configuration =>
+                {
+                    configuration.UseAsShell<MainView>();
+                })
+                .Build();
+
+            await host.StartAsync();
+
+            var customDependency = host.Services.GetService<SampleDependency>();
+            var viewResolver = host.Services.GetService<IViewResolver>();
+
+            Assert.IsNotNull(customDependency);
+            Assert.IsNotNull(viewResolver);
+
+            using (host)
+            {
+                await host?.StopAsync();
+            }
+        }
+
+        [SharedApplicationTestMethod]
+        public async Task Application_using_host_builder_can_call_configure_services_in_any_order()
+        {
+            var host = new HostBuilder()
+                .AddRadicalApplication(configuration =>
+                {
+                    configuration.UseAsShell<MainView>();
+                })
+                .ConfigureServices(serviceCollection =>
+                {
+                    serviceCollection.AddSingleton<SampleDependency>();
+                })
+                .Build();
+
+            await host.StartAsync();
+
+            var customDependency = host.Services.GetService<SampleDependency>();
+            var viewResolver = host.Services.GetService<IViewResolver>();
+
+            Assert.IsNotNull(customDependency);
+            Assert.IsNotNull(viewResolver);
+
+            using (host)
+            {
+                await host?.StopAsync();
+            }
+        }
+
+        [SharedApplicationTestMethod]
+        public async Task Application_can_boot_using_host_builder_and_Autofac()
+        {
+            var host = new HostBuilder()
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .AddRadicalApplication(configuration =>
+                {
+                    configuration.UseAsShell<MainView>();
+                })
+                .Build();
+
+            await host.StartAsync();
+
             var resolvedViaHost = host.Services.GetService<IViewResolver>();
 
+            Assert.AreEqual(host.Services.GetType(), typeof(AutofacServiceProvider));
+            Assert.IsNotNull(resolvedViaHost);
+
+            using (host)
+            {
+                await host?.StopAsync();
+            }
+        }
+
+        [SharedApplicationTestMethod]
+        public async Task Application_can_boot_using_host_builder_and_Unity()
+        {
+            var host = new HostBuilder()
+                .UseUnityServiceProvider()
+                .AddRadicalApplication(configuration =>
+                {
+                    configuration.UseAsShell<MainView>();
+                })
+                .Build();
+
+            await host.StartAsync();
+
+            var resolvedViaHost = host.Services.GetService<IViewResolver>();
+
+            Assert.AreEqual(host.Services.GetType(), typeof(Unity.Microsoft.DependencyInjection.ServiceProvider));
             Assert.IsNotNull(resolvedViaHost);
 
             using (host)
@@ -50,4 +156,6 @@ namespace Radical.Windows.Tests.Boot
             }
         }
     }
+
+    class SampleDependency { }
 }

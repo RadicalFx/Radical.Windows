@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="ApprovalTests" Version="4.5.0" NoWarn="NU1701" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="FakeItEasy" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
@@ -14,6 +15,7 @@
     <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
     <PackageReference Include="PublicApiGenerator" Version="10.0.2" />
     <PackageReference Include="SharpTestsEx" Version="2.0.0" />
+    <PackageReference Include="Unity.Microsoft.DependencyInjection" Version="5.11.5" />
   </ItemGroup>
 
   <ItemGroup>
