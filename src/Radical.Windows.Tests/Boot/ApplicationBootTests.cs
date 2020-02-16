@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Radical.Windows.ComponentModel;
-using Radical.Windows.Hosting;
 using System;
 using System.Threading.Tasks;
 using System.Windows;

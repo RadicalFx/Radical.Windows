@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading;
-using System.Windows;
-using System.Windows.Markup;
 
 namespace Radical.Windows.Bootstrap.Features
 {
