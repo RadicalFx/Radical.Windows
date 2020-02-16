@@ -2,12 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Radical.Windows.Bootstrap;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Hosting;
 using Radical.Windows.Tests.Boot.Presentation;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Unity.Microsoft.DependencyInjection;
@@ -15,15 +13,18 @@ using Unity.Microsoft.DependencyInjection;
 namespace Radical.Windows.Tests.Boot
 {
     [TestClass]
-    public class ApplicationBootstrapperTests
+    public class ApplicationBootTests
     {
         [SharedApplicationTestMethod]
         public void ApplicationBoot_process_should_create_valid_container()
         {
             IServiceProvider container = null;
-            var bootstrapper = new ApplicationBootstrapper();
-            bootstrapper.DisableAutoBoot();
-            bootstrapper.OnBoot(serviceProvider => container = serviceProvider);
+
+            var configuration = new BootstrapConfiguration();
+            configuration.DisableAutoBoot();
+            configuration.OnServiceProviderCreated(serviceProvider => container = serviceProvider);
+
+            var bootstrapper = RadicalApplication.BindTo(Application.Current, configuration);
             bootstrapper.Boot();
 
             var viewResolver = container.GetService<IViewResolver>();
@@ -57,7 +58,7 @@ namespace Radical.Windows.Tests.Boot
         public async Task Application_using_host_builder_can_resolve_configured_services()
         {
             var host = new HostBuilder()
-                .ConfigureServices(serviceCollection => 
+                .ConfigureServices(serviceCollection =>
                 {
                     serviceCollection.AddSingleton<SampleDependency>();
                 })
@@ -79,6 +80,16 @@ namespace Radical.Windows.Tests.Boot
             {
                 await host?.StopAsync();
             }
+        }
+
+        [SharedApplicationTestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Application_using_host_builder_can_call_AddRadicalApplication_only_once()
+        {
+            var host = new HostBuilder()
+                .AddRadicalApplication(configuration =>{})
+                .AddRadicalApplication(configuration => { })
+                .Build();
         }
 
         [SharedApplicationTestMethod]

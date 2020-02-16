@@ -8,17 +8,22 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="SingletonApplicationStartupArgs"/> class.
         /// </summary>
-        /// <param name="scope">The scope.</param>
-        public SingletonApplicationStartupArgs( SingletonApplicationScope scope )
+        public SingletonApplicationStartupArgs(SingletonApplicationScope scope, string singletonRegistrationKey)
         {
             Scope = scope;
             AllowStartup = true;
+            SingletonRegistrationKey = singletonRegistrationKey;
         }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
-        public SingletonApplicationScope Scope { get; private set; }
+        public SingletonApplicationScope Scope { get; }
+
+        /// <summary>
+        /// Get the registration key
+        /// </summary>
+        public string SingletonRegistrationKey { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the startup is allowed.

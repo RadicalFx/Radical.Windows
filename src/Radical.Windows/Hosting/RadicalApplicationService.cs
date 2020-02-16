@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Radical.Windows.Bootstrap;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Radical.Windows.Hosting
 {
@@ -11,27 +11,26 @@ namespace Radical.Windows.Hosting
     {
         IServiceProvider serviceProvider;
         BootstrapConfiguration bootstrapConfiguration;
+        RadicalApplication radicalApplication;
 
-        public RadicalApplicationService(IServiceProvider serviceProvider, BootstrapConfiguration bootstrapConfiguration)
+        public RadicalApplicationService(IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
-            this.bootstrapConfiguration = bootstrapConfiguration;
+            bootstrapConfiguration = serviceProvider.GetRequiredService<BootstrapConfiguration>();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            //boot
-            var features = serviceProvider.GetServices<IFeature>();
-            foreach (var feature in features)
-            {
-                feature.Setup(serviceProvider, bootstrapConfiguration);
-            }
+            var application = serviceProvider.GetRequiredService<Application>();
+            radicalApplication = RadicalApplication.ExternallyManagedBy(application, serviceProvider, bootstrapConfiguration);
+            radicalApplication.Boot();
 
             return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            radicalApplication.Shutdown();
             return Task.CompletedTask;
         }
     }
