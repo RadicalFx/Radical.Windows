@@ -17,7 +17,10 @@ namespace Radical.Windows.Tests.API
         [UseReporter(typeof(DiffReporter))]
         public void Approve_API()
         {
-            ApiGeneratorOptions options = null;
+            ApiGeneratorOptions options = new ApiGeneratorOptions()
+            {
+                WhitelistedNamespacePrefixes = new []{ "Microsoft", "System" }
+            };
             var type = Type.GetType("XamlGeneratedNamespace.GeneratedInternalTypeHelper, Radical.Windows");
             if (type != null) 
             {
@@ -26,10 +29,7 @@ namespace Radical.Windows.Tests.API
                     .Except(new Type[] { type })
                     .ToArray();
 
-                options = new ApiGeneratorOptions()
-                {
-                    IncludeTypes = typesToInclude
-                };
+                options.IncludeTypes = typesToInclude;
             }
 
             var publicApi = ApiGenerator.GeneratePublicApi(typeof(VisualTreeCrawler).Assembly, options: options);

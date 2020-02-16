@@ -10,7 +10,13 @@
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/regions", "Radical.Windows.Regions")]
 namespace Microsoft.Extensions.Hosting
 {
-    public static class HostBuilderExtensions { }
+    public static class HostBuilderExtensions
+    {
+        public static Microsoft.Extensions.Hosting.IHostBuilder AddRadicalApplication(this Microsoft.Extensions.Hosting.IHostBuilder hostBuilder, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure) { }
+        public static Microsoft.Extensions.Hosting.IHostBuilder AddRadicalApplication(this Microsoft.Extensions.Hosting.IHostBuilder hostBuilder, System.Type shellType, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure) { }
+        public static Microsoft.Extensions.Hosting.IHostBuilder AddRadicalApplication<TShellView>(this Microsoft.Extensions.Hosting.IHostBuilder hostBuilder, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure)
+            where TShellView : System.Windows.Window { }
+    }
 }
 namespace Radical.ComponentModel
 {
@@ -3618,5 +3624,11 @@ namespace Radical.Windows.Validation
 }
 namespace System.Windows
 {
-    public static class ApplicationExtensions { }
+    public static class ApplicationExtensions
+    {
+        public static Radical.Windows.RadicalApplication AddRadicalApplication(this System.Windows.Application application, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure) { }
+        public static Radical.Windows.RadicalApplication AddRadicalApplication(this System.Windows.Application application, System.Type shellViewType, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure) { }
+        public static Radical.Windows.RadicalApplication AddRadicalApplication<TShellView>(this System.Windows.Application application, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure)
+            where TShellView : System.Windows.Window { }
+    }
 }
