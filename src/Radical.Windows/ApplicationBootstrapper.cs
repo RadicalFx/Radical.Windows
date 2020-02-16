@@ -40,7 +40,7 @@ namespace Radical.Windows
         private Action<IServiceProvider> bootHandler;
         bool isSessionEnding;
 
-        internal static IServiceProvider Boot(BootstrapConfiguration configuration, IServiceProvider services)
+        internal static IServiceProvider BootWithExternallyManagedHost(BootstrapConfiguration configuration, IServiceProvider services)
         {
             throw new NotImplementedException();
         }

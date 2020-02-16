@@ -1889,6 +1889,7 @@ namespace Radical.Windows
         public Radical.Windows.ApplicationBootstrapper OnBeforeInstall(System.Action<Radical.Windows.Bootstrap.BootstrapConventions, Radical.Windows.Bootstrap.AssemblyScanner> onBeforeInstall) { }
         public Radical.Windows.ApplicationBootstrapper OnBoot(System.Action<System.IServiceProvider> bootHandler) { }
         public Radical.Windows.ApplicationBootstrapper OnBootCompleted(System.Action<System.IServiceProvider> bootCompletedHandler) { }
+        public void OnCreatingServiceProvider(System.Func<Microsoft.Extensions.DependencyInjection.IServiceCollection, System.IServiceProvider> serviceProviderFactory) { }
         public Radical.Windows.ApplicationBootstrapper OnServiceProviderCreated(System.Action<System.IServiceProvider> onServiceProviderCreated) { }
         public Radical.Windows.ApplicationBootstrapper OnShutdown(System.Action<Radical.Windows.Bootstrap.ApplicationShutdownArgs> shutdownHandler) { }
         public Radical.Windows.ApplicationBootstrapper OnSingletonApplicationStartup(System.Action<Radical.Windows.Bootstrap.SingletonApplicationStartupArgs> onSingletonApplicationStartup) { }
@@ -1897,16 +1898,7 @@ namespace Radical.Windows
         public Radical.Windows.ApplicationBootstrapper RegisterAsSingleton(string key) { }
         public Radical.Windows.ApplicationBootstrapper RegisterAsSingleton(string key, Radical.Windows.Bootstrap.SingletonApplicationScope scope) { }
         public void Shutdown() { }
-        public Radical.Windows.ApplicationBootstrapper UsingAsCurrentCulture(System.Func<System.Globalization.CultureInfo> currentCultureHandler) { }
-        public Radical.Windows.ApplicationBootstrapper UsingAsCurrentUICulture(System.Func<System.Globalization.CultureInfo> currentUICultureHandler) { }
-        public Radical.Windows.ApplicationBootstrapper UsingAsShell(System.Type shellViewType) { }
-        public Radical.Windows.ApplicationBootstrapper UsingAsShell<TShellType>()
-            where TShellType : System.Windows.Window { }
-    }
-    public class ApplicationBootstrapper<TMainView> : Radical.Windows.ApplicationBootstrapper
-        where TMainView : System.Windows.Window
-    {
-        public ApplicationBootstrapper() { }
+        public void UseServiceCollection(Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection) { }
     }
     public sealed class LoadedWeakEventManager : System.Windows.WeakEventManager
     {
@@ -2364,6 +2356,20 @@ namespace Radical.Windows.Bootstrap
             Exclude = 0,
             Include = 1,
         }
+    }
+    public class BootstrapConfiguration
+    {
+        public BootstrapConfiguration() { }
+        public Radical.Windows.Bootstrap.AssemblyScanner AssemblyScanner { get; }
+        public Radical.Windows.Bootstrap.BootstrapConventions BootstrapConventions { get; }
+        public void ExposeServiceAsResource<TService>() { }
+        public void ExposeServiceAsResource<TService, TView>()
+            where TView : System.Windows.FrameworkElement { }
+        public void UseAsShell(System.Type shellViewType) { }
+        public void UseAsShell<TShellType>()
+            where TShellType : System.Windows.Window { }
+        public void UseCulture(System.Func<System.IServiceProvider, Radical.Windows.Bootstrap.BootstrapConventions, System.Globalization.CultureInfo> cultureConfig) { }
+        public void UseUICulture(System.Func<System.IServiceProvider, Radical.Windows.Bootstrap.BootstrapConventions, System.Globalization.CultureInfo> uiCultureConfig) { }
     }
     public class BootstrapConventions
     {
@@ -3043,6 +3049,13 @@ namespace Radical.Windows.Effects
         public GrayscaleEffect() { }
         public double DesaturationFactor { get; set; }
         public System.Windows.Media.Brush Input { get; set; }
+    }
+}
+namespace Radical.Windows.Hosting
+{
+    public static class HostBuilderExtensions
+    {
+        public static Microsoft.Extensions.Hosting.IHostBuilder AddRadicalApplication(this Microsoft.Extensions.Hosting.IHostBuilder hostBuilder, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure) { }
     }
 }
 namespace Radical.Windows.Input

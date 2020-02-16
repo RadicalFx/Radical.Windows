@@ -1,9 +1,12 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Radical.Windows.Bootstrap;
 using Radical.Windows.ComponentModel;
+using Radical.Windows.Hosting;
 using Radical.Windows.Tests.Boot.Presentation;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Radical.Windows.Tests.Boot
@@ -26,41 +29,25 @@ namespace Radical.Windows.Tests.Boot
         }
 
         [SharedApplicationTestMethod]
-        public async Task ApplicationBoot_should_used_host_builder()
+        public async Task Application_can_boot_using_host_builder()
         {
-            var configuration = new BootstrapConfiguration();
-            configuration.UseShell<MainView>();
-
             var host = new HostBuilder()
-                .AddRadicalApplication(configuration)
+                .AddRadicalApplication(configuration =>
+                {
+                    configuration.UseAsShell<MainView>();
+                })
                 .Build();
 
             await host.StartAsync();
-            var container = ApplicationBootstrapper.Boot(configuration, host.Services);
 
-            var resolvedByHost = host.Services.GetService<IViewResolver>();
-            var resolvedByAppplicationBootstrapper = container.GetService<IViewResolver>();
+            var resolvedViaHost = host.Services.GetService<IViewResolver>();
 
-            Assert.IsNotNull(resolvedByHost);
-            Assert.IsNotNull(resolvedByAppplicationBootstrapper);
+            Assert.IsNotNull(resolvedViaHost);
 
             using (host)
             {
                 await host?.StopAsync();
             }
-        }
-    }
-
-    static class Ext
-    {
-        public static IHostBuilder AddRadicalApplication(this IHostBuilder hostBuilder, BootstrapConfiguration bootstrapConfiguration)
-        {
-            hostBuilder.ConfigureServices(serviceCollection =>
-            {
-                bootstrapConfiguration.UseServiceCollection(serviceCollection);
-            });
-
-            return hostBuilder;
         }
     }
 }
