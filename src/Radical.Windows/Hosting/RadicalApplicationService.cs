@@ -23,7 +23,7 @@ namespace Radical.Windows.Hosting
         {
             var application = serviceProvider.GetRequiredService<Application>();
             radicalApplication = RadicalApplication.ExternallyManagedBy(application, serviceProvider, bootstrapConfiguration);
-            radicalApplication.Boot();
+            radicalApplication.BootApplication();
 
             return Task.CompletedTask;
         }
