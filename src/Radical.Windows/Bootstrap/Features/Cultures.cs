@@ -15,22 +15,22 @@ namespace Radical.Windows.Bootstrap.Features
             Thread.CurrentThread.CurrentCulture = currentCulture;
             Thread.CurrentThread.CurrentUICulture = currentUICulture;
 
-            var xmlLang = XmlLanguage.GetLanguage(currentCulture.IetfLanguageTag);
-            FrameworkElement.LanguageProperty.OverrideMetadata
-            (
-                forType: typeof(FrameworkElement),
-                typeMetadata: new FrameworkPropertyMetadata(xmlLang)
-            );
+            //var xmlLang = XmlLanguage.GetLanguage(currentCulture.IetfLanguageTag);
+            //FrameworkElement.LanguageProperty.OverrideMetadata
+            //(
+            //    forType: typeof(FrameworkElement),
+            //    typeMetadata: new FrameworkPropertyMetadata(xmlLang)
+            //);
 
-            var fd = currentUICulture.TextInfo.IsRightToLeft ?
-                FlowDirection.RightToLeft :
-                FlowDirection.LeftToRight;
+            //var fd = currentUICulture.TextInfo.IsRightToLeft ?
+            //    FlowDirection.RightToLeft :
+            //    FlowDirection.LeftToRight;
 
-            FrameworkElement.FlowDirectionProperty.OverrideMetadata
-            (
-                forType: typeof(FrameworkElement),
-                typeMetadata: new FrameworkPropertyMetadata(fd)
-            );
+            //FrameworkElement.FlowDirectionProperty.OverrideMetadata
+            //(
+            //    forType: typeof(FrameworkElement),
+            //    typeMetadata: new FrameworkPropertyMetadata(fd)
+            //);
         }
     }
 }
