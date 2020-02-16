@@ -36,7 +36,13 @@ namespace Radical.Windows.Tests.Boot
                 .Build();
 
             await host.StartAsync();
-            ApplicationBootstrapper.Boot(configuration, host.Services);
+            var container = ApplicationBootstrapper.Boot(configuration, host.Services);
+
+            var resolvedByHost = host.Services.GetService<IViewResolver>();
+            var resolvedByAppplicationBootstrapper = container.GetService<IViewResolver>();
+
+            Assert.IsNotNull(resolvedByHost);
+            Assert.IsNotNull(resolvedByAppplicationBootstrapper);
 
             using (host)
             {
