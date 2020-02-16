@@ -18,11 +18,13 @@ namespace Radical.Windows.Tests.Boot
         [SharedApplicationTestMethod]
         public void ApplicationBoot_process_should_create_valid_container()
         {
+            var bootCompleted = false;
             IServiceProvider container = null;
 
             var configuration = new BootstrapConfiguration();
             configuration.DisableAutoBoot();
             configuration.OnServiceProviderCreated(serviceProvider => container = serviceProvider);
+            configuration.OnBootCompleted(_ => bootCompleted = true);
 
             var bootstrapper = RadicalApplication.BindTo(Application.Current, configuration);
             bootstrapper.Boot();
@@ -30,15 +32,18 @@ namespace Radical.Windows.Tests.Boot
             var viewResolver = container.GetService<IViewResolver>();
 
             Assert.IsNotNull(viewResolver);
+            Assert.IsTrue(bootCompleted);
         }
 
         [SharedApplicationTestMethod]
         public async Task Application_can_boot_using_host_builder()
         {
+            var bootCompleted = false;
+
             var host = new HostBuilder()
                 .AddRadicalApplication(configuration =>
                 {
-                    configuration.UseAsShell<MainView>();
+                    configuration.OnBootCompleted(_ => bootCompleted = true);
                 })
                 .Build();
 
@@ -47,6 +52,7 @@ namespace Radical.Windows.Tests.Boot
             var viewResolver = host.Services.GetService<IViewResolver>();
 
             Assert.IsNotNull(viewResolver);
+            Assert.IsTrue(bootCompleted);
 
             using (host)
             {
@@ -62,10 +68,7 @@ namespace Radical.Windows.Tests.Boot
                 {
                     serviceCollection.AddSingleton<SampleDependency>();
                 })
-                .AddRadicalApplication(configuration =>
-                {
-                    configuration.UseAsShell<MainView>();
-                })
+                .AddRadicalApplication(_ => { })
                 .Build();
 
             await host.StartAsync();
@@ -87,8 +90,8 @@ namespace Radical.Windows.Tests.Boot
         public void Application_using_host_builder_can_call_AddRadicalApplication_only_once()
         {
             var host = new HostBuilder()
-                .AddRadicalApplication(configuration =>{})
-                .AddRadicalApplication(configuration => { })
+                .AddRadicalApplication(_ => { })
+                .AddRadicalApplication(_ => { })
                 .Build();
         }
 
@@ -96,10 +99,7 @@ namespace Radical.Windows.Tests.Boot
         public async Task Application_using_host_builder_can_call_configure_services_in_any_order()
         {
             var host = new HostBuilder()
-                .AddRadicalApplication(configuration =>
-                {
-                    configuration.UseAsShell<MainView>();
-                })
+                .AddRadicalApplication(_ => { })
                 .ConfigureServices(serviceCollection =>
                 {
                     serviceCollection.AddSingleton<SampleDependency>();
@@ -125,10 +125,7 @@ namespace Radical.Windows.Tests.Boot
         {
             var host = new HostBuilder()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .AddRadicalApplication(configuration =>
-                {
-                    configuration.UseAsShell<MainView>();
-                })
+                .AddRadicalApplication(_ => { })
                 .Build();
 
             await host.StartAsync();
@@ -149,10 +146,7 @@ namespace Radical.Windows.Tests.Boot
         {
             var host = new HostBuilder()
                 .UseUnityServiceProvider()
-                .AddRadicalApplication(configuration =>
-                {
-                    configuration.UseAsShell<MainView>();
-                })
+                .AddRadicalApplication(_ => { })
                 .Build();
 
             await host.StartAsync();
