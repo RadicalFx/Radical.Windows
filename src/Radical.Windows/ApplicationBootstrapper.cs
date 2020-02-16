@@ -28,9 +28,8 @@ namespace Radical.Windows
     {
         static readonly TraceSource logger = new TraceSource(typeof(ApplicationBootstrapper).Name);
 
-        readonly ApplicationSettings applicationSettings = new ApplicationSettings();
+        readonly BootstrapConfiguration bootstrapConfiguration = new BootstrapConfiguration();
 
-        Type shellViewType = null;
         IServiceProvider serviceProvider;
 
         bool isAutoBootEnabled = true;
@@ -40,8 +39,30 @@ namespace Radical.Windows
         private Action<ApplicationShutdownArgs> shutdownHandler;
         private Action<IServiceProvider> bootHandler;
         bool isSessionEnding;
+
+        internal static void Boot(BootstrapConfiguration configuration, IServiceProvider services)
+        {
+            throw new NotImplementedException();
+        }
+
         bool isShuttingDown;
         ShutdownMode? shutdownMode = null;
+        IServiceCollection services = new ServiceCollection();
+        Func<IServiceCollection, IServiceProvider> serviceProviderFactory = services => services.BuildServiceProvider();
+
+        /// <summary>
+        /// Instruct Radical to use an externally provided service collection;
+        /// </summary>
+        public void UseServiceCollection(IServiceCollection serviceCollection)
+        {
+            services = serviceCollection;
+        }
+
+        public void OnCreatingServiceProvider(Func<IServiceCollection, IServiceProvider> serviceProviderFactory)
+        {
+            this.serviceProviderFactory = serviceProviderFactory;
+        }
+
         Mutex mutex;
         string key;
         SingletonApplicationScope singleton = SingletonApplicationScope.NotSupported;
@@ -110,32 +131,6 @@ namespace Radical.Windows
             };
         }
 
-        /// <summary>
-        /// Defines the type to use as main/shell window.
-        /// </summary>
-        /// <typeparam name="TShellType">The shell type.</typeparam>
-        /// <returns></returns>
-        public ApplicationBootstrapper UsingAsShell<TShellType>() where TShellType : Window
-        {
-            return UsingAsShell(typeof(TShellType));
-        }
-
-        /// <summary>
-        /// Defines the type to use as main/shell window.
-        /// </summary>
-        /// <param name="shellViewType">The shell type.</param>
-        /// <returns></returns>
-        public ApplicationBootstrapper UsingAsShell(Type shellViewType)
-        {
-            Ensure.That(shellViewType)
-                .WithMessage("Only Window is supported as shell type.")
-                .Is<Window>();
-
-            this.shellViewType = shellViewType;
-
-            return this;
-        }
-
         private bool isSplashScreenEnabled = false;
         SplashScreenConfiguration splashScreenConfiguration = new SplashScreenConfiguration();
 
@@ -196,8 +191,6 @@ namespace Radical.Windows
 
         void OnBoot()
         {
-            var services = new ServiceCollection();
-
             var conventions = new BootstrapConventions();
             onBeforeInstall?.Invoke(conventions, assemblyScanner);
             services.AddSingleton(conventions);
@@ -215,13 +208,13 @@ namespace Radical.Windows
                 installer.Install(conventions, services, allTypes);
             }
 
-            serviceProvider = services.BuildServiceProvider();
+            serviceProvider = serviceProviderFactory(services);
             onServiceProviderCreated?.Invoke(serviceProvider);
 
             var features = serviceProvider.GetServices<IFeature>();
             foreach (var feature in features)
             {
-                feature.Setup(serviceProvider, applicationSettings);
+                feature.Setup(serviceProvider, conventions, bootstrapConfiguration);
             }
 
             if (shutdownMode != null && shutdownMode.HasValue)
@@ -311,30 +304,6 @@ namespace Radical.Windows
                 .IsFalse(hs => hs.Contains(serviceType));
 
             types.Add(serviceType);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Using as current culture.
-        /// </summary>
-        /// <param name="currentCultureHandler">The current culture handler.</param>
-        /// <returns></returns>
-        public ApplicationBootstrapper UsingAsCurrentCulture(Func<CultureInfo> currentCultureHandler)
-        {
-            this.applicationSettings.CurrentCultureHandler = currentCultureHandler;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Using as current UI culture.
-        /// </summary>
-        /// <param name="currentUICultureHandler">The current UI culture handler.</param>
-        /// <returns></returns>
-        public ApplicationBootstrapper UsingAsCurrentUICulture(Func<CultureInfo> currentUICultureHandler)
-        {
-            this.applicationSettings.CurrentUICultureHandler = currentUICultureHandler;
 
             return this;
         }
@@ -461,9 +430,9 @@ namespace Radical.Windows
 
             void showShell()
             {
-                if (shellViewType != null)
+                if (bootstrapConfiguration.ShellViewType != null)
                 {
-                    var mainView = (Window)resolver.GetView(shellViewType);
+                    var mainView = (Window)resolver.GetView(bootstrapConfiguration.ShellViewType);
                     Application.Current.MainWindow = mainView;
 
                     mainView.Show();

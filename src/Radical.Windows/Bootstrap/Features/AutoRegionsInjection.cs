@@ -10,7 +10,7 @@ namespace Radical.Windows.Bootstrap.Features
     {
         readonly Dictionary<string, List<Type>> buffer = new Dictionary<string, List<Type>>();
 
-        public void Setup(IServiceProvider serviceProvider, ApplicationSettings applicationSettings)
+        public void Setup(IServiceProvider serviceProvider, BootstrapConventions bootstrapConventions, BootstrapConfiguration bootstrapConfiguration)
         {
             var injectionHandler = serviceProvider.GetRequiredService<IRegionInjectionHandler>();
             foreach (var kvp in buffer)

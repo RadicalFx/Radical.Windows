@@ -7,10 +7,10 @@ namespace Radical.Windows.Bootstrap.Features
 {
     class Cultures : IFeature
     {
-        public void Setup(IServiceProvider serviceProvider, ApplicationSettings applicationSettings)
+        public void Setup(IServiceProvider serviceProvider, BootstrapConventions bootstrapConventions, BootstrapConfiguration bootstrapConfiguration)
         {
-            var currentCulture = applicationSettings.CurrentCultureHandler();
-            var currentUICulture = applicationSettings.CurrentUICultureHandler();
+            var currentCulture = bootstrapConfiguration.CultureConfig(serviceProvider, bootstrapConventions);
+            var currentUICulture = bootstrapConfiguration.UICultureConfig(serviceProvider, bootstrapConventions);
 
             Thread.CurrentThread.CurrentCulture = currentCulture;
             Thread.CurrentThread.CurrentUICulture = currentUICulture;

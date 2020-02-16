@@ -1,6 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Extensions.Hosting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Radical.Windows.Bootstrap;
 using Radical.Windows.ComponentModel;
+using Radical.Windows.Tests.Boot.Presentation;
 using System;
+using System.Threading.Tasks;
 
 namespace Radical.Windows.Tests.Boot
 {
@@ -8,7 +12,7 @@ namespace Radical.Windows.Tests.Boot
     public class ApplicationBootstrapperTests
     {
         [SharedApplicationTestMethod]
-        public void ApplicationBoot_process_should_create_valid_container() 
+        public void ApplicationBoot_process_should_create_valid_container()
         {
             IServiceProvider container = null;
             var bootstrapper = new ApplicationBootstrapper();
@@ -19,6 +23,38 @@ namespace Radical.Windows.Tests.Boot
             var viewResolver = container.GetService<IViewResolver>();
 
             Assert.IsNotNull(viewResolver);
+        }
+
+        [SharedApplicationTestMethod]
+        public async Task ApplicationBoot_should_used_host_builder()
+        {
+            var configuration = new BootstrapConfiguration();
+            configuration.UseShell<MainView>();
+
+            var host = new HostBuilder()
+                .AddRadicalApplication(configuration)
+                .Build();
+
+            await host.StartAsync();
+            ApplicationBootstrapper.Boot(configuration, host.Services);
+
+            using (host)
+            {
+                await host?.StopAsync();
+            }
+        }
+    }
+
+    static class Ext
+    {
+        public static IHostBuilder AddRadicalApplication(this IHostBuilder hostBuilder, BootstrapConfiguration bootstrapConfiguration)
+        {
+            hostBuilder.ConfigureServices(serviceCollection =>
+            {
+                bootstrapConfiguration.UseServiceCollection(serviceCollection);
+            });
+
+            return hostBuilder;
         }
     }
 }
