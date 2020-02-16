@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Radical.Windows.Bootstrap;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

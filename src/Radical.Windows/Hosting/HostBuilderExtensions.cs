@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Radical.Validation;
+using Radical.Windows;
 using Radical.Windows.Bootstrap;
+using Radical.Windows.Hosting;
 using System;
 
-namespace Radical.Windows.Hosting
+namespace Microsoft.Extensions.Hosting
 {
     public static class HostBuilderExtensions
     {

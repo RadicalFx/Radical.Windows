@@ -20,13 +20,14 @@ namespace Radical.Windows.Tests.Boot
             var bootCompleted = false;
             IServiceProvider container = null;
 
-            var configuration = new BootstrapConfiguration();
-            configuration.DisableAutoBoot();
-            configuration.OnServiceProviderCreated(serviceProvider => container = serviceProvider);
-            configuration.OnBootCompleted(_ => bootCompleted = true);
+            var radicalApplication = Application.Current.AddRadicalApplication(configuration => 
+            {
+                configuration.DisableAutoBoot();
+                configuration.OnServiceProviderCreated(serviceProvider => container = serviceProvider);
+                configuration.OnBootCompleted(_ => bootCompleted = true);
+            });
 
-            var bootstrapper = RadicalApplication.BindTo(Application.Current, configuration);
-            bootstrapper.Boot();
+            radicalApplication.Boot();
 
             var viewResolver = container.GetService<IViewResolver>();
 

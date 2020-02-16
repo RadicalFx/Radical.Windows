@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Radical.Validation;
-using Radical.Windows.Bootstrap;
 using Radical.Windows.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -8,13 +7,15 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 
-namespace Radical.Windows
+namespace Radical.Windows.Bootstrap
 {
     /// <summary>
     /// Application bootstrap configuration options.
     /// </summary>
     public class BootstrapConfiguration
     {
+        internal BootstrapConfiguration(){}
+
         bool isInitialized = false;
         readonly ResourcesRegistrationHolder resourcesRegistrationHolder = new ResourcesRegistrationHolder();
 

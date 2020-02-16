@@ -26,7 +26,7 @@ namespace Radical.Windows
         /// the given configuration.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
-        public static RadicalApplication BindTo(Application application, BootstrapConfiguration bootstrapConfiguration)
+        internal static RadicalApplication BoundTo(Application application, BootstrapConfiguration bootstrapConfiguration)
         {
             Ensure.That(bootstrapConfiguration)
                 .Named(nameof(bootstrapConfiguration))
