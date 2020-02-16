@@ -21,6 +21,14 @@ namespace Microsoft.Extensions.Hosting
         /// <summary>
         /// Add a RadicalApplication to the current host builder
         /// </summary>
+        public static IHostBuilder AddRadicalApplication<TShellView>(this IHostBuilder hostBuilder) where TShellView : Window
+        {
+            return AddRadicalApplication(hostBuilder, typeof(TShellView), null);
+        }
+
+        /// <summary>
+        /// Add a RadicalApplication to the current host builder
+        /// </summary>
         public static IHostBuilder AddRadicalApplication<TShellView>(this IHostBuilder hostBuilder, Action<BootstrapConfiguration> configure) where TShellView: Window
         {
             return AddRadicalApplication(hostBuilder, typeof(TShellView), configure);
@@ -43,11 +51,7 @@ namespace Microsoft.Extensions.Hosting
                 configuration.UseAsShell(shellType);
             }
 
-            Ensure.That(configure)
-                .Named(nameof(configure))
-                .IsNotNull();
-
-            configure(configuration);
+            configure?.Invoke(configuration);
 
             hostBuilder.ConfigureServices((context,serviceCollection) =>
             {
