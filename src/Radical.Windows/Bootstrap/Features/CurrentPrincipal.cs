@@ -6,7 +6,7 @@ namespace Radical.Windows.Bootstrap.Features
 {
     class CurrentPrincipal : IFeature
     {
-        public void Setup(IServiceProvider serviceProvider, BootstrapConventions bootstrapConventions, BootstrapConfiguration bootstrapConfiguration)
+        public void Setup(IServiceProvider serviceProvider, BootstrapConfiguration bootstrapConfiguration)
         {
             Thread.CurrentPrincipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
         }

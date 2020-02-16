@@ -17,9 +17,21 @@ namespace Radical.Windows.Bootstrap
         bool isInitialized = false;
         readonly ResourcesRegistrationHolder resourcesRegistrationHolder = new ResourcesRegistrationHolder();
 
-        internal Func<IServiceProvider, BootstrapConventions, CultureInfo> CultureConfig { get; private set; } = (_, __) => CultureInfo.CurrentCulture;
-        internal Func<IServiceProvider, BootstrapConventions, CultureInfo> UICultureConfig { get; private set; } = (_, __) => CultureInfo.CurrentUICulture;
+        internal Func<IServiceProvider, CultureInfo> CultureConfig { get; private set; } = _ => CultureInfo.CurrentCulture;
+        internal Func<IServiceProvider, CultureInfo> UICultureConfig { get; private set; } = _ => CultureInfo.CurrentUICulture;
         internal Type ShellViewType { get; private set; }
+
+        /// <summary>
+        /// The set of conventions used to bootstrap
+        /// the application and configure DI.
+        /// </summary>
+        public BootstrapConventions BootstrapConventions { get; } = new BootstrapConventions();
+
+        /// <summary>
+        /// The assembly scanner used to scan for assembles and types
+        /// to include in the DI configuration step.
+        /// </summary>
+        public AssemblyScanner AssemblyScanner { get; } = new AssemblyScanner();
 
         /// <summary>
         /// Exposes the given service type as resource in the App resources.
@@ -56,29 +68,26 @@ namespace Radical.Windows.Bootstrap
         }
 
         /// <summary>
-        /// The set of conventions used to bootstrap
-        /// the application and configure DI.
-        /// </summary>
-        public BootstrapConventions BootstrapConventions { get; } = new BootstrapConventions();
-
-        /// <summary>
-        /// The assembly scanner used to scan for assembles and types
-        /// to include in the DI configuration step.
-        /// </summary>
-        public AssemblyScanner AssemblyScanner { get; } = new AssemblyScanner();
-
-        /// <summary>
         /// Defines the Culture to use.
         /// </summary>
-        public void UseCulture(Func<IServiceProvider, BootstrapConventions, CultureInfo> cultureConfig)
+        public void UseCulture(Func<IServiceProvider, CultureInfo> cultureConfig)
         {
             CultureConfig = cultureConfig;
+        }
+
+        /// <summary>
+        /// Defines the UICulture to use.
+        /// </summary>
+        public void UseUICulture(Func<IServiceProvider, CultureInfo> uiCultureConfig)
+        {
+            UICultureConfig = uiCultureConfig;
         }
 
         internal void PopulateServiceCollection(IServiceCollection services)
         {
             Ensure.That(this).IsFalse(cfg => cfg.isInitialized);
 
+            services.AddSingleton(this);
             services.AddSingleton(BootstrapConventions);
             services.AddSingleton(resourcesRegistrationHolder);
 
@@ -95,14 +104,6 @@ namespace Radical.Windows.Bootstrap
             }
 
             isInitialized = true;
-        }
-
-        /// <summary>
-        /// Defines the UICulture to use.
-        /// </summary>
-        public void UseUICulture(Func<IServiceProvider, BootstrapConventions, CultureInfo> uiCultureConfig)
-        {
-            UICultureConfig = uiCultureConfig;
         }
 
         /// <summary>

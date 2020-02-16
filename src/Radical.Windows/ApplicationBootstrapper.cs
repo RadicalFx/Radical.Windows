@@ -214,7 +214,7 @@ namespace Radical.Windows
             var features = serviceProvider.GetServices<IFeature>();
             foreach (var feature in features)
             {
-                feature.Setup(serviceProvider, conventions, bootstrapConfiguration);
+                feature.Setup(serviceProvider, bootstrapConfiguration);
             }
 
             if (shutdownMode != null && shutdownMode.HasValue)

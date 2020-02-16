@@ -9,6 +9,7 @@ using Radical.Windows.Tests.Boot.Presentation;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Unity.Microsoft.DependencyInjection;
 
 namespace Radical.Windows.Tests.Boot

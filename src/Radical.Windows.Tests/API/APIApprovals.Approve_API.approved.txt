@@ -2368,8 +2368,8 @@ namespace Radical.Windows.Bootstrap
         public void UseAsShell(System.Type shellViewType) { }
         public void UseAsShell<TShellType>()
             where TShellType : System.Windows.Window { }
-        public void UseCulture(System.Func<System.IServiceProvider, Radical.Windows.Bootstrap.BootstrapConventions, System.Globalization.CultureInfo> cultureConfig) { }
-        public void UseUICulture(System.Func<System.IServiceProvider, Radical.Windows.Bootstrap.BootstrapConventions, System.Globalization.CultureInfo> uiCultureConfig) { }
+        public void UseCulture(System.Func<System.IServiceProvider, System.Globalization.CultureInfo> cultureConfig) { }
+        public void UseUICulture(System.Func<System.IServiceProvider, System.Globalization.CultureInfo> uiCultureConfig) { }
     }
     public class BootstrapConventions
     {

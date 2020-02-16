@@ -4,6 +4,6 @@ namespace Radical.Windows.Bootstrap
 {
     interface IFeature
     {
-        void Setup(IServiceProvider serviceProvider, BootstrapConventions bootstrapConventions, BootstrapConfiguration bootstrapConfiguration);
+        void Setup(IServiceProvider serviceProvider, BootstrapConfiguration bootstrapConfiguration);
     }
 }

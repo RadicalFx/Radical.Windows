@@ -12,7 +12,7 @@ namespace Radical.Windows.Bootstrap.Features
     {
         readonly List<Entry> entries = new List<Entry>();
 
-        public void Setup(IServiceProvider serviceProvider, BootstrapConventions bootstrapConventions, BootstrapConfiguration bootstrapConfiguration)
+        public void Setup(IServiceProvider serviceProvider, BootstrapConfiguration bootstrapConfiguration)
         {
             var broker = serviceProvider.GetRequiredService<IMessageBroker>();
             foreach (var entry in entries)
