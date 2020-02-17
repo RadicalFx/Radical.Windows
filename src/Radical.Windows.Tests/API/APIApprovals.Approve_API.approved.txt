@@ -1922,6 +1922,11 @@ namespace Radical.Windows
         public static void AddListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
         public static void RemoveListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
     }
+    public sealed class RadicalApplication
+    {
+        public void Boot() { }
+        public void Shutdown() { }
+    }
     public class Repeat
     {
         public Repeat() { }
