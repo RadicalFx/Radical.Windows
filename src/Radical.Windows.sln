@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radical.Windows", "Radical.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Radical.Windows.Tests", "Radical.Windows.Tests\Radical.Windows.Tests.csproj", "{20FC6C18-4C37-4BAE-9482-B77B4664D058}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadicalAppWithGenericHost", "RadicalAppWithGenericHost\RadicalAppWithGenericHost.csproj", "{B8EF47AA-2A6F-4DE7-9328-84B6AC723884}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadicalApp", "RadicalApp\RadicalApp.csproj", "{4B5FE31E-BA9D-445B-AAFB-F0C72297BFBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,12 +25,20 @@ Global
 		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20FC6C18-4C37-4BAE-9482-B77B4664D058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8EF47AA-2A6F-4DE7-9328-84B6AC723884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8EF47AA-2A6F-4DE7-9328-84B6AC723884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8EF47AA-2A6F-4DE7-9328-84B6AC723884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8EF47AA-2A6F-4DE7-9328-84B6AC723884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B5FE31E-BA9D-445B-AAFB-F0C72297BFBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B5FE31E-BA9D-445B-AAFB-F0C72297BFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B5FE31E-BA9D-445B-AAFB-F0C72297BFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B5FE31E-BA9D-445B-AAFB-F0C72297BFBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 		SolutionGuid = {169E928A-D6BD-4608-A068-3B8AAB88B19D}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal
