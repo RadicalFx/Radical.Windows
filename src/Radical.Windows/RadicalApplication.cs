@@ -37,7 +37,7 @@ namespace Radical.Windows
             var serviceProvider = services.BuildServiceProvider();
             bootstrapConfiguration.OnServiceProviderCreatedHandler(serviceProvider);
 
-            var radicalApplication = new RadicalApplication(false, application, serviceProvider, bootstrapConfiguration);
+            var radicalApplication = new RadicalApplication(application, serviceProvider, bootstrapConfiguration);
 
             application.Startup += (s, e) =>
             {
@@ -50,16 +50,6 @@ namespace Radical.Windows
             return radicalApplication;
         }
 
-        internal static RadicalApplication ExternallyManagedBy(Application application, IServiceProvider serviceProvider, BootstrapConfiguration bootstrapConfiguration)
-        {
-            Ensure.That(bootstrapConfiguration.IsAutoBootEnabled)
-                .WithMessage("When using Generic Host auto boot cannot be disabled.")
-                .Is(true);
-
-            return new RadicalApplication(true, application, serviceProvider, bootstrapConfiguration);
-        }
-
-        readonly bool isExternallyManaged = false;
         readonly Application application;
         readonly BootstrapConfiguration bootstrapConfiguration;
         readonly IServiceProvider serviceProvider;
@@ -68,9 +58,8 @@ namespace Radical.Windows
         bool isBootCompleted = false;
         Mutex singletonApplicationMutex;
 
-        internal RadicalApplication(bool isExternallyManaged, Application application, IServiceProvider serviceProvider, BootstrapConfiguration bootstrapConfiguration)
+        internal RadicalApplication(Application application, IServiceProvider serviceProvider, BootstrapConfiguration bootstrapConfiguration)
         {
-            this.isExternallyManaged = isExternallyManaged;
             this.application = application;
             this.serviceProvider = serviceProvider;
             this.bootstrapConfiguration = bootstrapConfiguration;
