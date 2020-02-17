@@ -3643,3 +3643,15 @@ namespace Radical.Windows.Validation
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
     }
 }
+namespace System.Windows
+{
+    public static class ApplicationExtensions
+    {
+        public static Radical.Windows.RadicalApplication AddRadicalApplication(this System.Windows.Application application, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure) { }
+        public static Radical.Windows.RadicalApplication AddRadicalApplication(this System.Windows.Application application, System.Type shellViewType, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure) { }
+        public static Radical.Windows.RadicalApplication AddRadicalApplication<TShellView>(this System.Windows.Application application)
+            where TShellView : System.Windows.Window { }
+        public static Radical.Windows.RadicalApplication AddRadicalApplication<TShellView>(this System.Windows.Application application, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure)
+            where TShellView : System.Windows.Window { }
+    }
+}
