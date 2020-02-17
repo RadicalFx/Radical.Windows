@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
@@ -14,6 +15,11 @@ namespace Radical.Windows.Bootstrap.Features
 
             Thread.CurrentThread.CurrentCulture = currentCulture;
             Thread.CurrentThread.CurrentUICulture = currentUICulture;
+
+            if (UnitTestDetector.IsTest) 
+            {
+                return;
+            }
 
             var xmlLang = XmlLanguage.GetLanguage(currentCulture.IetfLanguageTag);
             FrameworkElement.LanguageProperty.OverrideMetadata
@@ -32,5 +38,23 @@ namespace Radical.Windows.Bootstrap.Features
                 typeMetadata: new FrameworkPropertyMetadata(fd)
             );
         }
+    }
+
+    /// <summary>
+    /// Detect if we are running as part of a unit test.
+    /// This is DIRTY and should only be used if absolutely necessary 
+    /// as its usually a sign of bad design.
+    /// </summary>    
+    static class UnitTestDetector
+    {
+        static UnitTestDetector()
+        {
+            IsTest = AppDomain.CurrentDomain.GetAssemblies().Any(assembly =>
+            {
+                return assembly.FullName.StartsWith("Microsoft.VisualStudio.TestPlatform", StringComparison.InvariantCultureIgnoreCase);
+            });
+        }
+
+        public static bool IsTest { get; }
     }
 }
