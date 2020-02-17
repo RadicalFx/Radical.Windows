@@ -28,7 +28,7 @@ namespace Radical.Windows
     {
         static readonly TraceSource logger = new TraceSource(typeof(ApplicationBootstrapper).Name);
 
-        readonly ApplicationSettings applicationSettings = new ApplicationSettings();
+        readonly BootstrapConfiguration bootstrapConfiguration = new BootstrapConfiguration();
 
         Type shellViewType = null;
         IServiceProvider serviceProvider;
@@ -221,7 +221,7 @@ namespace Radical.Windows
             var features = serviceProvider.GetServices<IFeature>();
             foreach (var feature in features)
             {
-                feature.Setup(serviceProvider, applicationSettings);
+                feature.Setup(serviceProvider, bootstrapConfiguration);
             }
 
             if (shutdownMode != null && shutdownMode.HasValue)
@@ -322,7 +322,7 @@ namespace Radical.Windows
         /// <returns></returns>
         public ApplicationBootstrapper UsingAsCurrentCulture(Func<CultureInfo> currentCultureHandler)
         {
-            this.applicationSettings.CurrentCultureHandler = currentCultureHandler;
+            this.bootstrapConfiguration.UseCulture(_=> currentCultureHandler());
 
             return this;
         }
@@ -334,7 +334,7 @@ namespace Radical.Windows
         /// <returns></returns>
         public ApplicationBootstrapper UsingAsCurrentUICulture(Func<CultureInfo> currentUICultureHandler)
         {
-            this.applicationSettings.CurrentUICultureHandler = currentUICultureHandler;
+            this.bootstrapConfiguration.UseUICulture(_=> currentUICultureHandler());
 
             return this;
         }
