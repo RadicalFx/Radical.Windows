@@ -384,7 +384,7 @@ namespace Radical.Windows
                 OnShutdownCore(ApplicationShutdownReason.UserRequest);
             });
 
-            var args = new SingletonApplicationStartupArgs(singleton);
+            var args = new SingletonApplicationStartupArgs(singleton, key);
             HandleSingletonApplicationStartup(args);
 
             if (args.AllowStartup)

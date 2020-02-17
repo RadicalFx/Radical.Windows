@@ -2496,9 +2496,10 @@ namespace Radical.Windows.Bootstrap
     }
     public class SingletonApplicationStartupArgs
     {
-        public SingletonApplicationStartupArgs(Radical.Windows.Bootstrap.SingletonApplicationScope scope) { }
+        public SingletonApplicationStartupArgs(Radical.Windows.Bootstrap.SingletonApplicationScope scope, string singletonRegistrationKey) { }
         public bool AllowStartup { get; set; }
         public Radical.Windows.Bootstrap.SingletonApplicationScope Scope { get; }
+        public string SingletonRegistrationKey { get; }
     }
     public class SplashScreenConfiguration
     {
