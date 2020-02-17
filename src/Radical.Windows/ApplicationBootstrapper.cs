@@ -37,7 +37,7 @@ namespace Radical.Windows
         bool isBootCompleted;
 
         private Action<IServiceProvider> bootCompletedHandler;
-        private Action<ApplicationShutdownArgs> shutdownHandler;
+        private Action<ApplicationShuttingDownArgs> shutdownHandler;
         private Action<IServiceProvider> bootHandler;
         bool isSessionEnding;
         bool isShuttingDown;
@@ -551,7 +551,7 @@ namespace Radical.Windows
                     }
                 }
 
-                var args = new ApplicationShutdownArgs()
+                var args = new ApplicationShuttingDownArgs()
                 {
                     Reason = reason,
                     IsBootCompleted = isBootCompleted
@@ -666,7 +666,7 @@ namespace Radical.Windows
         /// </summary>
         /// <param name="shutdownHandler">The shutdown handler.</param>
         /// <returns></returns>
-        public ApplicationBootstrapper OnShutdown(Action<ApplicationShutdownArgs> shutdownHandler)
+        public ApplicationBootstrapper OnShutdown(Action<ApplicationShuttingDownArgs> shutdownHandler)
         {
             this.shutdownHandler = shutdownHandler;
             return this;
