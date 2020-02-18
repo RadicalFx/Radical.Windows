@@ -13,5 +13,5 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2.0.0
-    - run: '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.com .\src\Radical.Windows.sln /Build Release"'
+    - run: '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.com .\src\Radical-.Windows.sln /Build Release"'
     - run: dotnet test .\src\Radical.Windows.sln --no-build
