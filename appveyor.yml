@@ -8,6 +8,8 @@ pull_requests:
 environment:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   NUGET_XMLDOC_MODE: skip
+  PID:
+    secure: 5RquVB8XZESBf8K8lEsBdR+h2xpeEGxx/SXjtuPzup4=
 
 branches:
   only:
@@ -27,6 +29,7 @@ before_build:
   - nuget restore .\src\Radical.Windows.sln
 
 build_script:
+  - '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\StorePID.exe" 5RquVB8XZESBf8K8lEsBdR+h2xpeEGxx/SXjtuPzup4= 09262'
   - '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.com" .\src\Radical.Windows.sln /Build Release'
 
 test_script:
