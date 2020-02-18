@@ -10,7 +10,7 @@ on:
   pull_request:
 jobs:
   build:
-    name: 'Compile on Windows'
+    name: 'Compile & test on Windows'
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2.0.0
