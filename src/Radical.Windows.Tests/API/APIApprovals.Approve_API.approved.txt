@@ -1877,6 +1877,9 @@ namespace Radical.Windows.Analytics
 }
 namespace Radical.Windows
 {
+    [System.Obsolete("ApplicationBootstrapper has been obsoleted and will be treated as an error in v3." +
+        "0.0 and removed in v4.0.0. Consider moving to new RadicalApplication using the A" +
+        "ddRadicalApplication extension method.", false)]
     public class ApplicationBootstrapper
     {
         public ApplicationBootstrapper() { }
@@ -1890,7 +1893,7 @@ namespace Radical.Windows
         public Radical.Windows.ApplicationBootstrapper OnBoot(System.Action<System.IServiceProvider> bootHandler) { }
         public Radical.Windows.ApplicationBootstrapper OnBootCompleted(System.Action<System.IServiceProvider> bootCompletedHandler) { }
         public Radical.Windows.ApplicationBootstrapper OnServiceProviderCreated(System.Action<System.IServiceProvider> onServiceProviderCreated) { }
-        public Radical.Windows.ApplicationBootstrapper OnShutdown(System.Action<Radical.Windows.Bootstrap.ApplicationShutdownArgs> shutdownHandler) { }
+        public Radical.Windows.ApplicationBootstrapper OnShutdown(System.Action<Radical.Windows.Bootstrap.ApplicationShuttingDownArgs> shutdownHandler) { }
         public Radical.Windows.ApplicationBootstrapper OnSingletonApplicationStartup(System.Action<Radical.Windows.Bootstrap.SingletonApplicationStartupArgs> onSingletonApplicationStartup) { }
         public Radical.Windows.ApplicationBootstrapper OnUnhandledException(System.Action<System.Exception> unhandledExceptionHandler) { }
         public Radical.Windows.ApplicationBootstrapper OverrideShutdownMode(System.Windows.ShutdownMode mode) { }
@@ -1903,6 +1906,9 @@ namespace Radical.Windows
         public Radical.Windows.ApplicationBootstrapper UsingAsShell<TShellType>()
             where TShellType : System.Windows.Window { }
     }
+    [System.Obsolete("ApplicationBootstrapper has been obsoleted and will be treated as an error in v3." +
+        "0.0 and removed in v4.0.0. Consider moving to new RadicalApplication using the A" +
+        "ddRadicalApplication extension method.", false)]
     public class ApplicationBootstrapper<TMainView> : Radical.Windows.ApplicationBootstrapper
         where TMainView : System.Windows.Window
     {
@@ -1921,6 +1927,11 @@ namespace Radical.Windows
         protected override void StopListening(object source) { }
         public static void AddListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
         public static void RemoveListener(Radical.ComponentModel.IMonitor source, System.Windows.IWeakEventListener listener) { }
+    }
+    public sealed class RadicalApplication
+    {
+        public void Boot() { }
+        public void Shutdown() { }
     }
     public class Repeat
     {
@@ -2342,18 +2353,18 @@ namespace Radical.Windows.Behaviors
 }
 namespace Radical.Windows.Bootstrap
 {
-    public class ApplicationShutdownArgs
-    {
-        public ApplicationShutdownArgs() { }
-        public bool IsBootCompleted { get; }
-        public Radical.Windows.Bootstrap.ApplicationShutdownReason Reason { get; }
-    }
     public enum ApplicationShutdownReason
     {
         UserRequest = 0,
         MultipleInstanceNotAllowed = 1,
         SessionEnding = 2,
         ApplicationRequest = 3,
+    }
+    public class ApplicationShuttingDownArgs
+    {
+        public ApplicationShuttingDownArgs() { }
+        public bool IsBootCompleted { get; }
+        public Radical.Windows.Bootstrap.ApplicationShutdownReason Reason { get; }
     }
     public class AssemblyScanner
     {
@@ -2364,6 +2375,30 @@ namespace Radical.Windows.Bootstrap
             Exclude = 0,
             Include = 1,
         }
+    }
+    public class BootstrapConfiguration
+    {
+        public Radical.Windows.Bootstrap.AssemblyScanner AssemblyScanner { get; }
+        public Radical.Windows.Bootstrap.BootstrapConventions BootstrapConventions { get; }
+        public void DisableAutoBoot() { }
+        public void EnableSplashScreen(Radical.Windows.Bootstrap.SplashScreenConfiguration config = null) { }
+        public void ExposeServiceAsResource<TService>() { }
+        public void ExposeServiceAsResource<TService, TView>()
+            where TView : System.Windows.FrameworkElement { }
+        public void OnBootCompleted(System.Action<System.IServiceProvider> bootCompletedHandler) { }
+        public void OnBooting(System.Action<System.IServiceProvider> bootingHandler) { }
+        public void OnServiceProviderCreated(System.Action<System.IServiceProvider> onServiceProviderCreatedHandler) { }
+        public void OnShuttingDown(System.Action<Radical.Windows.Bootstrap.ApplicationShuttingDownArgs> shutingDownHandler) { }
+        public void OnSingletonApplicationStartup(System.Action<Radical.Windows.Bootstrap.SingletonApplicationStartupArgs> onSingletonApplicationStartup) { }
+        public void OnUnhandledException(System.Action<System.Exception> unhandledExceptionHandler) { }
+        public void OverrideShutdownMode(System.Windows.ShutdownMode shutdownMode) { }
+        public void RegisterAsGlobalSingleton(string registrationKey) { }
+        public void RegisterAsLocalSingleton(string registrationKey) { }
+        public void UseAsShell(System.Type shellViewType) { }
+        public void UseAsShell<TShellType>()
+            where TShellType : System.Windows.Window { }
+        public void UseCulture(System.Func<System.IServiceProvider, System.Globalization.CultureInfo> cultureConfig) { }
+        public void UseUICulture(System.Func<System.IServiceProvider, System.Globalization.CultureInfo> uiCultureConfig) { }
     }
     public class BootstrapConventions
     {
@@ -2472,9 +2507,10 @@ namespace Radical.Windows.Bootstrap
     }
     public class SingletonApplicationStartupArgs
     {
-        public SingletonApplicationStartupArgs(Radical.Windows.Bootstrap.SingletonApplicationScope scope) { }
+        public SingletonApplicationStartupArgs(Radical.Windows.Bootstrap.SingletonApplicationScope scope, string singletonRegistrationKey) { }
         public bool AllowStartup { get; set; }
         public Radical.Windows.Bootstrap.SingletonApplicationScope Scope { get; }
+        public string SingletonRegistrationKey { get; }
     }
     public class SplashScreenConfiguration
     {
@@ -3611,5 +3647,17 @@ namespace Radical.Windows.Validation
     {
         public static readonly Radical.Windows.ComponentModel.IValidationService Instance;
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
+    }
+}
+namespace System.Windows
+{
+    public static class ApplicationExtensions
+    {
+        public static Radical.Windows.RadicalApplication AddRadicalApplication(this System.Windows.Application application, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure) { }
+        public static Radical.Windows.RadicalApplication AddRadicalApplication(this System.Windows.Application application, System.Type shellViewType, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure) { }
+        public static Radical.Windows.RadicalApplication AddRadicalApplication<TShellView>(this System.Windows.Application application)
+            where TShellView : System.Windows.Window { }
+        public static Radical.Windows.RadicalApplication AddRadicalApplication<TShellView>(this System.Windows.Application application, System.Action<Radical.Windows.Bootstrap.BootstrapConfiguration> configure)
+            where TShellView : System.Windows.Window { }
     }
 }
