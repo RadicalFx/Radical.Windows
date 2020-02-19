@@ -24,7 +24,7 @@ namespace Radical.Windows
     /// The application bootstrapper. Provides a way to dramatically simplify the
     /// application boot process.
     /// </summary>
-    [Obsolete("ApplicationBootstrapper has been obsoleted and will be removed in v3.0.0, consider moving to new RadicalApplication using the AddRadicalApplication extension method.", false)]
+    [Obsolete("ApplicationBootstrapper has been obsoleted and will be treated as an error in v3.0.0 and removed in v4.0.0. Consider moving to new RadicalApplication using the AddRadicalApplication extension method.", false)]
     public class ApplicationBootstrapper
     {
         static readonly TraceSource logger = new TraceSource(typeof(ApplicationBootstrapper).Name);
