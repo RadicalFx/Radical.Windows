@@ -20,11 +20,6 @@ namespace Radical.Windows.Bootstrap.Installers
                 {
                     foreach (var contract in descriptor.Contracts)
                     {
-                        if (conventions.AllowServiceOverride(contract) && services.IsRegistered(contract)) 
-                        {
-                            continue;
-                        }
-
                         services.AddSingleton(contract, descriptor.Implementation);
                     }
                 });

@@ -12,21 +12,9 @@ namespace Radical.Windows.Bootstrap.Installers
         public void Install(BootstrapConventions conventions, IServiceCollection services, IEnumerable<Type> assemblyScanningResults)
         {
             services.AddSingleton<IFeature, UIComposition>();
-
-            if (!services.IsRegistered<IRegionManagerFactory>())
-            {
-                services.AddSingleton<IRegionManagerFactory, RegionManagerFactory>();
-            }
-
-            if (!services.IsRegistered<IRegionService>())
-            {
-                services.AddSingleton<IRegionService, RegionService>();
-            }
-
-            if (!services.IsRegistered<IRegionManager>())
-            {
-                services.AddTransient<IRegionManager, RegionManager>();
-            }
+            services.AddSingleton<IRegionManagerFactory, RegionManagerFactory>();
+            services.AddSingleton<IRegionService, RegionService>();
+            services.AddTransient<IRegionManager, RegionManager>();
         }
     }
 }

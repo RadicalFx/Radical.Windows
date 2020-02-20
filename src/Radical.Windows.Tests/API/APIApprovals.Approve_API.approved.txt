@@ -2404,11 +2404,7 @@ namespace Radical.Windows.Bootstrap
     {
         public BootstrapConventions() { }
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> AllowServiceOverride { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Reflection.Assembly, System.Collections.Generic.IEnumerable<string>> AssemblyFileScanPatterns { get; set; }
-        [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        public System.Predicate<System.Type> DefaultAllowServiceOverride { get; }
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         public System.Func<System.Reflection.Assembly, System.Collections.Generic.IEnumerable<string>> DefaultAssemblyFileScanPatterns { get; }
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]

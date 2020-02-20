@@ -26,9 +26,6 @@ namespace Radical.Windows.Bootstrap
             DefaultIsService = t => IsConcreteType(t) && t.Namespace.IsLike("*.Services");
             IsService = t => DefaultIsService(t);
 
-            DefaultAllowServiceOverride = t => t.Namespace.IsLike("Radical.*.Services");
-            AllowServiceOverride = t => DefaultAllowServiceOverride(t);
-
             DefaultSelectServiceContracts = type =>
             {
                 var types = new HashSet<Type>(type.GetInterfaces());
@@ -174,24 +171,6 @@ namespace Radical.Windows.Bootstrap
         /// </value>
         [IgnorePropertyInjectionAttribue]
         public Predicate<Type> IsService { get; set; }
-
-        /// <summary>
-        /// Default: Gets or sets if a service can be overridden.
-        /// </summary>
-        /// <value>
-        /// The is service.
-        /// </value>
-        [IgnorePropertyInjectionAttribue]
-        public Predicate<Type> DefaultAllowServiceOverride { get; private set; }
-
-        /// <summary>
-        /// Gets or sets if a service can be overridden.
-        /// </summary>
-        /// <value>
-        /// The is service.
-        /// </value>
-        [IgnorePropertyInjectionAttribue]
-        public Predicate<Type> AllowServiceOverride { get; set; }
 
         /// <summary>
         /// Default: Gets or sets the select service contracts.
