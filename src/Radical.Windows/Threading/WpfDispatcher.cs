@@ -8,7 +8,7 @@ namespace Radical.Windows.Threading
     /// Wraps the Wpf multi-threading synchronization 
     /// Dispatcher (System.Windows.Threading).
     /// </summary>
-    public sealed class WpfDispatcher : IDispatcher
+    sealed class WpfDispatcher : IDispatcher
     {
         readonly Wpf.Dispatcher dispatcher;
 
