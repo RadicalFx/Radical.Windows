@@ -19,15 +19,8 @@ namespace Radical.Windows.Bootstrap.Installers
             services.AddSingleton(container => Application.Current);
             services.AddSingleton(container => Application.Current.Dispatcher);
 
-            if (!services.IsRegistered<IDispatcher>())
-            {
-                services.AddSingleton<IDispatcher, WpfDispatcher>();
-            }
-
-            if (!services.IsRegistered<IReleaseComponents>())
-            {
-                services.AddSingleton<IReleaseComponents, DefaultComponentReleaser>();
-            }
+            services.AddSingleton<IDispatcher, WpfDispatcher>();
+            services.AddSingleton<IReleaseComponents, DefaultComponentReleaser>();
         }
     }
 }

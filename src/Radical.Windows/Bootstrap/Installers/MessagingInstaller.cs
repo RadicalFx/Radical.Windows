@@ -32,10 +32,7 @@ namespace Radical.Windows.Bootstrap.Installers
                     autoSubscribeFeature.Add(descriptor.Implementation, descriptor.Contracts);
                 });
 
-            if (!services.IsRegistered<IMessageBroker>())
-            {
-                services.AddSingleton<IMessageBroker, MessageBroker>();
-            }
+            services.AddSingleton<IMessageBroker, MessageBroker>();
         }
     }
 }
