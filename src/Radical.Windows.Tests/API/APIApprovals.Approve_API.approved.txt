@@ -3589,19 +3589,6 @@ namespace Radical.Windows.Regions
         protected virtual object TryGetHeader(System.Windows.DependencyObject view) { }
     }
 }
-namespace Radical.Windows.Threading
-{
-    public sealed class WpfDispatcher : Radical.ComponentModel.IDispatcher
-    {
-        public WpfDispatcher(System.Windows.Threading.Dispatcher dispatcher) { }
-        public bool IsSafe { get; }
-        public void Dispatch(System.Action action) { }
-        public TResult Dispatch<TResult>(System.Func<TResult> func) { }
-        public void Dispatch<T>(T arg, System.Action<T> action) { }
-        public void Dispatch<T1, T2>(T1 arg1, T2 arg2, System.Action<T1, T2> action) { }
-        public void Invoke(System.Delegate d, params object[] args) { }
-    }
-}
 namespace Radical.Windows.Validation
 {
     public abstract class AbstractValidationService : Radical.Windows.ComponentModel.IValidationService
