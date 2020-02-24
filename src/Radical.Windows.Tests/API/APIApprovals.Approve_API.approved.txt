@@ -2057,11 +2057,6 @@ namespace Radical.Windows.Behaviors
         protected override void OnAttached() { }
         protected override void OnDetaching() { }
     }
-    public sealed class DisableUndoManagerBehavior : Microsoft.Xaml.Behaviors.Behavior<System.Windows.Controls.TextBox>
-    {
-        public DisableUndoManagerBehavior() { }
-        protected override void OnAttached() { }
-    }
     public static class DragDropManager
     {
         public static readonly System.Windows.DependencyProperty DataObjectProperty;
