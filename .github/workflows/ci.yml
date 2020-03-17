@@ -14,5 +14,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2.0.0
     - run: 'echo %CD%'
-    - run: '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.com D:\a\Radical.Windows\Radical.Windows\src\Radical-.Windows.sln /Build Release"'
+    - run: '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.com D:\a\Radical.Windows\Radical.Windows\src\Radical.Windows.sln /Build Release"'
     - run: dotnet test .\src\Radical.Windows.sln --no-build
