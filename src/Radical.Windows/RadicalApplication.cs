@@ -50,6 +50,15 @@ namespace Radical.Windows
             return radicalApplication;
         }
 
+        internal static RadicalApplication ExternallyManagedBy(Application application, IServiceProvider serviceProvider, BootstrapConfiguration bootstrapConfiguration)
+        {
+            Ensure.That(bootstrapConfiguration.IsAutoBootEnabled)
+                .WithMessage("When using Generic Host auto boot cannot be disabled.")
+                .Is(true);
+
+            return new RadicalApplication(application, serviceProvider, bootstrapConfiguration);
+        }
+
         readonly Application application;
         readonly BootstrapConfiguration bootstrapConfiguration;
         readonly IServiceProvider serviceProvider;
