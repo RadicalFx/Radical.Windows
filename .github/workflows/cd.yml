@@ -24,9 +24,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      
-      - name: Echo PR number
-        run: echo  $env:GITHUB_PULL_REQUEST_NUMBER
         
       # Install the .NET Core workload
       - name: Install .NET Core
