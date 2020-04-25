@@ -11,7 +11,6 @@ jobs:
   build:
     runs-on: windows-latest
     env:
-      MyGet_API_Key: ${{ secrets.MyGet_API_Key }}
       Configuration: Release
       Solution_Path: src\Radical.Windows.sln
       Test_Project_Path: src\Radical.Windows.Tests\Radical.Windows.Tests.csproj
@@ -49,4 +48,4 @@ jobs:
 
       # Push to Myget
       - name: Push to Myget
-        run: dotnet nuget push $env:Bin_Folder\$env:Configuration\*.nupkg --skip-duplicate --source https://www.myget.org/F/radical-unstable/api/v2/package --api-key $env:MyGet_API_Key
+        run: dotnet nuget push $env:Bin_Folder\$env:Configuration\*.nupkg --skip-duplicate --source https://www.myget.org/F/radical-unstable/api/v2/package --api-key ${{ secrets.MyGet_API_Key }}
