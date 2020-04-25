@@ -48,4 +48,4 @@ jobs:
 
       # Push to Myget
       - name: Push to Myget
-        run: dotnet nuget push $env.Artifacts_Folder\*.nupkg --skip-duplicate --source https://www.myget.org/F/radical-unstable/api/v2/package --api-key $env.MyGet_API_Key
+        run: dotnet nuget push $env:Artifacts_Folder\*.nupkg --skip-duplicate --source https://www.myget.org/F/radical-unstable/api/v2/package --api-key $env:MyGet_API_Key
