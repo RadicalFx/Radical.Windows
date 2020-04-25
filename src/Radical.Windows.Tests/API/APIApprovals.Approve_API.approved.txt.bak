@@ -3170,6 +3170,11 @@ namespace Radical.Windows.Markup
         protected virtual bool TryGetTargetItems<T>(System.IServiceProvider provider, out T target, out System.Windows.DependencyProperty dp)
             where T : System.Windows.DependencyObject { }
     }
+    public class ChoosenItemBinding : Radical.Windows.Markup.BindingDecoratorBase
+    {
+        public ChoosenItemBinding() { }
+        public ChoosenItemBinding(string path) { }
+    }
     public class CommandBinding : Radical.Windows.Markup.BindingDecoratorBase
     {
         public CommandBinding() { }

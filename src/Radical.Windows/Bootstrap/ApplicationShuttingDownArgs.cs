@@ -3,7 +3,7 @@
     /// <summary>
     /// The application shutdown arguments.
     /// </summary>
-    public class ApplicationShutdownArgs
+    public class ApplicationShuttingDownArgs
     {
         /// <summary>
         /// Gets a value indicating whether this application boot is completed.

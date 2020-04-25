@@ -24,11 +24,12 @@ namespace Radical.Windows
     /// The application bootstrapper. Provides a way to dramatically simplify the
     /// application boot process.
     /// </summary>
+    [Obsolete("ApplicationBootstrapper has been obsoleted and will be treated as an error in v3.0.0 and removed in v4.0.0. Consider moving to new RadicalApplication using the AddRadicalApplication extension method.", false)]
     public class ApplicationBootstrapper
     {
         static readonly TraceSource logger = new TraceSource(typeof(ApplicationBootstrapper).Name);
 
-        readonly ApplicationSettings applicationSettings = new ApplicationSettings();
+        readonly BootstrapConfiguration bootstrapConfiguration = new BootstrapConfiguration();
 
         Type shellViewType = null;
         IServiceProvider serviceProvider;
@@ -37,7 +38,7 @@ namespace Radical.Windows
         bool isBootCompleted;
 
         private Action<IServiceProvider> bootCompletedHandler;
-        private Action<ApplicationShutdownArgs> shutdownHandler;
+        private Action<ApplicationShuttingDownArgs> shutdownHandler;
         private Action<IServiceProvider> bootHandler;
         bool isSessionEnding;
         bool isShuttingDown;
@@ -221,7 +222,7 @@ namespace Radical.Windows
             var features = serviceProvider.GetServices<IFeature>();
             foreach (var feature in features)
             {
-                feature.Setup(serviceProvider, applicationSettings);
+                feature.Setup(serviceProvider, bootstrapConfiguration);
             }
 
             if (shutdownMode != null && shutdownMode.HasValue)
@@ -322,7 +323,7 @@ namespace Radical.Windows
         /// <returns></returns>
         public ApplicationBootstrapper UsingAsCurrentCulture(Func<CultureInfo> currentCultureHandler)
         {
-            this.applicationSettings.CurrentCultureHandler = currentCultureHandler;
+            this.bootstrapConfiguration.UseCulture(_=> currentCultureHandler());
 
             return this;
         }
@@ -334,7 +335,7 @@ namespace Radical.Windows
         /// <returns></returns>
         public ApplicationBootstrapper UsingAsCurrentUICulture(Func<CultureInfo> currentUICultureHandler)
         {
-            this.applicationSettings.CurrentUICultureHandler = currentUICultureHandler;
+            this.bootstrapConfiguration.UseUICulture(_=> currentUICultureHandler());
 
             return this;
         }
@@ -384,7 +385,7 @@ namespace Radical.Windows
                 OnShutdownCore(ApplicationShutdownReason.UserRequest);
             });
 
-            var args = new SingletonApplicationStartupArgs(singleton);
+            var args = new SingletonApplicationStartupArgs(singleton, key);
             HandleSingletonApplicationStartup(args);
 
             if (args.AllowStartup)
@@ -551,7 +552,7 @@ namespace Radical.Windows
                     }
                 }
 
-                var args = new ApplicationShutdownArgs()
+                var args = new ApplicationShuttingDownArgs()
                 {
                     Reason = reason,
                     IsBootCompleted = isBootCompleted
@@ -666,7 +667,7 @@ namespace Radical.Windows
         /// </summary>
         /// <param name="shutdownHandler">The shutdown handler.</param>
         /// <returns></returns>
-        public ApplicationBootstrapper OnShutdown(Action<ApplicationShutdownArgs> shutdownHandler)
+        public ApplicationBootstrapper OnShutdown(Action<ApplicationShuttingDownArgs> shutdownHandler)
         {
             this.shutdownHandler = shutdownHandler;
             return this;
