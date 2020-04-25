@@ -11,9 +11,12 @@ jobs:
   build:
     runs-on: windows-latest
     env:
+      MyGet_API_Key: ${{ secrets.MyGet_API_Key }}
+      Configuration: Release
       Solution_Path: src\Radical.Windows.sln
       Test_Project_Path: src\Radical.Windows.Tests\Radical.Windows.Tests.csproj
       Wpf_Project_Path: src\Radical.Windows\Radical.Windows.csproj
+      Artifacts_Folder: src\Radical.Windows\Bin\$env:Configuration
     
     steps:
       - name: Checkout
@@ -33,12 +36,16 @@ jobs:
       
       # Restore the application
       - name:  Restore the Wpf application to populate the obj folder
-        run: msbuild $env:Solution_Path /t:Restore /p:Configuration=Release
+        run: msbuild $env:Solution_Path /t:Restore /p:Configuration=$env:Configuration
         
       # Build the Windows Application Packaging project
       - name: Build Solution
-        run: msbuild $env:Solution_Path /p:Configuration=Release
+        run: msbuild $env:Solution_Path /p:Configuration=$env:Configuration
       
       # Test
       - name: Execute Unit Tests
-        run: dotnet test $env:Test_Project_Path --no-build --configuration Release
+        run: dotnet test $env:Test_Project_Path --no-build --configuration $env:Configuration
+
+      # Push to Myget
+      - name: Push to Myget
+        run: dotnet nuget push $env.Artifacts_Folder\*.nupkg --skip-duplicate -source https://www.myget.org/F/radical-unstable/api/v2/package --api-key $env.MyGet_API_Key
