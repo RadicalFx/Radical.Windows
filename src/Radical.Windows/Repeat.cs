@@ -7,6 +7,7 @@ namespace Radical.Windows
     /// <summary>
     /// Allows to execute and action every time the given amount of time elapses.
     /// </summary>
+    [Obsolete("Repeat has been obsoleted and will be removed in v3.0.0")]
     public class Repeat
     {
         /// <summary>
