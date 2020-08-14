@@ -314,6 +314,7 @@ namespace Radical.Windows.Presentation
         /// Moves the focus to.
         /// </summary>
         /// <param name="property">The property.</param>
+        [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use MoveFocusTo(nameof(property)) instead")]
         protected virtual void MoveFocusTo<T>(Expression<Func<T>> property)
         {
             EnsureNotDisposed();
