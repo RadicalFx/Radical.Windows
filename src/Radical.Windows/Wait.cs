@@ -7,6 +7,7 @@ namespace Radical.Windows
     /// <summary>
     /// Allows to execute and action after a user defined amount of time.
     /// </summary>
+    [Obsolete("Wait has been obsoleted and will be removed in v3.0.0")]
     public class Wait
     {
         /// <summary>
