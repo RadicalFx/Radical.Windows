@@ -86,7 +86,7 @@ namespace Radical.Windows.Bootstrap
                         return type.GetAttribute<InjectViewInRegionAttribute>().Named;
                     }
 
-                    if (type.Namespace.IsLike("*.Presentation.Partial.*"))
+                    if (type.Namespace.IsLike("*.Presentation.Partials.*") || type.Namespace.IsLike("*.Presentation.Partial.*"))
                     {
                         var regionName = type.Namespace.Split('.').Last();
                         return regionName;
