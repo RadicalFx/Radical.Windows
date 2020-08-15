@@ -3294,6 +3294,9 @@ namespace Radical.Windows.Model
         protected override void OnDeserializationCompleted(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         protected override void OnInsertCompleted(int index, T value) { }
         protected virtual void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e) { }
+        protected void OnPropertyChanged(string propertyName) { }
+        [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use OnPropertyCha" +
+            "nged(nameof(property)) instead")]
         protected void OnPropertyChanged<TValue>(System.Linq.Expressions.Expression<System.Func<TValue>> property) { }
         protected override void OnRemoveCompleted(T value, int index) { }
     }
@@ -3333,6 +3336,8 @@ namespace Radical.Windows.Presentation
         public System.Collections.IEnumerable GetErrors(string propertyName) { }
         protected string GetPropertyDisplayName(string propertyName) { }
         protected virtual void MoveFocusTo(string focusedElementKey) { }
+        [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use MoveFocusTo(n" +
+            "ameof(property)) instead")]
         protected virtual void MoveFocusTo<T>(System.Linq.Expressions.Expression<System.Func<T>> property) { }
         protected virtual void OnAcceptingChanges(System.ComponentModel.CancelEventArgs e) { }
         protected virtual void OnChangesAccepted() { }
@@ -3394,6 +3399,8 @@ namespace Radical.Windows.Presentation
         public System.Collections.IEnumerable GetErrors(string propertyName) { }
         protected string GetPropertyDisplayName(string propertyName) { }
         protected virtual void MoveFocusTo(string focusedElementKey) { }
+        [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use MoveFocusTo(n" +
+            "ameof(property)) instead")]
         protected virtual void MoveFocusTo<T>(System.Linq.Expressions.Expression<System.Func<T>> property) { }
         protected void OnErrorsChanged(string propertyName) { }
         protected override void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e) { }

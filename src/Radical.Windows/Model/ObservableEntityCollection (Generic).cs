@@ -59,33 +59,33 @@ namespace Radical.Windows.Model
         {
             base.OnAddCompleted(index, value);
 
-            OnPropertyChanged(() => Count);
+            OnPropertyChanged(nameof(Count));
         }
 
         protected override void OnRemoveCompleted(T value, int index)
         {
             base.OnRemoveCompleted(value, index);
 
-            OnPropertyChanged(() => Count);
+            OnPropertyChanged(nameof(Count));
         }
 
         protected override void OnClearCompleted(IEnumerable<T> clearedItems)
         {
             base.OnClearCompleted(clearedItems);
 
-            OnPropertyChanged(() => Count);
+            OnPropertyChanged(nameof(Count));
         }
 
         protected override void OnInsertCompleted(int index, T value)
         {
             base.OnInsertCompleted(index, value);
 
-            OnPropertyChanged(() => Count);
+            OnPropertyChanged(nameof(Count));
         }
 
         protected override void OnDeserializationCompleted(SerializationInfo info, StreamingContext context)
         {
-            OnPropertyChanged(() => Count);
+            OnPropertyChanged(nameof(Count));
 
             base.OnDeserializationCompleted(info, context);
         }
@@ -121,9 +121,19 @@ namespace Radical.Windows.Model
         /// Raises the <see cref="E:PropertyChanged"/> event.
         /// </summary>
         /// <param name="property">The property.</param>
+        [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use OnPropertyChanged(nameof(property)) instead")]
         protected void OnPropertyChanged<TValue>(Expression<Func<TValue>> property)
         {
             var propertyName = property.GetMemberName();
+            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:PropertyChanged"/> event.
+        /// </summary>
+        /// <param name="propertyName">The property name.</param>
+        protected void OnPropertyChanged(string propertyName)
+        {
             OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
         }
 
@@ -171,7 +181,7 @@ namespace Radical.Windows.Model
         {
             base.OnAddRangeCompleted(addedRange);
 
-            OnPropertyChanged(() => Count);
+            OnPropertyChanged(nameof(Count));
 
             EndInit();
         }
