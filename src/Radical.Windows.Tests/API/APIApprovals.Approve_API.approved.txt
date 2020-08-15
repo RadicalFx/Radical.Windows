@@ -1953,6 +1953,7 @@ namespace Radical.Windows
         public void Boot() { }
         public void Shutdown() { }
     }
+    [System.Obsolete("Repeat has been obsoleted and will be removed in v3.0.0")]
     public class Repeat
     {
         public Repeat() { }
@@ -1980,6 +1981,7 @@ namespace Radical.Windows
         public static bool IsChildOfType<T>(System.Windows.DependencyObject obj)
             where T : System.Windows.DependencyObject { }
     }
+    [System.Obsolete("Wait has been obsoleted and will be removed in v3.0.0")]
     public class Wait
     {
         public Wait() { }
