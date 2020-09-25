@@ -53,6 +53,7 @@ namespace Microsoft.Extensions.Hosting
 
             hostBuilder.ConfigureServices((context, serviceCollection) =>
             {
+                configuration.ConfigureServicesHandler(serviceCollection);
                 configuration.PopulateServiceCollection(serviceCollection);
 
                 serviceCollection.AddHostedService<RadicalApplicationService>();

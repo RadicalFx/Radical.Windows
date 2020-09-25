@@ -35,6 +35,8 @@ namespace Radical.Windows.Bootstrap
         internal Action<Exception> UnhandledExceptionHandler { get; private set; } = _ => { };
         internal Action<IServiceProvider> BootCompletedHandler { get; private set; } = _ => { };
 
+        internal Action<IServiceCollection> ConfigureServicesHandler{ get; private set; } = _ => { };
+
         internal void PopulateServiceCollection(IServiceCollection services)
         {
             Ensure.That(this).IsFalse(cfg => cfg.isInitialized);
@@ -70,6 +72,16 @@ namespace Radical.Windows.Bootstrap
                     application.Resources.Add(key, instance);
                 }
             }
+        }
+
+        /// <summary>
+        /// Customize the services collection before the service provider is created.
+        /// </summary>
+        /// <param name="services">A callback invoked to customize the services collection.</param>
+        public void ConfigureServices(Action<IServiceCollection> services)
+        {
+            Ensure.That(services).Named(nameof(services)).IsNotNull();
+            ConfigureServicesHandler = services;
         }
 
         /// <summary>
