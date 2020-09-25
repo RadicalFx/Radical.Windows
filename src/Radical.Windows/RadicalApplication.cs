@@ -22,7 +22,7 @@ namespace Radical.Windows
     {
         /// <summary>
         /// Create a Radical application with a life-cycle
-        /// bound to the supplied WPF application, using 
+        /// bound to the supplied WPF application, using
         /// the given configuration.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
@@ -33,6 +33,7 @@ namespace Radical.Windows
                 .IsNotNull();
 
             var services = new ServiceCollection();
+            bootstrapConfiguration.ConfigureServicesHandler(services);
             bootstrapConfiguration.PopulateServiceCollection(services);
             var serviceProvider = services.BuildServiceProvider();
             bootstrapConfiguration.OnServiceProviderCreatedHandler(serviceProvider);

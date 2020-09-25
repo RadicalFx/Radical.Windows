@@ -63,6 +63,33 @@ namespace Radical.Windows.Tests.Boot
         }
 
         [SharedApplicationTestMethod]
+        public async Task Application_using_host_builder_can_resolve_application_configuration_configured_services()
+        {
+            var host = new HostBuilder()
+                .AddRadicalApplication(cfg =>
+                {
+                    cfg.ConfigureServices(services =>
+                    {
+                        services.AddSingleton<SampleDependency>();
+                    });
+                })
+                .Build();
+
+            await host.StartAsync();
+
+            var customDependency = host.Services.GetService<SampleDependency>();
+            var viewResolver = host.Services.GetService<IViewResolver>();
+
+            Assert.IsNotNull(customDependency);
+            Assert.IsNotNull(viewResolver);
+
+            using (host)
+            {
+                await host?.StopAsync();
+            }
+        }
+
+        [SharedApplicationTestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void Application_using_host_builder_can_call_AddRadicalApplication_only_once()
         {
@@ -139,6 +166,4 @@ namespace Radical.Windows.Tests.Boot
             }
         }
     }
-
-    class SampleDependency { }
 }

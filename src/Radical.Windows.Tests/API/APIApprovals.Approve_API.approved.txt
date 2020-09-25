@@ -2356,6 +2356,7 @@ namespace Radical.Windows.Bootstrap
     {
         public Radical.Windows.Bootstrap.AssemblyScanner AssemblyScanner { get; }
         public Radical.Windows.Bootstrap.BootstrapConventions BootstrapConventions { get; }
+        public void ConfigureServices(System.Action<Microsoft.Extensions.DependencyInjection.IServiceCollection> services) { }
         public void DisableAutoBoot() { }
         public void EnableSplashScreen(Radical.Windows.Bootstrap.SplashScreenConfiguration config = null) { }
         public void ExposeServiceAsResource<TService>() { }
