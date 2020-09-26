@@ -785,7 +785,7 @@ namespace Radical.Windows.Services
         /// The default view data context search behavior.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior{ get; set; }
+        public ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior{ get; private set; }
 
         /// <summary>
         /// Gets or sets the generate service static resource key convention.
