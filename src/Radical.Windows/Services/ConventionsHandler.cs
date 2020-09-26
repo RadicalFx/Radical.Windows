@@ -1,4 +1,4 @@
-﻿using Microsoft.Xaml.Behaviors;
+using Microsoft.Xaml.Behaviors;
 using Radical.ComponentModel.Messaging;
 using Radical.Conversions;
 using Radical.Linq;
@@ -778,7 +778,6 @@ namespace Radical.Windows.Services
         [IgnorePropertyInjectionAttribue]
         public Func<DependencyObject, bool> DefaultShouldUnsubscribeViewModelOnRelease { get; private set; }
 
-
         /// <summary>
         /// Gets or sets the default view data context search behavior.
         /// </summary>
@@ -786,11 +785,7 @@ namespace Radical.Windows.Services
         /// The default view data context search behavior.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior
-        {
-            get;
-            set;
-        }
+        public ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior{ get; set; }
 
         /// <summary>
         /// Gets or sets the generate service static resource key convention.
