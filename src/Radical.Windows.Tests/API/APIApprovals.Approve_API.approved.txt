@@ -2545,6 +2545,11 @@ namespace Radical.Windows.ComponentModel
         public CommandDescriptionAttribute(string displayText) { }
         public string DisplayText { get; }
     }
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.All, Inherited=false)]
+    public class ExposeViewModelAsStaticResourceAttribute : System.Attribute
+    {
+        public ExposeViewModelAsStaticResourceAttribute() { }
+    }
     public interface IContentRegion : Radical.Windows.ComponentModel.IRegion
     {
         System.Windows.DependencyObject Content { get; set; }
