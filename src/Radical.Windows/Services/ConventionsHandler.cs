@@ -1,4 +1,4 @@
-﻿using Microsoft.Xaml.Behaviors;
+using Microsoft.Xaml.Behaviors;
 using Radical.ComponentModel.Messaging;
 using Radical.Conversions;
 using Radical.Linq;
@@ -398,25 +398,6 @@ namespace Radical.Windows.Services
             GenerateServiceStaticResourceKey = type => DefaultGenerateServiceStaticResourceKey(type);
         }
 
-        //Boolean TryFindWindowOrIClosableView( DependencyObject fe, out DependencyObject windowOrIClosableView )
-        //{
-        //    if( fe is IClosableView || fe is Window )
-        //    {
-        //        windowOrIClosableView = fe;
-        //        return true;
-        //    }
-        //    else if( fe != null /* && fe.Parent != null */ )
-        //    {
-        //        var parent = VisualTreeHelper.GetParent( fe );
-        //        return TryFindWindowOrIClosableView( parent, out windowOrIClosableView );
-        //    }
-        //    else
-        //    {
-        //        windowOrIClosableView = null;
-        //        return false;
-        //    }
-        //}
-
         /// <summary>
         /// Gets or sets the view model type resolver that can resolve the view model type given the view type.
         /// </summary>
@@ -778,7 +759,6 @@ namespace Radical.Windows.Services
         [IgnorePropertyInjectionAttribue]
         public Func<DependencyObject, bool> DefaultShouldUnsubscribeViewModelOnRelease { get; private set; }
 
-
         /// <summary>
         /// Gets or sets the default view data context search behavior.
         /// </summary>
@@ -786,11 +766,7 @@ namespace Radical.Windows.Services
         /// The default view data context search behavior.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior
-        {
-            get;
-            set;
-        }
+        public ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior{ get; set; }
 
         /// <summary>
         /// Gets or sets the generate service static resource key convention.

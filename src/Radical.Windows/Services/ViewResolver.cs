@@ -143,14 +143,5 @@ namespace Radical.Windows.Services
                 }
             }
         }
-
-        ///// <summary>
-        ///// Releases the given view
-        ///// </summary>
-        ///// <param name="view">The view to release.</param>
-        //public void Release( DependencyObject view )
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
