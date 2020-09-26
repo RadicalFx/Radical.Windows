@@ -214,27 +214,27 @@ namespace Radical.Windows.Services
                 DefaultSetViewDataContext(view, dc);
             };
 
-            DefaultShouldExposeViewModelAsStaticResource = (view, dc) =>
+            DefaultShouldExposeViewModelAsStaticResource = (view, viewModel) =>
             {
-                return false;
+                return viewModel.GetType().GetCustomAttribute<ExposeViewModelAsStaticResourceAttribute>() != null;
             };
 
-            ShouldExposeViewModelAsStaticResource = (view, dc) =>
+            ShouldExposeViewModelAsStaticResource = (view, viewModel) =>
             {
-                return DefaultShouldExposeViewModelAsStaticResource(view, dc);
+                return DefaultShouldExposeViewModelAsStaticResource(view, viewModel);
             };
 
-            DefaultExposeViewModelAsStaticResource = (view, dc) =>
+            DefaultExposeViewModelAsStaticResource = (view, viewModel) =>
             {
-                var key = GenerateViewModelStaticResourceKey(dc);
+                var key = GenerateViewModelStaticResourceKey(viewModel);
                 if(view is FrameworkElement)
                 {
-                    ((FrameworkElement)view).Resources.Add(key, dc);
+                    ((FrameworkElement)view).Resources.Add(key, viewModel);
                 }
 
                 else if(view is FrameworkContentElement)
                 {
-                    ((FrameworkContentElement)view).Resources.Add(key,dc);
+                    ((FrameworkContentElement)view).Resources.Add(key, viewModel);
                 }
             };
 
