@@ -39,5 +39,21 @@ namespace Radical.Windows.Regions
         {
             return (object)element.GetValue(HeaderProperty);
         }
+        
+        public static readonly DependencyProperty PreserveOwningRegionDataContextProperty = DependencyProperty.RegisterAttached(
+            "PreserveOwningRegionDataContext",
+            typeof(bool),
+            typeof(RegionHeaderedElement),
+            new PropertyMetadata(defaultValue: false));
+
+        public static void SetPreserveOwningRegionDataContext(DependencyObject element, bool value)
+        {
+            element.SetValue(PreserveOwningRegionDataContextProperty, value);
+        }
+
+        public static bool GetPreserveOwningRegionDataContext(DependencyObject element)
+        {
+            return (bool)element.GetValue(PreserveOwningRegionDataContextProperty);
+        }
     }
 }
