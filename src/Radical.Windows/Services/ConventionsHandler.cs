@@ -398,25 +398,6 @@ namespace Radical.Windows.Services
             GenerateServiceStaticResourceKey = type => DefaultGenerateServiceStaticResourceKey(type);
         }
 
-        //Boolean TryFindWindowOrIClosableView( DependencyObject fe, out DependencyObject windowOrIClosableView )
-        //{
-        //    if( fe is IClosableView || fe is Window )
-        //    {
-        //        windowOrIClosableView = fe;
-        //        return true;
-        //    }
-        //    else if( fe != null /* && fe.Parent != null */ )
-        //    {
-        //        var parent = VisualTreeHelper.GetParent( fe );
-        //        return TryFindWindowOrIClosableView( parent, out windowOrIClosableView );
-        //    }
-        //    else
-        //    {
-        //        windowOrIClosableView = null;
-        //        return false;
-        //    }
-        //}
-
         /// <summary>
         /// Gets or sets the view model type resolver that can resolve the view model type given the view type.
         /// </summary>
