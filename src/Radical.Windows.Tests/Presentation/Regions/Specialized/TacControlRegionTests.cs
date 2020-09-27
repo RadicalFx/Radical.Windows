@@ -119,7 +119,7 @@ namespace Test.Radical.Windows.Presentation.Regions.Specialized
             var headerView = new TextBlock();
             
             RegionHeaderedElement.SetHeader(tabView, headerView);
-            RegionHeaderedElement.SetPreserveOwningRegionDataContext(headerView, true);
+            RegionHeaderedElement.SetPreserveOwningRegionDataContext(tabView, true);
             
             sut.Add(tabView);
             
@@ -144,7 +144,7 @@ namespace Test.Radical.Windows.Presentation.Regions.Specialized
             };
             
             RegionHeaderedElement.SetHeader(tabView, headerView);
-            RegionHeaderedElement.SetPreserveOwningRegionDataContext(headerView, false);
+            RegionHeaderedElement.SetPreserveOwningRegionDataContext(tabView, false);
             
             sut.Add(tabView);
             
@@ -170,7 +170,7 @@ namespace Test.Radical.Windows.Presentation.Regions.Specialized
             
             RegionHeaderedElement.SetHeader(tabView, headerView);
             //PreserveOwningRegionDataContext defaults to false
-            //RegionHeaderedElement.SetPreserveOwningRegionDataContext(headerView, false);
+            //RegionHeaderedElement.SetPreserveOwningRegionDataContext(tabView, false);
             
             sut.Add(tabView);
             

@@ -41,7 +41,7 @@ namespace Radical.Windows.Regions
             if( header != null )
             {
                 var viewDataContext = TryViewDataContext(view);
-                if (viewDataContext != null && header is DependencyObject headerDependencyObj && RegionHeaderedElement.GetPreserveOwningRegionDataContext(headerDependencyObj))
+                if (viewDataContext != null && header is DependencyObject headerDependencyObj && RegionHeaderedElement.GetPreserveOwningRegionDataContext(view))
                 {
                     SetHeaderDataContext(headerDependencyObj, viewDataContext);
                 }
