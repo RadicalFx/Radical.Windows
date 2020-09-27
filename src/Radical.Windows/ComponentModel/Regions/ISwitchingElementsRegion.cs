@@ -30,6 +30,20 @@ namespace Radical.Windows.ComponentModel
         event EventHandler<ActiveContentChangedEventArgs> ActiveContentChanged;
 
         /// <summary>
+        /// Adds a new item to the switching elements region, and optionally activates it.
+        /// </summary>
+        /// <param name="view">The content to add.</param>
+        /// <param name="activateOnAdd"><c>true</c> to attivate the added content; otherwise <c>false</c>.</param>
+        void Add(DependencyObject view, bool activateOnAdd)
+        {
+            Add(view);
+            if (activateOnAdd)
+            {
+                Activate(view);   
+            }
+        }
+
+        /// <summary>
         /// Activates the specified content.
         /// </summary>
         /// <param name="content">The content.</param>
