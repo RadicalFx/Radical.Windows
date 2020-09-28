@@ -40,6 +40,12 @@ namespace Radical.Windows.Regions
             var header = TryGetHeader( view );
             if( header != null )
             {
+                var viewDataContext = TryViewDataContext(view);
+                if (viewDataContext != null && header is DependencyObject headerDependencyObj && RegionHeaderedElement.GetPreserveOwningRegionDataContext(view))
+                {
+                    SetHeaderDataContext(headerDependencyObj, viewDataContext);
+                }
+
                 tabItem.Header = header;
             }
 
@@ -54,6 +60,25 @@ namespace Radical.Windows.Regions
         protected virtual object TryGetHeader( DependencyObject view )
         {
             return RegionHeaderedElement.GetHeader( view );
+        }
+
+        static object TryViewDataContext( DependencyObject view )
+        {
+            return view switch
+            {
+                FrameworkElement fe => fe.DataContext,
+                FrameworkContentElement fce => fce.DataContext,
+                _ => null
+            };
+        }
+        
+        static void SetHeaderDataContext( DependencyObject header, object dataContext )
+        {
+            _ = header switch
+            {
+                FrameworkElement fe => fe.DataContext = dataContext,
+                FrameworkContentElement fce => fce.DataContext = dataContext
+            };
         }
 
         /// <summary>
