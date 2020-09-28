@@ -2762,6 +2762,7 @@ namespace Radical.Windows.ComponentModel
         System.Windows.DependencyObject PreviousActiveContent { get; }
         event System.EventHandler<Radical.Windows.ComponentModel.ActiveContentChangedEventArgs> ActiveContentChanged;
         void Activate(System.Windows.DependencyObject content);
+        void Add(System.Windows.DependencyObject view, bool activateOnAdd);
     }
     public interface IValidationService
     {
