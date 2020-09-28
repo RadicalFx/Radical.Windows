@@ -3489,8 +3489,11 @@ namespace Radical.Windows.Regions
     public static class RegionHeaderedElement
     {
         public static readonly System.Windows.DependencyProperty HeaderProperty;
+        public static readonly System.Windows.DependencyProperty PreserveOwningRegionDataContextProperty;
         public static object GetHeader(System.Windows.DependencyObject element) { }
+        public static bool GetPreserveOwningRegionDataContext(System.Windows.DependencyObject element) { }
         public static void SetHeader(System.Windows.DependencyObject element, object value) { }
+        public static void SetPreserveOwningRegionDataContext(System.Windows.DependencyObject element, bool value) { }
     }
     public class RegionManager : Radical.Windows.ComponentModel.IRegionManager
     {
