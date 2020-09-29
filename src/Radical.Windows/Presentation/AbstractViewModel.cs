@@ -19,7 +19,8 @@ namespace Radical.Windows.Presentation
     public abstract class AbstractViewModel :
         Entity,
         IViewModel,
-        ISupportInitialize
+        ISupportInitialize,
+        IRequireValidation
     {
         /// <summary>
         /// Gets or sets the view. The view property is intended only for
@@ -76,11 +77,7 @@ namespace Radical.Windows.Presentation
         [SkipPropertyValidation]
         protected virtual bool IsValidationEnabled
         {
-            get
-            {
-                return this is INotifyDataErrorInfo
-                    || this is IRequireValidation;
-            }
+            get{ return true; }
         }
 
         IValidationService _validationService;
