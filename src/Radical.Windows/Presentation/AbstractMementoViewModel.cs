@@ -129,7 +129,7 @@ namespace Radical.Windows.Presentation
         /// </returns>
         protected virtual (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName, ValidationBehavior behavior)
         {
-            (bool IsValid, IEnumerable<ValidationError> Errors) validationResult = (true, new ValidationError[0]);
+            (bool IsValid, IEnumerable<ValidationError> Errors) validationResult = (true, Array.Empty<ValidationError>());
             if (ValidationService.IsValidationSuspended)
             {
                 return validationResult;
@@ -202,7 +202,7 @@ namespace Radical.Windows.Presentation
         {
             if (ValidationService.IsValidationSuspended)
             {
-                return (true, new ValidationError[0]);
+                return (true, Array.Empty<ValidationError>());
             }
 
             var wasValid = IsValid;
