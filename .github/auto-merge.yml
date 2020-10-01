@@ -1,6 +1,6 @@
 - requiredAuthor: dependabot
-  minApprovals:	  minApprovals:
-    NONE: 0	    NONE: 0
+  minApprovals:
+    NONE: 0
   
 # must be enabled as a merge option in the repository settings
 mergeMethod: squash
