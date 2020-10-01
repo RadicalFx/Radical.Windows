@@ -1,13 +1,6 @@
-rules:
-- minApprovals:
-    OWNER: 1
-- minApprovals:
-    MEMBER: 2
-- requiredAuthorRole: MEMBER
-  requiredLabels:
-    - auto merge
-  minApprovals:
-    MEMBER: 1
+- requiredAuthor: dependabot
+  minApprovals:	  minApprovals:
+    NONE: 0	    NONE: 0
   
 # must be enabled as a merge option in the repository settings
 mergeMethod: squash
