@@ -2793,8 +2793,7 @@ namespace Radical.Windows.ComponentModel
         T GetView<T>(System.Action<object> viewModelInterceptor)
             where T : System.Windows.DependencyObject;
         TView GetView<TView, TViewModel>(System.Action<TViewModel> viewModelInterceptor)
-            where TView : System.Windows.DependencyObject
-        ;
+            where TView : System.Windows.DependencyObject;
     }
     [System.AttributeUsage(System.AttributeTargets.Property | System.AttributeTargets.All)]
     public class IgnorePropertyInjectionAttribue : System.Attribute
