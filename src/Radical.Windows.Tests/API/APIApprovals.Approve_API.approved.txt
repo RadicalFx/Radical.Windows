@@ -1,7 +1,5 @@
-﻿[assembly: System.Reflection.AssemblyMetadata("RepositoryUrl", "https://github.com/RadicalFx/Radical.Windows.git")]
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Radical.Windows.Tests")]
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Radical.Windows.Tests")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("Windows7.0")]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v6.0", FrameworkDisplayName="")]
 [assembly: System.Runtime.Versioning.TargetPlatform("Windows7.0")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.radicalframework.com/windows", "Radical.Windows")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.radicalframework.com/windows/behaviors", "Radical.Windows.Behaviors")]
@@ -1877,8 +1875,8 @@ namespace Radical.Win32
     }
     public static class NativeMethods
     {
-        public static System.IntPtr GetWindowLong(System.IntPtr hWnd, Radical.Win32.WindowLong index) { }
-        public static System.IntPtr SetWindowLong(System.IntPtr hWnd, Radical.Win32.WindowLong index, System.IntPtr value) { }
+        public static nint GetWindowLong(nint hWnd, Radical.Win32.WindowLong index) { }
+        public static nint SetWindowLong(nint hWnd, Radical.Win32.WindowLong index, nint value) { }
     }
     public enum WindowLong
     {
