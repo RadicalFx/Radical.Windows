@@ -19,9 +19,8 @@ namespace Radical.Windows.Tests.API
         {
             ApiGeneratorOptions options = new ApiGeneratorOptions()
             {
-                WhitelistedNamespacePrefixes = ["Microsoft", "System"],
-                ExcludeAttributes = ["System.Runtime.Versioning.TargetFrameworkAttribute", "System.Reflection.AssemblyMetadataAttribute"
-                ]
+                AllowNamespacePrefixes = ["Microsoft", "System"],
+                ExcludeAttributes = ["System.Runtime.Versioning.TargetFrameworkAttribute", "System.Reflection.AssemblyMetadataAttribute"]
             };
 
             var type = Type.GetType("XamlGeneratedNamespace.GeneratedInternalTypeHelper, Radical.Windows");
@@ -29,7 +28,7 @@ namespace Radical.Windows.Tests.API
             {
                 var typesToInclude = typeof(VisualTreeCrawler).Assembly
                     .GetExportedTypes()
-                    .Except(new Type[] { type })
+                    .Except([type])
                     .ToArray();
 
                 options.IncludeTypes = typesToInclude;

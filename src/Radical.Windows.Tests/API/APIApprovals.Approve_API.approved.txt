@@ -1875,8 +1875,8 @@ namespace Radical.Win32
     }
     public static class NativeMethods
     {
-        public static System.IntPtr GetWindowLong(System.IntPtr hWnd, Radical.Win32.WindowLong index) { }
-        public static System.IntPtr SetWindowLong(System.IntPtr hWnd, Radical.Win32.WindowLong index, System.IntPtr value) { }
+        public static nint GetWindowLong(nint hWnd, Radical.Win32.WindowLong index) { }
+        public static nint SetWindowLong(nint hWnd, Radical.Win32.WindowLong index, nint value) { }
     }
     public enum WindowLong
     {
