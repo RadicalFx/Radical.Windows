@@ -20,10 +20,10 @@ namespace Radical.Windows.Validation
         private NullValidationService()
             : base()
         {
-
+            SuspendValidation();
         }
 
-        private static readonly ValidationError[] emptyErrors = new ValidationError[0];
+        private static readonly ValidationError[] emptyErrors = System.Array.Empty<ValidationError>();
 
         /// <summary>
         /// Called in order to execute the concrete validation process.
