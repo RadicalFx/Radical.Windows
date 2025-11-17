@@ -10,6 +10,7 @@
     <Description>Radical is an infrastructure framework whose primary role is to help in the development of composite WPF applications based on the Model View ViewModel pattern.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>Radical Radical.Windows</PackageTags>
+    <PackageOutputPath>../../nugets</PackageOutputPath>
     <PackageIcon>icon.png</PackageIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -39,14 +40,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <NoWarn>1701;1702;NU5105;1591</NoWarn>
   </PropertyGroup>
-
-  <Target Name="AppVeyorPullRequestsTarget" AfterTargets="MinVer" Condition="'$(APPVEYOR_PULL_REQUEST_NUMBER)' != ''">
-    <PropertyGroup>
-      <PackageVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)-$(MinVerPreRelease).PR.$(APPVEYOR_PULL_REQUEST_NUMBER).$(APPVEYOR_BUILD_ID)</PackageVersion>
-      <PackageVersion Condition="'$(MinVerBuildMetadata)' != ''">$(PackageVersion)+$(MinVerBuildMetadata)</PackageVersion>
-      <Version>$(PackageVersion)</Version>
-    </PropertyGroup>
-  </Target>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.2">
