@@ -30,4 +30,4 @@ jobs:
           msbuild .\src\Radical.Windows.sln /t:Restore /p:Configuration=Release
           msbuild .\src\Radical.Windows.sln /p:Configuration=Release
       - name: Tests
-        run: dotnet test .\src\Radical.Windows.Tests\Radical.Windows.Tests.csproj --configuration Release --no-build
+        run: dotnet test src --configuration Release --no-build
