@@ -27,7 +27,7 @@ jobs:
           dotnet-version: 10.0.x
       - name: Build Radical.Windows
         run: |
-          'msbuild .\src\Radical.Windows.sln /t:Restore /p:Configuration=Release'
-          'msbuild .\src\Radical.Windows.sln /p:Configuration=Release'
+          msbuild .\src\Radical.Windows.sln /t:Restore /p:Configuration=Release
+          msbuild .\src\Radical.Windows.sln /p:Configuration=Release
       - name: Tests
         run: dotnet test .\src\Radical.Windows.Tests\Radical.Windows.Tests.csproj --configuration Release --no-build
