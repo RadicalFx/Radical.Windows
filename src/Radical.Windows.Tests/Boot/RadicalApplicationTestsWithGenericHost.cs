@@ -90,13 +90,15 @@ namespace Radical.Windows.Tests.Boot
         }
 
         [SharedApplicationTestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void Application_using_host_builder_can_call_AddRadicalApplication_only_once()
         {
-            var host = new HostBuilder()
-                .AddRadicalApplication(_ => { })
-                .AddRadicalApplication(_ => { })
-                .Build();
+            Assert.ThrowsException<InvalidOperationException>(() =>
+            {
+                var host = new HostBuilder()
+                    .AddRadicalApplication(_ => { })
+                    .AddRadicalApplication(_ => { })
+                    .Build();
+            });
         }
 
         [SharedApplicationTestMethod]
