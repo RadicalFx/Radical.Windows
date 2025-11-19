@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Radical.Windows.Tests
@@ -11,11 +12,11 @@ namespace Radical.Windows.Tests
         {
             public ITestMethod TestMethod { get; set; }
             public TestResult[] Results { get; private set; }
-            public Func<TestResult[]> Execute { get; internal set; }
+            public Func<Task<TestResult[]>> ExecuteAsync { get; internal set; }
 
-            public void ExecuteTest() 
+            public async Task ExecuteTestAsync() 
             {
-                Results = Execute();
+                Results = await ExecuteAsync();
             }
         }
 
@@ -28,21 +29,19 @@ namespace Radical.Windows.Tests
         {
             worker = new Thread(()=> 
             {
-                new Application();
+                _ = new Application();
                 while (true) 
                 {
-                    lock (syncLock) 
+                    lock (syncLock)
                     {
-                        if (todo != null)
-                        {
-                            todo.ExecuteTest();
-                            todo = null;
-                            waitHandle.Set();
-                        }
-                        else 
+                        if (todo == null)
                         {
                             continue;
                         }
+
+                        todo.ExecuteTestAsync().GetAwaiter().GetResult();
+                        todo = null;
+                        waitHandle.Set();
                     }
                 }
             });
@@ -51,19 +50,19 @@ namespace Radical.Windows.Tests
             worker.Start();
         }
 
-        public override TestResult[] Execute(ITestMethod testMethod)
+        public override Task<TestResult[]> ExecuteAsync(ITestMethod testMethod)
         {
             var context = new TestExecutionContext()
             {
                 TestMethod = testMethod,
-                Execute = () => base.Execute(testMethod)
+                ExecuteAsync = () => base.ExecuteAsync(testMethod)
             };
 
             todo = context;
             WaitHandle.WaitAll(new []{ waitHandle });
             waitHandle.Reset();
 
-            return context.Results;
+            return Task.FromResult(context.Results);
         }
     }
 }
