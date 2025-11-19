@@ -92,7 +92,7 @@ namespace Radical.Windows.Tests.Boot
         [SharedApplicationTestMethod]
         public void Application_using_host_builder_can_call_AddRadicalApplication_only_once()
         {
-            Assert.ThrowsException<InvalidOperationException>(() =>
+            Assert.Throws<InvalidOperationException>(() =>
             {
                 var host = new HostBuilder()
                     .AddRadicalApplication(_ => { })
