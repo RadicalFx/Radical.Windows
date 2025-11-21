@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Radical.ComponentModel.Messaging;
 using Radical.Diagnostics;
-using Radical.Helpers;
-using Radical.Linq;
-using Radical.Reflection;
 using Radical.Validation;
 using Radical.Windows.Bootstrap;
 using Radical.Windows.ComponentModel;
+using Radical.Windows.Internals;
 using Radical.Windows.Messaging;
 using Radical.Windows.Regions;
 using System;
@@ -54,7 +52,6 @@ namespace Radical.Windows
         public ApplicationBootstrapper()
         {
             var commandLine = CommandLine.GetCurrent();
-
             if (commandLine.Contains("radical-wait-for-debugger") && !Debugger.IsAttached)
             {
                 logger.Warning("Application is waiting for the debugger...");
