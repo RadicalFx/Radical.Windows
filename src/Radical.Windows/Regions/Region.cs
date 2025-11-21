@@ -3,6 +3,7 @@ using Radical.Diagnostics;
 using Radical.Helpers;
 using Radical.Reflection;
 using Radical.Windows.ComponentModel;
+using Radical.Windows.Internals;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -191,9 +192,10 @@ namespace Radical.Windows.Regions
                     RegionService.CurrentService.UnregisterRegionManager( view, UnregisterBehavior.WholeLogicalTreeChain );
                 }
 
-                RegionService.Conventions
-                    .GetViewDataContext( view, RegionService.Conventions.DefaultViewDataContextSearchBehavior )
-                    .As<IExpectViewClosedCallback>( i => i.OnViewClosed() );
+                if (RegionService.Conventions.GetViewDataContext( view, RegionService.Conventions.DefaultViewDataContextSearchBehavior ) is IExpectViewClosedCallback ievcc)
+                {
+                    ievcc.OnViewClosed();
+                }
 
                 if ( RegionService.Conventions.ShouldReleaseView( view ) )
                 {

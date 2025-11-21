@@ -14,19 +14,16 @@ namespace Radical.Windows.Behaviors
 
         void OnAssociatedObjectSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            sender.As<DataGrid>(dataGrid =>
+            if (sender is DataGrid { SelectedItem: not null } dataGrid)
             {
-                if (dataGrid.SelectedItem != null)
-                {
-                    dataGrid.Dispatcher.BeginInvoke(
-                        (Action)(() =>
-                        {
-                            dataGrid.UpdateLayout();
-                            if (dataGrid.SelectedItem != null)
-                                dataGrid.ScrollIntoView(dataGrid.SelectedItem);
-                        }));
-                }
-            });
+                dataGrid.Dispatcher.BeginInvoke(
+                    (Action)(() =>
+                    {
+                        dataGrid.UpdateLayout();
+                        if (dataGrid.SelectedItem != null)
+                            dataGrid.ScrollIntoView(dataGrid.SelectedItem);
+                    }));
+            }
         }
 
         protected override void OnDetaching()

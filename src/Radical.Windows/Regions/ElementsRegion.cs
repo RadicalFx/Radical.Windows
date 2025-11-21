@@ -104,9 +104,7 @@ namespace Radical.Windows.Regions
                 Cancel = false
             };
 
-            RegionService.Conventions
-                .GetViewDataContext( view, RegionService.Conventions.DefaultViewDataContextSearchBehavior )
-                .As<IExpectViewClosingCallback>( i => i.OnViewClosing( args ) );
+            (RegionService.Conventions.GetViewDataContext( view, RegionService.Conventions.DefaultViewDataContextSearchBehavior ) as IExpectViewClosingCallback)?.OnViewClosing(args);
 
             if ( !args.Cancel )
             {

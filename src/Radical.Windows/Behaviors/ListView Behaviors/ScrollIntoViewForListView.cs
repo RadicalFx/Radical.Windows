@@ -14,20 +14,16 @@ namespace Radical.Windows.Behaviors
 
         void OnAssociatedObjectSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            sender.As<ListView>(listView =>
+            if (sender is ListView { SelectedItem: not null } listView)
             {
-                if (listView.SelectedItem != null)
-                {
-                    listView.Dispatcher.BeginInvoke(
-                        (Action)(() =>
-                        {
-                            listView.UpdateLayout();
-                            if (listView.SelectedItem != null)
-                                listView.ScrollIntoView(listView.SelectedItem);
-                        }));
-                }
-            });
-
+                listView.Dispatcher.BeginInvoke(
+                    (Action)(() =>
+                    {
+                        listView.UpdateLayout();
+                        if (listView.SelectedItem != null)
+                            listView.ScrollIntoView(listView.SelectedItem);
+                    }));
+            }
         }
         protected override void OnDetaching()
         {

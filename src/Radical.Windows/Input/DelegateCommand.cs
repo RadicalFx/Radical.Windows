@@ -205,14 +205,9 @@ namespace Radical.Windows.Input
 
             if (onBeforeTracking != null)
             {
-                onBeforeTracking(new CommandEvent()
-                {
-                    Name = DisplayText,
-                    Data = new Dictionary<string, object>()
-                    {
-                        {"parameter", parameter}
-                    }
-                });
+                var evt = new CommandEvent { Name = DisplayText };
+                evt.Data.Add("parameter", parameter);
+                onBeforeTracking(evt);
             }
         }
 

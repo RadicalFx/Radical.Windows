@@ -280,7 +280,7 @@ namespace Radical.Windows.Behaviors
                 {
                     //C'è un handler da agganciare
                     var handler = new SelectionHandler();
-                    handler.SartSync(d.CastTo<ListView>(), e.NewValue.CastTo<IList>());
+                    handler.SartSync((ListView)d, e.NewValue as IList);
 
                     d.SetValue(selectionHandlerProperty, handler);
                 }

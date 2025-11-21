@@ -57,7 +57,7 @@ namespace Radical.Windows.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (!bool.TryParse(parameter.As<string>(), out bool inverted))
+            if (!bool.TryParse(parameter as string, out bool inverted))
             {
                 inverted = false;
             }
