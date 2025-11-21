@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Radical.ComponentModel.Validation;
 using Radical.Validation;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation;
@@ -76,16 +75,6 @@ namespace Test.Radical.Windows.Presentation
             {
                 get { return GetPropertyValue(() => OnceMore); }
                 set { SetPropertyValue(() => OnceMore, value); }
-            }
-        }
-
-        class SampleTestViewModelWithValidationCallback : SampleTestViewModel, IRequireValidationCallback<SampleTestViewModelWithValidationCallback>
-        {
-            public Action<ValidationContext<SampleTestViewModelWithValidationCallback>> Test_OnValidate { get; set; }
-
-            public void OnValidate(ValidationContext<SampleTestViewModelWithValidationCallback> context)
-            {
-                Test_OnValidate(context);
             }
         }
 
@@ -597,7 +586,7 @@ namespace Test.Radical.Windows.Presentation
                 NotNullNotEmpty = "something, so this doesn't fail."
             };
             var svc = DataAnnotationValidationService.CreateFor(sut);
-
+        
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
             sut.Test_OnValidate = ctx =>
             {
@@ -606,14 +595,14 @@ namespace Test.Radical.Windows.Presentation
                     ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
                 }
             };
-
+        
             sut.Validate();
             sut.Validate();
             sut.Validate();
-
+        
             Assert.AreEqual(1, sut.ValidationErrors.Count);
         }
-
+        
         [TestMethod]
         [TestCategory("AbstractViewModel"), TestCategory("Validation"), TestCategory("Issue#176")]
         public void AbstractViewModel_with_custom_validation_changing_properties_multiple_times_should_report_custom_validation_errors_only_once()
@@ -623,7 +612,7 @@ namespace Test.Radical.Windows.Presentation
                 NotNullNotEmpty = "something, so this doesn't fail."
             };
             var svc = DataAnnotationValidationService.CreateFor(sut);
-
+        
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
             sut.Test_OnValidate = ctx =>
             {
@@ -632,14 +621,14 @@ namespace Test.Radical.Windows.Presentation
                     ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
                 }
             };
-
+        
             sut.NotNullNotEmpty = "";
             sut.NotNullNotEmpty = "foo";
             sut.NotNullNotEmpty = "bar";
-
+        
             Assert.AreEqual(0, sut.ValidationErrors.Count);
         }
-
+        
         [TestMethod]
         [TestCategory("AbstractViewModel"), TestCategory("Validation"), TestCategory("Issue#176")]
         [Ignore]
@@ -647,13 +636,13 @@ namespace Test.Radical.Windows.Presentation
         {
             var sut = new SampleTestViewModelWithValidationCallback();
             var svc = DataAnnotationValidationService.CreateFor(sut);
-
+        
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
             sut.Test_OnValidate = ctx =>
             {
                 sut.AnotherOne = "fail";
             };
-
+        
             sut.NotNullNotEmpty = "a value";
         }
 

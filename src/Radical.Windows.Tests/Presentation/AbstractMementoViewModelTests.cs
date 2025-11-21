@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Radical.ComponentModel.Validation;
 using Radical.Validation;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation;
@@ -11,6 +10,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
+using ValidationResult = Radical.Validation.ValidationResult;
 
 namespace Test.Radical.Windows.Presentation
 {
@@ -90,17 +90,6 @@ namespace Test.Radical.Windows.Presentation
                 set { SetPropertyValue(() => OnceMore, value); }
             }
         }
-
-        class SampleTestMementoViewModelWithValidationCallback : SampleTestMementoViewModel, IRequireValidationCallback<SampleTestMementoViewModelWithValidationCallback>
-        {
-            public Action<ValidationContext<SampleTestMementoViewModelWithValidationCallback>> Test_OnValidate { get; set; }
-
-            public void OnValidate(ValidationContext<SampleTestMementoViewModelWithValidationCallback> context)
-            {
-                Test_OnValidate(context);
-            }
-        }
-
 
         //class ImplementsIDataErrorInfo : TestViewModel, IDataErrorInfo
         //{
@@ -678,52 +667,47 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory("AbstractViewModel"), TestCategory("Validation"), TestCategory("Issue#176")]
         public void AbstractViewModel_with_custom_validation_validating_multiple_times_should_report_custom_validation_errors_only_once()
         {
-            var sut = new SampleTestMementoViewModelWithValidationCallback()
+            var sut = new SampleTestMementoViewModel()
             {
-                NotNullNotEmpty = "something"
+                NotNullNotEmpty = "something"  // we don't want to validate this required property, hence we initialize it to some value
             };
             var svc = DataAnnotationValidationService.CreateFor(sut);
+            svc.AddRule(vm => vm.Another, ctx => ctx.Failed("This is fully custom."));
 
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
-            sut.Test_OnValidate = ctx =>
-            {
-                if (ctx.PropertyName == "AProperty" || ctx.PropertyName == null)
-                {
-                    ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
-                }
-            };
 
             sut.Validate();
             sut.Validate();
             sut.Validate();
 
-            Assert.AreEqual(1, sut.ValidationErrors.Count);
+            Assert.HasCount(1, sut.ValidationErrors);
         }
 
         [TestMethod]
         [TestCategory("AbstractViewModel"), TestCategory("Validation"), TestCategory("Issue#176")]
         public void AbstractViewModel_with_custom_validation_changing_properties_multiple_times_should_report_custom_validation_errors_only_once()
         {
-            var sut = new SampleTestMementoViewModelWithValidationCallback()
+            var sut = new SampleTestMementoViewModel()
             {
-                NotNullNotEmpty = "something"
+                NotNullNotEmpty = "something"  // we don't want to validate this required property, hence we initialize it to some value
             };
             var svc = DataAnnotationValidationService.CreateFor(sut);
+            svc.AddRule(vm => vm.Another, ctx => ctx.Failed("This is fully custom."));
 
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
-            sut.Test_OnValidate = ctx =>
-            {
-                if (ctx.PropertyName == "AProperty" || ctx.PropertyName == null)
-                {
-                    ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
-                }
-            };
+            // sut.Test_OnValidate = ctx =>
+            // {
+            //     if (ctx.PropertyName == "AProperty" || ctx.PropertyName == null)
+            //     {
+            //         ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
+            //     }
+            // };
 
             sut.NotNullNotEmpty = "";
             sut.NotNullNotEmpty = "longer";
             sut.NotNullNotEmpty = "+longer";
 
-            Assert.AreEqual(0, sut.ValidationErrors.Count);
+            Assert.IsEmpty(sut.ValidationErrors);
         }
 
         [TestMethod]
@@ -731,14 +715,15 @@ namespace Test.Radical.Windows.Presentation
         [Ignore]
         public void AbstractMementoViewModel_it_should_be_possible_to_change_a_validatable_property_at_custom_validation_time()
         {
-            var sut = new SampleTestMementoViewModelWithValidationCallback();
+            var sut = new SampleTestMementoViewModel();
             var svc = DataAnnotationValidationService.CreateFor(sut);
+            svc.AddRule(vm => vm.NotNullNotEmpty, ctx =>
+            {
+                sut.Another = "hi, there";
+                return new SuccessfulValidationResult();
+            });
 
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
-            sut.Test_OnValidate = ctx =>
-            {
-                sut.AnotherOne = "fail";
-            };
 
             sut.NotNullNotEmpty = "a value";
         }
