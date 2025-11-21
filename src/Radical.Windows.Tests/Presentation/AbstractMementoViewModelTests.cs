@@ -266,7 +266,7 @@ namespace Test.Radical.Windows.Presentation
             };
 
             sut.ValidateUsing(
-                new DataAnnotationValidationService<SampleTestMementoViewModel>(sut));
+                new DataAnnotationValidationService<SampleTestMementoViewModel>(sut), false);
             sut.NotNullNotEmpty = "";
 
             Assert.IsNotNull(errors);
