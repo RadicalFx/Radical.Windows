@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <MinVerMinimumMajorMinor>4</MinVerMinimumMajorMinor>
+    <MinVerMinimumMajorMinor>5</MinVerMinimumMajorMinor>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
