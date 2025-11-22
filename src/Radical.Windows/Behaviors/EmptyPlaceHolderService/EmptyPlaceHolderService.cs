@@ -103,7 +103,7 @@ namespace Radical.Windows.Behaviors
             {
                 Ensure.That(d.GetType()).Is<ItemsControl>();
 
-                d.CastTo<ItemsControl>().Loaded += onLoaded;
+                ((ItemsControl)d).Loaded += onLoaded;
             }
         }
 
