@@ -31,6 +31,12 @@ jobs:
           msbuild .\src\Radical.Windows.sln /p:Configuration=Release
       - name: Tests
         run: dotnet test src --configuration Release --no-build
+      - name: Upload packages
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: nuget-packages
+          path: nugets/
+          retention-days: 2
   release:
     needs: build
     runs-on: ubuntu-latest
