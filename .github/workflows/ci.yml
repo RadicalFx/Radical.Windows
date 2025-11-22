@@ -31,3 +31,43 @@ jobs:
           msbuild .\src\Radical.Windows.sln /p:Configuration=Release
       - name: Tests
         run: dotnet test src --configuration Release --no-build
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v6.0.0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5.0.0
+        with:
+          dotnet-version: 8.0.x
+      - name: Download artifacts
+        uses: actions/download-artifact@v6.0.0
+        with:
+          name: nuget-packages
+          path: nugets/
+      - name: Check Tag Type
+        id: check-tag-type
+        if: github.ref_type == 'tag'
+        run: |
+          if [[ ${{ github.ref_name }} =~ [0-9]+.[0-9]+.[0-9]+$ ]]; then
+            echo "release-type=production" >> $GITHUB_OUTPUT
+          else
+            echo "release-type=pre-release" >> $GITHUB_OUTPUT
+          fi
+      - name: Deploy pre-release to Feedz.io
+        if: steps.check-tag-type.outputs.release-type == 'pre-release'
+        run: |
+          echo "Tag is pre-release"
+          echo "Pushing package to Feedz.io"
+          dotnet nuget push ./nugets/*.nupkg --source https://f.feedz.io/radical-framework/pre-releases/nuget/index.json --api-key ${{ secrets.FEEDZ_API_KEY }}
+          echo "Pushing Symbols to Feedz.io"
+          dotnet nuget push ./nugets/*.snupkg --source https://f.feedz.io/radical-framework/pre-releases/nuget/index.json --api-key ${{ secrets.FEEDZ_API_KEY }}
+      - name: Deploy release to NuGet
+        if: steps.check-tag-type.outputs.release-type == 'production'
+        run: |
+          echo "Tag is production"
+          echo "Pushing package to NuGet.org"
+          dotnet nuget push ./nugets/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }}
+          echo "Pushing Symbols to NuGet.org"
+          dotnet nuget push ./nugets/*.snupkg --api-key ${{ secrets.NUGET_API_KEY }}
