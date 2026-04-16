@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,22 +10,21 @@ namespace Radical.Windows.Tests
 {
     public class SharedApplicationTestMethodAttribute : TestMethodAttribute
     {
-        class TestExecutionContext
+        class WorkItem
         {
-            public ITestMethod TestMethod { get; set; }
-            public TestResult[] Results { get; private set; }
-            public Func<Task<TestResult[]>> ExecuteAsync { get; internal set; }
+            public Func<Task<TestResult[]>> ExecuteAsync { get; set; }
+            // Execution context captured from the MSTest runner thread so that
+            // AsyncLocal values (including TestContext.Current set by MSTest 4.2+)
+            // are visible when the work runs on the shared STA thread.
+            public ExecutionContext CapturedContext { get; set; }
+            public TestResult[] Results { get; set; }
+            public ExceptionDispatchInfo Exception { get; set; }
             public ManualResetEventSlim Completed { get; } = new ManualResetEventSlim(false);
-
-            public async Task ExecuteTestAsync() 
-            {
-                Results = await ExecuteAsync();
-            }
         }
 
         static readonly Thread worker = null;
         static readonly object syncLock = new object();
-        static readonly Queue<TestExecutionContext> todo = new Queue<TestExecutionContext>();
+        static readonly Queue<WorkItem> pending = new Queue<WorkItem>();
         static readonly SemaphoreSlim hasWork = new SemaphoreSlim(0);
 
         static SharedApplicationTestMethodAttribute()
@@ -36,14 +36,47 @@ namespace Radical.Windows.Tests
                 {
                     hasWork.Wait();
 
-                    TestExecutionContext item = null;
+                    WorkItem item;
                     lock (syncLock)
                     {
-                        item = todo.Dequeue();
+                        item = pending.Dequeue();
                     }
 
-                    item.ExecuteTestAsync().GetAwaiter().GetResult();
-                    item.Completed.Set();
+                    try
+                    {
+                        if (item.CapturedContext != null)
+                        {
+                            // Run the test body within the captured execution context so that
+                            // MSTest 4.2+ AsyncLocal values (e.g. TestContext.Current) are visible.
+                            ExceptionDispatchInfo capturedException = null;
+                            TestResult[] capturedResults = null;
+                            ExecutionContext.Run(item.CapturedContext, _ =>
+                            {
+                                try
+                                {
+                                    capturedResults = item.ExecuteAsync().GetAwaiter().GetResult();
+                                }
+                                catch (Exception ex)
+                                {
+                                    capturedException = ExceptionDispatchInfo.Capture(ex);
+                                }
+                            }, null);
+                            item.Results = capturedResults;
+                            item.Exception = capturedException;
+                        }
+                        else
+                        {
+                            item.Results = item.ExecuteAsync().GetAwaiter().GetResult();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        item.Exception = ExceptionDispatchInfo.Capture(ex);
+                    }
+                    finally
+                    {
+                        item.Completed.Set();
+                    }
                 }
             });
             worker.IsBackground = true;
@@ -53,28 +86,34 @@ namespace Radical.Windows.Tests
 
         public override Task<TestResult[]> ExecuteAsync(ITestMethod testMethod)
         {
-            var context = new TestExecutionContext()
+            // Capture the current execution context. MSTest 4.2+ stores TestContext.Current
+            // in an AsyncLocal which is only visible within the current execution context.
+            // We must propagate it to the shared STA worker thread.
+            var capturedContext = ExecutionContext.Capture();
+
+            var item = new WorkItem
             {
-                TestMethod = testMethod,
-                ExecuteAsync = () => base.ExecuteAsync(testMethod)
+                ExecuteAsync = () => base.ExecuteAsync(testMethod),
+                CapturedContext = capturedContext
             };
 
             lock (syncLock)
             {
-                todo.Enqueue(context);
+                pending.Enqueue(item);
             }
 
             hasWork.Release();
             try
             {
-                context.Completed.Wait();
+                item.Completed.Wait();
             }
             finally
             {
-                context.Completed.Dispose();
+                item.Completed.Dispose();
             }
 
-            return Task.FromResult(context.Results);
+            item.Exception?.Throw();
+            return Task.FromResult(item.Results);
         }
     }
 }
