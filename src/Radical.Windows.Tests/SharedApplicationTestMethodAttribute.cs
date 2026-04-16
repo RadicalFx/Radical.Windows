@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace Radical.Windows.Tests
             public ITestMethod TestMethod { get; set; }
             public TestResult[] Results { get; private set; }
             public Func<Task<TestResult[]>> ExecuteAsync { get; internal set; }
+            public ManualResetEventSlim Completed { get; } = new ManualResetEventSlim(false);
 
             public async Task ExecuteTestAsync() 
             {
@@ -22,8 +24,8 @@ namespace Radical.Windows.Tests
 
         static readonly Thread worker = null;
         static readonly object syncLock = new object();
-        static TestExecutionContext todo = null;
-        static ManualResetEvent waitHandle = new ManualResetEvent(false);
+        static readonly Queue<TestExecutionContext> todo = new Queue<TestExecutionContext>();
+        static readonly AutoResetEvent hasWork = new AutoResetEvent(false);
 
         static SharedApplicationTestMethodAttribute()
         {
@@ -32,16 +34,23 @@ namespace Radical.Windows.Tests
                 _ = new Application();
                 while (true) 
                 {
-                    lock (syncLock)
+                    hasWork.WaitOne();
+
+                    while (true)
                     {
-                        if (todo == null)
+                        TestExecutionContext item = null;
+                        lock (syncLock)
                         {
-                            continue;
+                            if (todo.Count == 0)
+                            {
+                                break;
+                            }
+
+                            item = todo.Dequeue();
                         }
 
-                        todo.ExecuteTestAsync().GetAwaiter().GetResult();
-                        todo = null;
-                        waitHandle.Set();
+                        item.ExecuteTestAsync().GetAwaiter().GetResult();
+                        item.Completed.Set();
                     }
                 }
             });
@@ -58,9 +67,13 @@ namespace Radical.Windows.Tests
                 ExecuteAsync = () => base.ExecuteAsync(testMethod)
             };
 
-            todo = context;
-            WaitHandle.WaitAll(new []{ waitHandle });
-            waitHandle.Reset();
+            lock (syncLock)
+            {
+                todo.Enqueue(context);
+            }
+
+            hasWork.Set();
+            context.Completed.Wait();
 
             return Task.FromResult(context.Results);
         }
