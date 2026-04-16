@@ -25,7 +25,7 @@ namespace Radical.Windows.Tests
         static readonly Thread worker = null;
         static readonly object syncLock = new object();
         static readonly Queue<TestExecutionContext> todo = new Queue<TestExecutionContext>();
-        static readonly AutoResetEvent hasWork = new AutoResetEvent(false);
+        static readonly SemaphoreSlim hasWork = new SemaphoreSlim(0);
 
         static SharedApplicationTestMethodAttribute()
         {
@@ -34,24 +34,16 @@ namespace Radical.Windows.Tests
                 _ = new Application();
                 while (true) 
                 {
-                    hasWork.WaitOne();
+                    hasWork.Wait();
 
-                    while (true)
+                    TestExecutionContext item = null;
+                    lock (syncLock)
                     {
-                        TestExecutionContext item = null;
-                        lock (syncLock)
-                        {
-                            if (todo.Count == 0)
-                            {
-                                break;
-                            }
-
-                            item = todo.Dequeue();
-                        }
-
-                        item.ExecuteTestAsync().GetAwaiter().GetResult();
-                        item.Completed.Set();
+                        item = todo.Dequeue();
                     }
+
+                    item.ExecuteTestAsync().GetAwaiter().GetResult();
+                    item.Completed.Set();
                 }
             });
             worker.IsBackground = true;
@@ -72,8 +64,15 @@ namespace Radical.Windows.Tests
                 todo.Enqueue(context);
             }
 
-            hasWork.Set();
-            context.Completed.Wait();
+            hasWork.Release();
+            try
+            {
+                context.Completed.Wait();
+            }
+            finally
+            {
+                context.Completed.Dispose();
+            }
 
             return Task.FromResult(context.Results);
         }
