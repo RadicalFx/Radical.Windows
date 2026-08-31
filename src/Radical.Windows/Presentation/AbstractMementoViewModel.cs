@@ -19,7 +19,8 @@ namespace Radical.Windows.Presentation
     /// </summary>
     public abstract class AbstractMementoViewModel :
         MementoEntity,
-        IViewModel
+        IViewModel,
+        IRequireValidation
     {
         /// <summary>
         /// Gets or sets the view. The view property is intended only for
@@ -76,11 +77,7 @@ namespace Radical.Windows.Presentation
         [SkipPropertyValidation]
         protected virtual bool IsValidationEnabled
         {
-            get
-            {
-                return this is INotifyDataErrorInfo
-                    || this is IRequireValidation;
-            }
+            get{ return true; }
         }
 
         IValidationService _validationService;
@@ -132,7 +129,7 @@ namespace Radical.Windows.Presentation
         /// </returns>
         protected virtual (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName, ValidationBehavior behavior)
         {
-            (bool IsValid, IEnumerable<ValidationError> Errors) validationResult = (true, new ValidationError[0]);
+            (bool IsValid, IEnumerable<ValidationError> Errors) validationResult = (true, Array.Empty<ValidationError>());
             if (ValidationService.IsValidationSuspended)
             {
                 return validationResult;
@@ -205,7 +202,7 @@ namespace Radical.Windows.Presentation
         {
             if (ValidationService.IsValidationSuspended)
             {
-                return (true, new ValidationError[0]);
+                return (true, Array.Empty<ValidationError>());
             }
 
             var wasValid = IsValid;
