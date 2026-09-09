@@ -23,7 +23,7 @@ namespace Radical.Windows.Validation
         {
             if (IsValidationSuspended)
             {
-                return (true, new ValidationError[0]);
+                return (true, Array.Empty<ValidationError>());
             }
 
             var results = OnValidateProperty(propertyName);
@@ -41,7 +41,7 @@ namespace Radical.Windows.Validation
         {
             if (IsValidationSuspended) 
             {
-                return new ValidationError[0];
+                return Array.Empty<ValidationError>();
             }
 
             /*
@@ -64,7 +64,7 @@ namespace Radical.Windows.Validation
         {
             if (IsValidationSuspended)
             {
-                return (true, new ValidationError[0]);
+                return (true, Array.Empty<ValidationError>());
             }
 
             //var wasValidBeforeValidation = IsValid;
