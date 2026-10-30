@@ -36,6 +36,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: Command
 
+        /// <summary>
+        /// Identifies the Command attached property: the command executed, with a <see cref="PasswordBoxCommandArgs"/>
+        /// parameter, if the pressed key matches one of the command gestures, or is Enter when the command has no gestures.
+        /// </summary>
         public static readonly DependencyProperty CommandProperty = DependencyProperty.RegisterAttached(
                                       "Command",
                                       typeof(ICommand),
@@ -43,11 +47,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnCommandChanged));
 
 
+        /// <summary>
+        /// Gets the command of the given password box.
+        /// </summary>
+        /// <param name="owner">The password box.</param>
+        /// <returns>The command.</returns>
         public static ICommand GetCommand(PasswordBox owner)
         {
             return (ICommand)owner.GetValue(CommandProperty);
         }
 
+        /// <summary>
+        /// Sets the command of the given password box.
+        /// </summary>
+        /// <param name="owner">The password box.</param>
+        /// <param name="value">The command.</param>
         public static void SetCommand(PasswordBox owner, ICommand value)
         {
             owner.SetValue(CommandProperty, value);
@@ -67,6 +81,9 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: CommandParameter
 
+        /// <summary>
+        /// Identifies the CommandParameter attached property: the parameter passed to the command, wrapped in a <see cref="PasswordBoxCommandArgs"/>.
+        /// </summary>
         public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.RegisterAttached(
                                       "CommandParameter",
                                       typeof(object),
@@ -74,11 +91,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnCommandParameterChanged));
 
 
+        /// <summary>
+        /// Gets the command parameter of the given password box.
+        /// </summary>
+        /// <param name="owner">The password box.</param>
+        /// <returns>The command parameter.</returns>
         public static object GetCommandParameter(PasswordBox owner)
         {
             return (object)owner.GetValue(CommandParameterProperty);
         }
 
+        /// <summary>
+        /// Sets the command parameter of the given password box.
+        /// </summary>
+        /// <param name="owner">The password box.</param>
+        /// <param name="value">The command parameter.</param>
         public static void SetCommandParameter(PasswordBox owner, object value)
         {
             owner.SetValue(CommandParameterProperty, value);

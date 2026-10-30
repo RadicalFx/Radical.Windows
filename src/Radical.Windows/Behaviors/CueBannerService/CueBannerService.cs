@@ -9,21 +9,37 @@ using System.Windows.Documents;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// Exposes attached properties to show a cue banner, as an adorner, on empty text boxes and password boxes.
+    /// </summary>
     public static class CueBannerService
     {
         #region CueBanner Attached Property
 
+        /// <summary>
+        /// Identifies the CueBanner attached property: the content shown when the text box is empty.
+        /// </summary>
         public static readonly DependencyProperty CueBannerProperty = DependencyProperty.RegisterAttached(
                                       "CueBanner",
                                       typeof(object),
                                       typeof(CueBannerService),
                                       new FrameworkPropertyMetadata(null, OnCueBannerPropertyChanged));
 
+        /// <summary>
+        /// Gets the cue banner content of the given text box.
+        /// </summary>
+        /// <param name="control">The text box.</param>
+        /// <returns>The cue banner content.</returns>
         public static object GetCueBanner(TextBoxBase control)
         {
             return control.GetValue(CueBannerProperty);
         }
 
+        /// <summary>
+        /// Sets the cue banner content of the given text box.
+        /// </summary>
+        /// <param name="control">The text box.</param>
+        /// <param name="value">The cue banner content.</param>
         public static void SetCueBanner(TextBoxBase control, object value)
         {
             control.SetValue(CueBannerProperty, value);
@@ -33,6 +49,9 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: PasswordCueBanner
 
+        /// <summary>
+        /// Identifies the PasswordCueBanner attached property: the content shown when the password box is empty.
+        /// </summary>
         public static readonly DependencyProperty PasswordCueBannerProperty = DependencyProperty.RegisterAttached(
                                       "PasswordCueBanner",
                                       typeof(object),
@@ -40,11 +59,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnCueBannerPropertyChanged));
 
 
+        /// <summary>
+        /// Gets the cue banner content of the given password box.
+        /// </summary>
+        /// <param name="owner">The password box.</param>
+        /// <returns>The cue banner content.</returns>
         public static object GetPasswordCueBanner(PasswordBox owner)
         {
             return (object)owner.GetValue(PasswordCueBannerProperty);
         }
 
+        /// <summary>
+        /// Sets the cue banner content of the given password box.
+        /// </summary>
+        /// <param name="owner">The password box.</param>
+        /// <param name="value">The cue banner content.</param>
         public static void SetPasswordCueBanner(PasswordBox owner, object value)
         {
             owner.SetValue(PasswordCueBannerProperty, value);

@@ -7,6 +7,10 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// Exposes attached properties to execute commands on key press and to
+    /// automatically select the text of <see cref="TextBox"/> controls.
+    /// </summary>
     public static class TextBoxManager
     {
         static readonly KeyEventHandler onPreviewKeyDown;
@@ -78,6 +82,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: Command
 
+        /// <summary>
+        /// Identifies the Command attached property: the command executed, with a <see cref="TextBoxCommandArgs"/>
+        /// parameter, if the pressed key matches one of the command gestures, or is Enter when the command has no gestures.
+        /// </summary>
         public static readonly DependencyProperty CommandProperty = DependencyProperty.RegisterAttached(
                                       "Command",
                                       typeof(ICommand),
@@ -85,11 +93,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnCommandChanged));
 
 
+        /// <summary>
+        /// Gets the command of the given text box.
+        /// </summary>
+        /// <param name="owner">The text box.</param>
+        /// <returns>The command.</returns>
         public static ICommand GetCommand(DependencyObject owner)
         {
             return (ICommand)owner.GetValue(CommandProperty);
         }
 
+        /// <summary>
+        /// Sets the command of the given text box.
+        /// </summary>
+        /// <param name="owner">The text box.</param>
+        /// <param name="value">The command.</param>
         public static void SetCommand(DependencyObject owner, ICommand value)
         {
             owner.SetValue(CommandProperty, value);
@@ -99,6 +117,9 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: CommandParameter
 
+        /// <summary>
+        /// Identifies the CommandParameter attached property: the parameter passed to the command, wrapped in a <see cref="TextBoxCommandArgs"/>.
+        /// </summary>
         public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.RegisterAttached(
                                       "CommandParameter",
                                       typeof(object),
@@ -106,11 +127,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null));
 
 
+        /// <summary>
+        /// Gets the command parameter of the given text box.
+        /// </summary>
+        /// <param name="owner">The text box.</param>
+        /// <returns>The command parameter.</returns>
         public static object GetCommandParameter(DependencyObject owner)
         {
             return (object)owner.GetValue(CommandParameterProperty);
         }
 
+        /// <summary>
+        /// Sets the command parameter of the given text box.
+        /// </summary>
+        /// <param name="owner">The text box.</param>
+        /// <param name="value">The command parameter.</param>
         public static void SetCommandParameter(DependencyObject owner, object value)
         {
             owner.SetValue(CommandParameterProperty, value);
@@ -131,6 +162,9 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: AutoSelectText
 
+        /// <summary>
+        /// Identifies the AutoSelectText attached property: when <c>true</c> the whole text is selected when the text box gets focus.
+        /// </summary>
         public static readonly DependencyProperty AutoSelectTextProperty = DependencyProperty.RegisterAttached(
                                       "AutoSelectText",
                                       typeof(bool),
@@ -138,11 +172,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(false, OnAutoSelectTextChanged));
 
 
+        /// <summary>
+        /// Gets a value indicating whether the text of the given text box is selected when it gets focus.
+        /// </summary>
+        /// <param name="owner">The text box.</param>
+        /// <returns><c>true</c> if the text is automatically selected; otherwise, <c>false</c>.</returns>
         public static bool GetAutoSelectText(TextBox owner)
         {
             return (bool)owner.GetValue(AutoSelectTextProperty);
         }
 
+        /// <summary>
+        /// Sets a value indicating whether the text of the given text box is selected when it gets focus.
+        /// </summary>
+        /// <param name="owner">The text box.</param>
+        /// <param name="value"><c>true</c> to automatically select the text; otherwise, <c>false</c>.</param>
         public static void SetAutoSelectText(TextBox owner, bool value)
         {
             owner.SetValue(AutoSelectTextProperty, value);

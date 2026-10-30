@@ -7,16 +7,27 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// A behavior that executes a command when keys are pressed in the associated <see cref="TextBox"/>.
+    /// The command is executed if the pressed key matches one of the command gestures, or is Enter
+    /// when the command has no gestures.
+    /// </summary>
     public class TextBoxCommandBehavior : RadicalBehavior<TextBox>, ICommandSource
     {
         #region Dependency Property: Command
 
+        /// <summary>
+        /// Identifies the <see cref="Command"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
             "Command",
             typeof(ICommand),
             typeof(TextBoxCommandBehavior),
             new PropertyMetadata(null));
 
+        /// <summary>
+        /// Gets or sets the command to execute.
+        /// </summary>
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -25,12 +36,18 @@ namespace Radical.Windows.Behaviors
 
         #endregion
 
+        /// <summary>
+        /// Gets or sets the parameter passed to the command, wrapped in a <see cref="TextBoxCommandArgs"/>.
+        /// </summary>
         public object CommandParameter
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets the command target: the associated text box.
+        /// </summary>
         public IInputElement CommandTarget
         {
             get { return AssociatedObject; }
@@ -38,6 +55,9 @@ namespace Radical.Windows.Behaviors
 
         readonly KeyEventHandler onPreviewKeyDown;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextBoxCommandBehavior"/> class.
+        /// </summary>
         public TextBoxCommandBehavior()
         {
             onPreviewKeyDown = (s, e) =>
@@ -75,12 +95,14 @@ namespace Radical.Windows.Behaviors
             };
         }
 
+        /// <inheritdoc/>
         protected override void OnAttached()
         {
             base.OnAttached();
             AssociatedObject.PreviewKeyDown += onPreviewKeyDown;
         }
 
+        /// <inheritdoc/>
         protected override void OnDetaching()
         {
             base.OnDetaching();
