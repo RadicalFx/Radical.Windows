@@ -6,8 +6,16 @@ using System.Linq;
 
 namespace Radical.Windows.Presentation
 {
+    /// <summary>
+    /// Extension methods for validation errors collections.
+    /// </summary>
     public static class ValidationErrorsExtensions
     {
+        /// <summary>
+        /// Gets the names of the properties that have validation errors.
+        /// </summary>
+        /// <param name="validationErrors">The validation errors.</param>
+        /// <returns>The distinct names of the invalid properties.</returns>
         public static IEnumerable<string> GetInvalidProperties(this ObservableCollection<ValidationError> validationErrors)
         {
             return validationErrors.Select(ve => ve.PropertyName).Distinct();

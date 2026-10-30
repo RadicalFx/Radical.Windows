@@ -112,7 +112,7 @@ namespace Radical.Windows
         /// Defines the type to use as main/shell window.
         /// </summary>
         /// <typeparam name="TShellType">The shell type.</typeparam>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper UsingAsShell<TShellType>() where TShellType : Window
         {
             return UsingAsShell(typeof(TShellType));
@@ -122,7 +122,7 @@ namespace Radical.Windows
         /// Defines the type to use as main/shell window.
         /// </summary>
         /// <param name="shellViewType">The shell type.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper UsingAsShell(Type shellViewType)
         {
             Ensure.That(shellViewType)
@@ -141,7 +141,7 @@ namespace Radical.Windows
         /// Enables splash screen support.
         /// </summary>
         /// <param name="config">The splash screen configuration.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper EnableSplashScreen(SplashScreenConfiguration config = null)
         {
             if (config != null)
@@ -157,6 +157,7 @@ namespace Radical.Windows
         /// <summary>
         /// Disables the auto boot.
         /// </summary>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper DisableAutoBoot()
         {
             isAutoBootEnabled = false;
@@ -170,7 +171,7 @@ namespace Radical.Windows
         /// Called before the install and boot process begins, right after the service provider creation.
         /// </summary>
         /// <param name="onBeforeInstall">The on before install.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper OnBeforeInstall(Action<BootstrapConventions, AssemblyScanner> onBeforeInstall)
         {
             this.onBeforeInstall = onBeforeInstall;
@@ -184,7 +185,7 @@ namespace Radical.Windows
         /// Called when the service provider is created.
         /// </summary>
         /// <param name="onServiceProviderCreated">The on service provider created.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper OnServiceProviderCreated(Action<IServiceProvider> onServiceProviderCreated)
         {
             this.onServiceProviderCreated = onServiceProviderCreated;
@@ -273,7 +274,7 @@ namespace Radical.Windows
         /// Exposes the given service type as resource in the App resources.
         /// </summary>
         /// <typeparam name="TService">The type of the service.</typeparam>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper ExposeAsResource<TService>()
         {
             return ExposeAsResource(typeof(TService), Application.Current.GetType());
@@ -284,7 +285,7 @@ namespace Radical.Windows
         /// </summary>
         /// <typeparam name="TService">The type of the service.</typeparam>
         /// <typeparam name="TView">The type of the view.</typeparam>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper ExposeAsResource<TService, TView>() where TView : FrameworkElement
         {
             return ExposeAsResource(typeof(TService), typeof(TView));
@@ -295,7 +296,7 @@ namespace Radical.Windows
         /// </summary>
         /// <param name="serviceType">Type of the service.</param>
         /// <param name="resourceOwner">The resource owner.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         internal ApplicationBootstrapper ExposeAsResource(Type serviceType, Type resourceOwner)
         {
             if (!resourcesRegistrationHolder.Registrations.TryGetValue(resourceOwner, out HashSet<Type> types))
@@ -317,7 +318,7 @@ namespace Radical.Windows
         /// Using as current culture.
         /// </summary>
         /// <param name="currentCultureHandler">The current culture handler.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper UsingAsCurrentCulture(Func<CultureInfo> currentCultureHandler)
         {
             this.bootstrapConfiguration.UseCulture(_=> currentCultureHandler());
@@ -329,7 +330,7 @@ namespace Radical.Windows
         /// Using as current UI culture.
         /// </summary>
         /// <param name="currentUICultureHandler">The current UI culture handler.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper UsingAsCurrentUICulture(Func<CultureInfo> currentUICultureHandler)
         {
             this.bootstrapConfiguration.UseUICulture(_=> currentUICultureHandler());
@@ -366,7 +367,7 @@ namespace Radical.Windows
         /// Called when a singleton application startup.
         /// </summary>
         /// <param name="onSingletonApplicationStartup">The singleton application startup handler.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper OnSingletonApplicationStartup(Action<SingletonApplicationStartupArgs> onSingletonApplicationStartup)
         {
             this.onSingletonApplicationStartup = onSingletonApplicationStartup;
@@ -587,7 +588,7 @@ namespace Radical.Windows
         /// Registers this application as singleton.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper RegisterAsSingleton(string key)
         {
             return RegisterAsSingleton(key, SingletonApplicationScope.Local);
@@ -598,7 +599,7 @@ namespace Radical.Windows
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="scope">The scope.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper RegisterAsSingleton(string key, SingletonApplicationScope scope)
         {
             this.key = key;
@@ -611,7 +612,7 @@ namespace Radical.Windows
         /// Overrides the shutdown mode.
         /// </summary>
         /// <param name="mode">The mode.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper OverrideShutdownMode(ShutdownMode mode)
         {
             this.shutdownMode = mode;
@@ -623,7 +624,7 @@ namespace Radical.Windows
         /// Called when the application is booting.
         /// </summary>
         /// <param name="bootHandler">The boot handler.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper OnBoot(Action<IServiceProvider> bootHandler)
         {
             this.bootHandler = bootHandler;
@@ -641,7 +642,7 @@ namespace Radical.Windows
         /// Allows to inject an handler for not handled exception(s).
         /// </summary>
         /// <param name="unhandledExceptionHandler">The not handled exception handler.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper OnUnhandledException(Action<Exception> unhandledExceptionHandler)
         {
             this.unhandledExceptionHandler = unhandledExceptionHandler;
@@ -652,7 +653,7 @@ namespace Radical.Windows
         /// Called when the boot process is completed.
         /// </summary>
         /// <param name="bootCompletedHandler">The boot completed handler.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper OnBootCompleted(Action<IServiceProvider> bootCompletedHandler)
         {
             this.bootCompletedHandler = bootCompletedHandler;
@@ -663,7 +664,7 @@ namespace Radical.Windows
         /// Called when the application is shutting down.
         /// </summary>
         /// <param name="shutdownHandler">The shutdown handler.</param>
-        /// <returns></returns>
+        /// <returns>This bootstrapper instance, for chaining.</returns>
         public ApplicationBootstrapper OnShutdown(Action<ApplicationShuttingDownArgs> shutdownHandler)
         {
             this.shutdownHandler = shutdownHandler;

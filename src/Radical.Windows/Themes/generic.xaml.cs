@@ -51,8 +51,12 @@ namespace Radical.Windows.Controls.Themes
         }
     }
 
+    /// <summary>
+    /// Converts a <see cref="ResizeDirection"/>, given an <see cref="Orientation"/> as parameter, to the alignment of the <see cref="Resizer"/> grip.
+    /// </summary>
     public sealed class GripAlignmentConverter : IValueConverter
     {
+        /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             Orientation orientation = (Orientation)parameter;
@@ -83,14 +87,19 @@ namespace Radical.Windows.Controls.Themes
             return DependencyProperty.UnsetValue;
         }
 
+        /// <inheritdoc/>
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;
         }
     }
 
+    /// <summary>
+    /// Converts a <see cref="ResizeDirection"/> to the cursor of the <see cref="Resizer"/> grip.
+    /// </summary>
     public sealed class GripCursorConverter : IValueConverter
     {
+        /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             ResizeDirection resizeDirection = (ResizeDirection)value;
@@ -108,14 +117,19 @@ namespace Radical.Windows.Controls.Themes
             return DependencyProperty.UnsetValue;
         }
 
+        /// <inheritdoc/>
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;
         }
     }
 
+    /// <summary>
+    /// Converts a <see cref="ResizeDirection"/> to the rotation angle of the <see cref="Resizer"/> grip.
+    /// </summary>
     public sealed class GripRotationConverter : IValueConverter
     {
+        /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             ResizeDirection resizeDirection = (ResizeDirection)value;
@@ -133,6 +147,7 @@ namespace Radical.Windows.Controls.Themes
             return 0;
         }
 
+        /// <inheritdoc/>
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;

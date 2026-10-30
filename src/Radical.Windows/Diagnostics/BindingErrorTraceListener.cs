@@ -4,6 +4,9 @@ using System.Windows;
 
 namespace Radical.Diagnostics
 {
+    /// <summary>
+    /// A trace listener that, when a debugger is attached, shows WPF data binding errors in a message box.
+    /// </summary>
     public class BindingErrorTraceListener : DefaultTraceListener
     {
         private static BindingErrorTraceListener _listener;

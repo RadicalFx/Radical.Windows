@@ -2,6 +2,9 @@
 
 namespace Radical.Windows.ComponentModel
 {
+    /// <summary>
+    /// Defines the display text of a command generated from the decorated method.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class CommandDescriptionAttribute : Attribute
     {

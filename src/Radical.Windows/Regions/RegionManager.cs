@@ -27,8 +27,9 @@ namespace Radical.Windows.Regions
         }
 
         /// <summary>
-        /// Gets the <see cref="Radical.Windows.Presentation.ComponentModel.IRegion"/> with the specified name.
+        /// Gets the <see cref="IRegion"/> with the specified name.
         /// </summary>
+        /// <param name="name">The name of the region.</param>
         public IRegion this[ string name ]
         {
             get { return regions[ name ]; }
@@ -65,7 +66,7 @@ namespace Radical.Windows.Regions
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="region">The region.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if a region with the given name exists; otherwise, <c>false</c>.</returns>
         public bool TryGetRegion( string name, out IRegion region )
         {
             return regions.TryGetValue( name, out region );

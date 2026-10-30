@@ -9,6 +9,9 @@ using System.Windows.Media.Imaging;
 
 namespace Radical.Windows.Converters
 {
+    /// <summary>
+    /// Converts a byte array to a <see cref="BitmapImage"/>, and back.
+    /// </summary>
     [MarkupExtensionReturnType(typeof(BinaryImageConverter))]
     public class BinaryImageConverter : AbstractSingletonConverter
     {

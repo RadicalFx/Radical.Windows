@@ -17,6 +17,7 @@ namespace Radical.Windows.ComponentModel
         /// <summary>
         /// Gets the <see cref="IRegion"/> with the specified name.
         /// </summary>
+        /// <param name="name">The name of the region.</param>
         /// <value>THe requested region.</value>
         /// <exception cref="ArgumentOutOfRangeException">An ArgumentOutOfRangeException is raised if a region with the specifed name cannot be found.</exception>
         IRegion this[string name ] { get; }

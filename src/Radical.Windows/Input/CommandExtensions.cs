@@ -6,8 +6,16 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Input
 {
+    /// <summary>
+    /// Extension methods for <see cref="ICommand"/>.
+    /// </summary>
     public static class CommandExtensions
     {
+        /// <summary>
+        /// Gets the input gestures associated with the given command.
+        /// </summary>
+        /// <param name="source">The command.</param>
+        /// <returns>The input gestures, or an empty list if there are none.</returns>
         public static IEnumerable<InputGesture> GetGestures(this ICommand source)
         {
             Ensure.That(source).Named("source").IsNotNull();

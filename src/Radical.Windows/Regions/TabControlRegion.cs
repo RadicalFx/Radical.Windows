@@ -56,7 +56,7 @@ namespace Radical.Windows.Regions
         /// Tries the get header.
         /// </summary>
         /// <param name="view">The view.</param>
-        /// <returns></returns>
+        /// <returns>The header of the view.</returns>
         protected virtual object TryGetHeader( DependencyObject view )
         {
             return RegionHeaderedElement.GetHeader( view );

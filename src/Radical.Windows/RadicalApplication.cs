@@ -25,6 +25,9 @@ namespace Radical.Windows
         /// bound to the supplied WPF application, using
         /// the given configuration.
         /// </summary>
+        /// <param name="bootstrapConfiguration">The bootstrap configuration.</param>
+        /// <param name="application">The WPF application.</param>
+        /// <returns>The Radical application.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         internal static RadicalApplication BoundTo(Application application, BootstrapConfiguration bootstrapConfiguration)
         {

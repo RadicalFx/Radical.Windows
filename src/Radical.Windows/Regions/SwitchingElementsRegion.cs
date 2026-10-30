@@ -7,7 +7,7 @@ namespace Radical.Windows.Regions
     /// <summary>
     /// A base abstract implementation for the <see cref="ISwitchingElementsRegion"/>.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of the control that hosts the region.</typeparam>
     public abstract class SwitchingElementsRegion<T> :
         ElementsRegion<T>,
         ISwitchingElementsRegion
@@ -70,7 +70,7 @@ namespace Radical.Windows.Regions
         /// Tries the get view model.
         /// </summary>
         /// <param name="view">The view.</param>
-        /// <returns></returns>
+        /// <returns>The view model of the view, or <c>null</c> if it cannot be found.</returns>
         protected virtual object TryGetViewModel( DependencyObject view )
         {
             if( RegionService.Conventions != null )
