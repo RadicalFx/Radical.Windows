@@ -33,8 +33,8 @@ namespace Radical.Windows.Behaviors
         /// <param name="conventions">The conventions handler.</param>
         public WindowLifecycleNotificationsBehavior( IMessageBroker broker, IConventionsHandler conventions )
         {
-            Ensure.That( broker ).Named( () => broker ).IsNotNull();
-            Ensure.That( conventions ).Named( () => conventions ).IsNotNull();
+            Ensure.That( broker ).Named( nameof( broker ) ).IsNotNull();
+            Ensure.That( conventions ).Named( nameof( conventions ) ).IsNotNull();
 
             this.broker = broker;
             this.conventions = conventions;

@@ -130,18 +130,6 @@ namespace Radical.Windows.Model
         /// <summary>
         /// Raises the <see cref="E:PropertyChanged"/> event.
         /// </summary>
-        /// <typeparam name="TValue">The type of the property.</typeparam>
-        /// <param name="property">The property.</param>
-        [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use OnPropertyChanged(nameof(property)) instead")]
-        protected void OnPropertyChanged<TValue>(Expression<Func<TValue>> property)
-        {
-            var propertyName = property.GetMemberName();
-            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:PropertyChanged"/> event.
-        /// </summary>
         /// <param name="propertyName">The property name.</param>
         protected void OnPropertyChanged(string propertyName)
         {
