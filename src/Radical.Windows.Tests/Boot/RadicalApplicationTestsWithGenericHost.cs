@@ -39,6 +39,32 @@ namespace Radical.Windows.Tests.Boot
         }
 
         [SharedApplicationTestMethod]
+        public async Task Application_without_a_shell_using_host_builder_boots_without_showing_windows()
+        {
+            var bootCompleted = false;
+            var mainWindowBeforeBoot = Application.Current.MainWindow;
+            var windowsBeforeBoot = Application.Current.Windows.Count;
+
+            var host = new HostBuilder()
+                .AddRadicalApplication(configuration =>
+                {
+                    configuration.OnBootCompleted(_ => bootCompleted = true);
+                })
+                .Build();
+
+            await host.StartAsync();
+
+            Assert.IsTrue(bootCompleted);
+            Assert.AreSame(mainWindowBeforeBoot, Application.Current.MainWindow);
+            Assert.AreEqual(windowsBeforeBoot, Application.Current.Windows.Count);
+
+            using (host)
+            {
+                await host.StopAsync();
+            }
+        }
+
+        [SharedApplicationTestMethod]
         public async Task Application_using_host_builder_can_resolve_configured_services()
         {
             var host = new HostBuilder()

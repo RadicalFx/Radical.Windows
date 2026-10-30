@@ -31,6 +31,26 @@ namespace Radical.Windows.Tests.Boot
         }
 
         [SharedApplicationTestMethod]
+        public void Application_without_a_shell_boots_without_showing_windows()
+        {
+            var bootCompleted = false;
+            var mainWindowBeforeBoot = Application.Current.MainWindow;
+            var windowsBeforeBoot = Application.Current.Windows.Count;
+
+            var radicalApplication = Application.Current.AddRadicalApplication(configuration =>
+            {
+                configuration.DisableAutoBoot();
+                configuration.OnBootCompleted(_ => bootCompleted = true);
+            });
+
+            radicalApplication.Boot();
+
+            Assert.IsTrue(bootCompleted);
+            Assert.AreSame(mainWindowBeforeBoot, Application.Current.MainWindow);
+            Assert.AreEqual(windowsBeforeBoot, Application.Current.Windows.Count);
+        }
+
+        [SharedApplicationTestMethod]
         public void ApplicationBoot_process_should_allow_services_customization()
         {
             var bootCompleted = false;
