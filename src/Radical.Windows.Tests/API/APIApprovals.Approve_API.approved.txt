@@ -1890,9 +1890,8 @@ namespace Radical.Windows.Analytics
 }
 namespace Radical.Windows
 {
-    [System.Obsolete("ApplicationBootstrapper has been obsoleted and will be treated as an error in v3." +
-        "0.0 and removed in v4.0.0. Consider moving to new RadicalApplication using the A" +
-        "ddRadicalApplication extension method.", false)]
+    [System.Obsolete("ApplicationBootstrapper has been obsoleted and will be removed in v5.0.0. Use Rad" +
+        "icalApplication, through the AddRadicalApplication extension method, instead.", true)]
     public class ApplicationBootstrapper
     {
         public ApplicationBootstrapper() { }
@@ -1919,9 +1918,8 @@ namespace Radical.Windows
         public Radical.Windows.ApplicationBootstrapper UsingAsShell<TShellType>()
             where TShellType : System.Windows.Window { }
     }
-    [System.Obsolete("ApplicationBootstrapper has been obsoleted and will be treated as an error in v3." +
-        "0.0 and removed in v4.0.0. Consider moving to new RadicalApplication using the A" +
-        "ddRadicalApplication extension method.", false)]
+    [System.Obsolete("ApplicationBootstrapper has been obsoleted and will be removed in v5.0.0. Use Rad" +
+        "icalApplication, through the AddRadicalApplication extension method, instead.", true)]
     public class ApplicationBootstrapper<TMainView> : Radical.Windows.ApplicationBootstrapper
         where TMainView : System.Windows.Window
     {
