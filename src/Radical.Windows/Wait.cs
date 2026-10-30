@@ -7,13 +7,12 @@ namespace Radical.Windows
     /// <summary>
     /// Allows to execute and action after a user defined amount of time.
     /// </summary>
-    [Obsolete("Wait has been obsoleted and will be removed in v3.0.0")]
-    public class Wait
+    internal class Wait
     {
         /// <summary>
         /// A waiter for the Wait infrastucture.
         /// </summary>
-        public class Waiter
+        internal class Waiter
         {
             readonly DispatcherTimer timer;
 

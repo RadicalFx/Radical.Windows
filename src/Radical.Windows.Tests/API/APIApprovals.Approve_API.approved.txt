@@ -1954,17 +1954,6 @@ namespace Radical.Windows
         public void Boot() { }
         public void Shutdown() { }
     }
-    [System.Obsolete("Repeat has been obsoleted and will be removed in v3.0.0")]
-    public class Repeat
-    {
-        public Repeat() { }
-        public static Radical.Windows.Repeat.Repeater Every(System.TimeSpan delay) { }
-        public class Repeater
-        {
-            public void Stop() { }
-            public void This(System.Action action) { }
-        }
-    }
     public static class VisualTreeCrawler
     {
         public static T FindChild<T>(this System.Windows.DependencyObject source)
@@ -1981,16 +1970,6 @@ namespace Radical.Windows
             where T : System.Windows.DependencyObject { }
         public static bool IsChildOfType<T>(System.Windows.DependencyObject obj)
             where T : System.Windows.DependencyObject { }
-    }
-    [System.Obsolete("Wait has been obsoleted and will be removed in v3.0.0")]
-    public class Wait
-    {
-        public Wait() { }
-        public static Radical.Windows.Wait.Waiter For(System.TimeSpan delay) { }
-        public class Waiter
-        {
-            public void AndThen(System.Action action) { }
-        }
     }
 }
 namespace Radical.Windows.Behaviors
