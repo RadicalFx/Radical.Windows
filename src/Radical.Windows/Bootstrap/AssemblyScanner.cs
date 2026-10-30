@@ -6,11 +6,23 @@ using System.Reflection;
 
 namespace Radical.Windows.Bootstrap
 {
+    /// <summary>
+    /// Scans the application directory, and the trusted platform assemblies, for the assemblies to load at boot time.
+    /// </summary>
     public class AssemblyScanner
     {
+        /// <summary>
+        /// The result of an assembly filter.
+        /// </summary>
         public enum FilterResults
         {
+            /// <summary>
+            /// The assembly is excluded from the scan.
+            /// </summary>
             Exclude,
+            /// <summary>
+            /// The assembly is included in the scan.
+            /// </summary>
             Include
         }
 
@@ -25,6 +37,9 @@ namespace Radical.Windows.Bootstrap
 
         }
 
+        /// <summary>
+        /// Gets or sets the options used to search assemblies in the application directory. Defaults to <see cref="SearchOption.TopDirectoryOnly"/>.
+        /// </summary>
         public SearchOption DirectorySearchOptions { get; set; } = SearchOption.TopDirectoryOnly;
 
         readonly List<Func<string, FilterResults>> assemblyFilters = new List<Func<string, FilterResults>>();
@@ -77,6 +92,11 @@ namespace Radical.Windows.Bootstrap
             return assemblies.Distinct();
         }
 
+        /// <summary>
+        /// Adds a filter applied to the full path of each candidate assembly: only assemblies
+        /// included by all the filters are loaded.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
         public void AddAssemblyFilter(Func<string, FilterResults> filter)
         {
             assemblyFilters.Add(filter);

@@ -13,6 +13,10 @@ namespace Radical.Windows.Behaviors
     {
         #region Attached Property: IsDragSourceAttached
 
+        /// <summary>
+        /// Identifies the IsDragSourceAttached attached property, used internally to track
+        /// the elements whose drag source event handlers are attached.
+        /// </summary>
         public static readonly DependencyProperty IsDragSourceAttachedProperty = DependencyProperty.RegisterAttached(
                                       "IsDragSourceAttached",
                                       typeof(bool),
@@ -34,6 +38,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: IsDropTargetAttached
 
+        /// <summary>
+        /// Identifies the IsDropTargetAttached attached property, used internally to track
+        /// the elements whose drop target event handlers are attached.
+        /// </summary>
         public static readonly DependencyProperty IsDropTargetAttachedProperty = DependencyProperty.RegisterAttached(
                                       "IsDropTargetAttached",
                                       typeof(bool),
@@ -55,6 +63,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: DropTarget
 
+        /// <summary>
+        /// Identifies the DropTarget attached property: the object passed to the drop
+        /// commands as the target of the drag and drop operation.
+        /// </summary>
         public static readonly DependencyProperty DropTargetProperty = DependencyProperty.RegisterAttached(
                                       "DropTarget",
                                       typeof(object),
@@ -62,11 +74,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null));
 
 
+        /// <summary>
+        /// Gets the drop target of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <returns>The drop target.</returns>
         public static object GetDropTarget(DependencyObject owner)
         {
             return (object)owner.GetValue(DropTargetProperty);
         }
 
+        /// <summary>
+        /// Sets the drop target of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <param name="value">The drop target.</param>
         public static void SetDropTarget(DependencyObject owner, object value)
         {
             owner.SetValue(DropTargetProperty, value);
@@ -76,6 +98,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: DataObjectType
 
+        /// <summary>
+        /// Identifies the DataObjectType attached property: the data format used
+        /// to drag the data object. When not set the data object type is used.
+        /// </summary>
         public static readonly DependencyProperty DataObjectTypeProperty = DependencyProperty.RegisterAttached(
                                       "DataObjectType",
                                       typeof(string),
@@ -83,11 +109,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null));
 
 
+        /// <summary>
+        /// Gets the data object type of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <returns>The data object type.</returns>
         public static string GetDataObjectType(DependencyObject owner)
         {
             return (string)owner.GetValue(DataObjectTypeProperty);
         }
 
+        /// <summary>
+        /// Sets the data object type of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <param name="value">The data object type.</param>
         public static void SetDataObjectType(DependencyObject owner, string value)
         {
             owner.SetValue(DataObjectTypeProperty, value);
@@ -97,6 +133,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: DataObject
 
+        /// <summary>
+        /// Identifies the DataObject attached property: the object dragged when a drag
+        /// operation starts from the element. Setting it makes the element a drag source.
+        /// </summary>
         public static readonly DependencyProperty DataObjectProperty = DependencyProperty.RegisterAttached(
                                       "DataObject",
                                       typeof(object),
@@ -104,11 +144,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnDataObjectChanged));
 
 
+        /// <summary>
+        /// Gets the data object of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <returns>The data object.</returns>
         public static object GetDataObject(DependencyObject owner)
         {
             return (object)owner.GetValue(DataObjectProperty);
         }
 
+        /// <summary>
+        /// Sets the data object of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <param name="value">The data object.</param>
         public static void SetDataObject(DependencyObject owner, object value)
         {
             owner.SetValue(DataObjectProperty, value);
@@ -180,6 +230,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: IsDragging
 
+        /// <summary>
+        /// Identifies the read-only IsDragging attached property: <c>true</c> while a drag
+        /// operation started from the element is in progress.
+        /// </summary>
         public static readonly DependencyProperty IsDraggingProperty = DependencyProperty.RegisterAttached(
                                       "IsDragging",
                                       typeof(bool),
@@ -191,7 +245,7 @@ namespace Radical.Windows.Behaviors
         /// Gets the is dragging.
         /// </summary>
         /// <param name="owner">The owner.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if a drag operation started from the element is in progress; otherwise, <c>false</c>.</returns>
         public static bool GetIsDragging(DependencyObject owner)
         {
             return (bool)owner.GetValue(IsDraggingProperty);
@@ -206,6 +260,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: StartPoint
 
+        /// <summary>
+        /// Identifies the StartPoint attached property, used internally to track
+        /// the position where a potential drag operation started.
+        /// </summary>
         public static readonly DependencyProperty StartPointProperty = DependencyProperty.RegisterAttached(
                                       "StartPoint",
                                       typeof(Point),
@@ -227,6 +285,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: OnDropCommand
 
+        /// <summary>
+        /// Identifies the OnDropCommand attached property: the command executed, with a
+        /// <see cref="DropArgs"/> parameter, when data is dropped on the element. Setting it makes the element a drop target.
+        /// </summary>
         public static readonly DependencyProperty OnDropCommandProperty = DependencyProperty.RegisterAttached(
                                       "OnDropCommand",
                                       typeof(ICommand),
@@ -234,11 +296,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnOnDropCommandChanged));
 
 
+        /// <summary>
+        /// Gets the drop command of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <returns>The drop command.</returns>
         public static ICommand GetOnDropCommand(DependencyObject owner)
         {
             return (ICommand)owner.GetValue(OnDropCommandProperty);
         }
 
+        /// <summary>
+        /// Sets the drop command of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <param name="value">The drop command.</param>
         public static void SetOnDropCommand(DependencyObject owner, ICommand value)
         {
             owner.SetValue(OnDropCommandProperty, value);
@@ -248,6 +320,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: OnDragEnterCommand
 
+        /// <summary>
+        /// Identifies the OnDragEnterCommand attached property: the command executed, with a
+        /// <see cref="DragEnterArgs"/> parameter, when a drag operation enters the element.
+        /// </summary>
         public static readonly DependencyProperty OnDragEnterCommandProperty = DependencyProperty.RegisterAttached(
                                       "OnDragEnterCommand",
                                       typeof(ICommand),
@@ -255,11 +331,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null));
 
 
+        /// <summary>
+        /// Gets the drag enter command of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <returns>The drag enter command.</returns>
         public static ICommand GetOnDragEnterCommand(DependencyObject owner)
         {
             return (ICommand)owner.GetValue(OnDragEnterCommandProperty);
         }
 
+        /// <summary>
+        /// Sets the drag enter command of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <param name="value">The drag enter command.</param>
         public static void SetOnDragEnterCommand(DependencyObject owner, ICommand value)
         {
             owner.SetValue(OnDragEnterCommandProperty, value);
@@ -269,6 +355,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: OnDragLeaveCommand
 
+        /// <summary>
+        /// Identifies the OnDragLeaveCommand attached property: the command executed, with a
+        /// <see cref="DragLeaveArgs"/> parameter, when a drag operation leaves the element.
+        /// </summary>
         public static readonly DependencyProperty OnDragLeaveCommandProperty = DependencyProperty.RegisterAttached(
                                       "OnDragLeaveCommand",
                                       typeof(ICommand),
@@ -276,11 +366,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null));
 
 
+        /// <summary>
+        /// Gets the drag leave command of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <returns>The drag leave command.</returns>
         public static ICommand GetOnDragLeaveCommand(DependencyObject owner)
         {
             return (ICommand)owner.GetValue(OnDragLeaveCommandProperty);
         }
 
+        /// <summary>
+        /// Sets the drag leave command of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <param name="value">The drag leave command.</param>
         public static void SetOnDragLeaveCommand(DependencyObject owner, ICommand value)
         {
             owner.SetValue(OnDragLeaveCommandProperty, value);

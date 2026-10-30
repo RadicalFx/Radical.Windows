@@ -9,10 +9,17 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// A behavior that allows to bind the password of a <see cref="PasswordBox"/>, and to execute a command
+    /// if the pressed key matches one of the command gestures, or is Enter when the command has no gestures.
+    /// </summary>
     public class PasswordBoxBehavior : RadicalBehavior<PasswordBox>, ICommandSource
     {
         #region Dependency Property: Text
 
+        /// <summary>
+        /// Identifies the <see cref="Text"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text",
             typeof(string),
@@ -23,6 +30,9 @@ namespace Radical.Windows.Behaviors
                 BindsTwoWayByDefault = true,
             });
 
+        /// <summary>
+        /// Gets or sets the password. Binds two-way by default.
+        /// </summary>
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
@@ -33,12 +43,18 @@ namespace Radical.Windows.Behaviors
 
         #region Dependency Property: Command
 
+        /// <summary>
+        /// Identifies the <see cref="Command"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
             "Command",
             typeof(ICommand),
             typeof(PasswordBoxBehavior),
             new PropertyMetadata(null));
 
+        /// <summary>
+        /// Gets or sets the command to execute.
+        /// </summary>
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -47,12 +63,18 @@ namespace Radical.Windows.Behaviors
 
         #endregion
 
+        /// <summary>
+        /// Gets or sets the parameter passed to the command, wrapped in a <see cref="PasswordBoxCommandArgs"/>.
+        /// </summary>
         public object CommandParameter
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets the command target: the associated password box.
+        /// </summary>
         public IInputElement CommandTarget
         {
             get { return AssociatedObject; }
@@ -64,6 +86,9 @@ namespace Radical.Windows.Behaviors
         //true if going from password box to view model
         private bool isPushing;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PasswordBoxBehavior"/> class.
+        /// </summary>
         public PasswordBoxBehavior()
         {
             onPasswordChanged = (s, e) =>
@@ -131,6 +156,7 @@ namespace Radical.Windows.Behaviors
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -146,6 +172,7 @@ namespace Radical.Windows.Behaviors
             });
         }
 
+        /// <inheritdoc/>
         protected override void OnDetaching()
         {
             AssociatedObject.PasswordChanged -= onPasswordChanged;
@@ -155,8 +182,17 @@ namespace Radical.Windows.Behaviors
         }
     }
 
+    /// <summary>
+    /// The parameter passed to password box commands, describing the pressed key.
+    /// </summary>
     public class PasswordBoxCommandArgs : EventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PasswordBoxCommandArgs"/> class.
+        /// </summary>
+        /// <param name="key">The pressed key.</param>
+        /// <param name="modifiers">The pressed modifier keys.</param>
+        /// <param name="commandParameter">The command parameter configured on the password box.</param>
         public PasswordBoxCommandArgs(System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifiers, object commandParameter)
         {
             Key = key;
@@ -164,9 +200,18 @@ namespace Radical.Windows.Behaviors
             CommandParameter = commandParameter;
         }
 
+        /// <summary>
+        /// Gets the pressed key.
+        /// </summary>
         public System.Windows.Input.Key Key { get; private set; }
+        /// <summary>
+        /// Gets the pressed modifier keys.
+        /// </summary>
         public System.Windows.Input.ModifierKeys Modifiers { get; private set; }
 
+        /// <summary>
+        /// Gets the command parameter configured on the password box.
+        /// </summary>
         public object CommandParameter { get; private set; }
     }
 }

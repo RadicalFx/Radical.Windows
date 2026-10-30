@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Controls
 {
+    /// <summary>
+    /// A content control that can be resized by dragging a grip.
+    /// </summary>
     [TemplatePart(Name = _gripName, Type = typeof(FrameworkElement))]
     public class Resizer : ContentControl
     {
@@ -178,6 +181,7 @@ namespace Radical.Windows.Controls
             CommandManager.RegisterClassCommandBinding(typeof(Resizer), new CommandBinding(_autoSizeCommand, OnAutoSizeCommand));
         }
 
+        /// <inheritdoc/>
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
         {
             return new ResizerAutomationPeer(this);

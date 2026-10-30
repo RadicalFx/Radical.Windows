@@ -70,7 +70,7 @@ namespace Radical.Windows.Regions
         /// <summary>
         /// Called to get content.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The current content.</returns>
         protected abstract DependencyObject OnGetContent();
 
         /// <summary>

@@ -10,6 +10,7 @@ using Unity.Microsoft.DependencyInjection;
 
 namespace Radical.Windows.Tests.Boot
 {
+    [TestClass]
     public class RadicalApplicationTestsWithGenericHost
     {
         [SharedApplicationTestMethod]

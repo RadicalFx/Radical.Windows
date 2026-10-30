@@ -18,7 +18,7 @@ namespace Radical.Windows.Validation
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="entity">The entity.</param>
-        /// <returns></returns>
+        /// <returns>A new <see cref="DataAnnotationValidationService{TEntity}"/> instance.</returns>
         public static DataAnnotationValidationService<TEntity> CreateFor<TEntity>(TEntity entity)
         {
             return new DataAnnotationValidationService<TEntity>(entity);

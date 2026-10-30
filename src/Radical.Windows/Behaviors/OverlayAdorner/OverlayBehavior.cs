@@ -5,6 +5,9 @@ using System.Windows.Media;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// A behavior that shows content in an adorner overlaying the associated element.
+    /// </summary>
     public class OverlayBehavior : RadicalBehavior<FrameworkElement>
     {
         #region Dependency Property: Content
@@ -32,6 +35,9 @@ namespace Radical.Windows.Behaviors
 
         #region Dependency Property: IsVisible
 
+        /// <summary>
+        /// Identifies the <see cref="IsVisible"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty IsVisibleProperty = DependencyProperty.Register(
             "IsVisible",
             typeof(bool),
@@ -41,6 +47,9 @@ namespace Radical.Windows.Behaviors
                ((OverlayBehavior)s).OnIsVisibleChanged(e);
            }));
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the overlay is visible. Defaults to <c>true</c>.
+        /// </summary>
         public bool IsVisible
         {
             get { return (bool)GetValue(IsVisibleProperty); }
@@ -51,12 +60,18 @@ namespace Radical.Windows.Behaviors
 
         #region Dependency Property: DisableAdornedElement
 
+        /// <summary>
+        /// Identifies the <see cref="DisableAdornedElement"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty DisableAdornedElementProperty = DependencyProperty.Register(
             "DisableAdornedElement",
             typeof(bool),
             typeof(OverlayBehavior),
             new PropertyMetadata(false));
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the associated element is disabled while the overlay is visible.
+        /// </summary>
         public bool DisableAdornedElement
         {
             get { return (bool)GetValue(DisableAdornedElementProperty); }
@@ -67,6 +82,9 @@ namespace Radical.Windows.Behaviors
 
         #region Dependency Property: IsHitTestVisible
 
+        /// <summary>
+        /// Identifies the <see cref="IsHitTestVisible"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty IsHitTestVisibleProperty = DependencyProperty.Register(
             "IsHitTestVisible",
             typeof(bool),
@@ -76,6 +94,9 @@ namespace Radical.Windows.Behaviors
                 ((OverlayBehavior)s).IsHitTestVisibleChanged(e);
             }));
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the overlay is hit test visible. Defaults to <c>true</c>.
+        /// </summary>
         public bool IsHitTestVisible
         {
             get { return (bool)GetValue(IsHitTestVisibleProperty); }
@@ -86,6 +107,9 @@ namespace Radical.Windows.Behaviors
 
         #region Dependency Property: Background
 
+        /// <summary>
+        /// Identifies the <see cref="Background"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
             "Background",
             typeof(Brush),
@@ -95,6 +119,9 @@ namespace Radical.Windows.Behaviors
                ((OverlayBehavior)s).OnBackgroundChanged(e);
            }));
 
+        /// <summary>
+        /// Gets or sets the brush used to paint the overlay background.
+        /// </summary>
         public Brush Background
         {
             get { return (Brush)GetValue(BackgroundProperty); }
@@ -159,6 +186,7 @@ namespace Radical.Windows.Behaviors
         bool isAdornerVisible;
         private bool wasEnabled;
 
+        /// <inheritdoc/>
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -231,6 +259,7 @@ namespace Radical.Windows.Behaviors
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnDetaching()
         {
             AssociatedObject.Loaded -= new RoutedEventHandler(OnLoaded);

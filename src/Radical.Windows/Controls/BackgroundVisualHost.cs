@@ -6,6 +6,9 @@ using System.Windows.Threading;
 
 namespace Radical.Windows.Controls
 {
+    /// <summary>
+    /// Hosts a visual created and rendered on a dedicated background UI thread.
+    /// </summary>
     public class BackgroundVisualHost : FrameworkElement
     {
         private ThreadedVisualHelper _threadedHelper = null;
@@ -13,6 +16,10 @@ namespace Radical.Windows.Controls
 
         readonly Func<Visual> createContent;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BackgroundVisualHost"/> class.
+        /// </summary>
+        /// <param name="createContent">The function, invoked on the background thread, that creates the hosted visual.</param>
         public BackgroundVisualHost(Func<Visual> createContent)
         {
             this.createContent = createContent;
@@ -28,11 +35,13 @@ namespace Radical.Windows.Controls
             HideContentHelper();
         }
 
+        /// <inheritdoc/>
         protected override int VisualChildrenCount
         {
             get { return _hostVisual != null ? 1 : 0; }
         }
 
+        /// <inheritdoc/>
         protected override Visual GetVisualChild(int index)
         {
             if (_hostVisual != null && index == 0)
@@ -41,6 +50,7 @@ namespace Radical.Windows.Controls
             throw new IndexOutOfRangeException("index");
         }
 
+        /// <inheritdoc/>
         protected override System.Collections.IEnumerator LogicalChildren
         {
             get
@@ -71,6 +81,7 @@ namespace Radical.Windows.Controls
             }
         }
 
+        /// <inheritdoc/>
         protected override Size MeasureOverride(Size availableSize)
         {
             if (_threadedHelper != null)
