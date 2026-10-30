@@ -13,7 +13,7 @@ namespace Radical.Windows.Tests.Conventions
         [TestMethod, TestCategory("Conventions")]
         public void GenerateViewModelStaticResourceKey_should_generate_expected_key()
         {
-            var obj = new GenericParameterHelper();
+            var obj = new TestTypeHelper();
             var expected = obj.GetType().Name;
             var conventions = new ConventionsHandler(A.Fake<IMessageBroker>(), A.Fake<IReleaseComponents>(), new BootstrapConventions());
             var key = conventions.GenerateViewModelStaticResourceKey(obj);
@@ -24,7 +24,7 @@ namespace Radical.Windows.Tests.Conventions
         [TestMethod, TestCategory("Conventions")]
         public void DefaultGenerateViewModelStaticResourceKey_should_generate_expected_key() 
         {
-            var obj = new GenericParameterHelper();
+            var obj = new TestTypeHelper();
             var expected = obj.GetType().Name;
             var conventions = new ConventionsHandler(A.Fake<IMessageBroker>(), A.Fake<IReleaseComponents>(), new BootstrapConventions());
             var key = conventions.DefaultGenerateViewModelStaticResourceKey(obj);

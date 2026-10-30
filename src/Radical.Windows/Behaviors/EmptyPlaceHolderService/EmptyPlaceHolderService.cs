@@ -11,10 +11,16 @@ using System.Windows.Documents;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// Exposes an attached property to show placeholder content, as an adorner, on empty <see cref="ItemsControl"/> controls.
+    /// </summary>
     public static class EmptyPlaceHolderService
     {
         #region Attached Property: Content
 
+        /// <summary>
+        /// Identifies the Content attached property: the content shown when the items control has no items.
+        /// </summary>
         public static readonly DependencyProperty ContentProperty = DependencyProperty.RegisterAttached(
                                       "Content",
                                       typeof(object),
@@ -22,11 +28,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnContentChanged));
 
 
+        /// <summary>
+        /// Gets the placeholder content of the given items control.
+        /// </summary>
+        /// <param name="owner">The items control.</param>
+        /// <returns>The placeholder content.</returns>
         public static object GetContent(ItemsControl owner)
         {
             return (object)owner.GetValue(ContentProperty);
         }
 
+        /// <summary>
+        /// Sets the placeholder content of the given items control.
+        /// </summary>
+        /// <param name="owner">The items control.</param>
+        /// <param name="value">The placeholder content.</param>
         public static void SetContent(ItemsControl owner, object value)
         {
             owner.SetValue(ContentProperty, value);
@@ -103,7 +119,7 @@ namespace Radical.Windows.Behaviors
             {
                 Ensure.That(d.GetType()).Is<ItemsControl>();
 
-                d.CastTo<ItemsControl>().Loaded += onLoaded;
+                ((ItemsControl)d).Loaded += onLoaded;
             }
         }
 

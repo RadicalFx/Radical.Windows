@@ -288,10 +288,10 @@ namespace Radical.Windows.Services
 
             DefaultAttachViewToViewModel = (view, viewModel) =>
             {
-                viewModel.As<IViewModel>(i =>
-               {
-                   i.View = view;
-               });
+                if (viewModel is IViewModel ivm)
+                {
+                    ivm.View = view;
+                }
             };
 
             AttachViewToViewModel = (view, viewModel) =>

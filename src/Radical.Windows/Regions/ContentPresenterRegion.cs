@@ -32,7 +32,7 @@ namespace Radical.Windows.Regions
         /// <summary>
         /// Called to get content.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The current content.</returns>
         protected override DependencyObject OnGetContent()
         {
             return Element.Content as DependencyObject;
@@ -47,9 +47,7 @@ namespace Radical.Windows.Regions
         {
             if (Element.Content is DependencyObject previous)
             {
-                RegionService.Conventions
-                    .GetViewDataContext(previous, RegionService.Conventions.DefaultViewDataContextSearchBehavior)
-                    .As<IExpectViewClosingCallback>(i => i.OnViewClosing(args));
+                (RegionService.Conventions.GetViewDataContext(previous, RegionService.Conventions.DefaultViewDataContextSearchBehavior) as IExpectViewClosingCallback)?.OnViewClosing(args);
             }
 
             if ( !args.Cancel )

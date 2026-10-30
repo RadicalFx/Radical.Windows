@@ -4,7 +4,8 @@ using System.Windows.Input;
 namespace Radical.Windows.Behaviors
 {
     /// <summary>
-    /// 
+    /// Moves the keyboard focus to the associated element when <see cref="ControlledBy"/> matches
+    /// <see cref="UsingKey"/>, and sets <see cref="ControlledBy"/> when the element gets focus.
     /// </summary>
     public class Focus : RadicalBehavior<FrameworkElement>
     {

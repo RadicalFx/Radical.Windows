@@ -14,14 +14,13 @@ namespace Radical.Windows.Regions
         /// </summary>
         public PanelRegion()
         {
-
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelRegion"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        public PanelRegion(string name )
+        public PanelRegion(string name)
         {
             Name = name;
         }
@@ -30,9 +29,9 @@ namespace Radical.Windows.Regions
         /// Called after the add operation.
         /// </summary>
         /// <param name="view">The view.</param>
-        protected override void OnAdd( DependencyObject view )
+        protected override void OnAdd(DependencyObject view)
         {
-            Element.Children.Add( ( UIElement )view );
+            Element.Children.Add((UIElement)view);
         }
 
         /// <summary>
@@ -40,15 +39,12 @@ namespace Radical.Windows.Regions
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="reason">The reason.</param>
-        protected override void OnRemove( DependencyObject view, RemoveReason reason )
+        protected override void OnRemove(DependencyObject view, RemoveReason reason)
         {
-            view.As<UIElement>(e=>
+            if (view is UIElement e && Element.Children.Contains(e))
             {
-                if( Element.Children.Contains( e ) )
-                {
-                    Element.Children.Remove( e );
-                }
-            });
+                Element.Children.Remove(e);
+            }
         }
     }
 }

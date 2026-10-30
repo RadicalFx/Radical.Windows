@@ -29,8 +29,8 @@ namespace Radical.Windows.Input
         /// <summary>
         /// Used by the AutoCommandBinding...shuold be rewritten better :-)
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of the data.</typeparam>
+        /// <returns>The data associated with this command.</returns>
         internal T GetData<T>()
         {
             return (T)_data;
@@ -127,6 +127,8 @@ namespace Radical.Windows.Input
         /// <summary>
         /// Adds a new gesture to associate input bindings
         /// </summary>
+        /// <param name="gesture">The input gesture.</param>
+        /// <returns>This command instance, for chaining.</returns>
         public IDelegateCommand AddGesture(InputGesture gesture)
         {
             if (inputBindings == null)
@@ -139,11 +141,22 @@ namespace Radical.Windows.Input
             return this;
         }
 
+        /// <summary>
+        /// Adds a new key gesture to associate input bindings.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>This command instance, for chaining.</returns>
         public IDelegateCommand AddKeyGesture(System.Windows.Input.Key key)
         {
             return AddKeyGesture(key, ModifierKeys.None);
         }
 
+        /// <summary>
+        /// Adds a new key gesture, with modifiers, to associate input bindings.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="mk">The modifier keys.</param>
+        /// <returns>This command instance, for chaining.</returns>
         public IDelegateCommand AddKeyGesture(System.Windows.Input.Key key, ModifierKeys mk)
         {
             if (inputBindings == null)
@@ -205,14 +218,9 @@ namespace Radical.Windows.Input
 
             if (onBeforeTracking != null)
             {
-                onBeforeTracking(new CommandEvent()
-                {
-                    Name = DisplayText,
-                    Data = new Dictionary<string, object>()
-                    {
-                        {"parameter", parameter}
-                    }
-                });
+                var evt = new CommandEvent { Name = DisplayText };
+                evt.Data.Add("parameter", parameter);
+                onBeforeTracking(evt);
             }
         }
 

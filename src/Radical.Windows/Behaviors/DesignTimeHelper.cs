@@ -3,6 +3,9 @@ using System.Windows;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// Helper to detect if the code is running in a designer.
+    /// </summary>
     public static class DesignTimeHelper
     {
         /// <summary>

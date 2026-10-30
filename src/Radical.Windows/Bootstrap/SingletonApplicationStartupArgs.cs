@@ -8,6 +8,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="SingletonApplicationStartupArgs"/> class.
         /// </summary>
+        /// <param name="scope">The singleton application scope.</param>
+        /// <param name="singletonRegistrationKey">The key that identifies the singleton application.</param>
         public SingletonApplicationStartupArgs(SingletonApplicationScope scope, string singletonRegistrationKey)
         {
             Scope = scope;

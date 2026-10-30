@@ -5,6 +5,9 @@ using System.Windows.Markup;
 
 namespace Radical.Windows.Converters
 {
+    /// <summary>
+    /// Converts a <see cref="bool"/> to a <see cref="BusyStatus"/>, and back: <c>true</c> is <see cref="BusyStatus.Busy"/>.
+    /// </summary>
     [MarkupExtensionReturnType(typeof(BooleanBusyStatusConverter))]
     public sealed class BooleanBusyStatusConverter : AbstractSingletonConverter
     {

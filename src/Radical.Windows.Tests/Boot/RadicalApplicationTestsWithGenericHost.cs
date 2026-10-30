@@ -10,6 +10,7 @@ using Unity.Microsoft.DependencyInjection;
 
 namespace Radical.Windows.Tests.Boot
 {
+    [TestClass]
     public class RadicalApplicationTestsWithGenericHost
     {
         [SharedApplicationTestMethod]
@@ -90,13 +91,15 @@ namespace Radical.Windows.Tests.Boot
         }
 
         [SharedApplicationTestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void Application_using_host_builder_can_call_AddRadicalApplication_only_once()
         {
-            var host = new HostBuilder()
-                .AddRadicalApplication(_ => { })
-                .AddRadicalApplication(_ => { })
-                .Build();
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                var host = new HostBuilder()
+                    .AddRadicalApplication(_ => { })
+                    .AddRadicalApplication(_ => { })
+                    .Build();
+            });
         }
 
         [SharedApplicationTestMethod]

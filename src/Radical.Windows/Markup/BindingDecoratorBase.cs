@@ -48,6 +48,9 @@ namespace Radical.Windows.Markup
             set { binding = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.AsyncState"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public object AsyncState
         {
@@ -55,6 +58,9 @@ namespace Radical.Windows.Markup
             set { binding.AsyncState = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.BindsDirectlyToSource"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(false)]
         public bool BindsDirectlyToSource
         {
@@ -62,6 +68,9 @@ namespace Radical.Windows.Markup
             set { binding.BindsDirectlyToSource = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.Converter"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public IValueConverter Converter
         {
@@ -69,6 +78,9 @@ namespace Radical.Windows.Markup
             set { binding.Converter = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.ConverterCulture"/> of the decorated binding.
+        /// </summary>
         [TypeConverter(typeof(CultureInfoIetfLanguageTagConverter)), DefaultValue(null)]
         public CultureInfo ConverterCulture
         {
@@ -76,6 +88,9 @@ namespace Radical.Windows.Markup
             set { binding.ConverterCulture = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.ConverterParameter"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public object ConverterParameter
         {
@@ -83,6 +98,9 @@ namespace Radical.Windows.Markup
             set { binding.ConverterParameter = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.ElementName"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public string ElementName
         {
@@ -90,6 +108,9 @@ namespace Radical.Windows.Markup
             set { binding.ElementName = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.BindingBase.FallbackValue"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public object FallbackValue
         {
@@ -97,6 +118,9 @@ namespace Radical.Windows.Markup
             set { binding.FallbackValue = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.IsAsync"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(false)]
         public bool IsAsync
         {
@@ -104,6 +128,9 @@ namespace Radical.Windows.Markup
             set { binding.IsAsync = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.Mode"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(BindingMode.Default)]
         public BindingMode Mode
         {
@@ -111,6 +138,9 @@ namespace Radical.Windows.Markup
             set { binding.Mode = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.NotifyOnSourceUpdated"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(false)]
         public bool NotifyOnSourceUpdated
         {
@@ -118,6 +148,9 @@ namespace Radical.Windows.Markup
             set { binding.NotifyOnSourceUpdated = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.NotifyOnTargetUpdated"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(false)]
         public bool NotifyOnTargetUpdated
         {
@@ -125,6 +158,9 @@ namespace Radical.Windows.Markup
             set { binding.NotifyOnTargetUpdated = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.NotifyOnValidationError"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(false)]
         public bool NotifyOnValidationError
         {
@@ -132,6 +168,9 @@ namespace Radical.Windows.Markup
             set { binding.NotifyOnValidationError = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.Path"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public PropertyPath Path
         {
@@ -139,6 +178,9 @@ namespace Radical.Windows.Markup
             set { binding.Path = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.RelativeSource"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public RelativeSource RelativeSource
         {
@@ -146,6 +188,9 @@ namespace Radical.Windows.Markup
             set { binding.RelativeSource = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.Source"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public object Source
         {
@@ -153,6 +198,9 @@ namespace Radical.Windows.Markup
             set { binding.Source = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.BindingBase.TargetNullValue"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public object TargetNullValue
         {
@@ -160,6 +208,9 @@ namespace Radical.Windows.Markup
             set { binding.TargetNullValue = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.UpdateSourceExceptionFilter"/> of the decorated binding.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public UpdateSourceExceptionFilterCallback UpdateSourceExceptionFilter
         {
@@ -167,6 +218,9 @@ namespace Radical.Windows.Markup
             set { binding.UpdateSourceExceptionFilter = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.UpdateSourceTrigger"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(UpdateSourceTrigger.Default)]
         public UpdateSourceTrigger UpdateSourceTrigger
         {
@@ -174,6 +228,9 @@ namespace Radical.Windows.Markup
             set { binding.UpdateSourceTrigger = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.ValidatesOnDataErrors"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(false)]
         public bool ValidatesOnDataErrors
         {
@@ -181,6 +238,9 @@ namespace Radical.Windows.Markup
             set { binding.ValidatesOnDataErrors = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.ValidatesOnExceptions"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(false)]
         public bool ValidatesOnExceptions
         {
@@ -188,6 +248,9 @@ namespace Radical.Windows.Markup
             set { binding.ValidatesOnExceptions = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="System.Windows.Data.Binding.XPath"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public string XPath
         {
@@ -195,6 +258,9 @@ namespace Radical.Windows.Markup
             set { binding.XPath = value; }
         }
 
+        /// <summary>
+        /// Gets the <see cref="System.Windows.Data.Binding.ValidationRules"/> of the decorated binding.
+        /// </summary>
         [DefaultValue(null)]
         public Collection<ValidationRule> ValidationRules
         {
@@ -238,6 +304,15 @@ namespace Radical.Windows.Markup
             return TryGetTargetItems<DependencyObject>(provider, out target, out dp);
         }
 
+        /// <summary>
+        /// Validates a service provider that was submitted to the <see cref="ProvideValue"/> method, and
+        /// gets the target object, of the given type, and the target dependency property.
+        /// </summary>
+        /// <typeparam name="T">The expected type of the target object.</typeparam>
+        /// <param name="provider">The provider to be validated.</param>
+        /// <param name="target">The binding target of the binding.</param>
+        /// <param name="dp">The target property of the binding.</param>
+        /// <returns><c>true</c> if the provider supports all that's needed; otherwise, <c>false</c>.</returns>
         protected virtual bool TryGetTargetItems<T>(IServiceProvider provider, out T target, out DependencyProperty dp)
             where T : DependencyObject
         {

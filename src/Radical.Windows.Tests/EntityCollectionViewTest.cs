@@ -20,7 +20,7 @@
             var actual = 0;
             var wh = new EventWaitHandle(false, EventResetMode.ManualReset);
 
-            var list = new MementoEntityCollection<GenericParameterHelper>();
+            var list = new MementoEntityCollection<TestTypeHelper>();
             var view = list.DefaultView;
             view.ListChanged += (s, e) =>
             {
@@ -29,9 +29,9 @@
             };
 
             new Thread(new ThreadStart(() =>
-          {
-              list.Add(new GenericParameterHelper());
-          })).Start();
+            {
+                list.Add(new TestTypeHelper());
+            })).Start();
 
             actual.Should().Be.EqualTo(expected);
         }

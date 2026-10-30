@@ -7,6 +7,10 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Markup
 {
+    /// <summary>
+    /// A binding to a command that, once the target is loaded, registers the command input
+    /// bindings on the root element.
+    /// </summary>
     public class CommandBinding : BindingDecoratorBase
     {
         /// <summary>
@@ -55,6 +59,11 @@ namespace Radical.Windows.Markup
             return b;
         }
 
+        /// <summary>
+        /// Called when the value is provided, hooks the target lifecycle.
+        /// </summary>
+        /// <param name="provider">The service provider.</param>
+        /// <param name="value">The provided value.</param>
         protected virtual void OnProvideValue(IServiceProvider provider, object value)
         {
             if (!DesignTimeHelper.GetIsInDesignMode())
@@ -96,11 +105,23 @@ namespace Radical.Windows.Markup
             }
         }
 
+        /// <summary>
+        /// Called when the data context of the target changes.
+        /// </summary>
+        /// <param name="obj">The target.</param>
+        /// <param name="targetProperty">The target property.</param>
+        /// <param name="newValue">The new data context.</param>
+        /// <param name="oldValue">The old data context.</param>
         protected virtual void OnDataContextChanged(DependencyObject obj, DependencyProperty targetProperty, object newValue, object oldValue)
         {
 
         }
 
+        /// <summary>
+        /// Called when the target is loaded.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="targetProperty">The target property.</param>
         protected virtual void OnTargetLoaded(DependencyObject target, DependencyProperty targetProperty)
         {
             var source = target as ICommandSource;
@@ -109,6 +130,13 @@ namespace Radical.Windows.Markup
             SetInputBindings(target, source, command);
         }
 
+        /// <summary>
+        /// Adds the command input bindings to the root element of the given target, so that
+        /// they are available regardless of the focused element.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="source">The target as command source.</param>
+        /// <param name="command">The command.</param>
         protected virtual void SetInputBindings(DependencyObject target, ICommandSource source, IDelegateCommand command)
         {
             if (source != null && command != null && command.InputBindings != null)
@@ -126,11 +154,22 @@ namespace Radical.Windows.Markup
             }
         }
 
+        /// <summary>
+        /// Gets the command currently set on the target property.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="targetProperty">The target property.</param>
+        /// <returns>The command, if any.</returns>
         protected virtual IDelegateCommand GetCommand(DependencyObject target, DependencyProperty targetProperty)
         {
             return target.GetValue(targetProperty) as IDelegateCommand;
         }
 
+        /// <summary>
+        /// Gets the root element of the given element.
+        /// </summary>
+        /// <param name="fe">The element.</param>
+        /// <returns>The root element.</returns>
         protected virtual FrameworkElement GetRootElement(FrameworkElement fe)
         {
             if (fe.Parent == null)

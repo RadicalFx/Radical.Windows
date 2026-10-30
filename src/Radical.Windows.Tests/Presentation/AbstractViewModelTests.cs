@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Radical.ComponentModel.Validation;
 using Radical.Validation;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Presentation;
@@ -76,16 +75,6 @@ namespace Test.Radical.Windows.Presentation
             {
                 get { return GetPropertyValue(() => OnceMore); }
                 set { SetPropertyValue(() => OnceMore, value); }
-            }
-        }
-
-        class SampleTestViewModelWithValidationCallback : SampleTestViewModel, IRequireValidationCallback<SampleTestViewModelWithValidationCallback>
-        {
-            public Action<ValidationContext<SampleTestViewModelWithValidationCallback>> Test_OnValidate { get; set; }
-
-            public void OnValidate(ValidationContext<SampleTestViewModelWithValidationCallback> context)
-            {
-                Test_OnValidate(context);
             }
         }
 
@@ -592,67 +581,57 @@ namespace Test.Radical.Windows.Presentation
         [TestCategory("AbstractViewModel"), TestCategory("Validation"), TestCategory("Issue#176")]
         public void AbstractViewModel_with_custom_validation_validating_multiple_times_should_report_custom_validation_errors_only_once()
         {
-            var sut = new SampleTestViewModelWithValidationCallback()
+            var sut = new SampleTestViewModel()
             {
                 NotNullNotEmpty = "something, so this doesn't fail."
             };
             var svc = DataAnnotationValidationService.CreateFor(sut);
+            svc.AddRule(vm => vm.Another, ctx => ctx.Failed("This is fully custom."));
 
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
-            sut.Test_OnValidate = ctx =>
-            {
-                if (ctx.PropertyName == "AProperty" || ctx.PropertyName == null)
-                {
-                    ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
-                }
-            };
-
+        
             sut.Validate();
             sut.Validate();
             sut.Validate();
-
-            Assert.AreEqual(1, sut.ValidationErrors.Count);
+        
+            Assert.HasCount(1, sut.ValidationErrors);
         }
-
+        
         [TestMethod]
         [TestCategory("AbstractViewModel"), TestCategory("Validation"), TestCategory("Issue#176")]
         public void AbstractViewModel_with_custom_validation_changing_properties_multiple_times_should_report_custom_validation_errors_only_once()
         {
-            var sut = new SampleTestViewModelWithValidationCallback() 
+            var sut = new SampleTestViewModel() 
             {
                 NotNullNotEmpty = "something, so this doesn't fail."
             };
             var svc = DataAnnotationValidationService.CreateFor(sut);
+            svc.AddRule(vm => vm.Another, ctx => ctx.Failed("This is fully custom."));
 
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
-            sut.Test_OnValidate = ctx =>
-            {
-                if (ctx.PropertyName == "AProperty" || ctx.PropertyName == null)
-                {
-                    ctx.Results.AddError(new ValidationError("AProperty", null, new[] { "This is fully custom." }));
-                }
-            };
-
+        
             sut.NotNullNotEmpty = "";
             sut.NotNullNotEmpty = "foo";
             sut.NotNullNotEmpty = "bar";
-
-            Assert.AreEqual(0, sut.ValidationErrors.Count);
+        
+            Assert.IsEmpty(sut.ValidationErrors);
         }
-
+        
         [TestMethod]
         [TestCategory("AbstractViewModel"), TestCategory("Validation"), TestCategory("Issue#176")]
         [Ignore]
         public void AbstractViewModel_it_should_be_possible_to_change_a_validatable_property_at_custom_validation_time()
         {
-            var sut = new SampleTestViewModelWithValidationCallback();
+            var sut = new SampleTestViewModel();
             var svc = DataAnnotationValidationService.CreateFor(sut);
+        
+            svc.AddRule(vm => vm.NotNullNotEmpty, ctx =>
+            {
+                sut.Another = "hi, there";
+                return new SuccessfulValidationResult();
+            });
 
             sut.ValidateUsing(svc, forceIsValidationEnabledTo: true);
-            sut.Test_OnValidate = ctx =>
-            {
-                sut.AnotherOne = "fail";
-            };
 
             sut.NotNullNotEmpty = "a value";
         }

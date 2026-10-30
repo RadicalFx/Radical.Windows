@@ -3,6 +3,7 @@ using Radical.Diagnostics;
 using Radical.Helpers;
 using Radical.Reflection;
 using Radical.Windows.ComponentModel;
+using Radical.Windows.Internals;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -175,7 +176,7 @@ namespace Radical.Windows.Regions
         /// <summary>
         /// Notify via IExpectViewClosedCallback and release the resources, even for nested views.
         /// </summary>
-        /// <param name="view"></param>
+        /// <param name="view">The view to release.</param>
         protected virtual void NotifyClosedAndEnsureRelease( DependencyObject view )
         {
             if ( RegionService.Conventions == null )
@@ -191,9 +192,10 @@ namespace Radical.Windows.Regions
                     RegionService.CurrentService.UnregisterRegionManager( view, UnregisterBehavior.WholeLogicalTreeChain );
                 }
 
-                RegionService.Conventions
-                    .GetViewDataContext( view, RegionService.Conventions.DefaultViewDataContextSearchBehavior )
-                    .As<IExpectViewClosedCallback>( i => i.OnViewClosed() );
+                if (RegionService.Conventions.GetViewDataContext( view, RegionService.Conventions.DefaultViewDataContextSearchBehavior ) is IExpectViewClosedCallback ievcc)
+                {
+                    ievcc.OnViewClosed();
+                }
 
                 if ( RegionService.Conventions.ShouldReleaseView( view ) )
                 {
@@ -206,7 +208,7 @@ namespace Radical.Windows.Regions
         /// Finds the hosting view of the given FramerowkElement.
         /// </summary>
         /// <param name="fe">The FramerowkElement for which to find the hosting view.</param>
-        /// <returns></returns>
+        /// <returns>The hosting view, or <c>null</c> if none can be found.</returns>
         protected virtual DependencyObject FindHostingViewOf( FrameworkElement fe )
         {
             if ( fe == null )
