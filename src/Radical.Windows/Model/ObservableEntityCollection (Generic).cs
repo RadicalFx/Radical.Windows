@@ -10,6 +10,10 @@ using System.Runtime.Serialization;
 
 namespace Radical.Windows.Model
 {
+    /// <summary>
+    /// A <see cref="MementoEntityCollection{T}"/> that raises collection and property change notifications.
+    /// </summary>
+    /// <typeparam name="T">The type of the items in the collection.</typeparam>
     public class ObservableEntityCollection<T> :
         MementoEntityCollection<T>,
         INotifyCollectionChanged,
@@ -55,6 +59,7 @@ namespace Radical.Windows.Model
 
         }
 
+        /// <inheritdoc/>
         protected override void OnAddCompleted(int index, T value)
         {
             base.OnAddCompleted(index, value);
@@ -62,6 +67,7 @@ namespace Radical.Windows.Model
             OnPropertyChanged(nameof(Count));
         }
 
+        /// <inheritdoc/>
         protected override void OnRemoveCompleted(T value, int index)
         {
             base.OnRemoveCompleted(value, index);
@@ -69,6 +75,7 @@ namespace Radical.Windows.Model
             OnPropertyChanged(nameof(Count));
         }
 
+        /// <inheritdoc/>
         protected override void OnClearCompleted(IEnumerable<T> clearedItems)
         {
             base.OnClearCompleted(clearedItems);
@@ -76,6 +83,7 @@ namespace Radical.Windows.Model
             OnPropertyChanged(nameof(Count));
         }
 
+        /// <inheritdoc/>
         protected override void OnInsertCompleted(int index, T value)
         {
             base.OnInsertCompleted(index, value);
@@ -83,6 +91,7 @@ namespace Radical.Windows.Model
             OnPropertyChanged(nameof(Count));
         }
 
+        /// <inheritdoc/>
         protected override void OnDeserializationCompleted(SerializationInfo info, StreamingContext context)
         {
             OnPropertyChanged(nameof(Count));
@@ -90,6 +99,7 @@ namespace Radical.Windows.Model
             base.OnDeserializationCompleted(info, context);
         }
 
+        /// <inheritdoc/>
         public override void EndInit(bool notify)
         {
             base.EndInit(notify);
@@ -120,6 +130,7 @@ namespace Radical.Windows.Model
         /// <summary>
         /// Raises the <see cref="E:PropertyChanged"/> event.
         /// </summary>
+        /// <typeparam name="TValue">The type of the property.</typeparam>
         /// <param name="property">The property.</param>
         [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use OnPropertyChanged(nameof(property)) instead")]
         protected void OnPropertyChanged<TValue>(Expression<Func<TValue>> property)
@@ -170,6 +181,7 @@ namespace Radical.Windows.Model
         //    return new EntityCollectionView<T>( this );
         //}
 
+        /// <inheritdoc/>
         protected override void OnAddRange(IEnumerable<T> rangeToAdd)
         {
             base.OnAddRange(rangeToAdd);
@@ -177,6 +189,7 @@ namespace Radical.Windows.Model
             BeginInit();
         }
 
+        /// <inheritdoc/>
         protected override void OnAddRangeCompleted(IEnumerable<T> addedRange)
         {
             base.OnAddRangeCompleted(addedRange);

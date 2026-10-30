@@ -32,7 +32,7 @@ namespace Radical.Windows.Regions
         /// <summary>
         /// Called to get content.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The current content.</returns>
         protected override DependencyObject OnGetContent()
         {
             return Element.Content as DependencyObject;

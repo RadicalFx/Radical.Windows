@@ -64,6 +64,7 @@ namespace Radical.Windows.Regions
         /// Gets the value of the PreserveOwningRegionDataContext attached property
         /// </summary>
         /// <param name="element">The owner dependency object.</param>
+        /// <returns>The value of the PreserveOwningRegionDataContext attached property.</returns>
         public static bool GetPreserveOwningRegionDataContext(DependencyObject element)
         {
             return (bool)element.GetValue(PreserveOwningRegionDataContextProperty);

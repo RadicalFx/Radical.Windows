@@ -33,21 +33,28 @@ namespace Radical.Windows.Controls.Automation.Peers
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResizerAutomationPeer"/> class.
+        /// </summary>
+        /// <param name="owner">The <see cref="Resizer"/> associated with this peer.</param>
         public ResizerAutomationPeer(Resizer owner)
             : base(owner)
         {
         }
 
+        /// <inheritdoc/>
         protected override string GetClassNameCore()
         {
             return "Resizer";
         }
 
+        /// <inheritdoc/>
         protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Custom;
         }
 
+        /// <inheritdoc/>
         public override object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.Transform)

@@ -2,6 +2,9 @@
 
 namespace Radical.Windows
 {
+    /// <summary>
+    /// A weak event manager for the <see cref="FrameworkElement.Loaded"/> event.
+    /// </summary>
     public sealed class LoadedWeakEventManager : WeakEventManager
     {
         static LoadedWeakEventManager GetCurrentManager()
@@ -18,12 +21,22 @@ namespace Radical.Windows
             return manager;
         }
 
+        /// <summary>
+        /// Adds the given listener to the <see cref="FrameworkElement.Loaded"/> event of the given source.
+        /// </summary>
+        /// <param name="source">The source element.</param>
+        /// <param name="listener">The listener.</param>
         public static void AddListener(FrameworkElement source, IWeakEventListener listener)
         {
             GetCurrentManager()
                 .ProtectedAddListener(source, listener);
         }
 
+        /// <summary>
+        /// Removes the given listener from the <see cref="FrameworkElement.Loaded"/> event of the given source.
+        /// </summary>
+        /// <param name="source">The source element.</param>
+        /// <param name="listener">The listener.</param>
         public static void RemoveListener(FrameworkElement source, IWeakEventListener listener)
         {
             GetCurrentManager()

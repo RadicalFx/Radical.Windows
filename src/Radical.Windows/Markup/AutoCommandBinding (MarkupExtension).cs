@@ -8,6 +8,11 @@ using System.Windows;
 
 namespace Radical.Windows.Markup
 {
+    /// <summary>
+    /// A command binding that generates the command from the data context method matching the
+    /// binding path. A boolean property named <c>Can</c> followed by the method name, if any,
+    /// determines if the command can be executed.
+    /// </summary>
     public class AutoCommandBinding : CommandBinding
     {
         readonly static TraceSource logger = new TraceSource(typeof(AutoCommandBinding).FullName);
@@ -33,15 +38,15 @@ namespace Radical.Windows.Markup
         /// <summary>
         /// This basic implementation just sets a binding on the targeted
         /// <see cref="DependencyObject"/> and returns the appropriate
-        /// <see cref="BindingExpressionBase"/> instance.<br/>
-        /// All this work is delegated to the decorated <see cref="Binding"/>
+        /// <see cref="System.Windows.Data.BindingExpressionBase"/> instance.<br/>
+        /// All this work is delegated to the decorated <see cref="System.Windows.Data.Binding"/>
         /// instance.
         /// </summary>
         /// <param name="provider">Object that can provide services for the markup
         /// extension.</param>
         /// <returns>
         /// The object value to set on the property where the extension is applied.
-        /// In case of a valid binding expression, this is a <see cref="BindingExpressionBase"/>
+        /// In case of a valid binding expression, this is a <see cref="System.Windows.Data.BindingExpressionBase"/>
         /// instance.
         /// </returns>
         public override object ProvideValue(IServiceProvider provider)
@@ -78,6 +83,7 @@ namespace Radical.Windows.Markup
             return fakePlaceholder;
         }
 
+        /// <inheritdoc/>
         protected override void OnDataContextChanged(DependencyObject obj, DependencyProperty targetProperty, object newValue, object oldValue)
         {
             base.OnDataContextChanged(obj, targetProperty, newValue, oldValue);
@@ -100,11 +106,16 @@ namespace Radical.Windows.Markup
             }
         }
 
+        /// <summary>
+        /// Gets the builder used to generate the command.
+        /// </summary>
+        /// <returns>The command builder.</returns>
         protected virtual DelegateCommandBuilder GetCommandBuilder()
         {
             return new DelegateCommandBuilder();
         }
 
+        /// <inheritdoc/>
         protected override IDelegateCommand GetCommand(DependencyObject target, DependencyProperty targetProperty)
         {
             var builder = GetCommandBuilder();
