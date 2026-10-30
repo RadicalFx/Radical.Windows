@@ -4,8 +4,12 @@ using System.Windows.Controls;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// A behavior that scrolls the selected item of a <see cref="DataGrid"/> into view when the selection changes.
+    /// </summary>
     public class ScrollIntoViewForDataGrid : RadicalBehavior<DataGrid>
     {
+        /// <inheritdoc/>
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -26,6 +30,7 @@ namespace Radical.Windows.Behaviors
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnDetaching()
         {
             base.OnDetaching();

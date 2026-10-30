@@ -4,8 +4,12 @@ using System.Windows.Controls;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// A behavior that scrolls the selected item of a <see cref="ListView"/> into view when the selection changes.
+    /// </summary>
     public class ScrollIntoViewForListView : RadicalBehavior<ListView>
     {
+        /// <inheritdoc/>
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -25,6 +29,7 @@ namespace Radical.Windows.Behaviors
                     }));
             }
         }
+        /// <inheritdoc/>
         protected override void OnDetaching()
         {
             base.OnDetaching();

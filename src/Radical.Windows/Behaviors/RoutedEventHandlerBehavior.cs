@@ -5,16 +5,25 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// A behavior that handles a routed event executing a command.
+    /// </summary>
     public class Handle : RadicalBehavior<FrameworkElement>
     {
         #region Dependency Property: RoutedEvent
 
+        /// <summary>
+        /// Identifies the <see cref="RoutedEvent"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty RoutedEventProperty = DependencyProperty.Register(
             "RoutedEvent",
             typeof(RoutedEvent),
             typeof(Handle),
             new PropertyMetadata(null));
 
+        /// <summary>
+        /// Gets or sets the routed event to handle.
+        /// </summary>
         public RoutedEvent RoutedEvent
         {
             get { return (RoutedEvent)GetValue(RoutedEventProperty); }
@@ -25,12 +34,18 @@ namespace Radical.Windows.Behaviors
 
         #region Dependency Property: Command
 
+        /// <summary>
+        /// Identifies the <see cref="WithCommand"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty WithCommandProperty = DependencyProperty.Register(
             "WithCommand",
             typeof(ICommand),
             typeof(Handle),
             new PropertyMetadata(null));
 
+        /// <summary>
+        /// Gets or sets the command executed when the routed event is raised.
+        /// </summary>
         public ICommand WithCommand
         {
             get { return (ICommand)GetValue(WithCommandProperty); }
@@ -41,12 +56,19 @@ namespace Radical.Windows.Behaviors
 
         #region Dependency Property: PassingIn
 
+        /// <summary>
+        /// Identifies the <see cref="PassingIn"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty PassingInProperty = DependencyProperty.Register(
             "PassingIn",
             typeof(string),
             typeof(Handle),
             new PropertyMetadata(null));
 
+        /// <summary>
+        /// Gets or sets the command parameter: <c>$args</c>, <c>$this</c>, <c>$source</c>, or
+        /// <c>$originalSource</c>, optionally followed by a property name, e.g. <c>$args.Key</c>.
+        /// </summary>
         public string PassingIn
         {
             get { return (string)GetValue(PassingInProperty); }
@@ -57,6 +79,9 @@ namespace Radical.Windows.Behaviors
 
         readonly RoutedEventHandler handler = null;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Handle"/> class.
+        /// </summary>
         public Handle()
         {
             handler = (s, e) =>
@@ -119,6 +144,7 @@ namespace Radical.Windows.Behaviors
             };
         }
 
+        /// <inheritdoc/>
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -126,6 +152,7 @@ namespace Radical.Windows.Behaviors
             AssociatedObject.AddHandler(RoutedEvent, handler);
         }
 
+        /// <inheritdoc/>
         protected override void OnDetaching()
         {
             base.OnDetaching();

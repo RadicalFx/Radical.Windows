@@ -5,6 +5,10 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// A behavior that executes a command when a column header of a <see cref="ListView"/> is clicked,
+    /// passing the binding path of the column, or its <c>GridViewColumnManager.SortProperty</c>, as parameter.
+    /// </summary>
     public class ListViewColumnHeaderCommandBehavior :
         RadicalBehavior<ListView>,
         ICommandSource
@@ -12,6 +16,9 @@ namespace Radical.Windows.Behaviors
         readonly RoutedEventHandler onLoaded;
         readonly RoutedEventHandler onColumnHeaderClick;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListViewColumnHeaderCommandBehavior"/> class.
+        /// </summary>
         public ListViewColumnHeaderCommandBehavior()
         {
             onColumnHeaderClick = (s, e) =>
@@ -47,12 +54,18 @@ namespace Radical.Windows.Behaviors
 
         #region Dependency Property: Command
 
+        /// <summary>
+        /// Identifies the <see cref="Command"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
             "Command",
             typeof(ICommand),
             typeof(ListViewColumnHeaderCommandBehavior),
             new PropertyMetadata(null));
 
+        /// <summary>
+        /// Gets or sets the command executed when a column header is clicked.
+        /// </summary>
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -61,6 +74,7 @@ namespace Radical.Windows.Behaviors
 
         #endregion
 
+        /// <inheritdoc/>
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -68,6 +82,7 @@ namespace Radical.Windows.Behaviors
             AssociatedObject.Loaded += onLoaded;
         }
 
+        /// <inheritdoc/>
         protected override void OnDetaching()
         {
             base.OnDetaching();
@@ -78,6 +93,9 @@ namespace Radical.Windows.Behaviors
                     onColumnHeaderClick);
         }
 
+        /// <summary>
+        /// Gets or sets the command parameter. Not used: the command parameter is the column property name.
+        /// </summary>
         public object CommandParameter
         {
             get;
@@ -87,7 +105,7 @@ namespace Radical.Windows.Behaviors
         /// <summary>
         /// The object that the command is being executed on.
         /// </summary>
-        /// <value></value>
+        /// <value>The associated list view.</value>
         public IInputElement CommandTarget
         {
             get { return AssociatedObject as IInputElement; }
