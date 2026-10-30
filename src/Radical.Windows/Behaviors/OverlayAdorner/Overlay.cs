@@ -4,8 +4,14 @@ using System.Windows.Documents;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// Exposes an attached property to show content in an adorner overlaying the element.
+    /// </summary>
     public static class Overlay
     {
+        /// <summary>
+        /// Identifies the Content attached property: the content displayed in the overlay.
+        /// </summary>
         public static readonly DependencyProperty ContentProperty = DependencyProperty.RegisterAttached(
                                       "Content",
                                       typeof(object),
@@ -13,11 +19,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnContentPropertyChanged));
 
 
+        /// <summary>
+        /// Gets the overlay content of the given element.
+        /// </summary>
+        /// <param name="control">The element.</param>
+        /// <returns>The overlay content.</returns>
         public static object GetContent(UIElement control)
         {
             return control.GetValue(ContentProperty);
         }
 
+        /// <summary>
+        /// Sets the overlay content of the given element.
+        /// </summary>
+        /// <param name="control">The element.</param>
+        /// <param name="value">The overlay content.</param>
         public static void SetContent(UIElement control, object value)
         {
             control.SetValue(ContentProperty, value);

@@ -13,6 +13,10 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// Exposes attached properties to add commands, selection synchronization, sorting, and
+    /// columns auto sizing to <see cref="ListView"/> controls.
+    /// </summary>
     public static class ListViewManager
     {
         static readonly TraceSource logger = new TraceSource(typeof(ListViewManager).FullName);
@@ -149,6 +153,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: ItemDoubleClickCommand
 
+        /// <summary>
+        /// Identifies the ItemDoubleClickCommand attached property: the command executed, with the item as parameter,
+        /// when an item is double clicked, or Enter, or one of the command gestures, is pressed.
+        /// </summary>
         public static DependencyProperty ItemDoubleClickCommandProperty = DependencyProperty.RegisterAttached(
             "ItemDoubleClickCommand",
             typeof(ICommand),
@@ -156,6 +164,11 @@ namespace Radical.Windows.Behaviors
             new UIPropertyMetadata(OnItemDoubleClickCommandChanged));
 
 
+        /// <summary>
+        /// Sets the item double click command of the given list view.
+        /// </summary>
+        /// <param name="target">The list view.</param>
+        /// <param name="value">The command.</param>
         public static void SetItemDoubleClickCommand(DependencyObject target, ICommand value)
         {
             target.SetValue(ItemDoubleClickCommandProperty, value);
@@ -192,6 +205,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: ItemRemoveCommand
 
+        /// <summary>
+        /// Identifies the ItemRemoveCommand attached property: the command executed, with the item as parameter,
+        /// when Delete, or one of the command gestures, is pressed.
+        /// </summary>
         public static readonly DependencyProperty ItemRemoveCommandProperty = DependencyProperty.RegisterAttached(
                                       "ItemRemoveCommand",
                                       typeof(ICommand),
@@ -199,11 +216,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnItemRemoveCommandChanged));
 
 
+        /// <summary>
+        /// Gets the item remove command of the given list view.
+        /// </summary>
+        /// <param name="owner">The list view.</param>
+        /// <returns>The command.</returns>
         public static ICommand GetItemRemoveCommand(DependencyObject owner)
         {
             return (ICommand)owner.GetValue(ItemRemoveCommandProperty);
         }
 
+        /// <summary>
+        /// Sets the item remove command of the given list view.
+        /// </summary>
+        /// <param name="owner">The list view.</param>
+        /// <param name="value">The command.</param>
         public static void SetItemRemoveCommand(DependencyObject owner, ICommand value)
         {
             owner.SetValue(ItemRemoveCommandProperty, value);
@@ -233,6 +260,9 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: SelectedItems
 
+        /// <summary>
+        /// Identifies the SelectedItems attached property: a list kept in sync with the list view selected items.
+        /// </summary>
         public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.RegisterAttached(
                                       "SelectedItems",
                                       typeof(IList),
@@ -240,11 +270,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnSelectedItemsChanged));
 
 
+        /// <summary>
+        /// Gets the list synchronized with the selected items of the given list view.
+        /// </summary>
+        /// <param name="owner">The list view.</param>
+        /// <returns>The selected items list.</returns>
         public static IList GetSelectedItems(ListView owner)
         {
             return (IList)owner.GetValue(SelectedItemsProperty);
         }
 
+        /// <summary>
+        /// Sets the list synchronized with the selected items of the given list view.
+        /// </summary>
+        /// <param name="owner">The list view.</param>
+        /// <param name="value">The selected items list.</param>
         public static void SetSelectedItems(ListView owner, IList value)
         {
             owner.SetValue(SelectedItemsProperty, value);
@@ -289,6 +329,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: AutoSizeColumns
 
+        /// <summary>
+        /// Identifies the AutoSizeColumns attached property: when <c>true</c> the columns whose
+        /// <c>GridViewColumnManager.Fill</c> is set share the available width of the list view.
+        /// </summary>
         public static readonly DependencyProperty AutoSizeColumnsProperty = DependencyProperty.RegisterAttached(
                                       "AutoSizeColumns",
                                       typeof(bool),
@@ -296,11 +340,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(false, OnAutoSizeColumnsChanged));
 
 
+        /// <summary>
+        /// Gets a value indicating whether the columns of the given list view are automatically sized.
+        /// </summary>
+        /// <param name="owner">The list view.</param>
+        /// <returns><c>true</c> if the columns are automatically sized; otherwise, <c>false</c>.</returns>
         public static bool GetAutoSizeColumns(ListView owner)
         {
             return (bool)owner.GetValue(AutoSizeColumnsProperty);
         }
 
+        /// <summary>
+        /// Sets a value indicating whether the columns of the given list view are automatically sized.
+        /// </summary>
+        /// <param name="owner">The list view.</param>
+        /// <param name="value"><c>true</c> to automatically size the columns; otherwise, <c>false</c>.</param>
         public static void SetAutoSizeColumns(ListView owner, bool value)
         {
             owner.SetValue(AutoSizeColumnsProperty, value);
@@ -382,6 +436,10 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: SortCommand
 
+        /// <summary>
+        /// Identifies the SortCommand attached property: the command executed, with the column
+        /// <c>GridViewColumnManager.SortProperty</c> as parameter, when a column header is clicked.
+        /// </summary>
         public static readonly DependencyProperty SortCommandProperty = DependencyProperty.RegisterAttached(
                                       "SortCommand",
                                       typeof(ICommand),
@@ -389,11 +447,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnSortCommandChanged));
 
 
+        /// <summary>
+        /// Gets the sort command of the given list view.
+        /// </summary>
+        /// <param name="owner">The list view.</param>
+        /// <returns>The sort command.</returns>
         public static ICommand GetSortCommand(ListView owner)
         {
             return (ICommand)owner.GetValue(SortCommandProperty);
         }
 
+        /// <summary>
+        /// Sets the sort command of the given list view.
+        /// </summary>
+        /// <param name="owner">The list view.</param>
+        /// <param name="value">The sort command.</param>
         public static void SetSortCommand(ListView owner, ICommand value)
         {
             owner.SetValue(SortCommandProperty, value);

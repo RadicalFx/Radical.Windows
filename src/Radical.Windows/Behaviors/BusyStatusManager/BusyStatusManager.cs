@@ -7,6 +7,10 @@ using System.Windows.Documents;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// Exposes attached properties to show busy content as an adorner, and disable the
+    /// element, while the element status is <see cref="BusyStatus.Busy"/>.
+    /// </summary>
     public static class BusyStatusManager
     {
         internal static ContentPresenter WrapUserContent(object userContent)
@@ -36,6 +40,9 @@ namespace Radical.Windows.Behaviors
 
         #region Attached Property: EnableMultiThreadingHost
 
+        /// <summary>
+        /// Identifies the EnableMultiThreadingHost attached property. Currently not used.
+        /// </summary>
         public static readonly DependencyProperty EnableMultiThreadingHostProperty = DependencyProperty.RegisterAttached(
                                       "EnableMultiThreadingHost",
                                       typeof(bool),
@@ -43,11 +50,21 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(false /*, OnEnableMultiThreadingHostChanged */ ));
 
 
+        /// <summary>
+        /// Gets the EnableMultiThreadingHost value of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <returns>The EnableMultiThreadingHost value.</returns>
         public static bool GetEnableMultiThreadingHost(DependencyObject owner)
         {
             return (bool)owner.GetValue(EnableMultiThreadingHostProperty);
         }
 
+        /// <summary>
+        /// Sets the EnableMultiThreadingHost value of the given object.
+        /// </summary>
+        /// <param name="owner">The object.</param>
+        /// <param name="value">The EnableMultiThreadingHost value.</param>
         public static void SetEnableMultiThreadingHost(DependencyObject owner, bool value)
         {
             owner.SetValue(EnableMultiThreadingHostProperty, value);
@@ -55,6 +72,9 @@ namespace Radical.Windows.Behaviors
 
         #endregion
 
+        /// <summary>
+        /// Identifies the Content attached property: the content displayed by the busy adorner.
+        /// </summary>
         public static readonly DependencyProperty ContentProperty = DependencyProperty.RegisterAttached(
                                       "Content",
                                       typeof(object),
@@ -62,27 +82,50 @@ namespace Radical.Windows.Behaviors
                                       new FrameworkPropertyMetadata(null, OnPropertyChanged));
 
 
+        /// <summary>
+        /// Gets the content displayed while the given element is busy.
+        /// </summary>
+        /// <param name="control">The element.</param>
+        /// <returns>The busy content.</returns>
         public static object GetContent(UIElement control)
         {
             return control.GetValue(ContentProperty);
         }
 
+        /// <summary>
+        /// Sets the content displayed while the given element is busy.
+        /// </summary>
+        /// <param name="control">The element.</param>
+        /// <param name="value">The busy content.</param>
         public static void SetContent(UIElement control, object value)
         {
             control.SetValue(ContentProperty, value);
         }
 
+        /// <summary>
+        /// Identifies the Status attached property: the busy status of the element. Defaults to <see cref="BusyStatus.Idle"/>.
+        /// </summary>
         public static readonly DependencyProperty StatusProperty = DependencyProperty.RegisterAttached(
                               "Status",
                               typeof(BusyStatus),
                               typeof(BusyStatusManager),
                               new FrameworkPropertyMetadata(BusyStatus.Idle, OnPropertyChanged));
 
+        /// <summary>
+        /// Gets the busy status of the given element.
+        /// </summary>
+        /// <param name="control">The element.</param>
+        /// <returns>The busy status.</returns>
         public static BusyStatus GetStatus(UIElement control)
         {
             return (BusyStatus)control.GetValue(StatusProperty);
         }
 
+        /// <summary>
+        /// Sets the busy status of the given element.
+        /// </summary>
+        /// <param name="control">The element.</param>
+        /// <param name="value">The busy status.</param>
         public static void SetStatus(UIElement control, BusyStatus value)
         {
             control.SetValue(StatusProperty, value);

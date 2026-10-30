@@ -7,6 +7,9 @@ using System.Windows.Interop;
 
 namespace Radical.Windows.Behaviors
 {
+    /// <summary>
+    /// A behavior that customizes the control box of a <see cref="Window"/>: the minimize and maximize buttons, and the icon.
+    /// </summary>
     public sealed class WindowControlBoxBehavior : Behavior<Window>
     {
         private const int SwpFramechanged = 0x0020;
@@ -18,12 +21,18 @@ namespace Radical.Windows.Behaviors
         [DllImport("user32.dll")]
         private static extern bool SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter, int x, int y, int width, int height, uint flags);
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the window can be maximized.
+        /// </summary>
         public bool AllowMaximize
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the window can be minimized.
+        /// </summary>
         public bool AllowMinimize
         {
             get;
@@ -32,6 +41,9 @@ namespace Radical.Windows.Behaviors
 
         readonly EventHandler h;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the window icon is shown.
+        /// </summary>
         public bool ShowIcon { get; set; }
 
         /// <summary>
