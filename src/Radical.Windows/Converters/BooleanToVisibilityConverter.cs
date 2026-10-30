@@ -6,10 +6,10 @@ using System.Windows.Markup;
 
 namespace Radical.Windows.Converters
 {
-    [MarkupExtensionReturnType(typeof(BooleanToVisibilityConverter))]
     /// <summary>
     /// A value converter to convert from bool to Visibility and back.
     /// </summary>
+    [MarkupExtensionReturnType(typeof(BooleanToVisibilityConverter))]
     public class BooleanToVisibilityConverter : IValueConverter
     {
         /// <summary>

@@ -5,6 +5,9 @@ using System.Windows.Markup;
 
 namespace Radical.Windows.Converters
 {
+    /// <summary>
+    /// Negates a <see cref="bool"/> value.
+    /// </summary>
     [MarkupExtensionReturnType(typeof(NotConverter))]
     [ValueConversion(typeof(bool), typeof(bool))]
     public sealed class NotConverter : AbstractSingletonConverter
@@ -23,6 +26,7 @@ namespace Radical.Windows.Converters
         //    return converter;
         //}
 
+        /// <inheritdoc/>
         public override object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             Ensure.That(value).Named("value")
@@ -34,6 +38,7 @@ namespace Radical.Windows.Converters
             return !((bool)value);
         }
 
+        /// <inheritdoc/>
         public override object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             Ensure.That(value).Named("value").IsNotNull();

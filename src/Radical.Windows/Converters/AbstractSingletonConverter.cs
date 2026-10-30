@@ -5,6 +5,9 @@ using System.Windows.Markup;
 
 namespace Radical.Windows.Converters
 {
+    /// <summary>
+    /// Base class for converters that are also markup extensions, sharing a single instance per converter type.
+    /// </summary>
     public abstract class AbstractSingletonConverter : MarkupExtension, IValueConverter
     {
         static readonly Dictionary<Type, WeakReference> singletons = new Dictionary<Type, WeakReference>();

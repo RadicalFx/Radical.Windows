@@ -6,17 +6,28 @@
     using System.Linq;
     using System.Windows.Markup;
 
+    /// <summary>
+    /// A markup extension that returns a type, supporting generic types: the type arguments
+    /// are used to close the generic type definition.
+    /// </summary>
     [ContentProperty("TypeArguments")]
     public class TypeExtension : MarkupExtension
     {
         private Type _closedType;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeExtension"/> class.
+        /// </summary>
         public TypeExtension()
         {
             _typeArguments = new List<Type>();
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeExtension"/> class.
+        /// </summary>
+        /// <param name="typeName">The name of the type.</param>
         public TypeExtension(string typeName)
             : this()
         {
@@ -25,6 +36,11 @@
             _typeName = typeName;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeExtension"/> class.
+        /// </summary>
+        /// <param name="typeName">The name of the generic type.</param>
+        /// <param name="typeArgument1">The first type argument.</param>
         public TypeExtension(string typeName, Type typeArgument1)
             : this(typeName)
         {
@@ -33,6 +49,12 @@
             TypeArgument1 = typeArgument1;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeExtension"/> class.
+        /// </summary>
+        /// <param name="typeName">The name of the generic type.</param>
+        /// <param name="typeArgument1">The first type argument.</param>
+        /// <param name="typeArgument2">The second type argument.</param>
         public TypeExtension(string typeName, Type typeArgument1, Type typeArgument2)
             : this(typeName, typeArgument1)
         {
@@ -41,6 +63,13 @@
             TypeArgument2 = typeArgument2;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeExtension"/> class.
+        /// </summary>
+        /// <param name="typeName">The name of the generic type.</param>
+        /// <param name="typeArgument1">The first type argument.</param>
+        /// <param name="typeArgument2">The second type argument.</param>
+        /// <param name="typeArgument3">The third type argument.</param>
         public TypeExtension(string typeName, Type typeArgument1, Type typeArgument2, Type typeArgument3)
             : this(typeName, typeArgument1, typeArgument2)
         {
@@ -49,6 +78,14 @@
             TypeArgument3 = typeArgument3;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeExtension"/> class.
+        /// </summary>
+        /// <param name="typeName">The name of the generic type.</param>
+        /// <param name="typeArgument1">The first type argument.</param>
+        /// <param name="typeArgument2">The second type argument.</param>
+        /// <param name="typeArgument3">The third type argument.</param>
+        /// <param name="typeArgument4">The fourth type argument.</param>
         public TypeExtension(string typeName, Type typeArgument1, Type typeArgument2, Type typeArgument3, Type typeArgument4)
             : this(typeName, typeArgument1, typeArgument2, typeArgument3)
         {
@@ -58,6 +95,9 @@
         }
 
         private string _typeName;
+        /// <summary>
+        /// Gets or sets the name of the type, resolved using the XAML type resolver. Setting it clears <see cref="Type"/>.
+        /// </summary>
         [ConstructorArgument("typeName")]
         public string TypeName
         {
@@ -72,6 +112,9 @@
         }
 
         private Type _type;
+        /// <summary>
+        /// Gets or sets the type. Setting it clears <see cref="TypeName"/>.
+        /// </summary>
         public Type Type
         {
             get { return _type; }
@@ -85,11 +128,17 @@
         }
 
         private readonly List<Type> _typeArguments;
+        /// <summary>
+        /// Gets the type arguments used to close a generic type definition.
+        /// </summary>
         public IList<Type> TypeArguments
         {
             get { return _typeArguments; }
         }
 
+        /// <summary>
+        /// Gets or sets the first type argument.
+        /// </summary>
         [ConstructorArgument("typeArgument1")]
         public Type TypeArgument1
         {
@@ -97,6 +146,9 @@
             set { SetTypeArgument(0, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the second type argument.
+        /// </summary>
         [ConstructorArgument("typeArgument2")]
         public Type TypeArgument2
         {
@@ -104,6 +156,9 @@
             set { SetTypeArgument(1, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the third type argument.
+        /// </summary>
         [ConstructorArgument("typeArgument3")]
         public Type TypeArgument3
         {
@@ -111,6 +166,9 @@
             set { SetTypeArgument(2, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the fourth type argument.
+        /// </summary>
         [ConstructorArgument("typeArgument4")]
         public Type TypeArgument4
         {
@@ -145,6 +203,12 @@
             }
         }
 
+        /// <summary>
+        /// Returns the type, closed with the type arguments if it is a generic type definition.
+        /// </summary>
+        /// <param name="serviceProvider">Object that can provide services for the markup extension.</param>
+        /// <returns>The resolved type.</returns>
+        /// <exception cref="InvalidOperationException">Neither <see cref="Type"/> nor <see cref="TypeName"/> is set, or the type cannot be resolved.</exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (_typeName == null && _type == null)

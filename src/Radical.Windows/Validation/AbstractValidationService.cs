@@ -150,6 +150,7 @@ namespace Radical.Windows.Validation
             }
         }
 
+        /// <inheritdoc/>
         public bool MergeValidationErrors { get; set; }
     }
 }

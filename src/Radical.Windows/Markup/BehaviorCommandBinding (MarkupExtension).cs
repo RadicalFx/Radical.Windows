@@ -12,8 +12,13 @@ using System.Windows.Input;
 
 namespace Radical.Windows.Markup
 {
+    /// <summary>
+    /// A command binding to bind commands of behaviors: the command is generated from the data
+    /// context of the object the behavior is attached to, once it is loaded.
+    /// </summary>
     public class BehaviorCommandBinding : CommandBinding
     {
+        /// <inheritdoc/>
         protected override void OnProvideValue(IServiceProvider provider, object value)
         {
 
@@ -32,11 +37,18 @@ namespace Radical.Windows.Markup
             }
         }
 
+        /// <summary>
+        /// Input bindings are not supported for behaviors: does nothing.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="source">The target as command source.</param>
+        /// <param name="command">The command.</param>
         protected override void SetInputBindings(DependencyObject target, ICommandSource source, IDelegateCommand command)
         {
             //Not supported ?
         }
 
+        /// <inheritdoc/>
         protected override IDelegateCommand GetCommand(DependencyObject target, DependencyProperty targetProperty)
         {
             if (Path != null && target is INotifyAttachedOjectLoaded)
