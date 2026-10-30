@@ -2583,7 +2583,7 @@ namespace Radical.Windows.ComponentModel
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, System.Action<System.Windows.DependencyObject>, System.Windows.DependencyObject> DefaultTryHookClosedEventOfHostOf { get; }
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        Radical.Windows.ComponentModel.ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior { get; set; }
+        Radical.Windows.ComponentModel.ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior { get; }
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, Radical.Windows.ComponentModel.ViewDataContextSearchBehavior, bool> DefaultViewHasDataContext { get; }
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
