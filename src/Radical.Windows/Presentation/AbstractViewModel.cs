@@ -43,6 +43,7 @@ namespace Radical.Windows.Presentation
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             if (IsValidationEnabled
+                && !ValidationService.IsValidationSuspended
                 && RunValidationOnPropertyChanged
                 && !IsResettingValidation
                 && !IsTriggeringValidation
