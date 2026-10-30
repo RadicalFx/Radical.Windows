@@ -3579,11 +3579,6 @@ namespace Radical.Windows.Validation
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidateProperty(string propertyName) { }
     }
-    public sealed class DelegateValidationService : Radical.Windows.Validation.AbstractValidationService
-    {
-        public DelegateValidationService(System.Func<System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> validationCallback) { }
-        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
-    }
     public sealed class NullValidationService : Radical.Windows.Validation.AbstractValidationService
     {
         public static readonly Radical.Windows.ComponentModel.IValidationService Instance;
