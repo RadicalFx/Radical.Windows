@@ -3312,7 +3312,7 @@ namespace Radical.Windows.Model
 }
 namespace Radical.Windows.Presentation
 {
-    public abstract class AbstractMementoViewModel : Radical.Model.MementoEntity, Radical.Windows.ComponentModel.IViewModel, System.ComponentModel.INotifyPropertyChanged
+    public abstract class AbstractMementoViewModel : Radical.Model.MementoEntity, Radical.Windows.ComponentModel.IRequireValidation, Radical.Windows.ComponentModel.IViewModel, System.ComponentModel.INotifyDataErrorInfo, System.ComponentModel.INotifyPropertyChanged
     {
         protected AbstractMementoViewModel() { }
         protected AbstractMementoViewModel(Radical.ComponentModel.ChangeTracking.ChangeTrackingRegistration registration) { }
@@ -3376,7 +3376,7 @@ namespace Radical.Windows.Presentation
                 "Errors"})]
         protected virtual System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> ValidateProperty(string propertyName, Radical.Windows.ComponentModel.ValidationBehavior behavior) { }
     }
-    public abstract class AbstractViewModel : Radical.Model.Entity, Radical.Windows.ComponentModel.IViewModel, System.ComponentModel.INotifyPropertyChanged, System.ComponentModel.ISupportInitialize
+    public abstract class AbstractViewModel : Radical.Model.Entity, Radical.Windows.ComponentModel.IRequireValidation, Radical.Windows.ComponentModel.IViewModel, System.ComponentModel.INotifyDataErrorInfo, System.ComponentModel.INotifyPropertyChanged, System.ComponentModel.ISupportInitialize
     {
         protected AbstractViewModel() { }
         protected Radical.Windows.ComponentModel.ValidationBehavior DefaultValidationBehavior { get; set; }
