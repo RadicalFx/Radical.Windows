@@ -11,7 +11,7 @@ Radical.Windows requires .NET 10 (`net10.0-windows`).
 ### Release
 
 * Latest release is available on NuGet: http://www.nuget.org/profiles/radical
-* Development releases are available on MyGet: https://www.myget.org/F/radical-unstable/api/v3/index.json
+* Development releases are available on Feedz.io: https://f.feedz.io/radical-framework/pre-releases/nuget/index.json
 
 ### Q&A
 
