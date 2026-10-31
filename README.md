@@ -4,6 +4,8 @@
 
 Radical framework is designed to help developing composite WPF applications based on the Model-View-ViewModel presentation pattern.
 
+Radical.Windows requires .NET 10 (`net10.0-windows`).
+
 [Documentation](http://docs.radicalframework.com/) is composed of articles and guidance detailing how to get the most out of Radical.
 
 ### Release
