@@ -33,12 +33,12 @@ namespace Radical.Windows.Behaviors
 
                     if ( this.conventions.ShouldNotifyViewModelLoaded( view, dc ) )
                     {
-                        this.broker.Broadcast( this, new ViewModelLoaded( dc ) );
+                        _ = this.broker.BroadcastAsync( this, new ViewModelLoaded( dc ) );
                     }
 
                     if ( this.conventions.ShouldNotifyViewLoaded( view ) )
                     {
-                        this.broker.Broadcast( this, new ViewLoaded( view ) );
+                        _ = this.broker.BroadcastAsync( this, new ViewLoaded( view ) );
                     }
 
                     if (dc is IExpectViewLoadedCallback temp)

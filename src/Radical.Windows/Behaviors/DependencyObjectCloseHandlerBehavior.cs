@@ -3,6 +3,7 @@ using Radical.ComponentModel.Messaging;
 using Radical.Windows.ComponentModel;
 using Radical.Windows.Messaging;
 using System.Windows;
+using System.Threading.Tasks;
 
 namespace Radical.Windows.Behaviors
 {
@@ -48,6 +49,8 @@ namespace Radical.Windows.Behaviors
                         w.Close();
                     }
                 }
+
+                return Task.CompletedTask;
             } );
         }
 
