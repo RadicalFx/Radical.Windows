@@ -9,14 +9,6 @@
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.radicalframework.com/windows/input", "Radical.Windows.Input")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.radicalframework.com/windows/markup", "Radical.Windows.Markup")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.radicalframework.com/windows/regions", "Radical.Windows.Regions")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows", "Radical.Windows")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/behaviors", "Radical.Windows.Behaviors")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/controls", "Radical.Windows.Controls")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/converters", "Radical.Windows.Converters")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/effects", "Radical.Windows.Effects")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/input", "Radical.Windows.Input")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/markup", "Radical.Windows.Markup")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/regions", "Radical.Windows.Regions")]
 namespace Microsoft.Extensions.Hosting
 {
     public static class HostBuilderExtensions
