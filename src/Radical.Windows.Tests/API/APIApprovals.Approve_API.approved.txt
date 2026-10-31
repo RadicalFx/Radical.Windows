@@ -3236,6 +3236,9 @@ namespace Radical.Windows.Messaging
         public ViewModelClosed(object viewModel) { }
         public object ViewModel { get; }
     }
+    [System.Obsolete("ViewModelClosing has been obsoleted and will be removed in v5.0.0. The infrastruc" +
+        "ture never publishes it: to cancel closing a view, implement IExpectViewClosingC" +
+        "allback on the view model instead.", true)]
     public class ViewModelClosing
     {
         public ViewModelClosing(object viewModel) { }
