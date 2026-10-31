@@ -56,7 +56,7 @@ namespace Radical.Windows.Behaviors
                     {
                         logger.Debug( "ShouldNotifyViewModelLoaded -> true." );
 
-                        this.broker.Broadcast( this, new ViewModelLoaded( dc ) );
+                        _ = this.broker.BroadcastAsync( this, new ViewModelLoaded( dc ) );
 
                         logger.Debug( "Message broadcasted." );
                     }
@@ -65,7 +65,7 @@ namespace Radical.Windows.Behaviors
                     {
                         logger.Debug( "ShouldNotifyViewLoaded -> true." );
 
-                        this.broker.Broadcast( this, new ViewLoaded( view ));
+                        _ = this.broker.BroadcastAsync( this, new ViewLoaded( view ));
 
                         logger.Debug( "Message broadcasted." );
                     }
@@ -89,7 +89,7 @@ namespace Radical.Windows.Behaviors
 
                     if ( dc != null && dc.GetType().IsAttributeDefined<NotifyActivatedAttribute>() )
                     {
-                        this.broker.Broadcast( this, new ViewModelActivated( dc ) );
+                        _ = this.broker.BroadcastAsync( this, new ViewModelActivated( dc ) );
                     }
 
                     if (dc is IExpectViewActivatedCallback temp)
@@ -113,7 +113,7 @@ namespace Radical.Windows.Behaviors
 
                     if( dc != null && dc.GetType().IsAttributeDefined<NotifyShownAttribute>() )
                     {
-                        this.broker.Broadcast( this, new ViewModelShown( dc ) );
+                        _ = this.broker.BroadcastAsync( this, new ViewModelShown( dc ) );
                     }
 
                     if (dc is IExpectViewShownCallback temp)
@@ -138,7 +138,7 @@ namespace Radical.Windows.Behaviors
 
                     if ( dc != null && dc.GetType().IsAttributeDefined<NotifyClosedAttribute>() )
                     {
-                        this.broker.Broadcast( this, new ViewModelClosed(  dc ) );
+                        _ = this.broker.BroadcastAsync( this, new ViewModelClosed(  dc ) );
                     }
 
                     if (dc is IExpectViewClosedCallback temp)

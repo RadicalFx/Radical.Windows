@@ -1942,7 +1942,11 @@ namespace Radical.Windows
     public sealed class RadicalApplication
     {
         public void Boot() { }
+        [System.Obsolete("Shutdown has been obsoleted and will be removed in v5.0.0. Use ShutdownAsync inst" +
+            "ead: the message broker is async-only, and shutting down awaits the ApplicationS" +
+            "hutdownRequested subscribers.", true)]
         public void Shutdown() { }
+        public System.Threading.Tasks.Task ShutdownAsync() { }
     }
     public static class VisualTreeCrawler
     {
