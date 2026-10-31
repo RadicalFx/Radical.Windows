@@ -9,14 +9,6 @@
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.radicalframework.com/windows/input", "Radical.Windows.Input")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.radicalframework.com/windows/markup", "Radical.Windows.Markup")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.radicalframework.com/windows/regions", "Radical.Windows.Regions")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows", "Radical.Windows")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/behaviors", "Radical.Windows.Behaviors")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/controls", "Radical.Windows.Controls")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/converters", "Radical.Windows.Converters")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/effects", "Radical.Windows.Effects")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/input", "Radical.Windows.Input")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/markup", "Radical.Windows.Markup")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.topics.it/wpf/radical/windows/regions", "Radical.Windows.Regions")]
 namespace Microsoft.Extensions.Hosting
 {
     public static class HostBuilderExtensions
@@ -1898,9 +1890,8 @@ namespace Radical.Windows.Analytics
 }
 namespace Radical.Windows
 {
-    [System.Obsolete("ApplicationBootstrapper has been obsoleted and will be treated as an error in v3." +
-        "0.0 and removed in v4.0.0. Consider moving to new RadicalApplication using the A" +
-        "ddRadicalApplication extension method.", false)]
+    [System.Obsolete("ApplicationBootstrapper has been obsoleted and will be removed in v5.0.0. Use Rad" +
+        "icalApplication, through the AddRadicalApplication extension method, instead.", true)]
     public class ApplicationBootstrapper
     {
         public ApplicationBootstrapper() { }
@@ -1927,9 +1918,8 @@ namespace Radical.Windows
         public Radical.Windows.ApplicationBootstrapper UsingAsShell<TShellType>()
             where TShellType : System.Windows.Window { }
     }
-    [System.Obsolete("ApplicationBootstrapper has been obsoleted and will be treated as an error in v3." +
-        "0.0 and removed in v4.0.0. Consider moving to new RadicalApplication using the A" +
-        "ddRadicalApplication extension method.", false)]
+    [System.Obsolete("ApplicationBootstrapper has been obsoleted and will be removed in v5.0.0. Use Rad" +
+        "icalApplication, through the AddRadicalApplication extension method, instead.", true)]
     public class ApplicationBootstrapper<TMainView> : Radical.Windows.ApplicationBootstrapper
         where TMainView : System.Windows.Window
     {
@@ -1954,17 +1944,6 @@ namespace Radical.Windows
         public void Boot() { }
         public void Shutdown() { }
     }
-    [System.Obsolete("Repeat has been obsoleted and will be removed in v3.0.0")]
-    public class Repeat
-    {
-        public Repeat() { }
-        public static Radical.Windows.Repeat.Repeater Every(System.TimeSpan delay) { }
-        public class Repeater
-        {
-            public void Stop() { }
-            public void This(System.Action action) { }
-        }
-    }
     public static class VisualTreeCrawler
     {
         public static T FindChild<T>(this System.Windows.DependencyObject source)
@@ -1981,16 +1960,6 @@ namespace Radical.Windows
             where T : System.Windows.DependencyObject { }
         public static bool IsChildOfType<T>(System.Windows.DependencyObject obj)
             where T : System.Windows.DependencyObject { }
-    }
-    [System.Obsolete("Wait has been obsoleted and will be removed in v3.0.0")]
-    public class Wait
-    {
-        public Wait() { }
-        public static Radical.Windows.Wait.Waiter For(System.TimeSpan delay) { }
-        public class Waiter
-        {
-            public void AndThen(System.Action action) { }
-        }
     }
 }
 namespace Radical.Windows.Behaviors
@@ -2604,7 +2573,7 @@ namespace Radical.Windows.ComponentModel
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, System.Action<System.Windows.DependencyObject>, System.Windows.DependencyObject> DefaultTryHookClosedEventOfHostOf { get; }
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
-        Radical.Windows.ComponentModel.ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior { get; set; }
+        Radical.Windows.ComponentModel.ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior { get; }
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
         System.Func<System.Windows.DependencyObject, Radical.Windows.ComponentModel.ViewDataContextSearchBehavior, bool> DefaultViewHasDataContext { get; }
         [Radical.Windows.ComponentModel.IgnorePropertyInjectionAttribue]
@@ -3304,15 +3273,12 @@ namespace Radical.Windows.Model
         protected override void OnInsertCompleted(int index, T value) { }
         protected virtual void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e) { }
         protected void OnPropertyChanged(string propertyName) { }
-        [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use OnPropertyCha" +
-            "nged(nameof(property)) instead")]
-        protected void OnPropertyChanged<TValue>(System.Linq.Expressions.Expression<System.Func<TValue>> property) { }
         protected override void OnRemoveCompleted(T value, int index) { }
     }
 }
 namespace Radical.Windows.Presentation
 {
-    public abstract class AbstractMementoViewModel : Radical.Model.MementoEntity, Radical.Windows.ComponentModel.IViewModel, System.ComponentModel.INotifyPropertyChanged
+    public abstract class AbstractMementoViewModel : Radical.Model.MementoEntity, Radical.Windows.ComponentModel.IRequireValidation, Radical.Windows.ComponentModel.IViewModel, System.ComponentModel.INotifyDataErrorInfo, System.ComponentModel.INotifyPropertyChanged
     {
         protected AbstractMementoViewModel() { }
         protected AbstractMementoViewModel(Radical.ComponentModel.ChangeTracking.ChangeTrackingRegistration registration) { }
@@ -3345,9 +3311,6 @@ namespace Radical.Windows.Presentation
         public System.Collections.IEnumerable GetErrors(string propertyName) { }
         protected string GetPropertyDisplayName(string propertyName) { }
         protected virtual void MoveFocusTo(string focusedElementKey) { }
-        [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use MoveFocusTo(n" +
-            "ameof(property)) instead")]
-        protected virtual void MoveFocusTo<T>(System.Linq.Expressions.Expression<System.Func<T>> property) { }
         protected virtual void OnAcceptingChanges(System.ComponentModel.CancelEventArgs e) { }
         protected virtual void OnChangesAccepted() { }
         protected virtual void OnChangesRejected() { }
@@ -3376,7 +3339,7 @@ namespace Radical.Windows.Presentation
                 "Errors"})]
         protected virtual System.ValueTuple<bool, System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> ValidateProperty(string propertyName, Radical.Windows.ComponentModel.ValidationBehavior behavior) { }
     }
-    public abstract class AbstractViewModel : Radical.Model.Entity, Radical.Windows.ComponentModel.IViewModel, System.ComponentModel.INotifyPropertyChanged, System.ComponentModel.ISupportInitialize
+    public abstract class AbstractViewModel : Radical.Model.Entity, Radical.Windows.ComponentModel.IRequireValidation, Radical.Windows.ComponentModel.IViewModel, System.ComponentModel.INotifyDataErrorInfo, System.ComponentModel.INotifyPropertyChanged, System.ComponentModel.ISupportInitialize
     {
         protected AbstractViewModel() { }
         protected Radical.Windows.ComponentModel.ValidationBehavior DefaultValidationBehavior { get; set; }
@@ -3408,9 +3371,6 @@ namespace Radical.Windows.Presentation
         public System.Collections.IEnumerable GetErrors(string propertyName) { }
         protected string GetPropertyDisplayName(string propertyName) { }
         protected virtual void MoveFocusTo(string focusedElementKey) { }
-        [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use MoveFocusTo(n" +
-            "ameof(property)) instead")]
-        protected virtual void MoveFocusTo<T>(System.Linq.Expressions.Expression<System.Func<T>> property) { }
         protected void OnErrorsChanged(string propertyName) { }
         protected override void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e) { }
         protected virtual void OnValidated() { }
@@ -3608,11 +3568,6 @@ namespace Radical.Windows.Validation
         public Radical.Windows.Validation.DataAnnotationValidationService<TEntity> AddRule(System.Linq.Expressions.Expression<System.Func<TEntity, object>> property, System.Func<Radical.Validation.ValidationContext<TEntity>, Radical.Validation.ValidationResult> rule) { }
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
         protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidateProperty(string propertyName) { }
-    }
-    public sealed class DelegateValidationService : Radical.Windows.Validation.AbstractValidationService
-    {
-        public DelegateValidationService(System.Func<System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError>> validationCallback) { }
-        protected override System.Collections.Generic.IEnumerable<Radical.Validation.ValidationError> OnValidate() { }
     }
     public sealed class NullValidationService : Radical.Windows.Validation.AbstractValidationService
     {

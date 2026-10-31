@@ -96,8 +96,8 @@ namespace Radical.Windows.Regions
         /// <param name="conventions">The conventions.</param>
         public RegionService( IRegionManagerFactory regionManagerFactory, IConventionsHandler conventions )
         {
-            Ensure.That( regionManagerFactory ).Named( () => regionManagerFactory ).IsNotNull();
-            Ensure.That( conventions ).Named( () => conventions ).IsNotNull();
+            Ensure.That( regionManagerFactory ).Named( nameof( regionManagerFactory ) ).IsNotNull();
+            Ensure.That( conventions ).Named( nameof( conventions ) ).IsNotNull();
 
             this.regionManagerFactory = regionManagerFactory;
             this.conventions = conventions;

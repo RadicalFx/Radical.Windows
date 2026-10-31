@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace Radical.Windows.Presentation
 {
@@ -19,7 +18,8 @@ namespace Radical.Windows.Presentation
     /// </summary>
     public abstract class AbstractMementoViewModel :
         MementoEntity,
-        IViewModel
+        IViewModel,
+        IRequireValidation
     {
         /// <summary>
         /// Gets or sets the view. The view property is intended only for
@@ -42,6 +42,7 @@ namespace Radical.Windows.Presentation
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             if (IsValidationEnabled
+                && !ValidationService.IsValidationSuspended
                 && RunValidationOnPropertyChanged
                 && !IsResettingValidation
                 && !IsTriggeringValidation
@@ -76,11 +77,7 @@ namespace Radical.Windows.Presentation
         [SkipPropertyValidation]
         protected virtual bool IsValidationEnabled
         {
-            get
-            {
-                return this is INotifyDataErrorInfo
-                    || this is IRequireValidation;
-            }
+            get{ return true; }
         }
 
         IValidationService _validationService;
@@ -145,7 +142,7 @@ namespace Radical.Windows.Presentation
         /// </returns>
         protected virtual (bool IsValid, IEnumerable<ValidationError> Errors) ValidateProperty(string propertyName, ValidationBehavior behavior)
         {
-            (bool IsValid, IEnumerable<ValidationError> Errors) validationResult = (true, new ValidationError[0]);
+            (bool IsValid, IEnumerable<ValidationError> Errors) validationResult = (true, Array.Empty<ValidationError>());
             if (ValidationService.IsValidationSuspended)
             {
                 return validationResult;
@@ -218,7 +215,7 @@ namespace Radical.Windows.Presentation
         {
             if (ValidationService.IsValidationSuspended)
             {
-                return (true, new ValidationError[0]);
+                return (true, Array.Empty<ValidationError>());
             }
 
             var wasValid = IsValid;
@@ -239,8 +236,8 @@ namespace Radical.Windows.Presentation
 
             if (IsValid != wasValid)
             {
-                OnPropertyChanged(() => IsValid);
-                OnPropertyChanged(() => HasErrors);
+                OnPropertyChanged(nameof(IsValid));
+                OnPropertyChanged(nameof(HasErrors));
             }
 
             OnValidated();
@@ -384,22 +381,8 @@ namespace Radical.Windows.Presentation
         [SkipPropertyValidation]
         public string FocusedElementKey
         {
-            get { return GetPropertyValue(() => FocusedElementKey); }
-            set { SetPropertyValue(() => FocusedElementKey, value); }
-        }
-
-        /// <summary>
-        /// Moves the focus to.
-        /// </summary>
-        /// <typeparam name="T">The type of the property.</typeparam>
-        /// <param name="property">The property.</param>
-        [System.Obsolete("This function has been obsoleted and will be removed in v3.0.0. Use MoveFocusTo(nameof(property)) instead")]
-        protected virtual void MoveFocusTo<T>(Expression<Func<T>> property)
-        {
-            EnsureNotDisposed();
-
-            var propertyName = property.GetMemberName();
-            MoveFocusTo(propertyName);
+            get { return GetPropertyValue<string>(nameof(FocusedElementKey)); }
+            set { SetPropertyValue(nameof(FocusedElementKey), value); }
         }
 
         /// <summary>
