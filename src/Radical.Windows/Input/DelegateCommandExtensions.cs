@@ -24,7 +24,7 @@ namespace Radical.Windows.Input
         public static IDelegateCommand Observe<TSource>(this IDelegateCommand command, TSource source, params Expression<Func<TSource, object>>[] properties)
             where TSource : INotifyPropertyChanged
         {
-            Ensure.That(properties).Named(() => properties).IsNotNull();
+            Ensure.That(properties).Named(nameof(properties)).IsNotNull();
 
             if (properties.Any())
             {
