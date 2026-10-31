@@ -1,6 +1,7 @@
 ﻿using Radical.Analytics;
 using Radical.ComponentModel;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Radical.Windows.ComponentModel
@@ -58,6 +59,23 @@ namespace Radical.Windows.ComponentModel
         /// <param name="executeMethod">The delegate to execute at execution time.</param>
         /// <returns>An instance of the current command.</returns>
         IDelegateCommand OnExecute(Action<object> executeMethod);
+
+        /// <summary>
+        /// Sets the given asynchronous delegate as the one that must handle
+        /// the commands execution logic. While the returned task is running
+        /// the command can't be executed again.
+        /// </summary>
+        /// <param name="executeMethod">The delegate to execute at execution time.</param>
+        /// <returns>An instance of the current command.</returns>
+        IDelegateCommand OnExecute(Func<object, Task> executeMethod);
+
+        /// <summary>
+        /// Executes the command and returns a task that completes when the
+        /// execution logic, synchronous or asynchronous, completes.
+        /// </summary>
+        /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
+        /// <returns>A task that represents the command execution.</returns>
+        Task ExecuteAsync(object parameter);
 
         /// <summary>
         /// Sets the given Action as the delegate that must handle
