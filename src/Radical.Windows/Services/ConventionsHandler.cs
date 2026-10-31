@@ -760,13 +760,13 @@ namespace Radical.Windows.Services
         public Func<DependencyObject, bool> DefaultShouldUnsubscribeViewModelOnRelease { get; private set; }
 
         /// <summary>
-        /// Gets or sets the default view data context search behavior.
+        /// Gets the default view data context search behavior: <see cref="ViewDataContextSearchBehavior.LocalOnly"/>.
         /// </summary>
         /// <value>
         /// The default view data context search behavior.
         /// </value>
         [IgnorePropertyInjectionAttribue]
-        public ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior{ get; set; }
+        public ViewDataContextSearchBehavior DefaultViewDataContextSearchBehavior { get; private set; }
 
         /// <summary>
         /// Gets or sets the generate service static resource key convention.
