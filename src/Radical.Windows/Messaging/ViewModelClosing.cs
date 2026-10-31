@@ -1,8 +1,11 @@
-﻿namespace Radical.Windows.Messaging
+﻿using System;
+
+namespace Radical.Windows.Messaging
 {
     /// <summary>
     /// Domain event that identifies that a view model is closing.
     /// </summary>
+    [Obsolete("ViewModelClosing has been obsoleted and will be removed in v5.0.0. The infrastructure never publishes it: to cancel closing a view, implement IExpectViewClosingCallback on the view model instead.", true)]
     public class ViewModelClosing
     {
         /// <summary>
