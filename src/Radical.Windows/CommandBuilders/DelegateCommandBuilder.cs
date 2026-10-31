@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Radical.Windows.CommandBuilders
@@ -134,6 +135,7 @@ namespace Radical.Windows.CommandBuilders
                 MethodName = method.Name,
                 DataContext = dataContext,
                 FastDelegate = method.CreateVoidDelegate(),
+                AsyncFastDelegate = typeof(Task).IsAssignableFrom(method.ReturnType) ? method.CreateDelegate() : null,
 
                 BooleanFact = properties.Where(pi =>
                 {
@@ -153,6 +155,22 @@ namespace Radical.Windows.CommandBuilders
                 KeyBindings = method.GetAttributes<KeyBindingAttribute>(),
                 Description = method.GetAttribute<CommandDescriptionAttribute>()
             };
+        }
+
+        static object[] GetArguments(CommandData data, object parameter)
+        {
+            if (!data.HasParameter)
+            {
+                return null;
+            }
+
+            var prm = parameter;
+            if (parameter is IConvertible)
+            {
+                prm = Convert.ChangeType(parameter, data.ParameterType);
+            }
+
+            return new[] { prm };
         }
 
         /// <summary>
@@ -179,25 +197,24 @@ namespace Radical.Windows.CommandBuilders
                 }
 
                 return true;
-            })
-            .OnExecute(o =>
-            {
-                var data = command.GetData<CommandData>();
-                if (data.HasParameter)
-                {
-                    var prm = o;
-                    if (o is IConvertible)
-                    {
-                        prm = Convert.ChangeType(o, data.ParameterType);
-                    }
-
-                    data.FastDelegate(data.DataContext, new[] { prm });
-                }
-                else
-                {
-                    data.FastDelegate(data.DataContext, null);
-                }
             });
+
+            if (commandData.AsyncFastDelegate != null)
+            {
+                command.OnExecute(o =>
+                {
+                    var data = command.GetData<CommandData>();
+                    return (Task)data.AsyncFastDelegate(data.DataContext, GetArguments(data, o));
+                });
+            }
+            else
+            {
+                command.OnExecute(o =>
+                {
+                    var data = command.GetData<CommandData>();
+                    data.FastDelegate(data.DataContext, GetArguments(data, o));
+                });
+            }
 
             if (commandData.KeyBindings != null)
             {

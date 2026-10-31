@@ -7,7 +7,9 @@
     using Radical.Observers;
     using Radical.Windows.Input;
     using SharpTestsEx;
+    using System;
     using System.ComponentModel;
+    using System.Threading.Tasks;
 
     [TestClass]
     public class DelegateCommandTests
@@ -123,6 +125,85 @@
             stub.AnotherValue = "this raises PropertyChanged";
 
             actual.Should().Be.EqualTo(expected);
+        }
+
+        [TestMethod]
+        public async Task DelegateCommand_async_execution_should_disable_the_command_while_running()
+        {
+            var gate = new TaskCompletionSource<bool>();
+            var canExecuteChangedCount = 0;
+            var target = DelegateCommand.Create().OnExecute(async o => await gate.Task);
+            target.CanExecuteChanged += (s, e) => canExecuteChangedCount++;
+
+            var execution = target.ExecuteAsync(null);
+
+            target.CanExecute(null).Should().Be.False();
+
+            gate.SetResult(true);
+            await execution;
+
+            target.CanExecute(null).Should().Be.True();
+            canExecuteChangedCount.Should().Be.EqualTo(2);
+        }
+
+        [TestMethod]
+        public async Task DelegateCommand_async_execution_should_not_reenter_while_running()
+        {
+            var gate = new TaskCompletionSource<bool>();
+            var executions = 0;
+            var target = DelegateCommand.Create().OnExecute(async o =>
+            {
+                executions++;
+                await gate.Task;
+            });
+
+            var first = target.ExecuteAsync(null);
+            await target.ExecuteAsync(null);
+
+            gate.SetResult(true);
+            await first;
+
+            executions.Should().Be.EqualTo(1);
+        }
+
+        [TestMethod]
+        public async Task DelegateCommand_async_execution_should_propagate_exceptions_and_enable_the_command_again()
+        {
+            var target = DelegateCommand.Create().OnExecute(async o =>
+            {
+                await Task.Yield();
+                throw new InvalidOperationException("execution failure");
+            });
+
+            await Assert.ThrowsExactlyAsync<InvalidOperationException>(() => target.ExecuteAsync(null));
+
+            target.CanExecute(null).Should().Be.True();
+        }
+
+        [TestMethod]
+        public async Task DelegateCommand_ExecuteAsync_should_run_synchronous_execution_logic()
+        {
+            object received = null;
+            var target = DelegateCommand.Create().OnExecute(o => { received = o; });
+
+            await target.ExecuteAsync(42);
+
+            received.Should().Be.EqualTo(42);
+        }
+
+        [TestMethod]
+        public void DelegateCommand_OnExecute_should_replace_the_previous_execution_logic()
+        {
+            var asyncExecuted = false;
+            var syncExecuted = false;
+            var target = DelegateCommand.Create()
+                .OnExecute(o => { asyncExecuted = true; return Task.CompletedTask; })
+                .OnExecute(o => { syncExecuted = true; });
+
+            target.Execute(null);
+
+            asyncExecuted.Should().Be.False();
+            syncExecuted.Should().Be.True();
         }
     }
 }

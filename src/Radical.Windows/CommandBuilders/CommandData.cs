@@ -23,6 +23,10 @@ namespace Radical.Windows.CommandBuilders
         /// </summary>
         public LateBoundVoidMethod FastDelegate { get; set; }
         /// <summary>
+        /// Gets or sets the delegate used to invoke the method when it returns a <see cref="System.Threading.Tasks.Task"/>; otherwise <c>null</c>.
+        /// </summary>
+        public LateBoundMethod AsyncFastDelegate { get; set; }
+        /// <summary>
         /// Gets or sets the boolean property that determines if the command can be executed, if any.
         /// </summary>
         public BooleanFact BooleanFact { get; set; }

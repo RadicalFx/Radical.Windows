@@ -2481,6 +2481,7 @@ namespace Radical.Windows.CommandBuilders
     public class CommandData
     {
         public CommandData() { }
+        public Radical.Reflection.LateBoundMethod AsyncFastDelegate { get; set; }
         public Radical.Windows.CommandBuilders.BooleanFact BooleanFact { get; set; }
         public object DataContext { get; set; }
         public Radical.Windows.ComponentModel.CommandDescriptionAttribute Description { get; set; }
@@ -2631,8 +2632,10 @@ namespace Radical.Windows.ComponentModel
         Radical.Windows.ComponentModel.IDelegateCommand AddMonitor(Radical.ComponentModel.IMonitor source);
         Radical.Windows.ComponentModel.IDelegateCommand AddMonitor(params Radical.ComponentModel.IMonitor[] triggers);
         void EvaluateCanExecute();
+        System.Threading.Tasks.Task ExecuteAsync(object parameter);
         Radical.Windows.ComponentModel.IDelegateCommand OnCanExecute(System.Func<object, bool> canExecuteMethod);
         Radical.Windows.ComponentModel.IDelegateCommand OnExecute(System.Action<object> executeMethod);
+        Radical.Windows.ComponentModel.IDelegateCommand OnExecute(System.Func<object, System.Threading.Tasks.Task> executeMethod);
         Radical.Windows.ComponentModel.IDelegateCommand RemoveMonitor(Radical.ComponentModel.IMonitor source);
         Radical.Windows.ComponentModel.IDelegateCommand WithTrackingPreview(System.Action<Radical.Analytics.AnalyticsEvent> onBeforeTracking);
     }
@@ -3050,9 +3053,11 @@ namespace Radical.Windows.Input
         public bool CanExecute(object parameter) { }
         public virtual void EvaluateCanExecute() { }
         public void Execute(object parameter) { }
+        public System.Threading.Tasks.Task ExecuteAsync(object parameter) { }
         public virtual Radical.Windows.ComponentModel.IDelegateCommand OnCanExecute(System.Func<object, bool> canExecuteMethod) { }
         protected virtual void OnCanExecuteChanged() { }
         public virtual Radical.Windows.ComponentModel.IDelegateCommand OnExecute(System.Action<object> executeMethod) { }
+        public virtual Radical.Windows.ComponentModel.IDelegateCommand OnExecute(System.Func<object, System.Threading.Tasks.Task> executeMethod) { }
         protected virtual void OnTriggerChanged(Radical.ComponentModel.IMonitor source) { }
         public Radical.Windows.ComponentModel.IDelegateCommand RemoveMonitor(Radical.ComponentModel.IMonitor source) { }
         public Radical.Windows.ComponentModel.IDelegateCommand WithTrackingPreview(System.Action<Radical.Analytics.AnalyticsEvent> onBeforeTracking) { }
