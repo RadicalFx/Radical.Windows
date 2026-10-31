@@ -31,8 +31,7 @@ namespace Radical.Windows.Hosting
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            radicalApplication.Shutdown();
-            return Task.CompletedTask;
+            return radicalApplication.ShutdownAsync();
         }
     }
 }
