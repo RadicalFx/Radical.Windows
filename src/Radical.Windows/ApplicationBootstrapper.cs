@@ -103,7 +103,8 @@ namespace Radical.Windows
                 if (!isShuttingDown)
                 {
                     var reason = isSessionEnding ? ApplicationShutdownReason.SessionEnding : ApplicationShutdownReason.ApplicationRequest;
-                    OnShutdownCore(reason);
+                    // Not a user request: completes synchronously.
+                    _ = OnShutdownCoreAsync(reason);
                 }
             };
         }
@@ -237,7 +238,7 @@ namespace Radical.Windows
                 ExposeRegisteredAppResources();
 
                 var broker = serviceProvider.TryGetService<IMessageBroker>();
-                broker?.Broadcast(this, new ApplicationBootCompleted());
+                _ = broker?.BroadcastAsync(this, new ApplicationBootCompleted());
 
                 bootCompletedHandler?.Invoke(serviceProvider);
 
@@ -378,10 +379,7 @@ namespace Radical.Windows
         void OnBoot(IServiceProvider serviceProvider)
         {
             var broker = serviceProvider.GetService<IMessageBroker>();
-            broker.Subscribe<ApplicationShutdownRequest>(this, InvocationModel.Safe, (s, m) =>
-            {
-                OnShutdownCore(ApplicationShutdownReason.UserRequest);
-            });
+            broker.Subscribe<ApplicationShutdownRequest>(this, InvocationModel.Safe, (s, m) => OnShutdownCoreAsync(ApplicationShutdownReason.UserRequest));
 
             var args = new SingletonApplicationStartupArgs(singleton, key);
             HandleSingletonApplicationStartup(args);
@@ -392,7 +390,8 @@ namespace Radical.Windows
             }
             else
             {
-                OnShutdownCore(ApplicationShutdownReason.MultipleInstanceNotAllowed);
+                // Not a user request: completes synchronously.
+                _ = OnShutdownCoreAsync(ApplicationShutdownReason.MultipleInstanceNotAllowed);
             }
         }
 
@@ -412,7 +411,7 @@ namespace Radical.Windows
         /// </summary>
         public void Shutdown()
         {
-            OnShutdownCore(ApplicationShutdownReason.UserRequest);
+            _ = OnShutdownCoreAsync(ApplicationShutdownReason.UserRequest);
         }
         
         void OnBootCompleted(IServiceProvider serviceProvider)
@@ -510,9 +509,12 @@ namespace Radical.Windows
             }
         }
 
-        void OnShutdownCore(ApplicationShutdownReason reason)
+        // Only a user request awaits, letting ApplicationShutdownRequested subscribers
+        // complete asynchronously; any other reason completes synchronously, as
+        // required when shutting down from the platform's synchronous events.
+        async Task OnShutdownCoreAsync(ApplicationShutdownReason reason)
         {
-            var canceled = false;
+            var skipShutdown = false;
 
             try
             {
@@ -521,13 +523,20 @@ namespace Radical.Windows
                     var msg = new ApplicationShutdownRequested(reason);
 
                     var broker = serviceProvider.GetService<IMessageBroker>();
-                    broker.Dispatch(this, msg);
+                    await broker.DispatchAsync(this, msg);
 
-                    canceled = msg.Cancel;
-
-                    if (canceled)
+                    if (isShuttingDown)
                     {
-                        broker.Broadcast(this, new ApplicationShutdownCanceled(reason));
+                        // the application shut down, e.g. Exit was raised, while awaiting the subscribers
+                        skipShutdown = true;
+                        return;
+                    }
+
+                    skipShutdown = msg.Cancel;
+
+                    if (skipShutdown)
+                    {
+                        _ = broker.BroadcastAsync(this, new ApplicationShutdownCanceled(reason));
                         return;
                     }
                 }
@@ -536,9 +545,9 @@ namespace Radical.Windows
 
                 if (isBootCompleted)
                 {
-                    serviceProvider
+                    _ = serviceProvider
                         .GetService<IMessageBroker>()
-                        .Broadcast(this, new ApplicationShutdown(reason));
+                        .BroadcastAsync(this, new ApplicationShutdown(reason));
 
                     var callbacks = serviceProvider.GetServices<IExpectShutdownCallback>();
                     if (callbacks != null && callbacks.Any())
@@ -569,12 +578,12 @@ namespace Radical.Windows
             }
             finally
             {
-                if (!canceled && reason != ApplicationShutdownReason.ApplicationRequest)
+                if (!skipShutdown && reason != ApplicationShutdownReason.ApplicationRequest)
                 {
                     Application.Current.Shutdown();
                 }
 
-                if (!canceled)
+                if (!skipShutdown)
                 {
                     serviceProvider = null;
 
