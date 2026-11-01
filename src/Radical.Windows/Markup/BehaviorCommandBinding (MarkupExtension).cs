@@ -7,6 +7,7 @@ using Radical.Windows.Input;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -72,6 +73,7 @@ namespace Radical.Windows.Markup
                         return new
                         {
                             FastDelegate = mi.CreateVoidDelegate(),
+                            AsyncFastDelegate = typeof(Task).IsAssignableFrom(mi.ReturnType) ? mi.CreateDelegate() : null,
                             DataContext = dataContext,
                             HasParameter = prms.Length == 1,
                             ParameterType = prms.Length != 1 ? null : prms[0].ParameterType,
@@ -91,19 +93,18 @@ namespace Radical.Windows.Markup
                     .OnCanExecute(o =>
                     {
                        return def.Fact ?? true;
-                    })
-                    .OnExecute(o =>
-                    {
-                        if (def.HasParameter)
-                        {
-                            var prm = Convert.ChangeType(o, def.ParameterType);
-                            def.FastDelegate(def.DataContext, new[] { prm });
-                        }
-                        else
-                        {
-                            def.FastDelegate(def.DataContext, null);
-                        }
                     });
+
+                if (def.AsyncFastDelegate != null)
+                {
+                    cmd.OnExecute(o => (Task)def.AsyncFastDelegate(def.DataContext, getArguments(o)));
+                }
+                else
+                {
+                    cmd.OnExecute(o => def.FastDelegate(def.DataContext, getArguments(o)));
+                }
+
+                object[] getArguments(object o) => def.HasParameter ? new[] { Convert.ChangeType(o, def.ParameterType) } : null;
 
                 if (def.KeyBindings != null)
                 {

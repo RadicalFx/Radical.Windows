@@ -25,6 +25,8 @@ namespace Radical.Windows.Tests
             public void EndsWithcommand() { }
 
             public void WithoutCommandSuffix() { }
+
+            public System.Threading.Tasks.Task DoSomethingAsync() => System.Threading.Tasks.Task.CompletedTask;
         }
 
         class NestedPropertyClass
@@ -211,6 +213,29 @@ namespace Radical.Windows.Tests
 
             Assert.IsTrue(succeeded);
             Assert.IsTrue(cd.FastDelegate != null);
+        }
+
+        [TestMethod]
+        [TestCategory("DelegateCommandBuilder")]
+        public void DelegateCommandBuilder_using_async_method_should_generate_CommandData_with_async_delegate()
+        {
+            var sut = new DelegateCommandBuilder();
+
+            var succeeded = sut.TryGenerateCommandData(new PropertyPath("DoSomethingAsync"), new TestDataContext(), out CommandData cd);
+
+            Assert.IsTrue(succeeded);
+            Assert.IsNotNull(cd.AsyncFastDelegate);
+        }
+
+        [TestMethod]
+        [TestCategory("DelegateCommandBuilder")]
+        public void DelegateCommandBuilder_using_void_method_should_not_generate_async_delegate()
+        {
+            var sut = new DelegateCommandBuilder();
+
+            sut.TryGenerateCommandData(new PropertyPath("DoSomething"), new TestDataContext(), out CommandData cd);
+
+            Assert.IsNull(cd.AsyncFastDelegate);
         }
     }
 }
