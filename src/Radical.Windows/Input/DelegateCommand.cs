@@ -5,6 +5,7 @@ using Radical.Windows.Analytics;
 using Radical.Windows.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -63,6 +64,8 @@ namespace Radical.Windows.Input
         }
 
         private Action<object> executeMethod = null;
+        private Func<object, Task> asyncExecuteMethod = null;
+        private bool isExecuting;
         private Func<object, bool> canExecuteMethod = null;
 
         /// <summary>
@@ -107,6 +110,23 @@ namespace Radical.Windows.Input
         public virtual IDelegateCommand OnExecute(Action<object> executeMethod)
         {
             this.executeMethod = executeMethod;
+            asyncExecuteMethod = null;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the given asynchronous delegate as the one that must handle
+        /// the commands execution logic. While the returned task is running
+        /// the command can't be executed again.
+        /// </summary>
+        /// <param name="executeMethod">The delegate to execute at execution time.</param>
+        /// <returns>
+        /// An instance of the current command.
+        /// </returns>
+        public virtual IDelegateCommand OnExecute(Func<object, Task> executeMethod)
+        {
+            asyncExecuteMethod = executeMethod;
+            this.executeMethod = null;
             return this;
         }
 
@@ -195,6 +215,11 @@ namespace Radical.Windows.Input
         ///</returns>
         public bool CanExecute(object parameter)
         {
+            if (isExecuting)
+            {
+                return false;
+            }
+
             if (canExecuteMethod == null)
             {
                 return true;
@@ -207,14 +232,48 @@ namespace Radical.Windows.Input
         ///Defines the method to be called when the command is invoked.
         ///</summary>
         ///<param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            if (executeMethod == null)
+            // Exceptions are raised on the caller's synchronization context, which reports
+            // them as unhandled exceptions, as for synchronous execution logic.
+            await ExecuteAsync(parameter);
+        }
+
+        /// <summary>
+        /// Executes the command and returns a task that completes when the
+        /// execution logic, synchronous or asynchronous, completes.
+        /// </summary>
+        /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
+        /// <returns>A task that represents the command execution.</returns>
+        public async Task ExecuteAsync(object parameter)
+        {
+            if (asyncExecuteMethod != null)
+            {
+                if (isExecuting)
+                {
+                    return;
+                }
+
+                isExecuting = true;
+                OnCanExecuteChanged();
+                try
+                {
+                    await asyncExecuteMethod(parameter);
+                }
+                finally
+                {
+                    isExecuting = false;
+                    OnCanExecuteChanged();
+                }
+            }
+            else if (executeMethod != null)
+            {
+                executeMethod(parameter);
+            }
+            else
             {
                 return;
             }
-
-            executeMethod(parameter);
 
             if (onBeforeTracking != null)
             {
