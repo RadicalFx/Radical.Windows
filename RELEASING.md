@@ -1,6 +1,6 @@
 # Releasing
 
-This repository follows the same release process as the other RadicalFx repositories: [Radical](https://github.com/RadicalFx/Radical/blob/master/RELEASING.md), [Radical.Windows](https://github.com/RadicalFx/Radical.Windows/blob/main/RELEASING.md), and [Radical.Avalonia](https://github.com/RadicalFx/Radical.Avalonia/blob/main/RELEASING.md).
+This repository follows the same release process as the other RadicalFx repositories: [Radical](https://github.com/RadicalFx/Radical/blob/main/RELEASING.md), [Radical.Windows](https://github.com/RadicalFx/Radical.Windows/blob/main/RELEASING.md), and [Radical.Avalonia](https://github.com/RadicalFx/Radical.Avalonia/blob/main/RELEASING.md).
 
 ## Branches and versions
 
